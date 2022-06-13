@@ -1,0 +1,108 @@
+﻿w.event_generate('<<???>>')
+w.bind(     '<<???>>',func,)
+w.bind_all( '<<???>>',func,)
+
+virtual_event_generate
+virtual_event_receive
+
+root 
+    接收
+        <<StartGame>>
+
+top
+    <<GameListChangeColumnsToShow>>
+        显示的 列项目 切换：1组，2组，3组
+        global_variable.column_group_counter
+    
+    <<GamelistChangeGroupMode>>
+        分组/不分组：1层列表，2层列表，2层列表（可收缩） 
+    
+    <<FindItemById>>
+        定位，查找（上次记忆的）
+        self.new_var_data_for_FindItemById=''
+    
+    <<GameListSearch>>
+        self.new_var_data_for_virtual_event_search
+    
+    <<GameListSearchRegular>>
+        self.new_var_data_for_virtual_event_search ,同上
+    
+    <<GameListSearchClear>>
+
+
+index
+    <<IndexBeChosen>>
+    self.new_var_data_for_virtual_event
+    目录选中
+    
+    
+    
+    
+    接收
+		重新发一下 信号
+        <<RequestForIndexInfo>>
+        重新发一下 拥有列表 信号
+        <<RequestForAvailableGameList>>
+
+gamelist
+    接收
+        <<GameListChangeColumnsToShow>>
+        
+        <<GameListSearch>>
+            self.new_var_virtual_event_name_GameListSearch=r'<<GameListSearch>>'
+        <<GameListSearchRegular>>
+            self.new_var_virtual_event_name_GameListSearchRegular=r'<<GameListSearchRegular>>'
+        <<GameListSearchClear>>
+            self.new_var_virtual_event_name_GameListSearchClear=r'<<GameListSearchClear>>'  
+        <<FindItemById>>
+            self.new_var_virtual_event_name_received_from_topbar=r'<<FindItemById>>'
+        <<IndexBeChosen>>
+            self.new_func_bindings_receive_virtual_event_from_index() 中接收
+    生成
+        <<CurrentGameListNumber>>
+        当前列表数量
+        self.new_var_virtual_event_name_CurrentGameListNumber=r'<<CurrentGameListNumber>>'
+        self.new_var_data_for_CurrentGameListNumber = 0
+            self.new_func_table_reload_the_game_list() 中发送此信号
+        
+        <<CurrentGame>>
+        列表中选中的项目
+        self.new_var_virtual_event_name_CurrentGame=r'<<CurrentGame>>'
+            self.new_func_remember_select_row() 中发送此信号
+            global_variable.current_item
+                #
+            # self.new_var_data_for_CurrentGame   = "" # 不用这个了，用上面这个 global_variable.current_item
+            # self.new_var_data_for_CurrentGame_2 = "" # 状态栏字符串 ,没用上
+            
+        <<StartGame>>
+        self.new_var_virtual_event_name_StartGame = r'<<StartGame>>'
+        self.new_var_data_for_StartGame = {}
+            # 初始化
+            self.new_var_data_for_StartGame["id"]           = None
+            self.new_var_data_for_StartGame["type"]         = "mame" 
+                # "type" 这个,初始后，一直不变
+                # "如果是 softwarelist 改为 softwarelist
+            self.new_var_data_for_StartGame["other_option"] = []
+            self.new_var_data_for_StartGame["hide"]         = True
+        
+        <<VerifyMachine>> # Machine 和 sl 区别一下
+            self.new_var_virtual_event_name_VerifyMachine = r'<<VerifyMachine>>'
+            #同上 用
+            self.new_var_data_for_StartGame
+        <<MameShowInfo>> # Machine 和 sl 区别一下
+            self.new_var_virtual_event_name_VerifyMachine = r'<<MameShowInfo>>'
+            self.new_var_virtual_event_name_MameShowInfo = r'<<VerifyMachine>>'
+            #同上 用
+            self.new_var_data_for_StartGame
+extra   
+    接收
+        <<CurrentGame>>
+    
+states bar
+
+    接收
+        <<CurrentGameListNumber>>
+        <<CurrentGame>>
+
+misc
+    <<GameListChangeColumnsToShow>>
