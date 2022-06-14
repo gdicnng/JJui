@@ -471,6 +471,8 @@ class GameList_level_2(GameList_level_1):
                     int((line_position_y1+line_position_y2)/2),
                     # image
                     self.new_func_table_choose_icon_image(game_info),
+                    
+                    item_id,
                     )
 
 

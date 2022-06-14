@@ -81,10 +81,13 @@ folder_images = os.path.join(folder_source_file,"images")
 
 image_path_icon_main     = os.path.join(folder_images,"for-icon.png")
 image_path_image_no      = os.path.join(folder_images,"no_image.png")
+
 image_path_icon_black    = os.path.join(folder_images,"black.png")
 image_path_icon_red      = os.path.join(folder_images,"red.png")
 image_path_icon_yellow   = os.path.join(folder_images,"yellow.png")
 image_path_icon_green    = os.path.join(folder_images,"green.png")
+image_path_icon_not_have = os.path.join(folder_images,"not_have.png")
+
 image_path_zhifubao      = os.path.join(folder_images,"zhifubao.png")
 image_path_weixin        = os.path.join(folder_images,"weixin.png")
 

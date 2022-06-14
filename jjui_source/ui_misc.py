@@ -1246,23 +1246,22 @@ class Misc_functions():
         print("")
         print("window size and position")
         
-        #if sys.platform.startswith("win") or sys.platform.startswith("darwin"):
-        #    # normal zoomed iconic, withdrawn, icon, 
-        #    # (Windows and Mac OS X only) zoomed.
-        #    if root_window.wm_state() == "normal" : # 最大化
-        #        size  =  root_window.geometry() # 最大化时，这个值反回的位置不太对
-        #        user_configure["size"] = size
-        #    else:
-        #        height = root_window.winfo_height() 
-        #        width  = root_window.winfo_width()
-        #        size = str(width) + "x" + str(height) + "+0" + "+0"
-        #        user_configure["size"] = size
-        #else:
-        #    size  =  root_window.geometry() 
-        #        # windows 最大化时，这个值反回的位置不太对
-        #        # 其它没试过
-        #    user_configure["size"] = size
-
+        # windows 
+        if sys.platform.startswith("win") : # or sys.platform.startswith("darwin")
+            #  root_window.geometry() ，
+            # 因为这个值在最大化时，反回的位置不太对
+            
+            if root_window.wm_state() == "zoomed" : # 最大化
+                user_configure["zoomed"] = True
+            else:
+                user_configure["zoomed"] = False
+                
+                size  =  root_window.geometry() 
+                user_configure["size"] = size
+            
+            return
+        
+        # 其它
         size  =  root_window.geometry() 
             # windows 最大化时，这个值反回的位置不太对
             # 其它没试过
@@ -1325,11 +1324,28 @@ class Misc_functions():
         if global_variable.Combobox_chooser_text_2 is not None:
             user_configure["extra_command_type_chooser_index"] = global_variable.Combobox_chooser_text_2.current()
     
+    def user_configure_get_index_last_record(self,):
+        # 记录 treeview 中的 iid_string ，
+        # 方便判断下一打开时，如果是外置目录，此 iid_string 还存不存在
+        if global_variable.the_index:
+            event_data = global_variable.the_index.new_var_data_for_virtual_event
+            iid_string = ""
+            if event_data is not None:
+                for x in event_data:
+                    iid_string += x + "|"
+                if iid_string:
+                    iid_string=iid_string[0:-1]
+            user_configure["index_be_chosen"] = iid_string
+            print(iid_string)
+        
+    
     def save_user_configure(self,):
         
         self.user_configure_get_widget_option()
         
         self.for_save_font()
+        
+        self.user_configure_get_index_last_record()
         
         try:
             #read_user_config.write_ini(ini_file_name,ini_dict,order = None)
@@ -1424,7 +1440,12 @@ class Misc_functions():
         # 仅检查文件 存在 与否
         # 不深度检查文件的 正确性、完整性
         # *.zip 、*.7x 、文件夹
-        temp_set = self.get_files_names_in_rompath()
+        
+        if global_variable.gamelist_type == "softwarelist":
+            temp_set = self.get_files_names_in_rompath_sl()
+        else:
+            temp_set = self.get_files_names_in_rompath()
+        
         self.set_available_gamelist(temp_set,need_save=True)
         
         root_window.event_generate('<<RequestForAvailableGameList>>')
@@ -1437,7 +1458,12 @@ class Misc_functions():
         # 仅检查文件 存在 与否
         # 不深度检查文件的 正确性、完整性
         # *.zip 、*.7x 、文件夹
-        temp_set = self.get_files_names_in_rompath(merged = True)
+        if global_variable.gamelist_type == "softwarelist":
+            temp_set = self.get_files_names_in_rompath_sl(merged = True)
+        else:
+            temp_set = self.get_files_names_in_rompath(merged = True)
+        
+        
         self.set_available_gamelist(temp_set,need_save=True)
         
         root_window.event_generate('<<RequestForAvailableGameList>>')
@@ -1551,6 +1577,15 @@ class Misc_functions():
         
         window.wait_window()
 
+    # 初始化 ui_main.py
+    def initial_available_filter_set(self,):
+        
+        global_variable.available_filter_set = set()
+        
+        for x in user_configure["filter"]:
+            if x in global_variable.internal_index:
+                global_variable.available_filter_set.update( set(global_variable.internal_index[x]["gamelist"]) )
+
     # 找到拥有的 *.zip 、*.7z 、文件夹
     def get_files_names_in_rompath(self,merged = False):
         ### ###
@@ -1659,7 +1694,138 @@ class Misc_functions():
         # split
         else:
             return temp_set
+    
+    # wip
+    # sl
+    # 找到拥有的 *.zip 、*.7z 、文件夹
+    # copy 上面的
+    def get_files_names_in_rompath_sl(self,merged = False):
+        ### ###
+        # 还有一种情况 
+        # 路径里有变量：$HOME/mame/roms
+            ####
+            # 有变量的，到底有几种格式？  
 
+
+        # 仅检查文件 存在 与否
+        # 不深度检查文件的 正确性、完整性
+        # *.zip 、*.7x 、文件夹
+        
+        # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下            
+        
+        temp_set = set()
+        
+        xml_dict = global_variable.dict_data["xml"]
+        
+        rom_path = self.get_rompath_from_command_line()
+        
+        (mame_exe , mame_dir) = self.get_mame_path_and_working_directory()
+        
+        if rom_path:
+            rom_path = rom_path.replace(r"'","") # 去掉单引号
+            rom_path = rom_path.replace(r'"',"") # 去掉双引号
+        
+        
+        temp={}
+        
+        for x in rom_path.split(r';'): # x 每一条路径
+            if x:
+                print(x)
+
+                #######
+                # rompath ，记录的相对路径，是相对于模拟器的
+                
+                
+                ### ###
+                # 还有一种情况
+                # 路径里有变量：$HOME/mame/roms
+                    ####
+                    # 有变量的，到底有几种格式？
+                    
+                # 情况1，如果有变量，展开，
+                temp_path = x
+                try:
+                    temp_path = os.path.expandvars( x )
+                except:
+                    temp_path = x
+
+                if os.path.isabs(temp_path): # 如果是，绝对路径，不用转换
+                    y = temp_path
+                else: # 如果是，相对路径，转换
+                    if mame_dir != None:# 已设置 mame 工作文件夹
+                        # mame 所在文件夹 ,绝对路径
+                        mame_folders = mame_dir
+                        mame_folders = os.path.abspath( mame_folders )
+                        
+                        # 相对转换路径后的绝对路径
+                        y = os.path.join(mame_folders,temp_path)
+                        
+                        y = os.path.abspath( y )
+                        
+                    else:# 未设置 mame 工作文件夹，且不是默认值
+                        #当成与 jjui 同文件夹对待？
+                        y = x
+
+                print(y)
+                
+                if os.path.isdir(y): # 已将 x 转换一下
+                    
+                    for xml_name in xml_dict:
+                        z=os.path.join(y,xml_name) 
+                        # z, ????\nes
+                        # z, ????\gba
+                        # z, ????\.....
+                        if os.path.isdir( z ): 
+                            if xml_name not in temp:
+                                temp[xml_name]= [] # 初始化
+                            
+                            files_zip = glob.glob( os.path.join(z,"*.zip") )
+                            for a in files_zip:
+                                temp[xml_name].append(  xml_name+" "+os.path.basename(a).lower()[0:-4] )# zip
+                            
+                            files_7z  = glob.glob( os.path.join(z,"*.7z") )
+                            for b in files_7z:
+                                temp[xml_name].append(  xml_name+" "+os.path.basename(b).lower()[0:-3] )# 7z
+                    
+                            files_all = glob.glob( os.path.join(z,"*") )
+                            files_left = set(files_all) - set(files_zip) - set(files_7z)
+                            for c in files_left:
+                                if os.path.isdir(c):
+                                    temp[xml_name].append(  xml_name+" "+os.path.basename(c).lower() )
+        
+        for xml_name in temp:
+            #temp[xml_name] = set( temp[xml_name] )# 转为 set
+            temp[xml_name] = set( temp[xml_name] ) & xml_dict[xml_name] # 交集
+        
+        
+        temp_set = set() 
+        
+        for xml_name in temp:
+            temp_set.update( temp[xml_name] )
+        
+        # merged
+        if merged :
+            # 现有的主版
+            the_parent = temp_set & global_variable.set_data['parent_set']
+            
+            # 其中，有副版本的
+            the_parent = the_parent & set( global_variable.dict_data['parent_to_clone'].keys() )
+            
+            # 关联的副版本
+            the_colne = []
+            for x in the_parent:
+                the_colne.extend( global_variable.dict_data['parent_to_clone'][x] )
+            the_colne = set( the_colne )
+            
+            # 合并
+            the_result = temp_set | the_colne
+            return  the_result
+        
+        # split
+        else:
+            return temp_set
+        
+    
     # mame -showconfig 中
     #   rompath 这一项
     def get_rompath_from_command_line(self,event=None):

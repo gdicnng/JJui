@@ -655,10 +655,11 @@ class GameList_1(GameList_0):
         
         # 保存原始内容
         # 方便之后调整大小
-        self.new_image_black_original  = Image.open( the_files.image_path_icon_black)
-        self.new_image_green_original  = Image.open( the_files.image_path_icon_green)
-        self.new_image_yellow_original = Image.open( the_files.image_path_icon_yellow)
-        self.new_image_red_original    = Image.open( the_files.image_path_icon_red )
+        self.new_image_black_original    = Image.open( the_files.image_path_icon_black)
+        self.new_image_green_original    = Image.open( the_files.image_path_icon_green)
+        self.new_image_yellow_original   = Image.open( the_files.image_path_icon_yellow)
+        self.new_image_red_original      = Image.open( the_files.image_path_icon_red )
+        self.new_image_not_have_original = Image.open( the_files.image_path_icon_not_have )
 
         self.new_func_icon_resize()
     
@@ -683,6 +684,9 @@ class GameList_1(GameList_0):
         
         self.new_image_image_red    = ImageTk.PhotoImage( 
                 self.new_image_red_original.resize(    new_size,Image.BILINEAR, ) )
+                
+        self.new_image_image_not_have    = ImageTk.PhotoImage( 
+                self.new_image_not_have_original.resize(    new_size,Image.BILINEAR, ) )
     
     def new_func_set_colour_and_font(self,
                 foreground=None,
@@ -1350,6 +1354,8 @@ class GameList_2(GameList_1):
                         int((line_position_y1+line_position_y2)/2),
                         # image
                         self.new_func_table_choose_icon_image(game_info),
+                        
+                        item_id,
                         )
     
 
@@ -1373,15 +1379,26 @@ class GameList_2(GameList_1):
             return self.new_image_image_black
     # for
     # self.new_func_table_draw_icon_colunm()
-    def new_func_table_draw_icon_image(self,x,y,image,state='disabled',):
+    def new_func_table_draw_icon_image(self,x,y,image,item_id,):#state='disabled'
         self.new_ui_table.create_image(
                 x , 
                 y ,
                 image=image,
+                #image=self.new_image_image_not_have,
                 
                 anchor=tk.W,
                 state='disabled',
                )
+        if global_variable.flag_mark_unavailable_game:
+            if  item_id not in global_variable.available_set:
+                    self.new_ui_table.create_image(
+                            x , 
+                            y ,
+                            image=self.new_image_image_not_have,
+                            
+                            anchor=tk.W,
+                            state='disabled',
+                            )
     
     
     # 单独出来，方便之后 改
@@ -3158,15 +3175,15 @@ class GameList_12(GameList_11):
         super().new_func_bindings()
         
         
-        self.bind_all("<KeyPress-1>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-2>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-3>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-4>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-5>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-6>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-7>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-8>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-9>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-1>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-2>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-3>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-4>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-5>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-6>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-7>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-8>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-9>",self.new_func_table_binding_key_1_to_9)
         
 
 
@@ -3235,10 +3252,14 @@ class GameList_99(GameList_12):
         # focus_set()
         #    不然，Canvas 、 Frame 等，不 响应 按键 类 event
         for child_widget in self.winfo_children():
-            child_widget.bind( "<Button>", lambda event: self.focus_set(),"+")
+            child_widget.bind( "<Button-1>", lambda event: self.focus_set(),"+")
+            child_widget.bind( "<Button-2>", lambda event: self.focus_set(),"+")
+            child_widget.bind( "<Button-3>", lambda event: self.focus_set(),"+")
         #    child_widget.bind( "<Button>", lambda event: self.new_ui_table.focus_set(),"+")
+        
         #
-        self.bind("<Enter>",lambda event : self.focus_set(),"+")
+        # 这个效果太强了，影响搜索区
+        #self.bind("<Enter>",lambda event : self.focus_set(),"+") 
         
         #self.new_ui_table.bind( "<Button>", lambda event: self.new_ui_table.focus_set(),"+")
         #self.new_ui_table.bind("<Enter>",lambda event : self.new_ui_table.focus_set(),"+")
@@ -3279,15 +3300,6 @@ class GameList_99(GameList_12):
             self.new_func_bindings_receive_virtual_event_for_search_clear)
         
         
-        self.bind_all("<KeyPress-1>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-2>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-3>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-4>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-5>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-6>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-7>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-8>",self.new_func_table_binding_key_1_to_9)
-        self.bind_all("<KeyPress-9>",self.new_func_table_binding_key_1_to_9)
         
         
         

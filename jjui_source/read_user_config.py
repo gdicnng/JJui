@@ -149,7 +149,7 @@ def get_configure_file_default_value( ):
         
         
         ("size","800x600"),
-        ("state",""),
+        ("zoomed",False),
         # normal, iconic, withdrawn, icon, or (Windows and Mac OS X only) zoomed. 
         # normal, zoomed. 
         
@@ -194,7 +194,7 @@ def get_configure_file_default_value( ):
         ("gamelist_font"      ,""  ),
         ("gamelist_font_size" ,0   ),
         ("gamelist_header_font"      ,""  ),
-        ("gamelist_header_font_size" ,0   ),        
+        ("gamelist_header_font_size" ,0   ),
         ("text_font"          ,""         ),
         ("text_font_size"     ,0          ),
         ("text_2_font"        ,""         ),
@@ -216,8 +216,9 @@ def get_configure_file_default_value( ):
         ("tk_scaling_number",0),
         
 
-        ("use_available_game_mark",0 ), # 是否使用 标记
-        ("available_game_mark","√" ),# 拥有游戏，标记
+        #("use_available_game_mark",0 ), # 是否使用 标记
+        #("available_game_mark","√" ),# 拥有游戏，标记
+        ("unavailable_mark",False ), # 标记未拥有游戏，图标 - 号
         
         
         ("pos1",150),# 分隔线位置，目录｜游戏列表
@@ -374,7 +375,13 @@ def get_configure_file_value( file_name ):
                 ini_data[x] = 0
 
     # bool 类型的数据
-    for x in ("gamelist_group_mark","gamelist_sorted_reverse","use_shell",):
+    for x in (
+        #"gamelist_group_mark",
+        "gamelist_sorted_reverse",
+        "use_shell",
+        "zoomed",
+        "unavailable_mark",
+        ):
         if x in ini_data:
             # 字符 转为 bool
             if type( ini_data[x] ) == str : # 字符串，从 ini 文件中读取的值
@@ -433,7 +440,7 @@ def get_configure_file_value( file_name ):
               
               "tk_scaling_use_flag", # 选转为整数，用的时候，校验一下范围
               "use_colour_flag", # 选转为整数，用的时候，校验一下范围
-              "use_available_game_mark",
+              
               
               #"use_background_flag",
               

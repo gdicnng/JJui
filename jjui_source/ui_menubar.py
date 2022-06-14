@@ -262,17 +262,40 @@ class MenuBar(ttk.Frame):
         
         m.add_separator()
         
-        m.add_command(label=_(r"拥有列表 过滤"), 
-                command=misc_funcs.gamelist_available_filter
-                )
+        if global_variable.gamelist_type == "softwarelist":
+            pass
+        else:
+            m.add_command(label=_(r"拥有列表 过滤"), 
+                    command=misc_funcs.gamelist_available_filter
+                    )
         
-        m.add_separator()
+            m.add_separator()
         
         m.add_command(label=_(r"游戏列表 导入翻译／更新翻译"),
                 command=misc_funcs.gamelist_reload_translation
                 )
         
         m.add_separator()
+        
+        
+        
+        self.new_var_tk_unavailable_mark = tk.IntVar() # default value 0
+            # 初始化,需从配置文件中，读取值
+        
+        # 全局记录 bool
+        global_variable.flag_mark_unavailable_game = user_configure["unavailable_mark"]
+        
+        if user_configure["unavailable_mark"] :# bool
+            self.new_var_tk_unavailable_mark.set(1)
+            
+        m.add_checkbutton(
+                label=_(r"标记未拥有"),
+                command=self.new_func_menu_call_back_choose_mark_unavailable,
+                variable =self.new_var_tk_unavailable_mark,
+                )
+
+        
+        
     
     def new_func_ui_menu_for_about(self,):
         #self.new_menu_botton_about
@@ -1205,6 +1228,15 @@ class MenuBar(ttk.Frame):
         
         
         window.wait_window()
+
+    # 游戏列表
+    def new_func_menu_call_back_choose_mark_unavailable(self,):
+        if self.new_var_tk_unavailable_mark.get():
+            user_configure["unavailable_mark"] = True
+            global_variable.flag_mark_unavailable_game = True
+        else:
+            user_configure["unavailable_mark"] = False
+            global_variable.flag_mark_unavailable_game = False
 
     ###############
     # 菜单 callback 函数：关于→关于

@@ -34,11 +34,15 @@ Combobox_chooser_image_1 = None
 Combobox_chooser_image_2 = None
 Combobox_chooser_text_1  = None
 Combobox_chooser_text_2  = None
-#flag
+#flag tkvar
 tkint_flag_for_zip_1 = None
 tkint_flag_for_zip_2 = None
 tkint_flag_for_text_index_1 = None
 tkint_flag_for_text_index_2 = None
+
+#flag bool
+flag_mark_unavailable_game = False
+
 
 #
 the_showing_table = None # tk table widget
@@ -49,6 +53,7 @@ tk_text_1 = None
 tk_text_1 = None
     #文本一
     #文本二
+the_index = None # 退出时，需要记录 目录 的选项
 
 
 #状态栏 等 
@@ -66,6 +71,7 @@ tk_text_1 = None
     # temp_dict["dict_data"]      = dict_data
     # temp_dict["internal_index"] = internal_index
 # 
+all_data = {}
 mame_version =""
 columns      = [] 
     # 所有列，范围

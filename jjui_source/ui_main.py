@@ -2,6 +2,7 @@
 #import sys
 import os
 import sys
+import re
 
 # gamelist_type="mame" #  "softwarelist"
 
@@ -194,6 +195,7 @@ def main():
         
         if game_list_data:
             # global_variable 赋值
+            global_variable.all_data       = game_list_data
             global_variable.mame_version   = game_list_data["mame_version"]
             global_variable.columns        = game_list_data["columns"]
             global_variable.machine_dict   = game_list_data["machine_dict"]
@@ -250,6 +252,13 @@ def main():
         
         
         from .ui_misc import  misc_funcs # import 在后边，有些变量值，之前，还没有赋值
+        
+        # 初始化过滤项
+        if global_variable.gamelist_type == "softwarelist":
+            pass
+        else:
+            misc_funcs.initial_available_filter_set()
+        
         misc_funcs.set_available_gamelist(available_game_list_data)
 
         #root.deiconify()

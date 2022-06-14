@@ -211,10 +211,8 @@ class GameIndex(Treeview_with_scrollbar):
             except:
                 pass
         global_variable.external_index_files_be_edited = set() # 重置
-
-
-
-
+    
+    
     # 生成 virtual event
     def new_func_index_generate_virtual_event(self,iid):
         #   内置目录 第一层 : internal|一级目录名
@@ -281,7 +279,7 @@ class GameIndex(Treeview_with_scrollbar):
         self.event_generate('<<IndexBeChosen>>')
     
     # 接收信号
-    # RequestForIndexInfo
+    # RequestForAvailableGameList
     def new_func_index_for_receive_virtual_event_RequestForAvailableGameList(self,event):
         
         # 收到此信号后，重新发送一个信号即可
@@ -298,14 +296,15 @@ class GameIndex(Treeview_with_scrollbar):
         id_string = "internal" + "|" +"available_set"
         if id_string in self.new_ui_tree.get_children(""):
             
+            self.new_ui_tree.see( id_string ) 
+            
             self.new_ui_tree.selection_set( (id_string,) )
             
             self.new_ui_tree.focus( id_string ) 
             
+            
             self.new_var_data_for_virtual_event = self.new_func_get_virtual_event_info_from_iid(id_string)
             self.event_generate('<<IndexBeChosen>>')
-            
-        
     
     
     def new_func_index_feed_data_internal(self,internal_index):
@@ -447,6 +446,32 @@ class GameIndex(Treeview_with_scrollbar):
         t2=time.time()
         print(t2-t1)
 
+    # 初始时，选中记录中的行
+    def new_func_index_initial_select(self,iid_string):
+        if iid_string:
+            tree=self.new_ui_tree
+            # 确认还存在
+            flag_exist = False
+            for x in tree.get_children():
+                if iid_string == x :
+                    flag_exist = True
+                    break
+                for y in tree.get_children(x):
+                    if iid_string == y :
+                        flag_exist = True
+                        break
+                if flag_exist:
+                    break
+            
+            if flag_exist:
+                
+                self.new_ui_tree.selection_set( (iid_string,) )
+                self.new_ui_tree.focus( iid_string )
+                self.new_ui_tree.see( iid_string )
+                
+                #event_data = self..new_func_get_virtual_event_info_from_iid(iid_string)
+                self.new_func_index_generate_virtual_event(iid_string)
+    
 if __name__ == "__main__" :
     from .read_pickle import read as read_pickle
 

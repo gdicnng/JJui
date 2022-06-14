@@ -30,8 +30,9 @@ def read_xml( file_name ):
     # id 为  ： xml 名称 + 一个空格 + 名称
     
     xml_info = {}
-    # nes
+    # nes     # key为 xml 名
         # description : "Nintendo Entertainment System cartridges"
+        # "gamelist"    : [] ,# 元素列表，初始化
         # .....
     
     print( )
@@ -118,11 +119,26 @@ def read_xml( file_name ):
     return all_info,xml_info
 
 
+def xml_info_change(xml_info):
+    # 转为 set 格式
+    
+    # nes     # key为 xml 名
+        # description : "Nintendo Entertainment System cartridges"
+        # "gamelist"    : [] ,# 元素列表，初始化
+        # .....
+    
+    for xml_name in xml_info:
+        temp = set( xml_info[xml_name]["gamelist"] )
+        
+        xml_info[xml_name]["gamelist"]  = temp
+    
+    
 # set_data = {}
 # set_data["all_set"] = set()
 # set_data["clone_set"] = set()
 # set_data["parent_set"] = set()
-def make_set_data(machine_dict):
+#############
+def make_set_data(machine_dict,):
     print( )
     print( "make set data")
     
@@ -141,13 +157,15 @@ def make_set_data(machine_dict):
     set_data["clone_set"]  = set( temp )
     
     set_data["parent_set"] = set_data["all_set"] - set_data["clone_set"]
-
+    
     return set_data
 
 # dict_data
 # dict_data["clone_to_parent"]
 # dict_data["parent_to_clone"]
-def make_dict_data(machine_dict):
+# 添加
+# dict_data["xml"]
+def make_dict_data(machine_dict,xml_info):
     print( )
     print( "make dict data")
     
@@ -162,6 +180,7 @@ def make_dict_data(machine_dict):
         # 这个要还是不要？
         #   似乎不重要，
         #   在后面的 分类 bios 里用一下，然后就可以删了
+    
     
     # romof
     # clone_to_parent
@@ -178,6 +197,12 @@ def make_dict_data(machine_dict):
             dict_data["parent_to_clone"][parent_game] = []
         dict_data["parent_to_clone"][parent_game].append( clone_game )
 
+
+    # xml
+    dict_data["xml"] = {}
+    
+    for xml_name in xml_info:
+        dict_data["xml"][xml_name] = xml_info[xml_name]["gamelist"]
     return dict_data
 
 
@@ -360,13 +385,15 @@ def main( file_name ,mame_version=""):
     all_info,xml_info = read_xml(file_name)
     #
     machine_dict = all_info
+    #
+    xml_info_change(xml_info) # 转为 set
     
     # set data ,
     #   all_set parent_set clone_set
-    set_data       = make_set_data( machine_dict )
+    set_data       = make_set_data( machine_dict ,) #
     # dict_data
     #   clone_to_parent parent_to_clone
-    dict_data      = make_dict_data( machine_dict )
+    dict_data      = make_dict_data( machine_dict ,xml_info)# 添加 dict_data["xml"]
     # 内置分类
     internal_index = make_internal_index( machine_dict,set_data,dict_data,xml_info)
 

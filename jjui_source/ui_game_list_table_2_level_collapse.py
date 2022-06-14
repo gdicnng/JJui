@@ -541,6 +541,8 @@ class GameList_level_2_collapse(GameList_base):
                         int((line_position_y1+line_position_y2)/2),
                         # image
                         self.new_func_table_choose_icon_image(game_info),
+                        
+                        item_id,
                         )
     
     # bindings
@@ -692,17 +694,14 @@ class GameList_level_2_collapse(GameList_base):
     # 初始 ,添加
     def new_func_initial_image_for_icon(self,):
         #super().new_func_initial_image_for_icon()
-            # 不用 super ，而是都复制过来，不然 resize() 错乱了
-        
-        self.new_image_black_original  = Image.open( the_files.image_path_icon_black)
-        self.new_image_green_original  = Image.open( the_files.image_path_icon_green)
-        self.new_image_yellow_original = Image.open( the_files.image_path_icon_yellow)
-        self.new_image_red_original    = Image.open( the_files.image_path_icon_red )        
+            # super() 放后面
+                # 因为最后边调用了 self.new_func_icon_resize()
+                # 不然先 resize() 时，原图像还没有被读取好
         
         self.new_image_plus_original   = Image.open( the_files.image_path_icon_plus )
         self.new_image_minus_original  = Image.open( the_files.image_path_icon_minus )
         
-        self.new_func_icon_resize()
+        super().new_func_initial_image_for_icon()
     
     # derived
     def new_func_icon_resize(self,):

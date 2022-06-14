@@ -188,6 +188,8 @@ def main(game_list_data):
     # ui game index
     ui_index = GameIndex(main_frame.middle_1)
     ui_index.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    # 记录
+    global_variable.the_index = ui_index
     # 添加 内部目录数据
     #
     print(global_static.index_order)
@@ -407,9 +409,15 @@ def main(game_list_data):
             except:
                 pass
         #root.update()
+        
+        # 窗口最大化，初始
+        if configure_data["zoomed"]:
+            root.wm_state("zoomed")
+        else:
+            pass
 
         # 分隔线位置，初始时，根据配置文件，设置一下
-        root.update() # 前边不放一个 updata ，就没有效果 ？？？？
+        root.update() # 前边不放一个 update ，就没有效果 ？？？？
         
         # 初始时，分隔线,重置位置
         main_frame.frame_middle.sashpos(0,configure_data["pos1"])
@@ -442,6 +450,15 @@ def main(game_list_data):
     #misc_funcs.find_widget('Canvas')
     
     #颜色
-    misc_funcs.use_user_configure_colours()
+    if configure_data["use_colour_flag"]:
+        misc_funcs.use_user_configure_colours()
+    
+    # 目录 选择 上一次的记录
+    root.update() # 不然定位不准
+    if configure_data["index_be_chosen"]:
+        global_variable.the_index.new_func_index_initial_select( configure_data["index_be_chosen"] )
+
+    # 初始化 拥有列表 过滤选项 
+    # 在 ui_main.py 中过滤的
     
     root.protocol("WM_DELETE_WINDOW", misc_funcs.exit_2)
