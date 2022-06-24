@@ -186,10 +186,12 @@ def main(root,style):
                         style.configure('TCombobox', fieldbackground ="#FFE6BA")
                     elif ini_data["theme"] == "itft1": # 修复 Treeview 选中颜色，颜色太浅
                         #style.configure('Treeview', background = background_colour)
-                        style.map('Treeview', background = [("selected","#3c9bf7"),("focus","#ccccff"),("alternate","#FFFFFF")])
+                        style.map('Treeview', foreground = [("selected","white"),])
+                        style.map('Treeview', background = [("selected","#3c9bf7"),])
                     elif ini_data["theme"] == "smog": # 修复 Treeview 选中颜色，颜色太浅
                         #style.configure('Treeview', background = background_colour)
-                        style.map('Treeview', background = [("selected","#3c9bf7"),("focus","#ccccff"),("alternate","#FFFFFF")])
+                        style.map('Treeview', foreground = [("selected","white"),])
+                        style.map('Treeview', background = [("selected","#3c9bf7"),])
                         #style.map('Heading', background  = [("active","yellow"),])
             
             # scid_themes

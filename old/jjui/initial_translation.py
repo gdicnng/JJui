@@ -14,7 +14,7 @@ def read_translation_file( translation_file_name ,text_encoding='utf_8_sig'):
     #   name : kof97
     #   translation : 拳皇97
 
-    p = r'^([^\t ]+)\t([^\t]+)'
+    p = r'^([^\t ]+)\t([^\t\r\n]+)'
     prog = re.compile(p)
     #s=r'10yard	十码大战 (世界版, 第 1 套)	十码大战 (世界版, 第 1 套)'
     #result = re.match(p, s)

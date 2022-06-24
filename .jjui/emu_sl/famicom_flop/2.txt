@@ -1,0 +1,11 @@
+﻿%mame%
+command famicom
+
+command -cart
+command disksys
+
+command -flop
+%xml:software%
+
+command -statename
+command %g/fds/%d_flop

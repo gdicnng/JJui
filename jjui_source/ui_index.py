@@ -385,27 +385,7 @@ class GameIndex(Treeview_with_scrollbar):
         t1=time.time()
         
         tree = self.new_ui_tree
-        #
-        ##folders_path
-        #
-        ## 去掉 双引号，单引号
-        #folders_path = folders_path.replace(r"'","")
-        #folders_path = folders_path.replace(r'"',"")
-        #
-        ## 分类列表文件  
-        #ini_files = {} # 初始化
-        #    # keys,为 （相对/绝对）路径 + 文件名 ，
-        #    # values ，为 文件名，不含路径
-        ## 分类列表，具体信息
-        #external_index_data = {} # 初始化
-        #    # keys,为 （相对/绝对）路径 + 文件名 ，
-        #    # values ，为 为一个 {}
-        #        # keys,为子分类名，
-        #        # values,为，分类游戏，集合 ,后来 转为 list 格式了
-        ## 查找 文件
-        #for x in folders_path.split(';') :
-        #    ini_files.update( folders_search.search_ini( x ) )
-        #
+
         ## 计算分类列表 具体信息
         #for x in ini_files:
         #    temp = folders_read.read_folder_ini_3(x) ## 
@@ -445,6 +425,92 @@ class GameIndex(Treeview_with_scrollbar):
                         
         t2=time.time()
         print(t2-t1)
+
+    # 添加内容 外置目录 ，只读目录，仅 sl 列表的功能
+    # 以 xml 分类
+    def new_func_index_set_content_external_xml_ini(self,external_index_data):
+        # from . import folders_read 
+        # from . import folders_search 
+        
+        print()
+        print("external index feed data")
+        t1=time.time()
+        
+        tree = self.new_ui_tree
+
+        ## 计算分类列表 具体信息
+        #for x in ini_files:
+        #    temp = folders_read.read_folder_ini_3(x) ## 
+        #    if temp==None:
+        #        # 格式错误，只检查了个别错误
+        #        pass
+        #    else: 
+        #        external_index_data[x] = {} # 初始化
+        #        external_index_data[x] = temp  
+        #
+        
+        # 添加到 目录
+        # 第一层
+        for x in sorted( external_index_data.keys()):
+            # x 为 路径 + 名称
+            # ini_files[x] 为 名称，无路径
+            basename = os.path.basename( x )
+            iid_string_1 = "external_xml_ini" + "|" + x
+            tree.insert('','end',iid=iid_string_1,text=basename,)
+        
+            #第二层
+                # iid 分隔符 原来用 分号；
+                #   改掉，
+                #       因为 ； 本来就可以作为 文件名、文件夹名
+                #       不用 \ ，这个是分隔符 ，文件夹名\文件名
+                #       不用 / ，这个是 linux 分隔符， 文件夹名/文件名
+                #       不用 ： 因为盘符是冒号， d:\xxx\yyy
+                #
+                #  / \ : * " < > | ? 
+                # 用 | 
+
+            for y in sorted( external_index_data[x] ) :
+                if y != "FOLDER_SETTINGS":
+                    if y != "ROOT_FOLDER":
+                        iid_string = iid_string_1 + r"|" + y
+                        tree.insert(iid_string_1,'end',iid = iid_string,text=y,)
+                        
+        t2=time.time()
+        print(t2-t1)
+    
+    # 添加内容 外置目录 ，只读目录，仅 mame 列表的功能
+    # 以 source 分类
+    def new_func_index_set_content_external_source_ini(self,external_index_data):
+        # from . import folders_read 
+        # from . import folders_search 
+        
+        print()
+        print("external index feed data")
+        t1=time.time()
+        
+        tree = self.new_ui_tree
+
+        # 添加到 目录
+        # 第一层
+        for x in sorted( external_index_data.keys()):
+            # x 为 路径 + 名称
+            # ini_files[x] 为 名称，无路径
+            basename = os.path.basename( x )
+            iid_string_1 = "external_source_ini" + "|" + x
+            tree.insert('','end',iid=iid_string_1,text=basename,)
+            
+            # 第二层
+            for y in sorted( external_index_data[x] ) :
+                if y != "FOLDER_SETTINGS":
+                    if y != "ROOT_FOLDER":
+                        iid_string = iid_string_1 + r"|" + y
+                        tree.insert(iid_string_1,'end',iid = iid_string,text=y,)
+                        
+        t2=time.time()
+        print(t2-t1)
+
+        
+
 
     # 初始时，选中记录中的行
     def new_func_index_initial_select(self,iid_string):

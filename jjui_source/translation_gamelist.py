@@ -63,11 +63,25 @@ def add_translation( translation_dict , gamelist_dict ,columns):
     for n in range(len(columns)):
         if "translation" == columns[n]:
             translation_index=n
-            
+    
+    # 'description'
+    description_index = -1
+    for n in range(len(columns)):
+        if "description" == columns[n]:
+            description_index=n
+    
+    # 已翻译的
+    translated_game = gamelist_dict.keys() & translation_dict.keys()
+    
     # 更新翻译
     for game_name in gamelist_dict:
-        if game_name in translation_dict:
+        if game_name in translated_game:
+            # 翻译
             gamelist_dict[ game_name ][ translation_index ] = translation_dict[ game_name ][ "translation" ]
+        else:
+            # 清理
+            gamelist_dict[ game_name ][ translation_index ] = gamelist_dict[ game_name ][ description_index ]
+    
   #      else: 
   #          # 如果没有翻译，则补上原文内容
   #          gamelist_dict[ game_name ][ "translation" ] = gamelist_dict[ game_name ][ "description" ]     

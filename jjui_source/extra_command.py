@@ -53,43 +53,43 @@ def extra_command_find_2(file_name , game_name):# 逐行读取，节约内存
     #$info=xxx,xxx,xxx
     #^\$info=(\S.*?)\s*$
     
-    text_file = open( file_name, 'rt',encoding='utf_8_sig')
+    with open( file_name, 'rt',encoding='utf_8_sig',errors='replace') as text_file:
     
-    str_1 = r'^\$info=(\S.*?)\s*$'
-    p1=re.compile(str_1,)
-    
-    str_comment= r'^#'
-    p_comment=re.compile(str_comment,)
-    
-    found_flag = False
-    
-    new_text = []
-    
-    for line in text_file:
+        str_1 = r'^\$info=(\S.*?)\s*$'
+        p1=re.compile(str_1,)
         
-        # 注释
-        m_comment = p_comment.search(line)
-        if m_comment:
-            continue
+        str_comment= r'^#'
+        p_comment=re.compile(str_comment,)
+        
+        found_flag = False
+        
+        new_text = []
+        
+        for line in text_file:
+            
+            # 注释
+            m_comment = p_comment.search(line)
+            if m_comment:
+                continue
+            
+            if found_flag:
+                m=p1.search(line)
+                if m:# 已经找到另一个游戏了
+                    break
+                new_text.append(line)
+            else:
+                m=p1.search(line)
+                if m:
+                    if game_name in m.group(1).split(r","):
+                        print(m.group(1).split(r","))
+                        found_flag = True
+        
+        
         
         if found_flag:
-            m=p1.search(line)
-            if m:# 已经找到另一个游戏了
-                break
-            new_text.append(line)
+            return new_text
         else:
-            m=p1.search(line)
-            if m:
-                if game_name in m.group(1).split(r","):
-                    print(m.group(1).split(r","))
-                    found_flag = True
-    
-    text_file.close()
-    
-    if found_flag:
-        return new_text
-    else:
-        return None
+            return None
 
 def command_replace(content):
     replace_dict={
@@ -391,11 +391,146 @@ def get_content(file_content,game_name):
     return content
 
 # 文本，不读到 内存
+###################################################
+##### 用的这个#####################################
+###################################################
 def get_content_by_file_name(file_name,game_name):
     content=extra_command_find_2(file_name,game_name)
     content=command_replace(content)
     content=command_format(content)
     return content
+    
+####################
+####################
+####################
+
+# 和 history.dat 一样
+def get_index(file_name,):
+    index_dict = {}
+    
+    start_position = 0
+    
+    str_1 = r'^\$info\=(\S.*?)\s*$'
+    p1=re.compile(str_1,)    
+    
+    
+    
+    with open( file_name, 'rb',) as f:
+        #$info=xxx,xxx,xxx
+        #^\$info\=(\S.*?)\s*$
+        
+        # encoding='utf_8_sig',errors='replace'
+        
+        start_position = f.tell()
+        
+        bin_line = f.readline()
+        
+        while bin_line :
+            
+            line = bin_line.decode(encoding='utf-8', errors='replace')
+            line = line.strip()
+            
+            m=p1.search(line)
+           
+            if m:
+                for game_name in m.group(1).split(","):
+                    the_id = game_name.strip()
+                    if the_id:
+                        index_dict[ the_id ] = start_position
+            
+            
+            
+            
+            
+            
+            start_position = f.tell()
+            
+            bin_line = f.readline()
+            
+            
+        
+    return index_dict
+
+######################
+######################
+######################
+
+# 和 history.dat 有一点不一样
+    # 结束标记不一样
+    # 这个，每一段 都有 结束结标记
+    # history.dat 改了一下，不和结束标记了，好像一样了
+def extra_command_find_2_use_index(file_name , game_name,the_index):# 逐行读取，节约内存
+    #$info=xxx,xxx,xxx
+    #^\$info=(\S.*?)\s*$
+    
+    
+    with open( file_name, 'rb',) as f:
+        
+        try:
+            f.seek(the_index)
+        except:
+            print("seek error")
+            return 
+        
+        count = 0
+        
+        
+        str_1 = r'^\$info\=(\S.*?)\s*$'
+        p1=re.compile(str_1,)
+        
+        str_comment= r'^#'
+        p_comment=re.compile(str_comment,)
+        
+        
+        found_flag = False
+        
+        new_text = []
+        
+        
+        bin_line=f.readline()
+        print("first line")
+        print(bin_line.decode(encoding='utf-8', errors='replace'))
+        
+        while bin_line:
+            
+            if count > 1 : 
+                break # ###
+            
+            line = bin_line.decode(encoding='utf-8', errors='replace')
+            
+            # 注释
+            m_comment = p_comment.search(line)
+            if m_comment:
+                bin_line=f.readline() #######################
+                continue
+            
+            m=p1.search(line)
+            if m:
+                count += 1
+                
+                if game_name in m.group(1).split(","):
+                    #print( m.group(1).split(",") )
+                    found_flag = True
+                else:
+                    break
+            else:
+                if found_flag:
+                    new_text.append(line)
+            
+            bin_line=f.readline() #######################
+        
+        if found_flag:
+            return new_text
+        else:
+            return None
+
+
+def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
+    content=extra_command_find_2_use_index(file_name,game_name,the_index)
+    content=command_replace(content)
+    content=command_format(content)
+    return content
+    #print(content)
 
 if __name__ =="__main__":
     print()
@@ -406,7 +541,7 @@ if __name__ =="__main__":
     lines = None
     new_content = None
     try:
-        text_file = open( text_file_name, 'rt',encoding='utf_8_sig')
+        text_file = open( text_file_name, 'rt',encoding='utf_8_sig',errors='replace')
         lines = text_file.readlines()
         text_file.close()
     except:

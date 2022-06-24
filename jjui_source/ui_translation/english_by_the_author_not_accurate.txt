@@ -1,0 +1,257 @@
+缩写	name
+年代	year
+源代码	source
+制造商	manufacturer
+主版本	parent
+游戏名(译)	description(translated)
+游戏名英文	description
+模拟状态	status
+存档状态	save state
+出版商	publisher
+备注名	alt_title
+支持	supported
+所有列表	all
+拥有列表	available
+未拥有列表	unavailable
+副版本	clone
+
+存盘状态	save state
+dump 问题	dump
+声音 通道	sound channels
+芯片 cpu	chip cpu
+芯片 audio	chip audio
+输入 玩家	input players
+输入 控制	input control
+显示 数量	display number
+显示 种类	display type
+显示 刷新率	display refresh
+显示 旋转	display rotate
+显示 分辨率	display resolution
+snap 游戏截图	snap
+titles 游戏标题图	titles
+flyers 游戏海报	flyers
+图片 cabinets	cabinets
+图片 cpanel	cpanel
+图片 devices	devices
+图片 marquees	marquees
+图片 pcb	pcb
+图片 artpreview	artpreview
+图片 bosses	bosses
+图片 ends	ends
+图片 gameover	gameover
+图片 howto	howto
+图片 logo	logo
+图片 scores	scores
+图片 select	select
+图片 versus	versus
+图片 warning	warning
+历史(xml格式)：history.xml	history.xml
+历史(dat格式)：history.dat	history.dat
+文档：mameinfo.dat	mameinfo.dat
+文档：messinfo.dat	messinfo.dat
+文档：gameinit.dat	gameinit.dat
+文档：sysinfo.dat	sysinfo.dat
+出招表 中文版 command.dat	command.dat
+出招表 英文版 command_english.dat	command_english.dat
+
+图片	image
+文档	text
+文档2	text2
+不换行	no wrap
+以词换行	wrap by word
+以字符换行	wrap by char
+用目录	use index
+全部	all
+运行游戏	run the game
+运行游戏，不隐藏 UI	run the game,not hide UI
+运行游戏，开启多键盘功能	run the game,use multi-keyboard
+校验 roms，-verifyroms	verify roms，-verifyroms
+校验 samples，-verifysamples	verify samples,-verifysamples
+显示roms信息，-listroms（太简略，分不清 roms 是独立的还是共用的）	show roms info,-listroms
+显示roms信息，-listxml（含大量其它信息）	show roms info,-listxml
+目录修改，添加到指定目录	edit index,add to ...
+删减当前目录，删除选中内容。	edit index,delete selected items from this index
+目录修改，从指定目录删除选中内容	edit index,delete selected items from ...
+选择列表显示项目	set gamelist columns
+多选模式	multi select
+添加到 自定义目录	add to index
+确认	OK
+目录	index
+文件路径	file path
+显示roms信息，-listxml -nodtd 去文件头（含大量其它信息）	show roms info,-listxml -nodtd
+
+目录列表	index list
+全部收起	collapse all
+计数	count
+保存	save
+第一层目录数量为：	the number of index in level 1
+第二层目录数量为：	the number of index in level 2
+总计：	all:
+目录数量	index number
+总数量：	all number:
+设置	settings
+游戏列表	game list
+帮助	help
+切换主题(关闭程序，重新打开后生效)	select theme (close the application,reopen it)
+启用 tk scaling 缩放（关闭程序，重新打开后生效）	use tk scaling (close the application,reopen it)
+设置 tk scaling 缩放 值	set tk scaling number (close the application,reopen it)
+列表行高设置	set row height
+列表标题行高设置	set header row height
+列表图标宽度设置	set icon width
+列表字体	game list font
+列表标题字体	game list header font
+文本字体1	text 1 font
+文本字体2	text 2 font
+其它字体	others font
+启用自定义颜色(关闭程序，重新打开)	use self define colours (close the application,reopen it)
+自定义一些颜色	set some colours
+保存配置文件	save option
+保存配置文件、窗口大小	save option and window size
+保存配置文件、窗口大小/位置	save option and window size/position
+
+路径设置	set file path
+周边延迟时间设置	extra delay time
+周边文档，建目录加速	extra text make index
+刷新列表，split/分离模式 (不具体校验文件，只检查有没有压缩包/文件夹)	refresh gamelist,split (not verify the files,only check if it exists)
+刷新列表，merged/合并模式 (不具体校验文件，只检查有没有压缩包/文件夹)	refresh gamelist,merged (not verify the files,only check if it exists)
+以上两项，只是检查文件是否存在，没有检查文件的正确性	the two above ,not verify the files,only check if it exists
+拥有列表 过滤	available gamelist filter
+
+标记未拥有	mark unavailable
+关于	about
+打开帮助文档：	open help file
+如果帮助文档没有正确打开，可以找到文件，手动打开	if the file is not opened,find it,open it manually
+查看当前 python 版本	see the python version
+选择主题	select theme
+当前使用的主题为：	the theme is using:
+设置中的主题为：	the theme be selected:
+ (关闭程序，重新打开后生效)	(close the application,reopen it)
+使用内置主题	use internal themes
+选择内置主题：	select internal themes
+使用第三方主题	use third party themes
+选择第三方主题（需要下载第三方主题文件）：	select third party themes (need to download the files)
+放大倍数	tk scaling
+已设定的值为：	the number be set
+输入一个大于0的数，整数/小数	input a number big than 0
+确定	OK
+程序启动时，值为：	the number when application started
+输入一个大于0的数，整数 或 小数	input a number big than 0
+输入0，程序关闭后，下次回到默认值	input 0 ,back to default ,when application reopened
+万一整错了，整个界面，大小变得不太方便操作了，
+可以删除配置文件中对应的选项
+或者简单点，删除整个配置文件
+配置文件为  ：  
+这功能我其实并不了解
+也不太清楚，是不是这样子使用的
+当时，在搜索第三方主题时看到的
+上面提到了有些主题可以 Scalable 
+如果需要的话 
+内置的主题可以自己试试。 
+第三方主题的话
+很多第三方的主题可能不太适用这个选项，
+可能有些地方放大，有些地方没有，具体可以自己试试。
+第三方主题，其中 aw 开头的，需要加载的另外的一个库文件，
+以使用 .svg 格式的 图片。
+其它主题的图片一般是 .png .gif 格式的。
+aw 开头的好像也有一两个不需要库文件也能使用。
+第三方主题
+使用 .svg 图片 的主题，可以先拿来试试这功能。
+其它的，感兴趣的，自己多试试吧
+列表 行高度 设置	set game list row height
+选择 0 的话，关闭程序，下次打开，回到默认值	if select 0 ,back to default ,when application reopened
+选择其它的值，即时生效,	other number ,take effected right now
+列表 标题行 高度 设置	set game list header row height
+列表 图标 大小 设置	set icon size
+模拟器路径	emulator file path
+mame 模拟器 路径	mame file path
+默认值	default
+修改	change
+选择	select
+mame 工作目录	mame's working directory
+
+folders 路径	folders path
+图片路径	image path
+图片压缩包路径	image zip file path
+文档路径	docs path
+周边延迟时间(毫秒):	extra delay time (millisecond)
+查看 python 版本	check python version
+python 版本：	python version:
+tkinter 版本：	tkinter version
+选择游戏列表显示项目	select gamelist columns
+第1组，程序一开始显示的内容	the first group,show it when application started
+后面的第2组、第3组，主要是为了方便切换显示不同的内容	the second or the third group ,for quickly change content
+不需要的话，可以不用去管 第2组、第3组	if you don't needed,the second or the third group is not important
+确认，确认后跳转到第1组	OK,then jump to the first group
+内容	content
+添加到第1组	add to group 1
+添加到第2组	add to group 2
+添加到第3组	add to group 3
+第1组	group 1
+从第1组移除	remove from group 1
+上移	move up
+下移	move donw
+第2组	group 2
+从第2组移除	remove from group 2
+第3组	group 3
+从第3组移除	remove from group 3
+字体选择	select font
+字体大小	font size
+负整数，字体单位是像素；正整数，字体单位是 point
+颜色 设置	colour setting
+背景色	background
+前景色	foreground
+列表选中行背景色	gamelist background when selected
+列表选中行前景色	gamelist foreground when selected
+分隔条背景色	background for separator
+拥有列表过滤	available gamelist filter
+导入翻译文件	import translation file
+翻译文件不存在：	not exist translation file
+读取翻译文件，出错。注意将文件的 文本编码 保存为 utf-8-bom	read translation file,error.make sure the text file is encoded as utf-8 with bom
+读取翻译文件，翻译数量为 0 ，翻译任务取消	read translation file,the translated number is 0,cancel
+有效翻译数量为 0 ，翻译任务取消	the effective translated number is 0,cancel
+未指翻译定文件	no translation file
+默认翻译文件：	the default translation file:
+默认翻译文件，文字编码为：utf_8_sig	the default translation file,the text is encoded as utf-8 with bom
+读取默认翻译文件	read default translation file
+另外选择翻译文件:	select another translation file
+列表数量：	gamelist number:
+主版本：	parent:
+romof：	romof:
+模拟状态：	status
+存盘状态：	save status
+1/2/3
+分组/不分组	grouped/flat
+定位到	jump to
+搜索栏:	search bar:
+搜索	search
+正则搜索	search use regular expression
+清空	clear
+初始化	initialize
+初始化，从模拟器读取游戏列表数据	initialize,read info from emulator
+选择 MAME 模拟器	select MAME emulator
+格式	type
+主列表，mame版本 >= 0.162，用 -listxml 命令导出数据	main list,mame version>=0.162,-listxml
+0.162 > mame版本 >= 0.84，用 -listxml 命令导出数据，xml 中标签为 game	0.162>mame version>0.84,-listxml
+mame版本 < 0.84，用 -listinfo 命令导出数据	mame version<0.84,-listinfo
+.exe 文件	.exe file
+所有文件	all file
+导出 xml	export xml
+请耐心等待......	wait ......
+模拟器：	emulator:
+提取 roms 信息 到文件：	extract info:
+导出结束	export ,finished
+解析 xml	parse xml
+完成	finished
+SoftwareList 软件列表，不是街机列表（mame版本 > 0.162，用 -getsoftlist 命令导出数据）	Software List,not the arcade game list( mame version > 0.162,-getsoftlist)
+周边延迟显示	use extra delay time
+导出选中内容到：	export select items to:
+导出当前列表到：	export current list to:
+UI 界面翻译	ui language
+游戏列表翻译	gamelist translation
+（关闭程序，重新打开后生效）	(close application,reopen it)
+使用内置中文	use internal Chinese
+选择其它翻译文件	select other translation file
+读取指定翻译文件	read the selected file
+编码提示：	the text's encoding:
+将文本保存为，utf_8_sig （utf-8 带 bom），可以包含多国文字	the text file's encoding should be utf-8 with bom
+.txt 文件	.txt files

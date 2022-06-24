@@ -1926,6 +1926,9 @@ class MyUi:
             
                 self.image = ImageTk.PhotoImage(self.image_original.resize( new_size,Image.BILINEAR, ))
                 
+                # 清理
+                self.extra_image.delete('all',)
+                
                 self.extra_image.create_image(
                             int(canvas_size[0]/2),
                             int(canvas_size[1]/2), 
@@ -1949,6 +1952,9 @@ class MyUi:
             if new_size:
             
                 self.image_2 = ImageTk.PhotoImage(self.image_original_2.resize( new_size,Image.BILINEAR, ))
+                
+                # 清理
+                self.extra_image_2.delete('all',)
                 
                 self.extra_image_2.create_image(
                             int(canvas_size[0]/2),
@@ -5632,6 +5638,9 @@ class MyUi:
                         
                         self.image = ImageTk.PhotoImage(self.image_original.resize( new_size,Image.BILINEAR, ))
                         
+                        
+                        # 清理
+                        self.extra_image.delete('all',)
                         self.extra_image.create_image( int(width/2), int(height/2), image=self.image , anchor=tk.CENTER)
             else: # 使用 普通 .png
             
@@ -5721,6 +5730,9 @@ class MyUi:
                         
                         self.image = ImageTk.PhotoImage(self.image_original.resize( new_size,Image.BILINEAR, ))
                         
+                        
+                        # 清理
+                        self.extra_image.delete('all',)
                         self.extra_image.create_image( int(width/2), int(height/2), image=self.image , anchor=tk.CENTER)
         else:
             try:
@@ -5840,6 +5852,9 @@ class MyUi:
                         
                         self.image_2 = ImageTk.PhotoImage(self.image_original_2.resize( new_size,Image.BILINEAR, ))
                         
+                        
+                        # 清理
+                        self.extra_image_2.delete('all',)
                         self.extra_image_2.create_image( int(width/2), int(height/2), image=self.image_2 , anchor=tk.CENTER)
             else: # 使用 普通 .png
             
@@ -5929,6 +5944,9 @@ class MyUi:
                         
                         self.image_2 = ImageTk.PhotoImage(self.image_original_2.resize( new_size,Image.BILINEAR, ))
                         
+                        
+                        # 清理
+                        self.extra_image_2.delete('all',)
                         self.extra_image_2.create_image( int(width/2), int(height/2), image=self.image_2 , anchor=tk.CENTER)                        
         else:
             try:

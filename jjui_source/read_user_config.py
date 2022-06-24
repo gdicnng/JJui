@@ -199,10 +199,10 @@ def get_configure_file_default_value( ):
         ("text_font_size"     ,0          ),
         ("text_2_font"        ,""         ),
         ("text_2_font_size"   ,0          ),
-        ("menu_font"          ,""           ),
-        ("menu_font_size"     ,0            ),
-        ("label_font"         ,""          ),
-        ("label_font_size"    ,0           ),
+        #("menu_font"          ,""           ),
+        #("menu_font_size"     ,0            ),
+        #("label_font"         ,""          ),
+        #("label_font_size"    ,0           ),
         ("others_font"        ,""         ),
         ("others_font_size"   ,0          ),
         
@@ -238,8 +238,8 @@ def get_configure_file_default_value( ):
         
         ("extra_image_usezip",1),# 0 , 1 ,ttk.Checkbutton    
         ("extra_image_usezip_2",1),# 0 , 1 ,ttk.Checkbutton    
-        ("extra_text_make_index_1",1),# 0 , 1 ,ttk.Checkbutton    
-        ("extra_text_make_index_2",1),# 0 , 1 ,ttk.Checkbutton            
+        ("extra_text_use_index_1",1),# 0 , 1 ,ttk.Checkbutton    
+        ("extra_text_use_index_2",1),# 0 , 1 ,ttk.Checkbutton            
      
         ("index_be_chosen",''),  # 暂时，初始化为 空
         #"index_set_remembered",set(),  # 有上面一项就够了
@@ -404,8 +404,8 @@ def get_configure_file_value( file_name ):
               "gamelist_header_font_size",
               "text_font_size",
               "text_2_font_size",
-              "menu_font_size",
-              "label_font_size",
+              #"menu_font_size",
+              #"label_font_size",
               "others_font_size",
                   ):
         if x in ini_data:

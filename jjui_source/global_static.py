@@ -9,6 +9,10 @@ if __name__ =="__main__":
 
 from . import global_variable
 
+title_string=r"JJui (v.2.0.test) -- MAME 街机游戏列表显示器 -- "
+if global_variable.gamelist_type == "softwarelist":
+    title_string=r"JJui (v.2.0.test) -- MAME Software List(软件列表) -- "
+
 # 游戏列表
 # 读取哪些
 # 列，标准。配置文件中 设置的 读取 列 的范围，要在这其中
@@ -122,6 +126,10 @@ extra_text_types =  (
         "gameinit.dat",
         "sysinfo.dat",
         )
+if global_variable.gamelist_type == "softwarelist":
+    extra_text_types =  (
+            "history.xml",
+            )
 
 # ui ,extra ，文档，第二类，出招表
 extra_text_types_2 =  (

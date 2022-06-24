@@ -376,6 +376,13 @@ def dict_to_list(game_list_data):
     return columns,machine_dict
 
 
+def get_xml_dict(xml_info):
+    xml_dict={}
+    
+    for xml_name in xml_info:
+        xml_dict[xml_name]=xml_info[xml_name]["gamelist"]
+    
+    return xml_dict
 
 def main( file_name ,mame_version=""):
     
@@ -387,6 +394,9 @@ def main( file_name ,mame_version=""):
     machine_dict = all_info
     #
     xml_info_change(xml_info) # 转为 set
+    
+    # 在转换格式之后
+    xml_dict = get_xml_dict(xml_info)
     
     # set data ,
     #   all_set parent_set clone_set
@@ -408,11 +418,14 @@ def main( file_name ,mame_version=""):
     # 第0项：xml ，第1项：name ，这样方便得到 id : xml + 空格 + name
     columns,machine_dict = dict_to_list(machine_dict)
     
+    
+    
     temp_dict = {}
     temp_dict["mame_version"]   = mame_version
     
     temp_dict["columns"]        = columns
     temp_dict["machine_dict"]   = machine_dict
+    temp_dict["xml"]   = xml_dict
     
     temp_dict["set_data"]       = set_data
     temp_dict["dict_data"]      = dict_data

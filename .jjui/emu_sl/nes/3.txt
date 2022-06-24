@@ -1,0 +1,6 @@
+﻿%mame%
+command famicom
+%xml:software%
+
+command -statename
+command %g/%d_cart

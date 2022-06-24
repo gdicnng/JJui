@@ -490,7 +490,7 @@ Data_Holder = Data_Holder_3
 
 # 基本 ui 
 class GameList_0(ttk.Frame):
-
+    
     
     def __init__(self, parent,*args,**kwargs):
         
@@ -510,12 +510,15 @@ class GameList_0(ttk.Frame):
         # 还需要改一下，要比 默认图标 大一点吧 16 ，20？
         if self.new_var_row_height <20 : self.new_var_row_height = 20
         
+        ###################################
+        # 关于 标题 行高 初始值 ************
         # header font
         # header row height
         self.new_var_font_for_header = "TkHeadingFont"
         the_heading_font = tk_font.nametofont('TkHeadingFont',)
         heading_linespace = the_default_font.metrics("linespace")
         self.new_var_row_height_for_header = heading_linespace + 6
+        
         
         
         self.new_var_virtual_event_name_StartGame = r'<<StartGame>>'
@@ -542,6 +545,12 @@ class GameList_0(ttk.Frame):
         
         parent=self
         
+        # 标题宽度要可调的，需要用这个选项，
+        #   一开始就用
+        #   不然，高度调得比初始，更小时，就会有问题
+        parent.rowconfigure(0,minsize=self.new_var_row_height_for_header) 
+        
+        
         parent.rowconfigure(0, weight=0)
         parent.rowconfigure(1, weight=1)
         parent.rowconfigure(2, weight=0)
@@ -550,7 +559,7 @@ class GameList_0(ttk.Frame):
         
         self.new_ui_header = tk.Canvas(parent,
             #bg="grey80",
-            height =self.new_var_row_height,
+            height =self.new_var_row_height_for_header,
             #width  =self.new_var_total_width,
             borderwidth=0,
             highlightthickness=0,
@@ -640,13 +649,86 @@ class GameList_1(GameList_0):
     # initial olour and font
     def new_func_initial_colour(self):
         style=ttk.Style()
-        self.new_var_foreground = style.configure('.','foreground')
-        if self.new_var_foreground =="":
-            self.new_var_foreground="black"
         
-        self.new_var_background = style.configure('.','background')
-        self.new_var_selectforeground = style.configure('.','selectforeground')
-        self.new_var_selectbackground = style.configure('.','selectbackground')
+        print("")
+        print("initial colours")
+        
+        def get_selectforeground(class_name):# treeview
+            colour = None
+            for x in  style.map(class_name, "foreground" ):#[('selected', '#fbfbf8')]
+                if type(x)==tuple:
+                    if x[0].lower() == "selected":
+                        print("foreground ,find selected")
+                        print(x)
+                        colour = x[1]
+            return colour
+        
+        def get_selectbackground(class_name):# treeview
+            colour = None
+            for x in  style.map(class_name, "background" ):#[('selected', '#fbfbf8')]
+                if type(x)==tuple:
+                    if x[0].lower() == "selected":
+                        print("background ,find selected")
+                        print(x)
+                        colour = x[1]
+            return colour
+        
+        # 使用 Treeview 的颜色
+        self.new_var_foreground = style.configure('Treeview','foreground')
+        self.new_var_background = style.configure('Treeview','background')
+        self.new_var_selectforeground = get_selectforeground("Treeview")
+        #self.new_var_selectforeground = get_selectforeground(".")
+        self.new_var_selectbackground = get_selectbackground("Treeview")
+        #self.new_var_selectbackground = get_selectbackground(".")
+        
+        
+        
+        #self.new_var_foreground = style.configure('.','foreground')
+        #self.new_var_background = style.configure('.','background')
+        #self.new_var_selectforeground = style.configure('.','selectforeground')
+        #self.new_var_selectbackground = style.configure('.','selectbackground')
+        
+        # 如果 Treeivew 缺少 颜色设置
+        # 使用全局颜色
+        
+        if not self.new_var_foreground :
+            self.new_var_foreground = style.configure('.','foreground')
+            
+            if not self.new_var_foreground :
+                print("not found foreground")
+                self.new_var_foreground="black"
+        
+        if not self.new_var_background :
+            self.new_var_background = style.configure('.','background')
+            
+            if not self.new_var_background :
+                print("not found background")
+                self.new_var_background="grey90"
+        
+        if not self.new_var_selectforeground:
+            
+            #self.new_var_selectforeground = get_selectforeground(".")
+            
+            #if not self.new_var_selectforeground:
+            
+            self.new_var_selectforeground = style.configure('.','selectforeground')
+                # 有没有这种选项？
+            
+            if not self.new_var_selectforeground:
+                print("not found selectforeground")
+                self.new_var_selectforeground = "white"
+        
+        if not self.new_var_selectbackground:
+            self.new_var_selectbackground = style.configure('.','selectbackground')
+                #有没有这种选项？ 
+            
+            if not self.new_var_selectbackground:
+                print("not found selectbackground")
+                self.new_var_selectbackground = "LightBlue4"
+        
+
+
+        
 
     # 读取 图标 图片 ，红 黄 绿 黑
     def new_func_initial_image_for_icon(self):
@@ -727,11 +809,48 @@ class GameList_1(GameList_0):
     
     def new_func_set_row_height_for_header(self,row_height):
         if row_height > 0:
+        
+            
             self.new_var_row_height_for_header = row_height
+            
+            self.new_ui_header.delete('all',)
+            
+            self.new_ui_header.configure(height=row_height)
+            
+            #self.new_ui_header.grid_forget()
             
             #??????????????
             # 行高度变化 ，窗口之间大小比例
             self.rowconfigure(0,minsize=row_height)
+
+            
+            #self.new_ui_header.destroy() 
+            # 完全删掉
+            # 重新建立
+            # 好像可以
+            # 那这样，它的一些 bingings ，还有效吗？
+            
+            #self.new_ui_header = tk.Canvas(self,
+            #    #bg="grey80",
+            #    height =self.new_var_row_height_for_header,
+            #    #width  =self.new_var_total_width,
+            #    borderwidth=0,
+            #    highlightthickness=0,
+            #    #scrollregion=(0,0,self.new_var_total_width,self.new_var_row_height), 
+            #    )
+            
+            #self.new_ui_header.grid_forget()
+            #self.new_ui_table.grid_forget()
+            #self.new_ui_scrollbar_v.grid_forget()
+            #self.new_ui_scrollbar_h.grid_forget()
+            #
+            #self.new_ui_header.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
+            #self.new_ui_table.grid( row=1,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
+            #self.new_ui_scrollbar_v.grid(row=0,column=1,rowspan=3,sticky=(tk.N,tk.S))
+            #self.new_ui_scrollbar_h.grid(row=2,column=0,sticky=(tk.W,tk.E))
+            
+            
+            #self.new_ui_header.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
             
             self.new_func_refresh_all()
         
@@ -1031,14 +1150,18 @@ class GameList_2(GameList_1):
                 print("same info from index ,quit")
                 return
         
+        # 对比是否重复之后，再记录
         # 记录
         self.new_var_remember_last_index_data = event_info
         
         internal_data  = self.new_var_data_holder.internal_data
         external_index = self.new_var_data_holder.external_index
         internal_index = internal_data["internal_index"]
+        
+        
         #all_set        = internal_data["set_data"]["all_set"]        
         
+        # mame
         def get_id_list():
             
             the_id_list = [] #默认值 空
@@ -1060,7 +1183,68 @@ class GameList_2(GameList_1):
                 if len(event_info)==3:# 第二层
                     the_id_list = external_index[event_info[1]][event_info[2]]
             
+            # 外置目录，只读，以 source 分类
+            elif event_info[0]=="external_source_ini":
+                the_source_list = []
+                if len(event_info)==2:# 第一层
+                    the_source_list = global_variable.external_index_by_source[event_info[1]]["ROOT_FOLDER"]
+                elif len(event_info)==3:# 第二层
+                    the_source_list = global_variable.external_index_by_source[event_info[1]][event_info[2]]
+                
+                temp_list = []
+                
+                try:
+                    for the_source in the_source_list :
+                        if the_source in internal_index["sourcefile"]["children"]:
+                            temp_list.extend( internal_index["sourcefile"]["children"][the_source]["gamelist"] )
+                except:
+                    temp_list = []
+                
+                the_id_list = temp_list
+                
+
+                
+            
             return the_id_list
+        
+        # software list 略有补充
+        if global_variable.gamelist_type == "softwarelist":
+            #"external_xml_ini"
+            
+            def get_id_list():
+                
+                the_id_list = [] #默认值 空
+                # 类型是 list
+                #  或者是 set 
+                # 之后都要转为 set ，方便 检查 重复的、方便 限制 范围 
+                
+                # 内置目录
+                if event_info[0]=="internal":
+                    if len(event_info)==2:# 第一层
+                        the_id_list = internal_index[event_info[1]]["gamelist"]
+                    if len(event_info)==3:# 第二层
+                        the_id_list = internal_index[event_info[1]]["children"][event_info[2]]["gamelist"]
+                
+                # 外置目录
+                elif event_info[0]=="external_ini_file":
+                    if len(event_info)==2:# 第一层
+                        the_id_list = external_index[event_info[1]]["ROOT_FOLDER"]
+                    if len(event_info)==3:# 第二层
+                        the_id_list = external_index[event_info[1]][event_info[2]]
+                
+                elif event_info[0]=="external_xml_ini":
+                    if len(event_info)==2:# 第一层
+                        the_xml_list = global_variable.external_index_sl_by_xml[event_info[1]]["ROOT_FOLDER"]
+                    if len(event_info)==3:# 第二层
+                        the_xml_list = global_variable.external_index_sl_by_xml[event_info[1]][event_info[2]]
+                    
+                    xml_dict = internal_data["xml"]
+                    for xml_name in the_xml_list:
+                        if xml_name in xml_dict:
+                            the_id_list.extend(  xml_dict[xml_name]  )
+                
+                return the_id_list
+        
         
         the_id_list = get_id_list()
         
@@ -1090,26 +1274,31 @@ class GameList_2(GameList_1):
         #print()
         #print("get visible rows,the last row is 1 bigger")
         #最大行数，超过行数1，因为 列表从0计数
-        table = self.new_ui_table
+        #table = self.new_ui_table
         #width = table.winfo_width()
-        height = table.winfo_height()
+        height = self.new_ui_table.winfo_height()
         #x1 , x2 = table.canvasx(0) , table.canvasx(width)
-        y1 , y2 = table.canvasy(0) , table.canvasy(height)
+        y1 , y2 = self.new_ui_table.canvasy(0) , self.new_ui_table.canvasy(height)
         
-        the_first_row =  y1/self.new_var_row_height 
-        the_last_row  = y2/self.new_var_row_height 
+        #the_first_row =  y1/self.new_var_row_height 
+        #the_last_row  = y2/self.new_var_row_height 
         #print("{},the first row".format(the_first_row))
         #print("{},the last row".format(the_last_row))
         
-        the_first_row =   math.floor(the_first_row) # 取整，退位
-        the_last_row  =   math.ceil(the_last_row) # 取整，进位,
+        #the_first_row =   math.floor(the_first_row) # 取整，退位
+        #the_last_row  =   math.ceil(the_last_row) # 取整，进位,
+        
+        the_first_row =   math.floor(y1/self.new_var_row_height) # 取整，退位
+        the_last_row  =   math.ceil(y2/self.new_var_row_height ) # 取整，进位,
         # range(the_first_row,the_last_row) 的范围在 the_last_row 之前
         
         if the_first_row<0: # 列表从 0 计数
             the_first_row=0
-        max_line_number = len( self.new_var_list_to_show )
-        if the_last_row > max_line_number :
-            the_last_row = max_line_number 
+        #max_line_number = len( self.new_var_list_to_show )
+        #if the_last_row > max_line_number :
+        if the_last_row > self.new_var_row_numbers :
+            #the_last_row = max_line_number 
+            the_last_row = self.new_var_row_numbers 
         #   最大行数 超过一个，因为 列表从 0 开始计数
         #   不过，后面正好，range(start_row,end_row) ，不会取到最后一个值
         
@@ -1127,9 +1316,9 @@ class GameList_2(GameList_1):
         # return  flag_show_icon , visible_column_id ,table_visible_width
         
         """
-        table = self.new_ui_table
-        table_visible_width = table.winfo_width()
-        x1 , x2 = table.canvasx(0) , table.canvasx(table_visible_width)
+        #table = self.new_ui_table
+        table_visible_width = self.new_ui_table.winfo_width()
+        x1 , x2 = self.new_ui_table.canvasx(0) , self.new_ui_table.canvasx(table_visible_width)
         
         # icon 列
         flag_show_icon = False
@@ -1137,8 +1326,7 @@ class GameList_2(GameList_1):
         icon_column_width = self.new_var_column_width[ self.new_var_icon_column_id ] 
         if x1 < icon_column_width :
             flag_show_icon = True
-        else: 
-            flag_show_icon = False
+        
         
         # 其它列
         visible_column_id=[]
@@ -1183,15 +1371,15 @@ class GameList_2(GameList_1):
         
         #
         
-        space   = self.new_var_space_before_cell # 每一格，前边的空白部分
+        #space   = self.new_var_space_before_cell # 每一格，前边的空白部分
         
-        table = self.new_ui_table
+        #table = self.new_ui_table
         
         the_first_row , the_last_row = self.new_func_table_get_visible_rows()
             # the_last_row 要大 1，但 range(the_first_row,the_last_row)正好取小一个
         
         # 所有标题 #不含图标列
-        headers_list = self.new_var_columns_to_show
+        #headers_list = self.new_var_columns_to_show
 
         # 图标列标记   #可见列id   #部件宽度
             # visible_column_id 不含图标列
@@ -1205,10 +1393,10 @@ class GameList_2(GameList_1):
         
         
         # 图标列
-        columns_width     = self.new_var_column_width
-        icon_column_id    = self.new_var_icon_column_id
-        icon_column_width = columns_width[ icon_column_id ]
-        row_height        = self.new_var_row_height
+        #columns_width     = self.new_var_column_width
+        #icon_column_id    = self.new_var_icon_column_id
+        icon_column_width = self.new_var_column_width[ self.new_var_icon_column_id ]
+        #row_height        = self.new_var_row_height
         
         # 起点 width_start_remember
         #   如果有图标列，从0开始
@@ -1216,7 +1404,7 @@ class GameList_2(GameList_1):
         #   如果没有图标列，计算一下：
         if not flag_show_icon :
             width_start_remember += icon_column_width
-            for x in headers_list:
+            for x in self.new_var_columns_to_show:
                 if x in visible_column_id:
                     break
                 else:
@@ -1225,10 +1413,10 @@ class GameList_2(GameList_1):
         ####
         ####
         ####
-        visible_column_id_and_column_index = []
-        for column_id in visible_column_id:
-            column_index = self.new_var_the_original_columns_index_dict[column_id]
-            visible_column_id_and_column_index.append( (column_id,column_index) )
+        #visible_column_id_and_column_index = []
+        #for column_id in visible_column_id:
+        #    column_index = self.new_var_the_original_columns_index_dict[column_id]
+        #    visible_column_id_and_column_index.append( (column_id,column_index) )
             
             
         def draw_background(row,y1,y2,item_id,background):
@@ -1249,7 +1437,10 @@ class GameList_2(GameList_1):
                        )
 
         def draw_content(row,width_start,game_info,y1,y2,background,foreground):
-            for column_id,column_index in visible_column_id_and_column_index:
+            #for column_id,column_index in visible_column_id_and_column_index:
+            for column_id in visible_column_id:
+                column_index = self.new_var_the_original_columns_index_dict[column_id]
+            
                 cell_width = self.new_var_column_width[ column_id ]
                 # 每一格，画一个长方形，做背景
                 self.new_ui_table.create_rectangle( 
@@ -1265,7 +1456,7 @@ class GameList_2(GameList_1):
                        )
                 # 每一格，文字内容
                 self.new_ui_table.create_text( 
-                        width_start + space , 
+                        width_start + self.new_var_space_before_cell , 
                         int((y1+y2)/2),
                         anchor=tk.W,
                         #text = str(game_info[column_index]),
@@ -1341,17 +1532,17 @@ class GameList_2(GameList_1):
     def new_func_table_draw_icon_colunm(self,row,item_id,game_info,line_position_y1,line_position_y2,foreground):
         
         # 双层列表 需要变动
-        space_before_icon  = self.new_var_space_before_icon
+        #space_before_icon  = self.new_var_space_before_icon
         #space_before_icon  = self.new_var_space_before_icon_level_2
         
         #if space_before_icon < icon_column_width:
-        if space_before_icon < self.new_var_column_width[ self.new_var_icon_column_id ]:
+        if self.new_var_space_before_icon < self.new_var_column_width[ self.new_var_icon_column_id ]:
             # draw_icon
             self.new_func_table_draw_icon_image(
                         # x
-                        space_before_icon,
+                        self.new_var_space_before_icon,
                         # y
-                        int((line_position_y1+line_position_y2)/2),
+                        int(  (line_position_y1+line_position_y2)/2  ),
                         # image
                         self.new_func_table_choose_icon_image(game_info),
                         
@@ -2283,17 +2474,18 @@ class GameList_7(GameList_6):
                 command = self.new_func_table_pop_up_menu_callback_start_game
                 )
         
-        self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("运行游戏，不隐藏 UI"),
-                command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(hide=hide_value)
-                )
-                
-        self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("运行游戏，开启多键盘功能"),
-                command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(other_option=["-multikeyboard", ] )
-                )#"-multikeyboard"
+        if global_variable.gamelist_type == "mame" :
+            self.new_ui_pop_up_menu_for_table.add_command(
+                    label=_("运行游戏，不隐藏 UI"),
+                    command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(hide=hide_value)
+                    )
+                    
+            self.new_ui_pop_up_menu_for_table.add_command(
+                    label=_("运行游戏，开启多键盘功能"),
+                    command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(other_option=["-multikeyboard", ] )
+                    )#"-multikeyboard"
         
-        if self.new_var_data_for_StartGame["type"] == "mame" :
+        if global_variable.gamelist_type == "mame" :
             self.new_ui_pop_up_menu_for_table.add_separator()
             
             self.new_ui_pop_up_menu_for_table.add_command(
@@ -2310,6 +2502,10 @@ class GameList_7(GameList_6):
                     )
             self.new_ui_pop_up_menu_for_table.add_command(
                     label=_("显示roms信息，-listxml（含大量其它信息）"),
+                    command = lambda : self.new_func_table_pop_up_menu_callback_show_info(other_option=["-listxml", ] )
+                    )
+            self.new_ui_pop_up_menu_for_table.add_command(
+                    label=_("显示roms信息，-listxml -nodtd 去文件头（含大量其它信息）"),
                     command = lambda : self.new_func_table_pop_up_menu_callback_show_info(other_option=["-listxml","-nodtd" ] )
                     )
         
@@ -2319,11 +2515,11 @@ class GameList_7(GameList_6):
         out_file_path = the_files.file_txt_export
         
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("导出当前列表到：" + out_file_path ),
+                label=_("导出当前列表到：") + out_file_path ,
                 command = self.new_func_table_pop_up_menu_callback_export_gamelist,
                     )
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("导出选中内容到：" + out_file_path),
+                label=_("导出选中内容到：") + out_file_path,
                 command = self.new_func_table_pop_up_menu_callback_export_select_items,
                     )
         self.new_ui_pop_up_menu_for_table.add_separator()
@@ -2687,10 +2883,12 @@ class GameList_10(GameList_9):
         super().__init__(parent,*args,**kwargs)
         
         self.new_var_tk_gamelist_multi_select_mode = tk.IntVar() # default value 0
+
         
         
         #self.new_var_remember_selected_items = set() 
-            #添加到最前边吧，前面的 refresh 函数改了一下
+            #添加到前边吧
+            
         
     
     # 添加 多选模式 到 鼠标右键菜单

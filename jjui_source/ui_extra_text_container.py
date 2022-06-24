@@ -38,6 +38,7 @@ if __name__ == "__main__" :
 from . import global_static
 from . import global_static_key_word_translation 
 from . import global_variable
+from . import global_static_filepath as the_files
 
 from . import extra_read_history_xml
 from . import extra_mameinfo_dat
@@ -45,6 +46,8 @@ from . import extra_history_dat
 from . import extra_gameinit_dat
 from . import extra_command
 from . import extra_command_english
+
+from . import read_pickle
 
 
 
@@ -145,10 +148,13 @@ class Text_area(ttk.Frame):
         finally:
             self.new_ui_index_popup_menu.grab_release()
 
-    def new_func_insert_string(self,a_string=''):
+    def new_func_insert_string(self,a_string='',tags=None):
         self.new_ui_text.configure(state="normal")
         
-        self.new_ui_text.insert(tk.END,a_string)
+        if tags is None:
+            self.new_ui_text.insert(tk.END,a_string)
+        else:
+            self.new_ui_text.insert(tk.END,a_string,tags=tags)
         
         self.new_ui_text.configure(state="disabled")
 
@@ -205,16 +211,17 @@ class Text_container(ttk.Frame):
         # 第一行 选择栏
         self.new_var_string_for_text_chooser = tk.StringVar()
         self.new_ui_text_chooser = ttk.Combobox( parent ,takefocus=False,textvariable=self.new_var_string_for_text_chooser,state="readonly")
-        self.new_ui_text_chooser.grid(row=0 , column=0 ,columnspan=2, sticky=(tk.W,tk.N,tk.E,),)
+        self.new_ui_text_chooser.grid(row=0 , column=0 , sticky=(tk.W,tk.N,tk.E,),)
+        #self.new_ui_text_chooser.grid(row=0 , column=0 ,columnspan=2, sticky=(tk.W,tk.N,tk.E,),)
         
         # 第一行 标记 ：创建目录 
         self.new_var_index_flag = tk.IntVar()
         self.new_ui_index_checkbutton = ttk.Checkbutton( parent ,
                 takefocus=False,
-                text=_("建目录"),
+                text=_("用目录"),
                 variable=self.new_var_index_flag,
                 )
-        #self.new_ui_index_checkbutton.grid(row=0 , column=1 ,columnspan=2, sticky= (tk.N,tk.E, ),)
+        self.new_ui_index_checkbutton.grid(row=0 , column=1 , sticky= (tk.N,tk.E, ),)
         
         
         # 第二行 选择栏 2
@@ -237,11 +244,13 @@ class Text_container(ttk.Frame):
     
     def new_func_initialize(self,):
         
+        self.new_ui_chooser_2.grid_forget()
+        
         # 记录
         global_variable.Combobox_chooser_text_1 = self.new_ui_text_chooser
         
         global_variable.tkint_flag_for_text_index_1 = self.new_var_index_flag
-        self.new_var_index_flag.set( user_configure["extra_text_make_index_1"] )
+        self.new_var_index_flag.set( user_configure["extra_text_use_index_1"] )
         
         # 记录 
         global_variable.tk_text_1 = self.new_ui_text_area.new_ui_text
@@ -267,10 +276,10 @@ class Text_container(ttk.Frame):
         
         self.new_func_get_info_from_choice()# 初始数据读取
     
-    def new_func_insert_string(self,a_string = ""):
+    def new_func_insert_string(self,a_string = "",tags=None):
         self.new_ui_text_area.new_ui_text.configure(state="normal")
         
-        self.new_ui_text_area.new_ui_text.insert(tk.END,a_string)
+        self.new_ui_text_area.new_ui_text.insert(tk.END,a_string,tags)
         
         self.new_ui_text_area.new_ui_text.configure(state="disabled")
     
@@ -300,6 +309,8 @@ class Text_container(ttk.Frame):
     # 用这个
     def new_func_show(self,item_id):
         
+        self.new_ui_chooser_2["values"] = ()
+        
         if item_id != global_variable.current_item : return 
         
         # 清理选择框
@@ -316,18 +327,27 @@ class Text_container(ttk.Frame):
             n = self.new_ui_text_chooser.current()
             temp = text_types[n]
             
-            if temp == "history.xml":
-                self.new_func_show_history_xml(item_id)
-            elif temp in ("mameinfo.dat","messinfo.dat",):
-                self.new_func_show_mameinfo_dat(temp,item_id)
-            elif temp in ("history.dat","sysinfo.dat",):
-                self.new_func_show_history_dat(temp,item_id)
-            elif temp in ("gameinit.dat",):
-                #show_gameinit_dat(self,type,game_name)
-                self.new_func_show_gameinit_dat(temp, item_id)
             
-
-    def new_func_show_history_xml(self,game_name):
+            if global_variable.gamelist_type == "softwarelist":
+                if temp == "history.xml":
+                    self.new_func_show_history_xml(item_id)
+                else:
+                    print("not for softwarelist")
+                    return
+            else:
+                if temp == "history.xml":
+                    self.new_func_show_history_xml(item_id)
+                elif temp in ("mameinfo.dat","messinfo.dat",):
+                    self.new_func_show_mameinfo_dat(temp,item_id)
+                elif temp in ("history.dat","sysinfo.dat",):
+                    self.new_func_show_history_dat(temp,item_id)
+                elif temp in ("gameinit.dat",):
+                    #show_gameinit_dat(self,type,game_name)
+                    self.new_func_show_gameinit_dat(temp, item_id)
+            
+    # history.xml 
+    #   no index
+    def new_func_show_history_xml_not_use_index(self,game_name):
 
         path = user_configure["history.xml_path"]
         path = path.replace(r"'","") # 去掉单引号
@@ -340,7 +360,10 @@ class Text_container(ttk.Frame):
         new_text = ''
         
         def get_content(path,game_name):
-            text = extra_read_history_xml.getinfo(path,game_name)
+            if global_variable.gamelist_type == "softwarelist":
+                text = extra_read_history_xml.getinfo(path,game_name,the_type = "softwarelist")
+            else:
+                text = extra_read_history_xml.getinfo(path,game_name)
             return text
             
         new_text = get_content(path,game_name)
@@ -349,87 +372,64 @@ class Text_container(ttk.Frame):
         
         if game_name == global_variable.current_item :
                 self.new_func_insert_string(new_text)
-
-    # ("mameinfo.dat","messinfo.dat",)
-    def new_func_show_mameinfo_dat(self,data_type,game_name):
-        # 有属于 游戏 的文档
-        # 还有，属于，驱动的文档
+    
+    # history.xml 
+    #   index
+    def new_func_show_history_xml_use_index(self,game_name):
+        # 如果还没有读取目录，读取目录
+        if not global_variable.extra_index_for_histroty_xml:
+            if os.path.isfile(the_files.file_pickle_extra_index_history_xml):
+                try:
+                    global_variable.extra_index_for_histroty_xml = read_pickle.read(the_files.file_pickle_extra_index_history_xml)
+                except:
+                    global_variable.extra_index_for_histroty_xml = {}
         
-        # 分隔线 
-        line_separator = "*"*5 +" " + "*"*5 + "\n"
-        
-        data_type =  data_type + "_path" 
-        # path = self.ini_data[ "mameinfo.dat_path" ]
-        # path = self.ini_data[ "messinfo.dat_path" ]
-        path = user_configure[ data_type ]
-        
-        path = path.replace(r"'","") # 去掉单引号
-        path = path.replace(r'"',"") # 去掉双引号 
-        
-        print(path)
-        
-        if not os.path.isfile(path): return
-        
-        new_text = None # 记录该游戏的文档,读取内容后，是 []  ，
-        if game_name == global_variable.current_item:
-            text = extra_mameinfo_dat.get_content_by_file_name(path,game_name)
-            if text is not None:
-                new_text = text
-                
-        new_text_2 = None # 记录该游戏所属 驱动 的文档,[]
-        
-        if game_name != global_variable.current_item: return
-        
-        try:
-            game_info = global_variable.machine_dict[game_name]
-            sourcefile = game_info[ global_variable.columns_index["sourcefile"] ]
-        except:
-            sourcefile = None
-        
-        if sourcefile:
-            text = extra_mameinfo_dat.get_content_by_file_name(path,sourcefile)
-            if text is not None:
-                new_text_2 = text
-        
-        if game_name != global_variable.current_item: return
-
-        flag1 = False
-        flag2 = False
-        if new_text is not None : flag1 = True
-        if new_text_2 is not None : flag2 = True
-        
-        if flag1:
-            self.new_func_insert_string(line_separator)
-            self.new_func_insert_string(game_name)
-            self.new_func_insert_string("\n")
-            self.new_func_insert_string(line_separator)
-            self.new_func_insert_string("\n")
-            self.new_func_insert_string("\n")
+        if global_variable.extra_index_for_histroty_xml:
+            
+            if game_name not in global_variable.extra_index_for_histroty_xml:
+                return
+            
+            the_index = global_variable.extra_index_for_histroty_xml[ game_name ]
+            print("id:{}".format(game_name))
+            print("index:{}".format(the_index))
             
             
-            for x in new_text:
-                self.new_func_insert_string(x)
+            path = user_configure["history.xml_path"]
+            path = path.replace(r"'","") # 去掉单引号
+            path = path.replace(r'"',"") # 去掉双引号
+        
+            if not os.path.isfile(path) : return
+        
+            if game_name != global_variable.current_item : return
+        
+            new_text = ''
+        
+            def get_content(path,game_name,the_index):
+                if global_variable.gamelist_type == "softwarelist":
+                    text = extra_read_history_xml.getinfo_by_index(path,game_name,the_index=the_index,the_type = "softwarelist")
+                else:
+                    text = extra_read_history_xml.getinfo_by_index(path,game_name,the_index=the_index)
+                return text
             
-            self.new_func_insert_string("\n")
-                
-        if flag2:
-            self.new_func_insert_string(line_separator)
-            self.new_func_insert_string("\n")
-                 
-            self.new_func_insert_string(sourcefile)
-            self.new_func_insert_string("\n")
-                 
-            self.new_func_insert_string("\n")
-            self.new_func_insert_string(line_separator)
-                 
-            self.new_func_insert_string("\n")
-            self.new_func_insert_string("\n")
+            new_text = get_content(path,game_name,the_index)
             
-            for x in new_text_2:
-                self.new_func_insert_string(x)
+            if not new_text : return 
+            
+            if game_name == global_variable.current_item :
+                    self.new_func_insert_string(new_text)            
+    
+    # history.xml
+    def new_func_show_history_xml(self,game_name):
+        
+        if self.new_var_index_flag.get():
+            self.new_func_show_history_xml_use_index(game_name)
+        else:
+            self.new_func_show_history_xml_not_use_index(game_name)
+    
 
     # ("history.dat","sysinfo.dat",)
-    def new_func_show_history_dat(self,data_type,game_name):
+    #   no index
+    def new_func_show_history_dat_not_use_index(self,data_type,game_name):
 
         data_type =  data_type + "_path" # "history.dat_path"
         
@@ -460,8 +460,299 @@ class Text_container(ttk.Frame):
                 for x in new_text:
                     self.new_func_insert_string(x)
 
+    # ("history.dat","sysinfo.dat",)
+    #   index
+    def new_func_show_history_dat_use_index(self,data_type,game_name):
+        # 如果还没有读取目录，读取目录
+        if data_type == "history.dat":
+            print("history.dat")
+            if not global_variable.extra_index_for_histroty_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_history_dat):
+                    try:
+                        global_variable.extra_index_for_histroty_dat = read_pickle.read(the_files.file_pickle_extra_index_history_dat)
+                    except:
+                        global_variable.extra_index_for_histroty_dat = {}
+            
+            index_dict = global_variable.extra_index_for_histroty_dat
+        
+        elif data_type == "sysinfo.dat":
+            #print("sysinfo.dat")
+            if not global_variable.extra_index_for_sysinfo_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_sysinfo_dat):
+                    try:
+                        global_variable.extra_index_for_sysinfo_dat = read_pickle.read(the_files.file_pickle_extra_index_sysinfo_dat)
+                    except:
+                        global_variable.extra_index_for_sysinfo_dat = {}
+            
+            index_dict = global_variable.extra_index_for_sysinfo_dat
+        
+        if not index_dict : 
+            print("no index,return")
+            return
+        
+        data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return
+        
+        if game_name not in index_dict: 
+            print("item id not in index,return")
+            return
+        
+        the_index = index_dict[game_name]
+        
+        new_text = []
+        
+        if game_name == global_variable.current_item:
+            
+            text = extra_history_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
+        
+            if text is not None:
+                new_text = text
+        
+        #if game_name == global_variable.current_item:
+            for x in new_text:
+                self.new_func_insert_string(x)
+
+    # ("history.dat","sysinfo.dat",)
+    def new_func_show_history_dat(self,data_type,game_name):
+        if self.new_var_index_flag.get():
+            self.new_func_show_history_dat_use_index(data_type,game_name)
+        else:
+            self.new_func_show_history_dat_not_use_index(data_type,game_name)
+
+
+    # ("mameinfo.dat","messinfo.dat",)
+    def new_func_show_mameinfo_dat_not_use_index(self,data_type,game_name,flag_is_game=True,the_source=None):
+        # flag_is_game
+            # 是游戏名
+            # 是驱动名
+
+        data_type_remember = data_type # 记录
+        
+        data_type =  data_type + "_path" 
+        # path = self.ini_data[ "mameinfo.dat_path" ]
+        # path = self.ini_data[ "messinfo.dat_path" ]
+        path = user_configure[ data_type ]
+        
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        print(path)
+        
+        if not os.path.isfile(path): 
+            print("file missing ,return")
+            return
+        
+        new_text = [] # 记录该游戏的文档,读取内容后，是 []  ，
+        
+        if flag_is_game:
+            if game_name != global_variable.current_item: 
+                return
+        
+        if flag_is_game:
+            text = extra_mameinfo_dat.get_content_by_file_name(path,game_name)
+        else:
+            text = extra_mameinfo_dat.get_content_by_file_name(path,the_source)
+        
+        
+        if flag_is_game:
+            if game_name != global_variable.current_item: 
+                return
+        
+        if text is not None:
+            new_text = text
+        
+        for x in new_text:
+            self.new_func_insert_string(x)
+        
+        
+        if flag_is_game:
+            try:
+                game_info = global_variable.machine_dict[game_name]
+                sourcefile = game_info[ global_variable.columns_index["sourcefile"] ]
+            except:
+                sourcefile = None
+                
+            if sourcefile is None:
+                return
+                
+            the_tk_text = self.new_ui_text_area.new_ui_text
+                    
+            def for_button():
+                #print(sourcefile)
+                
+                # 清理
+                the_tk_text.configure(state="normal")
+                the_tk_text.delete('1.0',tk.END)
+                the_tk_text.configure(state="disabled")
+                
+                #data_type,game_name,flag_is_game=True,the_source=None):
+                self.new_func_show_mameinfo_dat_not_use_index(data_type_remember,game_name,flag_is_game=False,the_source=sourcefile)
+            
+            def make_a_button():
+                b = ttk.Button(the_tk_text,text=sourcefile,command=for_button)
+                return b
+            
+            
+            the_tk_text.configure(state="normal")
+            
+            the_tk_text.insert(tk.END,"\n")
+            
+            the_tk_text.window_create(
+                    tk.END,
+                    create=make_a_button,
+                    )
+            
+            the_tk_text.configure(state="disabled")
+        
+        
+        
+
+    # ("mameinfo.dat","messinfo.dat",)
+    def new_func_show_mameinfo_dat_use_index(self,data_type,game_name,flag_is_game=True,the_source=None):
+        # flag_is_game
+            # 是游戏名
+            # 是驱动名
+    
+        print("",)
+        print("use index",)
+        print(data_type)
+        print(game_name)
+        
+        data_type_remember = data_type # 之后会变，记录一下，跳转到 驱动时用一下
+        
+        # 如果还没有读取目录，读取目录
+        if data_type == "mameinfo.dat":
+            print("mameinfo.dat")
+            if not global_variable.extra_index_for_mameinfo_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_mameinfo_dat):
+                    try:
+                        global_variable.extra_index_for_mameinfo_dat = read_pickle.read(the_files.file_pickle_extra_index_mameinfo_dat)
+                    except:
+                        global_variable.extra_index_for_mameinfo_dat = {}
+            
+            index_dict = global_variable.extra_index_for_mameinfo_dat
+        
+        elif data_type == "messinfo.dat":
+            #print("messinfo.dat")
+            if not global_variable.extra_index_for_messinfo_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_messinfo_dat):
+                    try:
+                        global_variable.extra_index_for_messinfo_dat = read_pickle.read(the_files.file_pickle_extra_index_messinfo_dat)
+                    except:
+                        global_variable.extra_index_for_messinfo_dat = {}
+            
+            index_dict = global_variable.extra_index_for_messinfo_dat
+        
+        if not index_dict : 
+            print("no index,return")
+            return
+        
+        data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return
+        
+        if flag_is_game:
+            if game_name not in index_dict: 
+                print("item id not in index,return")
+                return
+            
+            the_index = index_dict[game_name]
+        else:
+            if the_source not in index_dict: 
+                print("source id not in index,return")
+                return
+            
+            the_index = index_dict[the_source]
+        
+        
+        new_text = []
+        
+        if flag_is_game:
+            if game_name != global_variable.current_item:
+                return
+            
+            text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
+        else:
+            
+            text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,the_source,the_index=the_index)
+            
+
+        
+        if text is not None:
+            new_text = text
+        
+
+        for x in new_text:
+            self.new_func_insert_string(x)
+        
+        
+        # 如果是 game_name ，增加一个 按扭跳转到 驱动
+        # 如果是 驱动名 ，下面就不需要了
+        if not flag_is_game :
+            return
+        
+        if game_name in global_variable.machine_dict:
+        
+            try:
+                game_info = global_variable.machine_dict[game_name]
+                sourcefile = game_info[ global_variable.columns_index["sourcefile"] ]
+            except:
+                sourcefile = None
+            
+            if sourcefile:
+                if sourcefile in index_dict:
+                    the_index = index_dict[sourcefile]
+                    
+                    the_tk_text = self.new_ui_text_area.new_ui_text
+                    
+                    def for_button():
+                        #print(sourcefile)
+                        
+                        # 清理
+                        the_tk_text.configure(state="normal")
+                        the_tk_text.delete('1.0',tk.END)
+                        the_tk_text.configure(state="disabled")
+                        
+                        self.new_func_show_mameinfo_dat_use_index(data_type_remember,game_name,flag_is_game=False,the_source=sourcefile)
+
+                        
+                    def make_a_button():
+                        b = ttk.Button(the_tk_text,text=sourcefile,command=for_button)
+                        return b
+                    
+                    
+                    the_tk_text.configure(state="normal")
+                    
+                    the_tk_text.insert(tk.END,"\n")
+                    
+                    the_tk_text.window_create(
+                            tk.END,
+                            create=make_a_button,
+                            )
+                    
+                    the_tk_text.configure(state="disabled")
+
+    def new_func_show_mameinfo_dat(self,data_type,game_name):
+        if self.new_var_index_flag.get():
+            self.new_func_show_mameinfo_dat_use_index(data_type,game_name)
+        else:
+            self.new_func_show_mameinfo_dat_not_use_index(data_type,game_name)
+
     # ("gameinit.dat",)
-    def new_func_show_gameinit_dat(self,data_type,game_name):
+    def new_func_show_gameinit_dat_not_use_index(self,data_type,game_name):
         
         data_type =  data_type + "_path" # "gameinit.dat_path"
         
@@ -484,7 +775,60 @@ class Text_container(ttk.Frame):
                 for x in new_text:
                     self.new_func_insert_string(x)
 
+    # ("gameinit.dat",)
+    def new_func_show_gameinit_dat_use_index(self,data_type,game_name):
+        # 如果还没有读取目录，读取目录
+        # gameinit.dat
 
+        print("gameinit.dat")
+        if not global_variable.extra_index_for_gameinit_dat:
+            if os.path.isfile(the_files.file_pickle_extra_index_gameinit_dat):
+                try:
+                    global_variable.extra_index_for_gameinit_dat = read_pickle.read(the_files.file_pickle_extra_index_gameinit_dat)
+                except:
+                    global_variable.extra_index_for_gameinit_dat = {}
+        
+        index_dict = global_variable.extra_index_for_gameinit_dat
+        
+        if not index_dict : 
+            print("no index,return")
+            return
+        
+        data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return
+        
+        if game_name not in index_dict: 
+            print("item id not in index,return")
+            return
+        
+        the_index = index_dict[game_name]
+        
+        new_text = []
+        
+        if game_name == global_variable.current_item:
+            
+            text = extra_gameinit_dat.get_content_by_file_name_use_index(path,game_name,the_index=the_index)
+        
+            if text is not None:
+                new_text = text
+        
+        #if game_name == global_variable.current_item:
+            for x in new_text:
+                self.new_func_insert_string(x)
+
+    # ("gameinit.dat",)
+    def new_func_show_gameinit_dat(self,data_type,game_name):
+        if self.new_var_index_flag.get():
+            self.new_func_show_gameinit_dat_use_index(data_type,game_name)
+        else:
+            self.new_func_show_gameinit_dat_not_use_index(data_type,game_name)
 
 class Text_container_2(Text_container):
     def __init__(self ,parent,*args,**kwargs):
@@ -500,7 +844,7 @@ class Text_container_2(Text_container):
         global_variable.Combobox_chooser_text_2 = self.new_ui_text_chooser
         
         global_variable.tkint_flag_for_text_index_2 = self.new_var_index_flag
-        self.new_var_index_flag.set( user_configure["extra_text_make_index_2"] )
+        self.new_var_index_flag.set( user_configure["extra_text_use_index_2"] )
         
         # 记录 
         global_variable.tk_text_2 = self.new_ui_text_area.new_ui_text
@@ -537,6 +881,10 @@ class Text_container_2(Text_container):
     # 用这个
     def new_func_show(self,item_id):
         
+        if global_variable.gamelist_type == "softwarelist":
+            print("not for softwarelist")
+            return
+        
         print("text 2")
         
         if item_id != global_variable.current_item : return 
@@ -557,7 +905,7 @@ class Text_container_2(Text_container):
             
             self.new_func_show_command_dat(temp,item_id)
     
-    def new_func_show_command_dat(self,data_type,game_name):
+    def new_func_show_command_dat_not_use_index(self,data_type,game_name):
     
         print("show command")
         
@@ -585,11 +933,107 @@ class Text_container_2(Text_container):
         
         # 中文版，英文版 ，格式不同
         
+
+        if data_type == "command.dat":
+            self.new_var_command_content = extra_command.get_content_by_file_name( path,game_name )
+        elif data_type == "command_english.dat":
+            self.new_var_command_content = extra_command_english.get_content_by_file_name( path,game_name )
+
+        
+        
+        if self.new_var_command_content is None:
+            self.new_ui_chooser_2["values"]=("",)
+            self.new_ui_chooser_2.set("") 
+        elif len(self.new_var_command_content) <= 1:
+            #print(r"<=1")
+            self.new_ui_chooser_2["values"]=(_("全部"),)
+            self.new_ui_chooser_2.set( _("全部") ) 
+            for x in self.new_var_command_content:
+                for y in self.new_var_command_content[x]:
+                    self.new_func_insert_string( y)
+        else:
+            #print(r">1")
+            index = []
+            index.append( _("全部") )
+            for x in self.new_var_command_content:
+                # 提取 每一段 第一行，做为小标题
+                try:
+                    index.append( self.new_var_command_content[x][0] )
+                except:
+                    index.append("")
+            self.new_ui_chooser_2["values"]=index
+            self.new_ui_chooser_2.set( _("全部") ) 
+            
+            for x in self.new_var_command_content:
+                for y in self.new_var_command_content[x]:
+                    self.new_func_insert_string( y)
+
+    #"command.dat",
+    #"command_english.dat",
+    def new_func_show_command_dat_use_index(self,data_type,game_name):
+        
+        data_type_remember = data_type
+        # 如果还没有读取目录，读取目录
+        if data_type == "command.dat":
+            print("command.dat")
+            if not global_variable.extra_index_for_command_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_command_dat):
+                    try:
+                        global_variable.extra_index_for_command_dat = read_pickle.read(the_files.file_pickle_extra_index_command_dat)
+                    except:
+                        global_variable.extra_index_for_command_dat = {}
+            
+            index_dict = global_variable.extra_index_for_command_dat
+        
+        elif data_type == "command_english.dat":
+            print("command_english.dat")
+            if not global_variable.extra_index_for_command_english_dat:
+                if os.path.isfile(the_files.file_pickle_extra_index_command_english_dat):
+                    try:
+                        global_variable.extra_index_for_command_english_dat = read_pickle.read(the_files.file_pickle_extra_index_command_english_dat)
+                    except:
+                        global_variable.extra_index_for_command_english_dat = {}
+            
+            index_dict = global_variable.extra_index_for_command_english_dat
+        
+        if not index_dict : 
+            print("no index,return")
+            return
+        
+        data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return
+        
+        if game_name not in index_dict: 
+            print("item id not in index,return")
+            return
+        
+        the_index = index_dict[game_name]
+        
+        
+        # 初始化
         try:
-            if data_type == "command.dat":
-                self.new_var_command_content = extra_command.get_content_by_file_name( path,game_name )
-            elif data_type == "command_english.dat":
-                self.new_var_command_content = extra_command_english.get_content_by_file_name( path,game_name )
+            self.new_var_command_content
+        except:
+            self.new_var_command_content =  None 
+
+        # 读取内容
+        
+        # 中文版，英文版 ，格式不同
+        
+        try:
+            if data_type_remember == "command.dat":
+                print("A")
+                self.new_var_command_content = extra_command.get_content_by_file_name_use_index( path,game_name,the_index )
+            elif data_type_remember == "command_english.dat":
+                print("B")
+                self.new_var_command_content = extra_command_english.get_content_by_file_name_use_index( path,game_name,the_index )
         except:
             self.new_var_command_content =  None 
         
@@ -620,6 +1064,16 @@ class Text_container_2(Text_container):
             for x in self.new_var_command_content:
                 for y in self.new_var_command_content[x]:
                     self.new_func_insert_string( y)
+
+
+      
+
+    def new_func_show_command_dat(self,data_type,game_name):
+        if self.new_var_index_flag.get():
+            self.new_func_show_command_dat_use_index(data_type,game_name)
+        else:
+            self.new_func_show_command_dat_not_use_index(data_type,game_name)
+
 
     def new_func_binding_command_index_choose(self,event):
 

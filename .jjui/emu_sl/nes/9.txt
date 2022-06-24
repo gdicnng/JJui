@@ -1,0 +1,8 @@
+﻿%mame%
+command nes
+%xml:software%
+
+command -statename
+command %g/%d_cart
+
+command -joystick_contradictory

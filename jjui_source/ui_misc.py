@@ -22,11 +22,21 @@ from . import global_variable
 from . import global_static_filepath as the_files
 from . import global_static_key_word_translation as key_word_translation
 
+from . import ui__text_with_scrollbar 
 
 from . import read_user_config 
 from . import save_pickle 
 from . import read_pickle 
 from . import translation_gamelist 
+
+# 周边建目录用
+from . import extra_read_history_xml 
+from . import extra_history_dat 
+from . import extra_mameinfo_dat 
+from . import extra_command 
+from . import extra_command_english 
+from . import extra_gameinit_dat 
+
 
 
 user_configure = global_variable.user_configure_data
@@ -93,7 +103,7 @@ class Misc_functions():
         print()
         print( command_list )
         
-        if hide: # 打开游戏，影藏 UI
+        if hide: # 打开游戏，隐藏 UI
             #self.parent.iconify()
             root_window.withdraw()
             
@@ -411,16 +421,26 @@ class Misc_functions():
                 command_list.append( x )
                 
         
+        
+        
+        
         content=[]
+        binary_content = []
         p = subprocess.Popen( command_list, 
                             shell=user_configure["use_shell"],
                             stdout=subprocess.PIPE , 
                             stderr=subprocess.STDOUT ,
                             stdin=subprocess.PIPE,
-                            encoding="utf_8",
+                            #encoding="utf_8",# python 3.4 不兼容这选项 。同时也不方便检查 gbk
                             cwd=mame_dir,
                             )
-        for line in p.stdout:
+        for binary_line in p.stdout:
+            binary_content.append( binary_line )
+        
+        the_encoding = self.check_binary_string_list_encoding(binary_content)
+        
+        for binary_line in binary_content:
+            line = binary_line.decode(encoding=the_encoding, errors='replace')
             #print(line,end='')
             content.append(line)
         
@@ -433,6 +453,31 @@ class Misc_functions():
         
         
         self.show_text_winodw(content=content,title=temp_string,)
+    
+    # 二进制字符串列表，检查 字符编码
+    def check_binary_string_list_encoding(self,binary_string_list):
+        
+        
+        encoding_list=["utf_8","gbk","big5"]
+        
+        the_right_encoding = 'utf-8' # 默认值
+        
+        for the_encoding in encoding_list:
+            flag_encoding_is_ok = False
+            
+            try:
+                for binary_line in binary_string_list:
+                    line = binary_line.decode(encoding=the_encoding, )
+                flag_encoding_is_ok = True
+            except:
+                flag_encoding_is_ok = False
+            
+            if flag_encoding_is_ok:
+                the_right_encoding = the_encoding
+                print("the_right_encoding:{}".format(the_encoding))
+                break
+        
+        return the_right_encoding
     
     # top level window, 显示文本信息
     def show_text_winodw(self,content=None,title="",):
@@ -814,6 +859,18 @@ class Misc_functions():
         global_variable.font_text_2=tkfont.Font( font=(font_name, font_size,),)
         # 执行
         self.set_text_2_font()
+        
+        # others font
+        font_name = default_name
+        if user_configure["others_font"] in all_font:
+            font_name = user_configure["others_font"]
+        font_size = default_size
+        if user_configure["others_font_size"] != 0: 
+            font_size = user_configure["others_font_size"]
+        # 记录
+        global_variable.font_others=tkfont.Font( font=(font_name, font_size,),)
+        # 执行
+        self.set_others_font()
     
     # font gamelist
     def set_gamelist_font(self,):
@@ -840,6 +897,42 @@ class Misc_functions():
         for table in global_variable.all_tables:
             table.new_func_set_colour_and_font( header_font = global_variable.font_gamelist_header )
     
+    # font others
+    def set_others_font(self,):
+        
+        style = ttk.Style()
+        
+        if global_variable.font_others : 
+            the_font = global_variable.font_others
+            
+            style.configure('TLabel', font = the_font)
+            style.configure('TButton', font = the_font)
+            style.configure('TMenubutton', font = the_font)
+            style.configure('TCheckbutton', font=the_font)
+            style.configure('TCombobox', font=the_font)# 没用，似乎
+            style.configure('TNotebook', font=the_font)
+            style.configure('TNotebook.Tab', font=the_font)
+            
+            # TEntry
+            the_entry_list = self.find_widget("TEntry")
+            for x in the_entry_list:
+                x.configure(font=the_font)
+            
+            root_window.option_add("*TCombobox*Listbox.font", the_font)
+            root_window.option_add("*font", the_font)
+            root_window.option_add('*Text*font', the_font)
+            root_window.option_add('*Listbox*font', the_font)            
+            
+            # combobox
+            the_combobox_list = self.find_widget("TCombobox")
+            for x in the_combobox_list:
+                x.configure(font=the_font)
+            
+            # menu
+            the_menu_list = self.find_widget("Menu")
+            for x in the_menu_list:
+                x.configure(font=the_font)
+    
     # font text 1
     def set_text_1_font(self,):
         if global_variable.tk_text_1:
@@ -849,7 +942,9 @@ class Misc_functions():
     def set_text_2_font(self,):
         if global_variable.tk_text_2:
             global_variable.tk_text_2.configure(font=global_variable.font_text_2)
-
+    
+    
+    
     
     # ui 字体选择器
     def window_for_choose_font(self,the_font,title_string=None):
@@ -931,13 +1026,19 @@ class Misc_functions():
         
             font_name = font_name_tkstring.get()
             font_size = font_size_tkstring.get()
+            #print(font_size)
             font_size = int(font_size)
+            #print(font_size)
             
             if font_name:
+                #print(font_name)
                 the_font.config(family=font_name)
             
             if font_size!=0:
+                #print(font_size)
                 the_font.config(size=font_size)
+                #print("xxx")
+                #print(the_font.actual("size")) # 负的好像直接被转成正的了
             
         
         ttk.Label(window,text=_("负整数，字体单位是像素；正整数，字体单位是 point"),).grid(row=4,column=0,columnspan=2,sticky=tk.W+tk.N)
@@ -974,6 +1075,11 @@ class Misc_functions():
         the_font = global_variable.font_text_2
         user_configure["text_2_font"]      = the_font.actual("family")
         user_configure["text_2_font_size"] = the_font.actual("size")
+        
+        # others font
+        the_font = global_variable.font_others
+        user_configure["others_font"]      = the_font.actual("family")
+        user_configure["others_font_size"] = the_font.actual("size")
         
     # row height
     def use_user_configure_row_height(self,):
@@ -1225,6 +1331,215 @@ class Misc_functions():
     
     ##########
     ##########
+    ##########
+    ##########
+    # 建目录
+    #  for menu bar 周边文档，建目录
+    def extra_docs_make_index(self,):
+        print("")
+        print("extra_docs_make_index")
+        #window = tk.Toplevel()
+        #window.resizable(width=True, height=True)
+        #window.title(_("周边文档，建目录，加速"))
+        #
+        #size = "400x300"
+        #window.geometry( size )
+        #window.lift()
+        #
+        #window.rowconfigure(1,weight=1)
+        #window.columnconfigure(0,weight=1)
+        #
+        #progress_bar=ttk.Progressbar(window,)
+        #progress_bar.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+        #progress_bar.start()
+        #
+        #text_holder = ui__text_with_scrollbar.Text_with_scrollbar(window)
+        #text_holder.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+        #
+        #text_holder.new_func_insert_string("\n")
+        #text_holder.new_func_insert_string( _("请耐心等待)" + "......"))
+        
+        root_window.iconify()
+        
+        # history.xml
+        def make_index_of_history_xml():
+            
+            # 文件路径
+            path = user_configure["history.xml_path"]
+            path = path.replace(r"'","") # 去掉单引号
+            path = path.replace(r'"',"") # 去掉双引号
+            
+            if os.path.isfile(path) : 
+            
+                index_dict = {}
+                if global_variable.gamelist_type == "softwarelist":
+                    index_dict = extra_read_history_xml.get_index(path,the_type="softwarelist")
+                else:# mame
+                    index_dict = extra_read_history_xml.get_index(path,)
+                
+                if index_dict:
+                    global_variable.extra_index_for_histroty_xml = index_dict
+                    save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_xml)
+            
+        # ("history.dat","sysinfo.dat",)
+        # history.dat
+        def make_index_of_history_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["history.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    # file_pickle_extra_index_history_dat
+                    # global_variable.extra_index_for_histroty_dat
+                    
+                    index_dict = extra_history_dat.get_index( path )
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_histroty_dat = index_dict
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_dat)
+        # sysinfo.dat
+        def make_index_of_sysinfo_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["sysinfo.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    # file_pickle_extra_index_history_dat
+                    # global_variable.extra_index_for_histroty_dat
+                    
+                    index_dict = extra_history_dat.get_index( path )
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_sysinfo_dat = index_dict
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_sysinfo_dat)
+        
+        
+        #("mameinfo.dat","messinfo.dat",)
+        # mameinfo.dat
+        def make_index_of_mameinfo_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["mameinfo.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    # file_pickle_extra_index_history_dat
+                    # global_variable.extra_index_for_histroty_dat
+                    
+                    index_dict = extra_mameinfo_dat.get_index( path )
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_mameinfo_dat = index_dict
+                        
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_mameinfo_dat)
+        # messinfo.dat
+        def make_index_of_messinfo_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["messinfo.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    # file_pickle_extra_index_history_dat
+                    # global_variable.extra_index_for_histroty_dat
+                    
+                    index_dict = extra_mameinfo_dat.get_index( path )
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_messinfo_dat = index_dict
+                        
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_messinfo_dat)
+        
+        #"command.dat","command_english.dat",
+        # command.dat
+        def make_index_of_command_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["command.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    
+                    index_dict = extra_command.get_index( path )
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_command_dat = index_dict
+                        
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_dat)
+        def make_index_of_command_english_dat():
+            if global_variable.gamelist_type == "mame":
+                # history.dat
+                path = user_configure["command_english.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    
+                    index_dict = extra_command.get_index( path )# 和 command.dat 一样
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_command_english_dat = index_dict
+                        
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_english_dat)
+        
+        # "gameinit.dat",
+            # 建目录用 history.dat 的
+        def make_index_of_gameinit_dat():
+
+            if global_variable.gamelist_type == "mame":
+                # gameinit.dat
+                path = user_configure["gameinit.dat_path"]
+                path = path.replace(r"'","") # 去掉单引号
+                path = path.replace(r'"',"") # 去掉双引号
+                if os.path.isfile(path) : 
+                    index_dict = {}
+                    
+                    index_dict = extra_history_dat.get_index( path ) 
+                        # 使用 history 中的 建目录函数
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_gameinit_dat = index_dict
+                        
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_gameinit_dat)
+
+        
+        make_index_of_history_xml()
+        
+        make_index_of_history_dat()
+        make_index_of_sysinfo_dat()
+        
+        make_index_of_mameinfo_dat()
+        make_index_of_messinfo_dat()
+        
+        make_index_of_command_dat()
+        make_index_of_command_english_dat()
+        
+        make_index_of_gameinit_dat()
+        
+        
+        print("finish")
+        root_window.update()
+        root_window.deiconify()
+        #root_window.deiconify()
+        root_window.lift()
+        
+        #window.wait_window()
+        ""
+        
+    
+    
+    
+    ##########
+    ##########
+    ##########
+    ##########
     # save
     def user_configure_get_window_size(self,):
         # 主窗口大小
@@ -1306,9 +1621,9 @@ class Misc_functions():
             user_configure["extra_image_usezip_2"] = global_variable.tkint_flag_for_zip_2.get()
         # 文本区 是否使用 建立目录 记录
         if global_variable.tkint_flag_for_text_index_1 is not None:
-            user_configure["extra_text_make_index_1"] = global_variable.tkint_flag_for_text_index_1.get()
+            user_configure["extra_text_use_index_1"] = global_variable.tkint_flag_for_text_index_1.get()
         if global_variable.tkint_flag_for_text_index_2 is not None:
-            user_configure["extra_text_make_index_2"] = global_variable.tkint_flag_for_text_index_2.get()
+            user_configure["extra_text_use_index_2"] = global_variable.tkint_flag_for_text_index_2.get()
         
         # Combobox 选项记录
         #图片一
@@ -1844,16 +2159,28 @@ class Misc_functions():
         str_1 = r"^rompath\s+(\S.*?)\s*$"
         p=re.compile(str_1, )        
         
+        
+        content=[]
+        binary_content = []
         sub_process = subprocess.Popen( command_list, 
                             shell=user_configure["use_shell"],
                             stdout=subprocess.PIPE , 
                             stderr=subprocess.STDOUT ,
                             stdin=subprocess.PIPE,
-                            encoding="utf_8",
+                            #encoding="utf_8",python 3.4 没有这选项。同时也不方便 检查 gbk
                             cwd=mame_dir,
                             )
-                            
-        for line in sub_process.stdout:
+        for binary_line in sub_process.stdout:
+            binary_content.append( binary_line )
+        
+        the_encoding = self.check_binary_string_list_encoding(binary_content)
+        
+        for binary_line in binary_content:
+            line = binary_line.decode(encoding=the_encoding, errors='replace')
+            #print(line,end='')
+            content.append(line)
+        
+        for line in content:
             print(line)
             m = p.search(line)
             if m :
@@ -1861,9 +2188,14 @@ class Misc_functions():
                 #print("find")
                 break
         
+        print()
+        print()
+        print("find rom path:")
         print(rom_path)
         return rom_path
     
+    #######################
+    #######################
     #######################
     # 更新翻译
 
@@ -1906,7 +2238,7 @@ class Misc_functions():
             except:
                 translation_dict={}
                 
-                text = _("读取翻译文件，出错。注意将文件的 文本编码 保存为 uft-8-bom")
+                text = _("读取翻译文件，出错。注意将文件的 文本编码 保存为 utf-8-bom")
                 messagebox.showwarning(message=text)
                 window.lift()
                 return 0
@@ -1974,7 +2306,7 @@ class Misc_functions():
                 translation_dict = translation_gamelist.read_translation_file( file_name )
             except:
                 translation_dict={}
-                text = _("读取翻译文件，出错。注意将文件的 文本编码 保存为 uft-8-bom")
+                text = _("读取翻译文件，出错。注意将文件的 文本编码 保存为 utf-8-bom")
                 messagebox.showwarning(message=text)
                 window.lift()
                 return 0
@@ -2052,7 +2384,7 @@ class Misc_functions():
         ttk.Entry(window,textvariable=new_file_path).grid(row=n,column=1,sticky=tk.W+tk.N+tk.E,)
         n+=1
         
-        ttk.Button(window,text="读取指定翻译文件",width=-1,command = load_translation_file).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
+        ttk.Button(window,text=_("读取指定翻译文件"),width=-1,command = load_translation_file).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
         n+=1
@@ -2060,14 +2392,85 @@ class Misc_functions():
         ttk.Label(window,text="").grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
-        ttk.Label(window,text="编码提示：").grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
+        ttk.Label(window,text=_("编码提示：")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
-        ttk.Label(window,text="将文本保存为，utf_8_sig （utf-8 带 bom），可以包含多国文字").grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
+        ttk.Label(window,text=_("将文本保存为，utf_8_sig （utf-8 带 bom），可以包含多国文字")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
         window.wait_window()
-
+    
+    
+    
+    def ui_select_translation(self,):
+        # ui 翻译
+        window = tk.Toplevel()
+        
+        window.resizable(width=True, height=True)
+        
+        size = "400x300"
+        window.geometry(size)
+        
+        window.title(_("UI 界面翻译"))
+        
+        window.lift()
+        window.transient(root_window)
+        
+        # filedialog
+        #file_path = filedialog.askopenfilename( initialdir="." ,filetypes=[( _(".exe 文件"),"*.exe"),(_("所有文件"),"*")],)
+        
+        def for_button_use_internal_language():
+            user_configure["ui_language"] = ""
+            
+            window.destroy()
+            
+            self.save_user_configure()
+        
+        def for_button_select_other_translation_file():
+            the_folder_path = the_files.folder_language
+            file_path = filedialog.askopenfilename( initialdir=the_folder_path ,filetypes=[( _(".txt 文件"),"*.txt"),],)
+            
+            
+            if file_path:
+                file_path =  os.path.abspath(file_path) # 绝对
+                
+                print(file_path)
+                
+                try:
+                    the_path = os.path.relpath(file_path, start=os.curdir) #相对
+                except:
+                    the_path = file_path # 绝对
+                
+                print(the_path)
+                
+                user_configure["ui_language"] = the_path
+                
+                window.destroy()
+                
+                self.save_user_configure()
+        
+        row=0
+        
+        ttk.Label(window,text="").grid(row=row,column=0,sticky=tk.W+tk.N)
+        row+=1
+        
+        
+        button_chinese = ttk.Button(window,text=_("使用内置中文"),command=for_button_use_internal_language)
+        button_chinese.grid(row=row,column=0,sticky=tk.W+tk.N)
+        row+=1
+        
+        ttk.Label(window,text="").grid(row=row,column=0,sticky=tk.W+tk.N)
+        row+=1
+        
+        button_2 = ttk.Button(window,text=_("选择其它翻译文件"),command=for_button_select_other_translation_file)
+        button_2.grid(row=row,column=0,sticky=tk.W+tk.N)
+        row+=1
+        
+        
+        
+        
+        window.wait_window()
+    
     #     
     #######################
     # exit

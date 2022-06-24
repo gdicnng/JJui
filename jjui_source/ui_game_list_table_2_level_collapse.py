@@ -383,8 +383,8 @@ class GameList_level_2_collapse(GameList_base):
         
         self.new_var_data_holder = Data_Holder()
         
-        self.new_var_text_for_plus_sign  = " "+_("+")#＋╬︽ ︾
-        self.new_var_text_for_minus_sign = " "+_("-")#－═︾
+        #self.new_var_text_for_plus_sign  = " "+_("+")#＋╬︽ ︾
+        #self.new_var_text_for_minus_sign = " "+_("-")#－═︾
         
         
         

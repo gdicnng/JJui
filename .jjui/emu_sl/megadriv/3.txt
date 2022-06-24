@@ -1,0 +1,6 @@
+﻿%mame%
+command megadrij
+%xml:software%
+
+command -statename
+command %g/%d_cart

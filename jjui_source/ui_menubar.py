@@ -50,6 +50,8 @@ class MenuBar(ttk.Frame):
         self.new_func_ui_menu_for_gamelist()
         
         self.new_func_ui_menu_for_about()
+        
+        self.new_func_ui_menu_for_language()
 
     def new_func_ui(self,):
         
@@ -78,6 +80,10 @@ class MenuBar(ttk.Frame):
         self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("帮助"),)
         self.new_menu_botton_about.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
+        
+        self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),)
+        self.new_menu_botton_language.grid(row=0,column=column, sticky=(tk.W,))
+        column+=1        
         
     def new_func_bindings(self,):
         
@@ -173,10 +179,14 @@ class MenuBar(ttk.Frame):
         
         m.add_command(label=_(r"文本字体1"), 
                 command=self.new_func_menu_call_back_set_text_font_1
-                )        
+                )
         
         m.add_command(label=_(r"文本字体2"), 
                 command=self.new_func_menu_call_back_set_text_font_2
+                )
+        
+        m.add_command(label=_(r"其它字体"), 
+                command=self.new_func_menu_call_back_set_others_font
                 )
 
         m.add_separator()
@@ -187,7 +197,7 @@ class MenuBar(ttk.Frame):
         self.new_var_tk_use_colour_flag.set( user_configure["use_colour_flag"] )
         
         m.add_checkbutton(
-                label=_(r"启用自定义颜色"), 
+                label=_(r"启用自定义颜色(关闭程序，重新打开)"), 
                 variable = self.new_var_tk_use_colour_flag ,
                 command=self.new_func_menu_call_back_use_colours,
                 )
@@ -207,7 +217,7 @@ class MenuBar(ttk.Frame):
         m.add_command(label=_(r"保存配置文件、窗口大小/位置"),
                 command=self.new_func_save_user_configure_with_window_size_and_position
                 )
-        m.add_command(label=_("窗口最大化时，保存位置有点问题"), state=tk.DISABLED)  
+        #m.add_command(label=_("窗口最大化时，保存位置有点问题"), state=tk.DISABLED)  
         
         m.add_separator()
     
@@ -237,6 +247,10 @@ class MenuBar(ttk.Frame):
         
         m.add_command(label=_("周边延迟时间设置"), 
                 command=self.new_func_menu_call_back_set_extra_delay_time
+                )
+        
+        m.add_command(label=_("周边文档，建目录加速"), 
+                command=misc_funcs.extra_docs_make_index
                 )
     
     def new_func_ui_menu_for_index(self,):
@@ -271,11 +285,7 @@ class MenuBar(ttk.Frame):
         
             m.add_separator()
         
-        m.add_command(label=_(r"游戏列表 导入翻译／更新翻译"),
-                command=misc_funcs.gamelist_reload_translation
-                )
-        
-        m.add_separator()
+
         
         
         
@@ -294,7 +304,23 @@ class MenuBar(ttk.Frame):
                 variable =self.new_var_tk_unavailable_mark,
                 )
 
+    def new_func_ui_menu_for_language(self,):
+        m = tk.Menu(self.new_menu_botton_language, tearoff=0)
+        self.new_menu_botton_language.configure(menu=m)
         
+        m.add_separator()
+        
+        m.add_command(label=_(r"UI 界面翻译") + _("（关闭程序，重新打开后生效）"), 
+                command=misc_funcs.ui_select_translation
+                )
+        
+        m.add_separator()
+        
+        m.add_command(label=_(r"游戏列表翻译"),
+                command=misc_funcs.gamelist_reload_translation
+                )
+        
+        m.add_separator()
         
     
     def new_func_ui_menu_for_about(self,):
@@ -325,7 +351,9 @@ class MenuBar(ttk.Frame):
             label   = _("查看当前 python 版本"), 
             command = self.new_func_menu_call_back_show_python_version
             )
-        
+    
+    
+    
     # 菜单 callback 函数：UI→切换主题
     # a topleve window 
     def new_func_menu_call_back_change_theme(self,):
@@ -764,6 +792,12 @@ class MenuBar(ttk.Frame):
     def new_func_menu_call_back_set_text_font_2(self,):
         the_font = global_variable.font_text_2
         misc_funcs.window_for_choose_font(the_font , _("文本字体2"))
+    # set others font
+    def new_func_menu_call_back_set_others_font(self,):
+        the_font = global_variable.font_others
+        misc_funcs.window_for_choose_font(the_font , _("其它字体"))
+    
+    
     
     # 是否启用颜色
     def new_func_menu_call_back_use_colours(self,):
@@ -1450,6 +1484,7 @@ class MenuBar(ttk.Frame):
         
         
         window.wait_window()
+
 
 
     # 菜单 callback 函数：保存设置

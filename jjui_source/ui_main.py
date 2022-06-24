@@ -11,6 +11,7 @@ from tkinter import ttk
 
 from . import global_variable
 from . import global_static_filepath as the_files
+from . import global_static
 
 from .ui_toplevel_window_mame_initial    import Toplevel_Window as initial_window
 from .ui_toplevel_window_mame_initial_sl import Toplevel_Window as initial_window_sl
@@ -102,6 +103,8 @@ def main():
     
     ui_themes.main(root,style)
     
+
+    
     root.withdraw()
     
     
@@ -118,7 +121,8 @@ def main():
     # ？？？？？                   
 
 
-    str_title = _(r"JJui 街机游戏列表显示器 v.2.0.test  ----  ")
+    #str_title = _(r"JJui 街机游戏列表显示器 v.2.0.test  ----  ")
+    str_title = _(global_static.title_string)
     root.title( str_title )
     
     # 图标
@@ -128,34 +132,11 @@ def main():
     except:
         pass
     
-    
-    
-    # ???????????????????????
-    # colour # wip
-    # 默认值
-    foreground = style.configure('.','foreground')
     background = style.configure('.','background')
-    selectforeground = style.configure('.','selectforeground')
-    selectbackground = style.configure('.','selectbackground')
-    #
-    #
-    def set_colour( colour_in_configure_data,colour_var,):
-        if colour_in_configure_data:
-            colour_var = colour_in_configure_data
-    # 读取 配置文件中的值
-    set_colour(configure_data['background'],background)
-    set_colour(configure_data['foreground'],foreground)
-    set_colour(configure_data['selectbackground'],selectbackground)
-    set_colour(configure_data['selectforeground'],selectforeground)
-    #
-    print(background,foreground,selectbackground,selectforeground)
-    #style.configure('.',foreground='foreground')
-    #style.configure('.',background='background')
-    #style.configure('.',selectforeground='selectforeground')
-    #style.configure('.',selectbackground='selectbackground')
-    #
-    style.configure('Treeview', background=background) 
-    style.configure('Treeview', fieldbackground=background)
+    if background:
+        style.configure('Treeview', background=background) 
+        style.configure('Treeview', fieldbackground=background)    
+    
     
     # 初始化窗口
     # 选择模拟器，读取数据，写入数据到 pickle 文件

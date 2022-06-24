@@ -89,7 +89,31 @@ dict_data={}
     # 周边用到
 internal_index={}
 ##
-external_index={}
+external_index={} 
+# 外置目录,根据 id 分类
+#   读取外置目录，初始化目录时，用一下
+#   接收目录信号时，刷新列表时，用一下
+#   编辑外部目录时，用一下（在列表右键菜单功能里）
+# .ini .sl_ini
+
+
+# 外置目录，只读
+external_index_sl_by_xml     = {} 
+# sl 外置目录,根据 xml 分类,wip
+# 只读目录,不使用编辑功能
+#   读取外置目录，初始化目录时，用一下
+#   接收目录信号时，刷新列表时，用一下
+#   编辑外部目录时，不用这个，不使用编辑功能
+#       这样子，简单一点，只需要改前边两处
+# .xml_ini
+
+# 未完成
+external_index_sl_by_machine = {} # sl 外置目录，根据 machine 分类，wip
+
+# 街机部分，按 source 分类
+external_index_by_source = {}
+
+
 #
 external_index_files_editable =set()
 external_index_files_be_edited=set()
@@ -128,12 +152,13 @@ current_item = None
 # 或者用 font_name ???
 font_gamelist        = "TkDefaultFont"
 font_gamelist_header = "TkDefaultFont"
+
 font_text            = "TkDefaultFont"
 font_text_2          = "TkDefaultFont"
-#font_gamelist_header = "TkDefaultFont"
-#font_label           = "TkDefaultFont"
+
+font_others           = "TkDefaultFont"
 #font_button          = "TkDefaultFont"
-#font_menu            = "TkDefaultFont"
+#font_menu            = "TkMenuFont"
 #font_menu_button     = "TkDefaultFont"
 #
 
@@ -147,3 +172,22 @@ font_text_2          = "TkDefaultFont"
 # button 高亮色
 # 其它，
 #   应该 查看一下第三方主题 ？？
+
+# 周边 文档 建目录 以 加速
+extra_index_for_histroty_xml = {}
+
+# ("history.dat","sysinfo.dat",)
+extra_index_for_histroty_dat = {}
+extra_index_for_sysinfo_dat  = {}
+
+#("mameinfo.dat","messinfo.dat",)
+extra_index_for_mameinfo_dat = {}
+extra_index_for_messinfo_dat = {}
+
+#"command.dat",
+#"command_english.dat",
+extra_index_for_command_dat = {}
+extra_index_for_command_english_dat = {}
+
+# "gameinit.dat",
+extra_index_for_gameinit_dat = {}

@@ -185,6 +185,9 @@ ui_language_file_path = get_ui_language_file_path(configure_data)
 if ui_language_file_path == "" : # 原始 ，中文，不翻译
     pass
 else: # 其它语言
+    print(ui_language_file_path)
+    print(ui_language_file_path)
+    print(ui_language_file_path)
     translation_holder.get_translation_dict_from_file( ui_language_file_path )
 
 

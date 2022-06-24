@@ -3,53 +3,17 @@ import sys
 import os
 import re
 
-def extra_history_find(file_name , game_name):# 逐行读取，节约内存
+from . import extra_history_dat
 
-    #$info=xxx,xxx,xxx
-    #^\$info=(\S.*?)\s*$
-    
-    # $mame 或 $drv
-    # $end
-    
-    text_file = open( file_name, 'rt',encoding='utf_8_sig')
-    
-    str_1 = r'^\$info=(\S.*?)\s*$'
-    p1=re.compile(str_1,)
-    
-    str_comment= r'^#'
-    p_comment=re.compile(str_comment,)
-    
-    found_flag = False
-    
-    new_text = []
-    
-    for line in text_file:
-        
-        # 注释
-        m_comment = p_comment.search(line)
-        if m_comment:
-            continue
-        
-        if found_flag:
-            m=p1.search(line)
-            if m:# 已经找到另一个游戏了
-                break
-            new_text.append(line)
-        else:
-            m=p1.search(line)
-            if m:
-                if game_name in m.group(1).split(","):
-                    print( m.group(1).split(",") )
-                    found_flag = True
-    
-    text_file.close()
-    
-    if found_flag:
-        return new_text
-    else:
-        return None
 
-def history_format(content):
+# def extra_history_find(file_name , game_name):# 逐行读取，节约内存
+
+# 和 history.dat 一样
+
+extra_mameinfo_find = extra_history_dat.extra_history_find
+
+
+def mameinfo_format(content):
 
     if content is None:
         return None
@@ -73,7 +37,8 @@ def history_format(content):
             m_end = p_end.search(line) # 配匹 结束 标记
             
             if m_end:
-                flag = False # 标记 取消
+                #flag = False # 标记 取消
+                break
             else:
                 new_coutent.append(line)
         else:
@@ -87,9 +52,40 @@ def history_format(content):
         return new_coutent
 
 def get_content_by_file_name(file_name,game_name):
-    content=extra_history_find(file_name,game_name)
-    content=history_format(content)
+    content=extra_mameinfo_find(file_name,game_name)
+    content=mameinfo_format(content)
     return content
+
+##################
+##################
+##################
+
+# 创建目录
+
+# 街机部分
+# 驱动部分
+# 和 history.dat 一样
+
+get_index = extra_history_dat.get_index
+    # def get_index(file_name,):
+
+#################
+#################
+#################
+# 使用目录
+#
+
+
+# def extra_history_find_by_index(file_name , game_name,the_index):# 逐行读取，节约内存
+
+extra_mameinfo_find_by_index = extra_history_dat.extra_history_find_by_index
+
+
+def get_content_by_file_name_by_index(file_name,game_name,the_index=0):
+    content=extra_mameinfo_find_by_index(file_name,game_name,the_index)
+    content=mameinfo_format(content)
+    return content
+
 
 if __name__ =="__main__":
     print()
@@ -98,12 +94,12 @@ if __name__ =="__main__":
     
     text_file_name = r'mameinfo.dat'
     #game_name = r"kof97"
-    game_name = r"neogeo.cpp"
     
-    content = get_content_by_file_name(text_file_name,game_name)
     
-    if content:
-        for x in content:
-            print(x,end="")
+    index_dict = get_index(text_file_name)
+    
+    with open("out.txt",mode="wt") as f:
+        for x in index_dict:
+            print(x+"\t"+str(index_dict[x]) ,file = f)
 
 

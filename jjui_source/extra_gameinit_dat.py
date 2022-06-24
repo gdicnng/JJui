@@ -3,56 +3,14 @@ import sys
 import os
 import re
 
-# 复制 extra_history_dat.py ，改一下
-# $bio 改为 $mame 
+from . import extra_history_dat
 
-def extra_history_find(file_name , game_name):# 逐行读取，节约内存
+# ("gameinit.dat",)
 
-    #$info=xxx,xxx,xxx
-    #^\$info=(\S.*?)\s*$
-    
-    # $mame
-    # $end
-    
-    text_file = open( file_name, 'rt',encoding='utf_8_sig')
-    
-    str_1 = r'^\$info=(\S.*?)\s*$'
-    p1=re.compile(str_1,)
-    
-    str_comment= r'^#'
-    p_comment=re.compile(str_comment,)
-    
-    found_flag = False
-    
-    new_text = []
-    
-    for line in text_file:
-        
-        # 注释
-        m_comment = p_comment.search(line)
-        if m_comment:
-            continue
-        
-        if found_flag:
-            m=p1.search(line)
-            if m:# 已经找到另一个游戏了
-                break
-            new_text.append(line)
-        else:
-            m=p1.search(line)
-            if m:
-                if game_name in m.group(1).split(","):
-                    print( m.group(1).split(",") )
-                    found_flag = True
-    
-    text_file.close()
-    
-    if found_flag:
-        return new_text
-    else:
-        return None
-
-def history_format(content):
+# $mame 
+#   复制 extra_history_dat.py ，改一下
+#   $bio 改为 $mame 
+def gameinit_format(content):
 
     if content is None:
         return None
@@ -90,8 +48,15 @@ def history_format(content):
         return new_coutent
 
 def get_content_by_file_name(file_name,game_name):
-    content=extra_history_find(file_name,game_name)
-    content=history_format(content)
+    #content=extra_history_find(file_name,game_name)
+    content=extra_history_dat.extra_history_find(file_name,game_name)
+    content=gameinit_format(content)
+    return content
+
+
+def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
+    content=extra_history_dat.extra_history_find_by_index(file_name,game_name,the_index)
+    content=gameinit_format(content)
     return content
 
 if __name__ =="__main__":

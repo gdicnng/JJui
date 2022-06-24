@@ -85,6 +85,8 @@ class Extra(ttk.Frame):
 
     # text 2
     def new_func_ui_for_text_area_2(self):
+        
+        
         # 图片 区域 ，放两组图
         extra_t2 = ttk.Frame(self.new_ui_notebook)  
         self.new_ui_notebook.add(extra_t2, text= _('文档2'),sticky=tk.W+tk.N+tk.E+tk.S, )
@@ -111,16 +113,22 @@ class Extra(ttk.Frame):
         item_id = global_variable.current_item
         
         def show_extra(game_name):
+            
+            # self.new_ui_notebook
+            
             if self.new_ui_image_container_1.winfo_viewable():
                 self.new_ui_image_container_1.new_func_show(game_name)
-            
-            if self.new_ui_image_container_2.winfo_viewable():
+                
+                if self.new_ui_image_container_2.winfo_viewable():
+                    self.new_ui_image_container_2.new_func_show(game_name)
+                
+            elif self.new_ui_image_container_2.winfo_viewable():
                 self.new_ui_image_container_2.new_func_show(game_name)
             
-            if self.new_ui_text_container.winfo_viewable():
+            elif self.new_ui_text_container.winfo_viewable():
                 self.new_ui_text_container.new_func_show(game_name)
                 
-            if self.new_ui_text_container_2.winfo_viewable():
+            elif self.new_ui_text_container_2.winfo_viewable():
                 self.new_ui_text_container_2.new_func_show(game_name)
         
         

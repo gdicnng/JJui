@@ -24,7 +24,7 @@ folder_source_file  = os.path.join(os.curdir,"jjui_source" )
 folder_temporary  = os.path.join(os.curdir,".jjui" )
 
 # ui 翻译文件所在目录
-folder_language = os.path.join(folder_source_file,"language" )
+folder_language = os.path.join(folder_source_file,"ui_translation" )
 
 # 配置文件
 file_ini_configure              =   os.path.join(folder_temporary ,"jjui.ini")
@@ -97,6 +97,26 @@ image_path_icon_minus    = os.path.join(folder_images,"minus.xbm")
 
 emulator_configure_folder    = os.path.join(folder_temporary,"emu")
 emulator_configure_folder_sl = os.path.join(folder_temporary,"emu_sl")
+
+file_pickle_extra_index_history_xml = os.path.join(folder_temporary ,"cache_index_history_xml.bin") 
+if global_variable.gamelist_type == "softwarelist":
+    file_pickle_extra_index_history_xml = os.path.join(folder_temporary ,"cache_index_history_xml_sl.bin") 
+
+# ("history.dat","sysinfo.dat",)
+file_pickle_extra_index_history_dat = os.path.join(folder_temporary ,"cache_index_history_dat.bin") 
+file_pickle_extra_index_sysinfo_dat = os.path.join(folder_temporary ,"cache_index_sysinfo_dat.bin") 
+
+#("mameinfo.dat","messinfo.dat",)
+file_pickle_extra_index_mameinfo_dat = os.path.join(folder_temporary ,"cache_index_mameinfo_dat.bin") 
+file_pickle_extra_index_messinfo_dat = os.path.join(folder_temporary ,"cache_index_messinfo_dat.bin") 
+
+#"command.dat",
+#"command_english.dat",
+file_pickle_extra_index_command_dat = os.path.join(folder_temporary ,"cache_index_command_dat.bin") 
+file_pickle_extra_index_command_english_dat = os.path.join(folder_temporary ,"cache_index_command_english_dat.bin") 
+
+# "gameinit.dat",
+file_pickle_extra_index_gameinit_dat = os.path.join(folder_temporary ,"cache_index_gameinit_dat.bin") 
 
 if __name__ == "__main__" :
     # locals()

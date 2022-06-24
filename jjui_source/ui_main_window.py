@@ -80,7 +80,13 @@ def show_childrens(window):
 
 
 # 读取外部目录数据
+    # sl  and  mame
 def get_external_index_data(folders_path):
+    
+    # 去掉 双引号，单引号
+    folders_path = folders_path.replace(r"'","")
+    folders_path = folders_path.replace(r'"',"")
+
     # 分类列表文件  
     ini_files = {} # 初始化
         # keys,为 （相对/绝对）路径 + 文件名 ，
@@ -105,10 +111,57 @@ def get_external_index_data(folders_path):
             # 格式错误，只检查了个别错误
             pass
         else: 
-            external_index_data[x] = {} # 初始化
+            #external_index_data[x] = {} 
             external_index_data[x] = temp  
     
     return external_index_data
+
+
+# 读取外部目录数据，只读目录，
+#   sl 
+#       by xml
+#       .xml_ini
+#
+#   mame
+#       by source
+#       .source_ini
+def get_external_read_only_index_data(folders_path,file_extension):
+    
+    # 去掉 双引号，单引号
+    folders_path = folders_path.replace(r"'","")
+    folders_path = folders_path.replace(r'"',"")
+
+    # 分类列表文件  
+    ini_files = {} # 初始化
+        # keys,为 （相对/绝对）路径 + 文件名 ，
+        # values ，为 文件名，不含路径
+    # 分类列表，具体信息
+    external_index_data = {} # 初始化
+        # keys,为 （相对/绝对）路径 + 文件名 ，
+        # values ，为 为一个 {}
+            # keys,为子分类名，
+            # values,为，分类游戏，集合 ,后来 转为 list 格式了
+    # 查找 文件
+    for x in folders_path.split(';') :
+        ini_files.update( folders_search.search_ini( x ,file_extension=file_extension) )
+    
+    
+    # 计算分类列表 具体信息
+    for x in ini_files:
+        temp = folders_read.read_folder_ini_3(x) ## 
+        if temp==None:
+            # 格式错误，只检查了个别错误
+            pass
+        else: 
+            #external_index_data[x] = {} 
+            external_index_data[x] = temp  
+    
+    return external_index_data
+
+
+
+
+
 
 # 游戏列表界面，建立
 def add_game_list( 
@@ -144,6 +197,19 @@ def main(game_list_data):
     # 读取外部目录
     external_index=get_external_index_data(configure_data["folders_path"])
     
+    # 读取外部目录 ,只读目录，
+    # sl 部分，按 xml 分类
+    if global_variable.gamelist_type == "softwarelist":
+        external_index_by_xml=get_external_read_only_index_data(configure_data["folders_path"],".xml_ini")
+        # 记录
+        global_variable.external_index_sl_by_xml = external_index_by_xml
+    # mame 部分按 source 分类
+    elif global_variable.gamelist_type == "mame":
+        external_index_by_source=get_external_read_only_index_data(configure_data["folders_path"],".source_ini")
+        # 记录
+        global_variable.external_index_by_source = external_index_by_source
+
+    
     # 记录
     global_variable.external_index = external_index
     
@@ -164,8 +230,8 @@ def main(game_list_data):
     title_string = root.title()
     title_string = title_string + game_list_data["mame_version"]
     root.title(title_string)
-
-
+    
+    
     
     
     # ttk.Menubutton 去掉箭头
@@ -201,6 +267,17 @@ def main(game_list_data):
     
     # 添加 外部目录数据
     ui_index.new_func_index_set_content_external_ini(external_index)
+    
+    # 读取外部目录 ,只读目录，
+    # 仅 sl 添加的功能
+    if global_variable.gamelist_type == "softwarelist":
+        ui_index.new_func_index_set_content_external_xml_ini(external_index_by_xml)
+    # 仅 mame 部分
+    elif global_variable.gamelist_type == "mame":
+        ui_index.new_func_index_set_content_external_source_ini(external_index_by_source)
+    
+
+    
     
     # ui game list
     # 三种 列表，添加
@@ -394,6 +471,11 @@ def main(game_list_data):
         root.bind("<<MameShowInfo>>",misc_funcs.mame_show_info)
     some_bindings()
     
+    
+    # sl 模式，隐藏出招表
+    # 放在 下边 那些 初始内容，前边
+    if global_variable.gamelist_type == "softwarelist":
+        ui_extra.new_ui_notebook.hide(2)
     
     ############
     # ui 初始，设置 配置文件中的 位置、选项
