@@ -236,11 +236,20 @@ class Text_container(ttk.Frame):
     
     #### ??
     def new_func_bindings(self,):
-        #self.new_ui_image_chooser.bind(r"<<ComboboxSelected>>",self.new_func_for_virtual_event_of_combobox)
+        self.new_ui_text_chooser.bind(r"<<ComboboxSelected>>",self.new_func_for_virtual_event_of_combobox)
         
         #self.bind_all(self.new_var_virtual_event_name_CurrentGame,self.new_func_bindings_receive_virtual_event,"+")
             # 不在这里用这个
         ""
+    
+    def new_func_for_virtual_event_of_combobox(self,event):
+        print()
+        print("<<ComboboxSelected>>")
+        
+        item_id = global_variable.current_item
+        
+        self.new_func_show( item_id )
+        
     
     def new_func_initialize(self,):
         
@@ -283,6 +292,18 @@ class Text_container(ttk.Frame):
         
         self.new_ui_text_area.new_ui_text.configure(state="disabled")
     
+    def new_func_insert_list_of_string(self,list_of_string = None,tags=None):
+        if list_of_string is None: 
+            list_of_string = []
+        
+        self.new_ui_text_area.new_ui_text.configure(state="normal")
+        
+        for a_string in list_of_string:
+            self.new_ui_text_area.new_ui_text.insert(tk.END,a_string,tags)
+        
+        self.new_ui_text_area.new_ui_text.configure(state="disabled")
+        
+    
     def new_func_clear_chooer(self,):
         self.new_ui_chooser_2["values"]=("",)
         self.new_ui_chooser_2.set("") 
@@ -307,17 +328,22 @@ class Text_container(ttk.Frame):
     
 
     # 用这个
-    def new_func_show(self,item_id):
+    def new_func_show(self,item_id,clear_text=True):
         
         self.new_ui_chooser_2["values"] = ()
         
         if item_id != global_variable.current_item : return 
         
+        if item_id is None:
+            print("None ,return")
+            return
+        
         # 清理选择框
         self.new_func_clear_chooer()
         
         # 清理文本区
-        self.new_func_clear_content()
+        if clear_text:
+            self.new_func_clear_content()
         
         if self.new_ui_text_area.winfo_viewable():
             #if self.new_var_index_flag.get():
@@ -344,7 +370,9 @@ class Text_container(ttk.Frame):
                 elif temp in ("gameinit.dat",):
                     #show_gameinit_dat(self,type,game_name)
                     self.new_func_show_gameinit_dat(temp, item_id)
-            
+    
+    ##########################
+    
     # history.xml 
     #   no index
     def new_func_show_history_xml_not_use_index(self,game_name):
@@ -376,6 +404,14 @@ class Text_container(ttk.Frame):
     # history.xml 
     #   index
     def new_func_show_history_xml_use_index(self,game_name):
+        path = user_configure["history.xml_path"]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号
+    
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return    
+    
         # 如果还没有读取目录，读取目录
         if not global_variable.extra_index_for_histroty_xml:
             if os.path.isfile(the_files.file_pickle_extra_index_history_xml):
@@ -385,21 +421,38 @@ class Text_container(ttk.Frame):
                     global_variable.extra_index_for_histroty_xml = {}
         
         if global_variable.extra_index_for_histroty_xml:
+            index_dict = global_variable.extra_index_for_histroty_xml
             
-            if game_name not in global_variable.extra_index_for_histroty_xml:
-                return
+            #####################
+            # 添加主版本
+            parent_flag = False
+            if game_name in index_dict: 
+                the_index = index_dict[game_name]
+            else:
+                if game_name in global_variable.dict_data["clone_to_parent"]:
+                    parent_name = global_variable.dict_data["clone_to_parent"][game_name]
+                    if parent_name not in index_dict:
+                        print("item id ,not in index,")
+                        print("parent id ,not in index,too ,return")
+                        return
+                    else:
+                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                        parent_index = index_dict[parent_name]
+                        parent_flag = True
+                else:
+                    print("item id not in index,return")
+                    return
+                        
             
-            the_index = global_variable.extra_index_for_histroty_xml[ game_name ]
-            print("id:{}".format(game_name))
-            print("index:{}".format(the_index))
+            
+            if parent_flag:
+                print("id:{}".format(parent_name))
+                print("index:{}".format(parent_index))
+            else:
+                print("id:{}".format(game_name))
+                print("index:{}".format(the_index))
             
             
-            path = user_configure["history.xml_path"]
-            path = path.replace(r"'","") # 去掉单引号
-            path = path.replace(r'"',"") # 去掉双引号
-        
-            if not os.path.isfile(path) : return
-        
             if game_name != global_variable.current_item : return
         
             new_text = ''
@@ -411,12 +464,15 @@ class Text_container(ttk.Frame):
                     text = extra_read_history_xml.getinfo_by_index(path,game_name,the_index=the_index)
                 return text
             
-            new_text = get_content(path,game_name,the_index)
+            if parent_flag:
+                new_text = get_content(path,parent_name,parent_index)
+            else:
+                new_text = get_content(path,game_name,the_index)
             
             if not new_text : return 
             
             if game_name == global_variable.current_item :
-                    self.new_func_insert_string(new_text)            
+                    self.new_func_insert_string(new_text)
     
     # history.xml
     def new_func_show_history_xml(self,game_name):
@@ -426,7 +482,8 @@ class Text_container(ttk.Frame):
         else:
             self.new_func_show_history_xml_not_use_index(game_name)
     
-
+    ###############################
+    
     # ("history.dat","sysinfo.dat",)
     #   no index
     def new_func_show_history_dat_not_use_index(self,data_type,game_name):
@@ -457,12 +514,23 @@ class Text_container(ttk.Frame):
             #                 new_text = text
 
             if game_name == global_variable.current_item:
-                for x in new_text:
-                    self.new_func_insert_string(x)
+                #for x in new_text:
+                #    self.new_func_insert_string(x)
+                self.new_func_insert_list_of_string(new_text)
 
     # ("history.dat","sysinfo.dat",)
     #   index
     def new_func_show_history_dat_use_index(self,data_type,game_name):
+        
+        #data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type + "_path" ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return    
         # 如果还没有读取目录，读取目录
         if data_type == "history.dat":
             print("history.dat")
@@ -486,38 +554,54 @@ class Text_container(ttk.Frame):
             
             index_dict = global_variable.extra_index_for_sysinfo_dat
         
+
         if not index_dict : 
+
             print("no index,return")
             return
         
-        data_type =  data_type + "_path" # "history.dat_path"
+
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
-        path = path.replace(r'"',"") # 去掉双引号 
-        
-        if not os.path.isfile(path) : 
-            print("file is missing,return")
-            return
-        
-        if game_name not in index_dict: 
-            print("item id not in index,return")
-            return
-        
-        the_index = index_dict[game_name]
+        #####################
+        # 添加主版本
+        parent_flag = False
+        if game_name in index_dict: 
+            the_index = index_dict[game_name]
+        else:
+            if game_name in global_variable.dict_data["clone_to_parent"]:
+                parent_name = global_variable.dict_data["clone_to_parent"][game_name]
+                if parent_name not in index_dict:
+                    print("item id ,not in index,")
+                    print("parent id ,not in index,too ,return")
+                    return
+                else:
+                    self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                    parent_index = index_dict[parent_name]
+                    parent_flag = True
+                    
+                
+            else:
+                print("item id not in index,return")
+                return
+            
         
         new_text = []
         
         if game_name == global_variable.current_item:
             
-            text = extra_history_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
+            
+            if parent_flag:
+                text = extra_history_dat.get_content_by_file_name_by_index(path,parent_name,the_index=parent_index)
+            else:
+                text = extra_history_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
         
             if text is not None:
                 new_text = text
         
         #if game_name == global_variable.current_item:
-            for x in new_text:
-                self.new_func_insert_string(x)
+            #for x in new_text:
+            #    self.new_func_insert_string(x)
+            self.new_func_insert_list_of_string(new_text)
 
     # ("history.dat","sysinfo.dat",)
     def new_func_show_history_dat(self,data_type,game_name):
@@ -526,19 +610,18 @@ class Text_container(ttk.Frame):
         else:
             self.new_func_show_history_dat_not_use_index(data_type,game_name)
 
-
+    ################################
+    
     # ("mameinfo.dat","messinfo.dat",)
     def new_func_show_mameinfo_dat_not_use_index(self,data_type,game_name,flag_is_game=True,the_source=None):
         # flag_is_game
             # 是游戏名
             # 是驱动名
 
-        data_type_remember = data_type # 记录
-        
-        data_type =  data_type + "_path" 
+        #data_type =   data_type + "_path"
         # path = self.ini_data[ "mameinfo.dat_path" ]
         # path = self.ini_data[ "messinfo.dat_path" ]
-        path = user_configure[ data_type ]
+        path = user_configure[ data_type + "_path" ]
         
         path = path.replace(r"'","") # 去掉单引号
         path = path.replace(r'"',"") # 去掉双引号 
@@ -568,8 +651,9 @@ class Text_container(ttk.Frame):
         if text is not None:
             new_text = text
         
-        for x in new_text:
-            self.new_func_insert_string(x)
+        #for x in new_text:
+        #    self.new_func_insert_string(x)
+        self.new_func_insert_list_of_string(new_text)
         
         
         if flag_is_game:
@@ -593,7 +677,7 @@ class Text_container(ttk.Frame):
                 the_tk_text.configure(state="disabled")
                 
                 #data_type,game_name,flag_is_game=True,the_source=None):
-                self.new_func_show_mameinfo_dat_not_use_index(data_type_remember,game_name,flag_is_game=False,the_source=sourcefile)
+                self.new_func_show_mameinfo_dat_not_use_index(data_type,game_name,flag_is_game=False,the_source=sourcefile)
             
             def make_a_button():
                 b = ttk.Button(the_tk_text,text=sourcefile,command=for_button)
@@ -610,22 +694,28 @@ class Text_container(ttk.Frame):
                     )
             
             the_tk_text.configure(state="disabled")
-        
-        
-        
-
+    
     # ("mameinfo.dat","messinfo.dat",)
     def new_func_show_mameinfo_dat_use_index(self,data_type,game_name,flag_is_game=True,the_source=None):
         # flag_is_game
             # 是游戏名
             # 是驱动名
     
+        #data_type =  data_type + "_path" # "history.dat_path"
+        
+        path = user_configure[ data_type + "_path" ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return    
+    
         print("",)
         print("use index",)
         print(data_type)
         print(game_name)
         
-        data_type_remember = data_type # 之后会变，记录一下，跳转到 驱动时用一下
         
         # 如果还没有读取目录，读取目录
         if data_type == "mameinfo.dat":
@@ -654,28 +744,39 @@ class Text_container(ttk.Frame):
             print("no index,return")
             return
         
-        data_type =  data_type + "_path" # "history.dat_path"
+
+        ###############################
+        # 添加主版本
+        ###############################
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
-        path = path.replace(r'"',"") # 去掉双引号 
-        
-        if not os.path.isfile(path) : 
-            print("file is missing,return")
-            return
+        parent_flag = False
         
         if flag_is_game:
-            if game_name not in index_dict: 
-                print("item id not in index,return")
-                return
-            
-            the_index = index_dict[game_name]
+            if game_name in index_dict: 
+                the_index = index_dict[game_name]
+            else:
+                print("item id not in index")
+                #return
+                
+                if game_name in global_variable.dict_data["clone_to_parent"]:
+                    parent_name = global_variable.dict_data["clone_to_parent"][game_name]
+                    if parent_name not in index_dict:
+                        print("parent id ,not in index,too ,return")
+                        #return
+                    else:
+                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                        parent_index = index_dict[parent_name]
+                        parent_flag = True
+
+                
         else:
-            if the_source not in index_dict: 
+            if the_source in index_dict: 
+                the_index = index_dict[the_source]
+            else:
                 print("source id not in index,return")
                 return
             
-            the_index = index_dict[the_source]
+            
         
         
         new_text = []
@@ -684,7 +785,10 @@ class Text_container(ttk.Frame):
             if game_name != global_variable.current_item:
                 return
             
-            text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
+            if parent_flag:
+                text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,parent_name,the_index=parent_index)
+            else:
+                text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
         else:
             
             text = extra_mameinfo_dat.get_content_by_file_name_by_index(path,the_source,the_index=the_index)
@@ -695,8 +799,9 @@ class Text_container(ttk.Frame):
             new_text = text
         
 
-        for x in new_text:
-            self.new_func_insert_string(x)
+        #for x in new_text:
+        #    self.new_func_insert_string(x)
+        self.new_func_insert_list_of_string(new_text)
         
         
         # 如果是 game_name ，增加一个 按扭跳转到 驱动
@@ -721,12 +826,10 @@ class Text_container(ttk.Frame):
                     def for_button():
                         #print(sourcefile)
                         
-                        # 清理
-                        the_tk_text.configure(state="normal")
-                        the_tk_text.delete('1.0',tk.END)
-                        the_tk_text.configure(state="disabled")
+                        # 清理文本区
+                        self.new_func_clear_content()
                         
-                        self.new_func_show_mameinfo_dat_use_index(data_type_remember,game_name,flag_is_game=False,the_source=sourcefile)
+                        self.new_func_show_mameinfo_dat_use_index(data_type,game_name,flag_is_game=False,the_source=sourcefile)
 
                         
                     def make_a_button():
@@ -744,13 +847,16 @@ class Text_container(ttk.Frame):
                             )
                     
                     the_tk_text.configure(state="disabled")
-
+    
+    # ("mameinfo.dat","messinfo.dat",)
     def new_func_show_mameinfo_dat(self,data_type,game_name):
         if self.new_var_index_flag.get():
             self.new_func_show_mameinfo_dat_use_index(data_type,game_name)
         else:
             self.new_func_show_mameinfo_dat_not_use_index(data_type,game_name)
 
+    ##############################
+    
     # ("gameinit.dat",)
     def new_func_show_gameinit_dat_not_use_index(self,data_type,game_name):
         
@@ -772,8 +878,9 @@ class Text_container(ttk.Frame):
             # 主版本 ？，算了，不管
             
             if game_name == global_variable.current_item:
-                for x in new_text:
-                    self.new_func_insert_string(x)
+                #for x in new_text:
+                #    self.new_func_insert_string(x)
+                self.new_func_insert_list_of_string(new_text)
 
     # ("gameinit.dat",)
     def new_func_show_gameinit_dat_use_index(self,data_type,game_name):
@@ -820,8 +927,9 @@ class Text_container(ttk.Frame):
                 new_text = text
         
         #if game_name == global_variable.current_item:
-            for x in new_text:
-                self.new_func_insert_string(x)
+            #for x in new_text:
+            #    self.new_func_insert_string(x)
+            self.new_func_insert_list_of_string(new_text)
 
     # ("gameinit.dat",)
     def new_func_show_gameinit_dat(self,data_type,game_name):
@@ -881,13 +989,13 @@ class Text_container_2(Text_container):
     # 用这个
     def new_func_show(self,item_id):
         
-        if global_variable.gamelist_type == "softwarelist":
-            print("not for softwarelist")
-            return
-        
         print("text 2")
         
         if item_id != global_variable.current_item : return 
+        
+        if item_id is None:
+            print("None ,return")
+            return
         
         # 清理选择框
         self.new_func_clear_chooer()
@@ -949,8 +1057,9 @@ class Text_container_2(Text_container):
             self.new_ui_chooser_2["values"]=(_("全部"),)
             self.new_ui_chooser_2.set( _("全部") ) 
             for x in self.new_var_command_content:
-                for y in self.new_var_command_content[x]:
-                    self.new_func_insert_string( y)
+                #for y in self.new_var_command_content[x]:
+                #    self.new_func_insert_string( y)
+                self.new_func_insert_list_of_string(  self.new_var_command_content[x]  )
         else:
             #print(r">1")
             index = []
@@ -965,14 +1074,23 @@ class Text_container_2(Text_container):
             self.new_ui_chooser_2.set( _("全部") ) 
             
             for x in self.new_var_command_content:
-                for y in self.new_var_command_content[x]:
-                    self.new_func_insert_string( y)
+                #for y in self.new_var_command_content[x]:
+                #    self.new_func_insert_string( y)
+                self.new_func_insert_list_of_string(  self.new_var_command_content[x]  )
 
     #"command.dat",
     #"command_english.dat",
-    def new_func_show_command_dat_use_index(self,data_type,game_name):
+    def new_func_show_command_dat_use_index(self,data_type,game_name,):
         
-        data_type_remember = data_type
+        #data_type =  data_type + "_path" # "history.dat_path"
+        path = user_configure[ data_type + "_path" ]
+        path = path.replace(r"'","") # 去掉单引号
+        path = path.replace(r'"',"") # 去掉双引号 
+        
+        if not os.path.isfile(path) : 
+            print("file is missing,return")
+            return
+        
         # 如果还没有读取目录，读取目录
         if data_type == "command.dat":
             print("command.dat")
@@ -1000,19 +1118,46 @@ class Text_container_2(Text_container):
             print("no index,return")
             return
         
-        data_type =  data_type + "_path" # "history.dat_path"
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
-        path = path.replace(r'"',"") # 去掉双引号 
-        
-        if not os.path.isfile(path) : 
-            print("file is missing,return")
-            return
         
         if game_name not in index_dict: 
-            print("item id not in index,return")
+            print("item id not in index")
+            #return # 是否 还需要添加主版本按钮
+            if game_name in global_variable.dict_data["clone_to_parent"]:
+                parent_name = global_variable.dict_data["clone_to_parent"][game_name]
+                
+                
+                if parent_name in index_dict:
+                    def for_button():
+                        # 清理文本区
+                        self.new_func_clear_content()
+                        
+                        self.new_func_show_command_dat_use_index(data_type,parent_name)
+                    
+                    def make_a_button():
+                        b = ttk.Button(the_tk_text,text=parent_name,command=for_button)
+                        
+                        return b
+                    
+                    the_tk_text = self.new_ui_text_area.new_ui_text
+                    the_tk_text.configure(state="normal")
+                    the_tk_text.insert(tk.END,"\n")
+                    the_tk_text.window_create(
+                            tk.END,
+                            create=make_a_button,
+                            )
+                    the_tk_text.configure(state="disabled")
+                    return
+                    
+                else:
+                    print("parent id not in index,return")
+                    return
+            else:
+                print("return")
+                return
+            
             return
+            
         
         the_index = index_dict[game_name]
         
@@ -1028,11 +1173,11 @@ class Text_container_2(Text_container):
         # 中文版，英文版 ，格式不同
         
         try:
-            if data_type_remember == "command.dat":
-                print("A")
+            if data_type == "command.dat":
+                #print("A")
                 self.new_var_command_content = extra_command.get_content_by_file_name_use_index( path,game_name,the_index )
-            elif data_type_remember == "command_english.dat":
-                print("B")
+            elif data_type == "command_english.dat":
+                #print("B")
                 self.new_var_command_content = extra_command_english.get_content_by_file_name_use_index( path,game_name,the_index )
         except:
             self.new_var_command_content =  None 
@@ -1046,8 +1191,9 @@ class Text_container_2(Text_container):
             self.new_ui_chooser_2["values"]=(_("全部"),)
             self.new_ui_chooser_2.set( _("全部") ) 
             for x in self.new_var_command_content:
-                for y in self.new_var_command_content[x]:
-                    self.new_func_insert_string( y)
+                #for y in self.new_var_command_content[x]:
+                #    self.new_func_insert_string( y)
+                self.new_func_insert_list_of_string( self.new_var_command_content[x] )
         else:
             #print(r">1")
             index = []
@@ -1062,11 +1208,9 @@ class Text_container_2(Text_container):
             self.new_ui_chooser_2.set( _("全部") ) 
             
             for x in self.new_var_command_content:
-                for y in self.new_var_command_content[x]:
-                    self.new_func_insert_string( y)
-
-
-      
+                #for y in self.new_var_command_content[x]:
+                #    self.new_func_insert_string( y)
+                self.new_func_insert_list_of_string( self.new_var_command_content[x] )
 
     def new_func_show_command_dat(self,data_type,game_name):
         if self.new_var_index_flag.get():
@@ -1101,15 +1245,17 @@ class Text_container_2(Text_container):
             self.new_func_clear_content() 
             try:
                 for x in self.new_var_command_content:
-                    for y in self.new_var_command_content[x]:
-                        self.new_func_insert_string( y)
+                    #for y in self.new_var_command_content[x]:
+                    #    self.new_func_insert_string( y)
+                    self.new_func_insert_list_of_string(self.new_var_command_content[x])
             except:
                 pass
         else:
             self.new_func_clear_content() 
             try:
-                for x in self.new_var_command_content[n]:
-                    self.new_func_insert_string( x)
+                #for x in self.new_var_command_content[n]:
+                #    self.new_func_insert_string( x)
+                self.new_func_insert_list_of_string(self.new_var_command_content[n])
             except:
                 pass
     

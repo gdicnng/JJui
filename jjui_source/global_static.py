@@ -113,6 +113,9 @@ extra_image_types = (
         r"select",
         r"versus",
         r"warning",
+        r"other_image_1",
+        r"other_image_2",
+        r"other_image_3",
                             )
 
 # ui ,extra ，text 的选项

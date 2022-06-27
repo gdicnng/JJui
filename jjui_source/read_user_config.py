@@ -133,7 +133,23 @@ def get_configure_file_default_value( ):
         use_shell_or_not_in_subprocess = True
     else:
         the_mame_path = "mame"
-
+    
+    if global_variable.gamelist_type == "softwarelist":
+    
+        #snap_path      = os.path.join(os.curdir,"snap")
+        #titles_path    = os.path.join(os.curdir,"titles")
+        
+        snap_zip_path  =os.path.join(os.curdir,"snap_sl.zip")
+        titles_zip_path=os.path.join(os.curdir,"titles_sl.zip")
+    
+    
+    else:
+        #snap_path      = os.path.join(os.curdir,"snap")
+        #titles_path    = os.path.join(os.curdir,"titles")
+        
+        snap_zip_path  =os.path.join(os.curdir,"snap.zip")
+        titles_zip_path=os.path.join(os.curdir,"titles.zip")
+    
     # jjui.ini 默认值 ，初始
     #   之后改为：
     #   ini_order       list 保存顺序
@@ -277,9 +293,12 @@ def get_configure_file_default_value( ):
         ("select_path"    ,os.path.join(os.curdir,"select")     ),#r".\select"
         ("versus_path"    ,os.path.join(os.curdir,"versus")     ),#r".\versus"
         ("warning_path"   ,os.path.join(os.curdir,"warning")    ),#r".\warning"
+        ("other_image_1_path"   ,os.path.join(os.curdir,"other_image_1")    ),#r".\warning"
+        ("other_image_2_path"   ,os.path.join(os.curdir,"other_image_2")    ),#r".\warning"
+        ("other_image_3_path"   ,os.path.join(os.curdir,"other_image_3")    ),#r".\warning"
         
-        ("snap.zip_path"   ,os.path.join(os.curdir,"snap.zip")   ),#r".\snap.zip"
-        ("titles.zip_path" ,os.path.join(os.curdir,"titles.zip") ),#r".\titles.zip"
+        ("snap.zip_path"   ,snap_zip_path   ),
+        ("titles.zip_path" ,titles_zip_path ),
         ("flyers.zip_path" ,os.path.join(os.curdir,"flyers.zip") ),#r".\flyers.zip"
         
         ("cabinets.zip_path"  ,os.path.join(os.curdir,"cabinets.zip")   ),#r".\cabinets.zip"
@@ -297,6 +316,9 @@ def get_configure_file_default_value( ):
         ("select.zip_path"    ,os.path.join(os.curdir,"select.zip")     ),#r".\select.zip"
         ("versus.zip_path"    ,os.path.join(os.curdir,"versus.zip")     ),#r".\versus.zip"
         ("warning.zip_path"   ,os.path.join(os.curdir,"warning.zip")    ),#r".\warning.zip"
+        ("other_image_1.zip_path"   ,os.path.join(os.curdir,"other_image_1.zip")    ),
+        ("other_image_2.zip_path"   ,os.path.join(os.curdir,"other_image_2.zip")    ),
+        ("other_image_3.zip_path"   ,os.path.join(os.curdir,"other_image_3.zip")    ),
         
         ("history.xml_path"        ,os.path.join(os.curdir,"history.xml")         ),#.\history.xml
         ("history.dat_path"        ,os.path.join(os.curdir,"history.dat")         ),#.\history.dat
@@ -432,7 +454,9 @@ def get_configure_file_value( file_name ):
                 "extra_delay_time",
                 "extra_tab_index",
 
-
+                
+                "extra_delay_time_use_flag",
+                
               "row_height",
               "row_height_for_header",
               #"row_height_for_text",

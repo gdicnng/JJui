@@ -2847,6 +2847,10 @@ class GameList_9(GameList_8):
             # "hide" = True
         
         self.event_generate(self.new_var_virtual_event_name_StartGame)
+        
+        # focus_set ，单击时已有，双击可以取消了
+        # 猛虎 反应 的卡输入法的问题，会不会就在这里 ?
+        return "break" 
 
     def new_func_table_binding_press_enter(self,event):
         print()
@@ -3435,24 +3439,34 @@ class GameList_99(GameList_12):
         
         # 测试用
         # 查看一些信息
-        self.bind_all('<Alt-KeyPress-i>',self.new_func_binding_show_info,"+")
+        #self.bind_all('<Alt-KeyPress-i>',self.new_func_binding_show_info,"+")
         
-        self.bind('<Control-KeyPress-i>',self.new_func_binding_show_info,)
-        self.bind('<Control-KeyPress-i>',self.new_func_show_search_flag,"+")
+        #self.bind('<Control-KeyPress-i>',self.new_func_binding_show_info,)
+        #self.bind('<Control-KeyPress-i>',self.new_func_show_search_flag,"+")
 
-        self.bind('<Control-KeyPress-p>',self.new_func_find_root_window)
+        #self.bind('<Control-KeyPress-p>',self.new_func_find_root_window)
         
-        #
+        ##############################
+        ##############################
+        ##############################
+        
+        # 图标，有时候会卡住某个形状，没有转回来
+        #   干脆转一下算了
         self.new_ui_table.bind("<Enter>",
                 lambda event : self.new_ui_table.configure(cursor='') )
         
-        # 将 focus 留在 列表 里 ，原始的 Canvas 不留 focus 的
+        
+        def for_focus_set(event):
+            if self.focus_get() != self:
+                self.focus_set()
+            
+        # 将 focus 留在 列表 里 ，原始的 Canvas 、 Frame 等，不留 focus 的
         # focus_set()
         #    不然，Canvas 、 Frame 等，不 响应 按键 类 event
         for child_widget in self.winfo_children():
-            child_widget.bind( "<Button-1>", lambda event: self.focus_set(),"+")
-            child_widget.bind( "<Button-2>", lambda event: self.focus_set(),"+")
-            child_widget.bind( "<Button-3>", lambda event: self.focus_set(),"+")
+            child_widget.bind( "<Button-1>", for_focus_set,"+")
+            child_widget.bind( "<Button-2>", for_focus_set,"+")
+            child_widget.bind( "<Button-3>", for_focus_set,"+")
         #    child_widget.bind( "<Button>", lambda event: self.new_ui_table.focus_set(),"+")
         
         #

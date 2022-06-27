@@ -202,6 +202,14 @@ class Toplevel_Window(tk.Toplevel):
         
         configure_data["mame_path"] = self.new_var_mame_path.get()
         
+        # 删除文件
+        if xml_type=="SoftwareList":
+            if os.path.isfile( the_files.file_xml_mame_softwarelist ):
+                os.remove( the_files.file_xml_mame_softwarelist )
+        elif xml_type=="mame":
+            if os.path.isfile( the_files.file_xml_mame ):
+                os.remove( the_files.file_xml_mame )
+        
         self.destroy()
 
     # 导出版本信息

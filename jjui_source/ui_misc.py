@@ -52,6 +52,7 @@ class Misc_functions():
     # 打开游戏
     #   接收信号
     #   "<<StartGame>>"
+    # start_game
     def start_game(self,event):
         print()
         print(r"virtual event received <<StartGame>>")
@@ -82,7 +83,7 @@ class Misc_functions():
             elif emu_number in (1,2,3,4,5,6,7,8,9,):
                 self.get_other_emu_configure_sl(game_id,emu_number)
     
-    # MAME
+    # start_game mame
     def call_mame(self,game_name,other_option=None,hide=True):
         print()
         print("call_mame")
@@ -100,37 +101,88 @@ class Misc_functions():
             for x in other_option:
                 command_list.append( x )
         
-        print()
-        print( command_list )
+        #print()
+        #print( command_list )
         
         if hide: # 打开游戏，隐藏 UI
-            #self.parent.iconify()
+            self.start_emu_by_subprocess(
+                    command_list,
+                    shell=user_configure["use_shell"],
+                    cwd=mame_dir,
+                    hide=True
+                    )
+        else: # 打开游戏，保留 UI
+            self.start_emu_by_subprocess(
+                    command_list,
+                    shell=user_configure["use_shell"],
+                    cwd=mame_dir,
+                    hide=False
+                    )
+    
+    
+    def start_emu_by_subprocess(self,command_list,shell=True,cwd=None,hide=True):
+        print("")
+        print("start_emu_by_subprocess")
+        
+        print("command_list \n\t{}".format(command_list))
+        print("cwd \n\t{}".format(cwd))
+        print("shell \n\t{}".format(shell))
+        
+        if hide: # 打开游戏，隐藏 UI
+            
+            # 猛虎 反应 withdraw 他的输入法会卡
+            # .iconify() 可以
+            
+            # 问题的根源，估计应该是
+            #   .focus_set() 怎样取消？
+            
+            # 鼠标双击时，还有在设置 focus_set()
+            #   可能有影响
+            #   目前已取消 鼠标双击时 的 focus_set() ，反正单击时已有了
+            # 但根据 猛虎 的反应，按数字键，也会卡，那可能就不是这一处的影响
+            
+            # https://stackoverflow.com/questions/4299432
+                # root.focus_set()
+                # 这能管用吗 算球了，反正 iconify() 暂时有效
+            
+            
+            root_window.iconify() #
             root_window.withdraw()
+            #root_window.wm_state("withdrawn")
             
             proc = subprocess.Popen(
                     command_list,
-                    shell=user_configure["use_shell"],
-                    cwd=mame_dir
+                    shell=shell,
+                    cwd=cwd
                     )
             
             proc.wait()
             root_window.deiconify()
             
+            root_window.wait_visibility()
+            
             # 列表要不要刷新一下？
-            #root_window.wait_visibility()
+                # 应该不用了
             #root_window.update()
                 # 不能刷新太早了
                 # 太早，不可见时，设置的　刷新无效
                 # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
             
-            #global_variable.the_showing_table.new_func_refresh_table()
+            # focus_set
+            try:
+                global_variable.the_showing_table.focus_set()
+            except:
+                pass
             
-            ""
-        else: # 打开游戏，保留 UI
-            proc = subprocess.Popen(
-                    command_list, 
-                    shell=user_configure["use_shell"],
-                    cwd=mame_dir)
+            root_window.lift()
+        
+        else:
+            subprocess.Popen(
+                    command_list,
+                    shell=shell,
+                    cwd=cwd
+                    )
+    
     
     def get_mame_path_and_working_directory(self,):
     # mame_exe
@@ -163,6 +215,7 @@ class Misc_functions():
         
         return (mame_exe , mame_working_directory)
     
+    # start_game mame 1 - 9
     def get_other_emu_configure(self,item_id,emu_number):
         
         # item_id 为 machine
@@ -259,20 +312,18 @@ class Misc_functions():
         
         if not command_list : return
         
-        print(command_list)
-        print(cwd)
+        #print(command_list)
+        #print(cwd)
         
         # start game
-        root_window.withdraw()
-        proc = subprocess.Popen(
-                command_list,
-                shell=user_configure["use_shell"],
-                cwd=cwd
-                )
-        
-        proc.wait()
-        root_window.deiconify()
+        self.start_emu_by_subprocess(
+                    command_list,
+                    shell=user_configure["use_shell"],
+                    cwd=cwd,
+                    hide=True
+                    )
     
+    # start_game SL 1 - 9
     def get_other_emu_configure_sl(self,item_id,emu_number):
         
         # item_id 为 xml + name
@@ -378,19 +429,16 @@ class Misc_functions():
         
         if not command_list :return
         
-        print(command_list)
-        print(cwd)
+        #print(command_list)
+        #print(cwd)
         
         # start game
-        root_window.withdraw()
-        proc = subprocess.Popen(
-                command_list,
-                shell=user_configure["use_shell"],
-                cwd=cwd
-                )
-        
-        proc.wait()
-        root_window.deiconify()
+        self.start_emu_by_subprocess(
+                    command_list,
+                    shell=user_configure["use_shell"],
+                    cwd=cwd,
+                    hide=True
+                    )
     
     ###############
     ###############
@@ -1527,7 +1575,6 @@ class Misc_functions():
         print("finish")
         root_window.update()
         root_window.deiconify()
-        #root_window.deiconify()
         root_window.lift()
         
         #window.wait_window()
@@ -1901,6 +1948,7 @@ class Misc_functions():
             if x in global_variable.internal_index:
                 global_variable.available_filter_set.update( set(global_variable.internal_index[x]["gamelist"]) )
 
+    # 刷新列表
     # 找到拥有的 *.zip 、*.7z 、文件夹
     def get_files_names_in_rompath(self,merged = False):
         ### ###
@@ -2010,8 +2058,7 @@ class Misc_functions():
         else:
             return temp_set
     
-    # wip
-    # sl
+    # 刷新列表 sl
     # 找到拥有的 *.zip 、*.7z 、文件夹
     # copy 上面的
     def get_files_names_in_rompath_sl(self,merged = False):
@@ -2083,34 +2130,54 @@ class Misc_functions():
 
                 print(y)
                 
+                # y 为 rom_path 当中的，一条单路径
                 if os.path.isdir(y): # 已将 x 转换一下
                     
-                    for xml_name in xml_dict:
-                        z=os.path.join(y,xml_name) 
-                        # z, ????\nes
-                        # z, ????\gba
-                        # z, ????\.....
-                        if os.path.isdir( z ): 
-                            if xml_name not in temp:
-                                temp[xml_name]= [] # 初始化
-                            
-                            files_zip = glob.glob( os.path.join(z,"*.zip") )
-                            for a in files_zip:
-                                temp[xml_name].append(  xml_name+" "+os.path.basename(a).lower()[0:-4] )# zip
-                            
-                            files_7z  = glob.glob( os.path.join(z,"*.7z") )
-                            for b in files_7z:
-                                temp[xml_name].append(  xml_name+" "+os.path.basename(b).lower()[0:-3] )# 7z
+                    (dirpath, dirnames, filenames) = next( os.walk(y) )
                     
-                            files_all = glob.glob( os.path.join(z,"*") )
-                            files_left = set(files_all) - set(files_zip) - set(files_7z)
-                            for c in files_left:
-                                if os.path.isdir(c):
-                                    temp[xml_name].append(  xml_name+" "+os.path.basename(c).lower() )
+                    del dirpath
+                    del filenames
+                    
+                    for a_folder_name in dirnames:
+                        xml_name = a_folder_name.lower() 
+                        # a_folder_name.lower() 
+                        
+                        if xml_name in xml_dict:
+                            
+                            
+                            
+                            z=os.path.join(y,a_folder_name) 
+                            # z 是 xml 名称的 子文件夹路径
+                            
+                            print("\t" ,end="")
+                            print(z)
+
+                            # z, ????\nes
+                            # z, ????\gba
+                            # z, ????\.....
+
+                            if os.path.isdir( z ): 
+                                if xml_name not in temp:
+                                    temp[xml_name]= [] # 初始化
+                                
+                                files_zip = glob.glob( os.path.join(z,"*.zip") )
+                                for a in files_zip:
+                                    temp[xml_name].append(  xml_name+" "+os.path.basename(a).lower()[0:-4] )# zip
+                                
+                                files_7z  = glob.glob( os.path.join(z,"*.7z") )
+                                for b in files_7z:
+                                    temp[xml_name].append(  xml_name+" "+os.path.basename(b).lower()[0:-3] )# 7z
+                        
+                                files_all = glob.glob( os.path.join(z,"*") )
+                                files_left = set(files_all) - set(files_zip) - set(files_7z)
+                                for c in files_left:
+                                    if os.path.isdir(c):
+                                        temp[xml_name].append(  xml_name+" "+os.path.basename(c).lower() )
         
         for xml_name in temp:
             #temp[xml_name] = set( temp[xml_name] )# 转为 set
-            temp[xml_name] = set( temp[xml_name] ) & xml_dict[xml_name] # 交集
+            temp[xml_name] = set( temp[xml_name] ) & xml_dict[xml_name] 
+            # 交集
         
         
         temp_set = set() 
@@ -2197,8 +2264,7 @@ class Misc_functions():
     #######################
     #######################
     #######################
-    # 更新翻译
-
+    # 翻译
     def gamelist_reload_translation(self,):
         # 翻译
         window = tk.Toplevel()
@@ -2399,9 +2465,7 @@ class Misc_functions():
         n+=1
         
         window.wait_window()
-    
-    
-    
+    # 翻译
     def ui_select_translation(self,):
         # ui 翻译
         window = tk.Toplevel()

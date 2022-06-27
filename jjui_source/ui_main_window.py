@@ -51,34 +51,6 @@ def change_menubutton(style):
     # 去掉箭头
     style.layout('TMenubutton',layout_2)
 
-
-# test ,will be deleted
-def show_childrens(window):
-    # w.winfo_children()
-    # w.winfo_class()
-    print()
-    print("find children windows")
-    print()
-    
-    # 查找
-    result=[]
-    def find_childen(window):
-        for child in window.winfo_children():
-            result.append(child)
-            find_childen(child)
-    find_childen(window)
-    
-    # 结果
-    if result : 
-        for x in result:
-            print(x)
-            #print(type(x))
-        
-    print()
-    print("find children windows result")
-    print("total numbers : {}".format(len(result)))
-
-
 # 读取外部目录数据
     # sl  and  mame
 def get_external_index_data(folders_path):
@@ -460,17 +432,24 @@ def main(game_list_data):
     # 还需要一个 列表 1，2，3 组，选择的 功能，小窗口
     
 
+    ##################
+    ##################
+    ##################
+
     def some_bindings():
         root.bind('<<GamelistChangeGroupMode>>',virtual_event_receive_for_change_gamelist_group_mode)
+        
         root.bind('<<GameListChangeColumnsToShow>>',virtual_event_receive_for_change_gamelist_change_columns)
         
-        root.bind('<Control-KeyPress-t>',lambda event : show_childrens(root))
-        root.bind('<Control-KeyPress-T>',lambda event : show_childrens(root))
-    
         root.bind("<<StartGame>>",misc_funcs.start_game)
         root.bind("<<MameShowInfo>>",misc_funcs.mame_show_info)
+    
     some_bindings()
     
+    
+    ##################
+    ##################
+    ##################
     
     # sl 模式，隐藏出招表
     # 放在 下边 那些 初始内容，前边
@@ -536,9 +515,8 @@ def main(game_list_data):
         misc_funcs.use_user_configure_colours()
     
     # 目录 选择 上一次的记录
-    root.update() # 不然定位不准
-    if configure_data["index_be_chosen"]:
-        global_variable.the_index.new_func_index_initial_select( configure_data["index_be_chosen"] )
+    root.update() # 不然,index 的 Treeview 部件，定位不准
+    global_variable.the_index.new_func_index_initial_select( configure_data["index_be_chosen"] )
 
     # 初始化 拥有列表 过滤选项 
     # 在 ui_main.py 中过滤的

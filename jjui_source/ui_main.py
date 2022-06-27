@@ -104,7 +104,7 @@ def main():
     ui_themes.main(root,style)
     
 
-    
+    root.iconify() 
     root.withdraw()
     
     

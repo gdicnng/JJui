@@ -122,6 +122,12 @@ extra_image_types_translation = {
         "select"    :_("图片 select"),
         "versus"    :_("图片 versus"),
         "warning"   :_("图片 warning"),
+        "other_image_1"   :_("图片 其它 1 other_image_1"),
+        "other_image_2"   :_("图片 其它 2 other_image_2"),
+        "other_image_3"   :_("图片 其它 3 other_image_3"),
+        #"other_image_4"   :_("图片 其它 4"),
+        #"other_image_5"   :_("图片 其它 5"),
+        #"other_image_6"   :_("图片 其它 6"),
         
         
                         }

@@ -514,6 +514,11 @@ class GameIndex(Treeview_with_scrollbar):
 
     # 初始时，选中记录中的行
     def new_func_index_initial_select(self,iid_string):
+        print()
+        print("new_func_index_initial_select")
+        
+        flag_exist = False
+        
         if iid_string:
             tree=self.new_ui_tree
             # 确认还存在
@@ -528,15 +533,27 @@ class GameIndex(Treeview_with_scrollbar):
                         break
                 if flag_exist:
                     break
+        
+        if flag_exist:
+            # 存在
             
-            if flag_exist:
-                
-                self.new_ui_tree.selection_set( (iid_string,) )
-                self.new_ui_tree.focus( iid_string )
-                self.new_ui_tree.see( iid_string )
-                
-                #event_data = self..new_func_get_virtual_event_info_from_iid(iid_string)
-                self.new_func_index_generate_virtual_event(iid_string)
+            # iid_string # 不变
+            pass
+        else:
+            # 不存在
+            
+            # 默认 all_set
+            iid_string = r"internal|all_set"
+            
+        try:
+            self.new_ui_tree.selection_set( (iid_string,) )
+            self.new_ui_tree.focus( iid_string )
+            self.new_ui_tree.see( iid_string )
+            
+            #event_data = self..new_func_get_virtual_event_info_from_iid(iid_string)
+            self.new_func_index_generate_virtual_event(iid_string)
+        except:
+            pass
     
 if __name__ == "__main__" :
     from .read_pickle import read as read_pickle

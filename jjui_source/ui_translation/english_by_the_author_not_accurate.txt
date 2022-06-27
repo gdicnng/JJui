@@ -1,4 +1,4 @@
-缩写	name
+﻿缩写	name
 年代	year
 源代码	source
 制造商	manufacturer

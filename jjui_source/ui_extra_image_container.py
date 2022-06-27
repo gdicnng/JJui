@@ -296,15 +296,11 @@ class Image_container(ttk.Frame):
     # 算了，好像没有用到
     def new_func_for_virtual_event_of_combobox(self,event):
         print()
-        print("new_func_for_virtual_event_of_combobox")
+        print("<<ComboboxSelected>>")
         
-        number_index = self.new_ui_image_chooser.current()
-        print("number_index for image_types: {}".format(number_index))
+        item_id = global_variable.current_item
         
-        print("image_types")
-        print(image_types[number_index])
-        
-        self.new_func_get_info_from_choice()
+        self.new_func_show( item_id )
         
     def new_func_get_info_from_choice(self,):
         # self.new_var_remember_image_type        = None
@@ -339,7 +335,11 @@ class Image_container(ttk.Frame):
     # 用这个
     def new_func_show(self,item_id):
         if item_id != global_variable.current_item : return 
-
+        
+        if item_id is None:
+            #self.new_ui_image_area.new_func_use_backup_image()
+            return
+        
         if self.new_ui_image_area.winfo_viewable():
             if self.new_var_zip_flag.get():
                 self.new_func_show_image_from_zip(item_id)

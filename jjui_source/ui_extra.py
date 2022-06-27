@@ -48,6 +48,10 @@ class Extra(ttk.Frame):
         #self.new_ui_notebook.state(statespec=("readonly",))
         ""
         
+    def new_func_bindings(self,):
+        self.bind_all(self.new_var_virtual_event_name_CurrentGame,self.new_func_bindings_receive_virtual_event,"+")
+        
+        self.new_ui_notebook.bind('<<NotebookTabChanged>>',self.new_func_bindings_NotebookTabChanged)
     
     # image
     def new_func_ui_for_image_area(self):
@@ -100,44 +104,20 @@ class Extra(ttk.Frame):
         
 
     #
-    def new_func_bindings(self,):
-        self.bind_all(self.new_var_virtual_event_name_CurrentGame,self.new_func_bindings_receive_virtual_event,"+")
+
     
     # 接收信号 ,
     # 显示周边
     def new_func_bindings_receive_virtual_event(self,event):
-
+        
         #print("  event received,extra")
-
-
+        
         item_id = global_variable.current_item
-        
-        def show_extra(game_name):
-            
-            # self.new_ui_notebook
-            
-            if self.new_ui_image_container_1.winfo_viewable():
-                self.new_ui_image_container_1.new_func_show(game_name)
-                
-                if self.new_ui_image_container_2.winfo_viewable():
-                    self.new_ui_image_container_2.new_func_show(game_name)
-                
-            elif self.new_ui_image_container_2.winfo_viewable():
-                self.new_ui_image_container_2.new_func_show(game_name)
-            
-            elif self.new_ui_text_container.winfo_viewable():
-                self.new_ui_text_container.new_func_show(game_name)
-                
-            elif self.new_ui_text_container_2.winfo_viewable():
-                self.new_ui_text_container_2.new_func_show(game_name)
-        
-        
-        
         
         if user_configure["extra_delay_time_use_flag"]:
             
             extra_delay_time=user_configure["extra_delay_time"]
-        
+            
             # 取消 after
             if self.new_var_remember_after is not None:
                 try:
@@ -145,11 +125,34 @@ class Extra(ttk.Frame):
                 except:
                     pass
             
-            self.after(extra_delay_time, show_extra,item_id,)
+            self.after(extra_delay_time, self.new_func_show_extra,item_id,)
         else:
-            show_extra(item_id)
+            self.new_func_show_extra(item_id)
+
+    def new_func_show_extra(self,game_name):
             
+        # self.new_ui_notebook
+        
+        if self.new_ui_image_container_1.winfo_viewable():
+            self.new_ui_image_container_1.new_func_show(game_name)
             
+            if self.new_ui_image_container_2.winfo_viewable():
+                self.new_ui_image_container_2.new_func_show(game_name)
+            
+        elif self.new_ui_image_container_2.winfo_viewable():
+            self.new_ui_image_container_2.new_func_show(game_name)
+        
+        elif self.new_ui_text_container.winfo_viewable():
+            self.new_ui_text_container.new_func_show(game_name)
+            
+        elif self.new_ui_text_container_2.winfo_viewable():
+            self.new_ui_text_container_2.new_func_show(game_name)
+
+    def new_func_bindings_NotebookTabChanged(self,evnet=None):
+        print("")
+        print("NotebookTabChanged")
+        self.new_func_bindings_receive_virtual_event( None )
+        
 
 
 

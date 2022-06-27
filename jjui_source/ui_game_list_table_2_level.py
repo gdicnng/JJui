@@ -96,6 +96,7 @@ class Data_Holder_level_2(Data_Holder_level_1):
         # 标记重置
         if from_index:
             self.flag_search = False
+            # 正常状态，不在搜索中
         
         # 转为 set
         if type(the_id_list)==set or type(the_id_list)==frozenset :
@@ -454,13 +455,25 @@ class GameList_level_2(GameList_level_1):
         
         # self.new_var_icon_width = 16
         
-        if item_id in self.new_var_data_holder.items_in_level_1:
-            #第一层
-            space_before_icon  = self.new_var_space_before_icon 
+        if self.new_var_data_holder.flag_search:
+        
+            if item_id in self.new_var_data_holder.items_in_level_1_for_search:
+                #第一层
+                space_before_icon  = self.new_var_space_before_icon 
 
+            else:
+                #第二层
+                space_before_icon  = self.new_var_space_before_icon + self.new_var_icon_width
+        
         else:
-            #第二层
-            space_before_icon  = self.new_var_space_before_icon + self.new_var_icon_width
+        
+            if item_id in self.new_var_data_holder.items_in_level_1:
+                #第一层
+                space_before_icon  = self.new_var_space_before_icon 
+
+            else:
+                #第二层
+                space_before_icon  = self.new_var_space_before_icon + self.new_var_icon_width
 
             
         # draw_icon

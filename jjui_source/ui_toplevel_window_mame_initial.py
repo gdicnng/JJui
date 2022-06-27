@@ -194,6 +194,10 @@ class Toplevel_Window(tk.Toplevel):
         
         configure_data["mame_path"] = self.new_var_mame_path.get()
         
+        # 删除文件
+        if os.path.isfile( the_files.file_xml_mame ):
+            os.remove( the_files.file_xml_mame )
+        
         self.destroy()
 
     def new_func_export_xml(self,xml_type="mame0162"):
