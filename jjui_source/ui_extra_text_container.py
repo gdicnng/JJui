@@ -264,6 +264,18 @@ class Text_container(ttk.Frame):
         # 记录 
         global_variable.tk_text_1 = self.new_ui_text_area.new_ui_text
         
+        # text tag bind
+        self.new_ui_text_area.new_ui_text.tag_bind(
+                "mameinfo_find_sourcefile", 
+                "<ButtonPress-1>",
+                self.new_func_tag_binding_mameinfo_dat_find_source_use_index,
+                )
+        self.new_ui_text_area.new_ui_text.tag_config(
+                "mameinfo_find_sourcefile", 
+                underline=True,
+                )
+        
+        
         
         temp=[]
         for x in text_types:
@@ -311,6 +323,7 @@ class Text_container(ttk.Frame):
     def new_func_clear_content(self,):
         self.new_ui_text_area.new_ui_text.configure(state="normal")
         
+        # 再 清理文本
         self.new_ui_text_area.new_ui_text.delete('1.0',tk.END)
         
         self.new_ui_text_area.new_ui_text.configure(state="disabled")
@@ -436,7 +449,7 @@ class Text_container(ttk.Frame):
                         print("parent id ,not in index,too ,return")
                         return
                     else:
-                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n"+ "\n")
                         parent_index = index_dict[parent_name]
                         parent_flag = True
                 else:
@@ -575,7 +588,7 @@ class Text_container(ttk.Frame):
                     print("parent id ,not in index,too ,return")
                     return
                 else:
-                    self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                    self.new_func_insert_string(_("主版本为：")+parent_name + "\n"+ "\n")
                     parent_index = index_dict[parent_name]
                     parent_flag = True
                     
@@ -700,7 +713,7 @@ class Text_container(ttk.Frame):
         # flag_is_game
             # 是游戏名
             # 是驱动名
-    
+        
         #data_type =  data_type + "_path" # "history.dat_path"
         
         path = user_configure[ data_type + "_path" ]
@@ -709,7 +722,7 @@ class Text_container(ttk.Frame):
         
         if not os.path.isfile(path) : 
             print("file is missing,return")
-            return    
+            return
     
         print("",)
         print("use index",)
@@ -740,11 +753,38 @@ class Text_container(ttk.Frame):
             
             index_dict = global_variable.extra_index_for_messinfo_dat
         
+        else:return
+        
         if not index_dict : 
             print("no index,return")
             return
         
-
+        ########################
+        # 添加驱动
+        ########################
+        # 如果是 game_name ，增加一个 按扭跳转到 驱动
+        # 如果是 驱动名 ，下面就不需要了
+        if flag_is_game :
+            if game_name in global_variable.machine_dict:
+                try:
+                    game_info = global_variable.machine_dict[game_name]
+                    sourcefile = game_info[ global_variable.columns_index["sourcefile"] ]
+                except:
+                    sourcefile = None
+                
+                if sourcefile:
+                    if sourcefile in index_dict:
+                        #the_index = index_dict[sourcefile]
+                        
+                        the_tk_text = self.new_ui_text_area.new_ui_text
+                        
+                        the_tk_text.configure(state="normal")
+                        the_tk_text.insert(tk.END,"\n")
+                        the_tk_text.insert(tk.END,sourcefile,("mameinfo_find_sourcefile",))
+                        the_tk_text.insert(tk.END,"\n")
+                        the_tk_text.insert(tk.END,"\n")
+                        the_tk_text.configure(state="disabled")
+        
         ###############################
         # 添加主版本
         ###############################
@@ -756,19 +796,21 @@ class Text_container(ttk.Frame):
                 the_index = index_dict[game_name]
             else:
                 print("item id not in index")
-                #return
                 
-                if game_name in global_variable.dict_data["clone_to_parent"]:
+                if game_name not in global_variable.dict_data["clone_to_parent"]:
+                    print("no parent,return")
+                    return
+                else:
                     parent_name = global_variable.dict_data["clone_to_parent"][game_name]
+                    
                     if parent_name not in index_dict:
                         print("parent id ,not in index,too ,return")
-                        #return
+                        return
                     else:
-                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n")
+                        self.new_func_insert_string(_("主版本为：")+parent_name + "\n" + "\n")
                         parent_index = index_dict[parent_name]
                         parent_flag = True
-
-                
+        
         else:
             if the_source in index_dict: 
                 the_index = index_dict[the_source]
@@ -802,51 +844,45 @@ class Text_container(ttk.Frame):
         #for x in new_text:
         #    self.new_func_insert_string(x)
         self.new_func_insert_list_of_string(new_text)
+    
+    # mameinfo find source
+    def new_func_tag_binding_mameinfo_dat_find_source_use_index(self,event):
+        print()
+        print("mameinfo.dat find source use index")
         
+        n = self.new_ui_text_chooser.current()
+        data_type = text_types[n]
+        print(data_type)
         
-        # 如果是 game_name ，增加一个 按扭跳转到 驱动
-        # 如果是 驱动名 ，下面就不需要了
-        if not flag_is_game :
-            return
+        index_start = self.new_ui_text_area.new_ui_text.index("current linestart")
+        index_end   = self.new_ui_text_area.new_ui_text.index("current lineend")
         
-        if game_name in global_variable.machine_dict:
+        #print(index_start)
+        #print(index_end)
         
-            try:
-                game_info = global_variable.machine_dict[game_name]
-                sourcefile = game_info[ global_variable.columns_index["sourcefile"] ]
-            except:
-                sourcefile = None
-            
-            if sourcefile:
-                if sourcefile in index_dict:
-                    the_index = index_dict[sourcefile]
-                    
-                    the_tk_text = self.new_ui_text_area.new_ui_text
-                    
-                    def for_button():
-                        #print(sourcefile)
-                        
-                        # 清理文本区
-                        self.new_func_clear_content()
-                        
-                        self.new_func_show_mameinfo_dat_use_index(data_type,game_name,flag_is_game=False,the_source=sourcefile)
-
-                        
-                    def make_a_button():
-                        b = ttk.Button(the_tk_text,text=sourcefile,command=for_button)
-                        return b
-                    
-                    
-                    the_tk_text.configure(state="normal")
-                    
-                    the_tk_text.insert(tk.END,"\n")
-                    
-                    the_tk_text.window_create(
-                            tk.END,
-                            create=make_a_button,
-                            )
-                    
-                    the_tk_text.configure(state="disabled")
+        # tag.first tag.last
+        #index_start = self.new_ui_text_area.new_ui_text.index("command_find_parent.first")
+        #index_end   = self.new_ui_text_area.new_ui_text.index("command_find_parent.last")
+            # 如果有多个 相同的 tag ，找到的第一个 和 最后一个，
+        
+        # 算了，让 tag 内容，占一整行吧，这样好处理点
+        
+        source_name = self.new_ui_text_area.new_ui_text.get(index_start,index_end)
+        print(source_name)
+        source_name = source_name.rstrip("\r\n") # 不知道它，会不会包含 换行符号
+        
+        print(source_name)
+        
+        # 获得文本数据后，再清理
+        
+        # 清理文本区
+        self.new_func_clear_content()
+        
+        # 清理选择框
+        self.new_func_clear_chooer()
+        
+        game_name = None # 弄个假的
+        self.new_func_show_mameinfo_dat_use_index(data_type,game_name,flag_is_game=False,the_source=source_name)
     
     # ("mameinfo.dat","messinfo.dat",)
     def new_func_show_mameinfo_dat(self,data_type,game_name):
@@ -938,6 +974,9 @@ class Text_container(ttk.Frame):
         else:
             self.new_func_show_gameinit_dat_not_use_index(data_type,game_name)
 
+
+
+
 class Text_container_2(Text_container):
     def __init__(self ,parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
@@ -947,7 +986,6 @@ class Text_container_2(Text_container):
     
     def new_func_initialize(self,):
         
-        
         # 记录
         global_variable.Combobox_chooser_text_2 = self.new_ui_text_chooser
         
@@ -956,6 +994,18 @@ class Text_container_2(Text_container):
         
         # 记录 
         global_variable.tk_text_2 = self.new_ui_text_area.new_ui_text
+        
+        # 没用上了
+        ## text tag bind
+        #self.new_ui_text_area.new_ui_text.tag_bind(
+        #        "command_find_parent", 
+        #        "<ButtonPress-1>",
+        #        self.new_func_tag_binding_command_dat_find_parent_use_index,
+        #        )
+        #self.new_ui_text_area.new_ui_text.tag_config(
+        #        "command_find_parent", 
+        #        underline=True
+        #        )
         
         #print()
         #print(text_types_2)
@@ -984,7 +1034,6 @@ class Text_container_2(Text_container):
     def new_func_bindings(self,):
         super().new_func_bindings()
         self.new_ui_chooser_2.bind("<<ComboboxSelected>>",self.new_func_binding_command_index_choose) 
-    
     
     # 用这个
     def new_func_show(self,item_id):
@@ -1077,7 +1126,7 @@ class Text_container_2(Text_container):
                 #for y in self.new_var_command_content[x]:
                 #    self.new_func_insert_string( y)
                 self.new_func_insert_list_of_string(  self.new_var_command_content[x]  )
-
+    
     #"command.dat",
     #"command_english.dat",
     def new_func_show_command_dat_use_index(self,data_type,game_name,):
@@ -1118,35 +1167,25 @@ class Text_container_2(Text_container):
             print("no index,return")
             return
         
-        
-        
         if game_name not in index_dict: 
             print("item id not in index")
             #return # 是否 还需要添加主版本按钮
             if game_name in global_variable.dict_data["clone_to_parent"]:
+                
                 parent_name = global_variable.dict_data["clone_to_parent"][game_name]
                 
+                print("parent id in index")
                 
                 if parent_name in index_dict:
-                    def for_button():
-                        # 清理文本区
-                        self.new_func_clear_content()
-                        
-                        self.new_func_show_command_dat_use_index(data_type,parent_name)
-                    
-                    def make_a_button():
-                        b = ttk.Button(the_tk_text,text=parent_name,command=for_button)
-                        
-                        return b
-                    
-                    the_tk_text = self.new_ui_text_area.new_ui_text
-                    the_tk_text.configure(state="normal")
-                    the_tk_text.insert(tk.END,"\n")
-                    the_tk_text.window_create(
-                            tk.END,
-                            create=make_a_button,
-                            )
-                    the_tk_text.configure(state="disabled")
+                    #the_tk_text = self.new_ui_text_area.new_ui_text
+                    #the_tk_text.configure(state="normal")
+                    #
+                    #the_tk_text.insert(tk.END,"\n")
+                    #the_tk_text.insert(tk.END,parent_name,("command_find_parent",))
+                    #the_tk_text.insert(tk.END,"\n")
+                    #    # 让内容，占一整行，方便提取文本值
+                    #the_tk_text.configure(state="disabled")
+                    self.new_func_show_command_dat_use_index(data_type,parent_name)
                     return
                     
                 else:
@@ -1157,10 +1196,8 @@ class Text_container_2(Text_container):
                 return
             
             return
-            
         
         the_index = index_dict[game_name]
-        
         
         # 初始化
         try:
@@ -1211,14 +1248,13 @@ class Text_container_2(Text_container):
                 #for y in self.new_var_command_content[x]:
                 #    self.new_func_insert_string( y)
                 self.new_func_insert_list_of_string( self.new_var_command_content[x] )
-
+    
     def new_func_show_command_dat(self,data_type,game_name):
         if self.new_var_index_flag.get():
             self.new_func_show_command_dat_use_index(data_type,game_name)
         else:
             self.new_func_show_command_dat_not_use_index(data_type,game_name)
-
-
+    
     def new_func_binding_command_index_choose(self,event):
 
         try:
@@ -1259,7 +1295,45 @@ class Text_container_2(Text_container):
             except:
                 pass
     
-
+    # 没用上了，直接导入 主版本 文档
+    def new_func_tag_binding_command_dat_find_parent_use_index(self,event):
+        print()
+        print("command.dat find parent use index")
+        
+        
+        
+        index_start = self.new_ui_text_area.new_ui_text.index("current linestart")
+        index_end   = self.new_ui_text_area.new_ui_text.index("current lineend")
+        
+        print(index_start)
+        print(index_end)
+        
+        # tag.first tag.last
+        #index_start = self.new_ui_text_area.new_ui_text.index("command_find_parent.first")
+        #index_end   = self.new_ui_text_area.new_ui_text.index("command_find_parent.last")
+            # 如果有多个 相同的 tag ，找到的第一个 和 最后一个，
+        
+        # 算了，让 tag 内容，占一整行吧
+        
+        parent_name = self.new_ui_text_area.new_ui_text.get(index_start,index_end)
+        print(parent_name)
+        parent_name = parent_name.rstrip("\r\n") # 不知道它，会不会包含 换行符号
+        
+        print(parent_name)
+        
+        # 获得文本数据后，再清理
+        
+        # 清理文本区
+        self.new_func_clear_content()
+        
+        # 清理选择框
+        self.new_func_clear_chooer()        
+        
+        n = self.new_ui_text_chooser.current()
+        data_type = text_types_2[n]
+        print(data_type)
+        
+        self.new_func_show_command_dat_use_index( data_type,parent_name, )
 
 if __name__ == "__main__" :
     
