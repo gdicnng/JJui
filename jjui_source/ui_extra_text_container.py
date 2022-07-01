@@ -89,6 +89,7 @@ class Text_area(ttk.Frame):
                     highlightthickness = 0,
                     takefocus = False,
                     undo      = False,
+                    maxundo   = 1,
                     state     = tk.DISABLED,
                     wrap      = "char",
                     )
@@ -1356,11 +1357,3 @@ if __name__ == "__main__" :
         a.new_func_insert_string(str(x) + " : "+"test\n") 
     
     root.mainloop()
-
-
-
-
-
-
-
-

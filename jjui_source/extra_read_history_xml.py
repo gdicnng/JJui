@@ -139,52 +139,136 @@ def getinfo( file_name ,item_id ,the_type="mame"):
 ###########################################
 # 根据目录，读取一个
 
-def getinfo_mame_by_index( file_name ,game_name,the_index=0):
+# xml.etree.ElementTree.iterparse
+#   bug,memroy leak ,python 3.6
+# 此方法 python 3.6.8 可能是内存泄露，显示次数越多，内存越涨
+# python 3.7 没问题
+# python 3.8 没问题
+def getinfo_mame_by_index_1( file_name ,game_name,the_index=0):
     
     with open(file_name,mode="rb") as f:
         
         try:
             f.seek(the_index)
         except:
+            print("seek error")
             return
         
         text = ''
         flag = False
         count = 0
-        try:
-            for (event, elem) in xml.etree.ElementTree.iterparse(f,events=("end",) ) :
-                if count>1 : break
-                
-                #if event == 'end': # 找到结束标记
-                if elem.tag=="entry":
-                    count += 1
+        #try:
+        for (event, elem) in xml.etree.ElementTree.iterparse(f,events=("end",) ) :
+            
+            if count>1 : break
+            
+            #if event == 'end': # 找到结束标记
+            if elem.tag=="entry":
+                count += 1
+                for child in elem:
+                    if child.tag == "systems" :
+                        for grandchild in child:
+                            if grandchild.attrib["name"] == game_name :
+                                flag = True
+                                print("found")
+                                print(count)
+                                print(game_name)
+                            
+                if flag:
                     for child in elem:
-                        if child.tag == "systems" :
-                            for grandchild in child:
-                                if grandchild.attrib["name"] == game_name :
-                                    flag = True
-                                    print("found")
-                                    print(count)
-                                    print(game_name)
-                                
-                    if flag:
-                        for child in elem:
-                            if child.tag == "text" :
-                                try:
-                                    text = child.text
-                                except:
-                                    pass
-                                
-                        break
-                    
-                    elem.clear()
-        except:
-            pass
+                        if child.tag == "text" :
+                            try:
+                                text = child.text
+                            except:
+                                pass
+                            elem.clear()
+                    break
+                
+                elem.clear()
+        #except:
+        #    pass
         print(count)
-        if flag:return text
+        if flag:
+            print(type(text))
+            return text
         else: return None
 
-def getinfo_sl_by_index( file_name ,sl_id,the_index=0):
+
+class The_Target(xml.etree.ElementTree.TreeBuilder):
+    
+    def __init__(self,):
+        
+        self.the_found_elem = None
+        self.the_count_number = 0
+        
+        super().__init__()
+    
+    def end(self, tag):
+        
+        result = super().end(tag)
+        
+        if tag == "entry":
+            self.the_count_number += 1
+            self.the_found_elem   = result
+        
+        return result
+
+# 因为 python 3.6 的 bug ，重写一个函数，换一个方式
+def getinfo_mame_by_index_2( file_name ,game_name,the_index=0):
+    
+    with open(file_name,mode="rb") as f:
+        
+        try:
+            f.seek(the_index)
+        except:
+            print("seek error")
+            return
+        
+        text = ''
+        flag = False
+            
+        target=The_Target()
+        parser = xml.etree.ElementTree.XMLParser(target=target)
+        
+        line = f.readline()
+        
+        while line:
+            if target.the_count_number >= 1:
+                #print("break")
+                break
+            parser.feed(line)
+            line = f.readline()
+            
+        elem = target.the_found_elem
+        
+        if elem is not None:
+            for child in elem:
+                if child.tag == "systems" :
+                    for grandchild in child:
+                        if grandchild.attrib["name"] == game_name :
+                            flag = True
+                            print("found")
+                            print(game_name)
+                        
+            if flag:
+                for child in elem:
+                    if child.tag == "text" :
+                        try:
+                            text = child.text
+                        except:
+                            pass
+                        elem.clear()
+        
+        if flag:
+            #print(type(text))
+            return text
+        else: return None
+    
+getinfo_mame_by_index = getinfo_mame_by_index_2
+
+# xml.etree.ElementTree.iterparse
+#   bug ,memroy leak ,python 3.6
+def getinfo_sl_by_index_1( file_name ,sl_id,the_index=0):
     
     xml_name,game_name = sl_id.split(sep=" ",maxsplit=1)
     
@@ -233,6 +317,63 @@ def getinfo_sl_by_index( file_name ,sl_id,the_index=0):
         print(count)
         if flag:return text
         else: return None
+
+# 因为 python 3.6 的 bug ，重写一个函数，换一个方式
+def getinfo_sl_by_index_2( file_name ,sl_id,the_index=0):
+    
+    
+    xml_name,game_name = sl_id.split(sep=" ",maxsplit=1)
+    
+    with open(file_name,mode="rb") as f:
+        
+        try:
+            f.seek(the_index)
+        except:
+            print("seek error")
+            return
+        
+        text = ''
+        flag = False
+            
+        target=The_Target()
+        parser = xml.etree.ElementTree.XMLParser(target=target)
+        
+        line = f.readline()
+        
+        while line:
+            if target.the_count_number >= 1:
+                #print("break")
+                break
+            parser.feed(line)
+            line = f.readline()
+            
+        elem = target.the_found_elem
+        
+        if elem is not None:
+            for child in elem:
+                if child.tag == "software" :
+                    for grandchild in child:
+                        if grandchild.attrib["list"] == xml_name :
+                            if grandchild.attrib["name"] == game_name :
+                                flag = True
+                                print("found")
+                                print(sl_id)
+                        
+            if flag:
+                for child in elem:
+                    if child.tag == "text" :
+                        try:
+                            text = child.text
+                        except:
+                            pass
+                        elem.clear()
+        
+        if flag:
+            #print(type(text))
+            return text
+        else: return None
+
+getinfo_sl_by_index = getinfo_sl_by_index_2
 
 def getinfo_by_index( file_name ,item_id ,the_index=0,the_type="mame"):
     if the_type=="mame":
