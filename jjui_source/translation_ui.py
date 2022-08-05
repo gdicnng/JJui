@@ -32,7 +32,7 @@ class Translation_Dict():
         
         def read_a_text(file_name):
             lines = []
-            with open( file_name ,mode = 'rt',encoding = 'utf_8_sig' ) as file:
+            with open( file_name ,mode = 'rt',encoding = 'utf_8_sig',errors='backslashreplace' ) as file:
                 lines = file.readlines()
             return lines
         

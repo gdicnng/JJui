@@ -774,6 +774,17 @@ class Text_container(ttk.Frame):
                     sourcefile = None
                 
                 if sourcefile:
+                    
+                    # 新的驱动 文件夹/sourcefile
+                    #   取 sourcefile 的值
+                    # 这样原来的也仍然有效
+                    if sourcefile not in index_dict:
+                        if "/" in sourcefile:
+                            temp_string=sourcefile.split("/")[-1]
+                            if temp_string:
+                                sourcefile = temp_string
+                    
+                    # 之前的代码
                     if sourcefile in index_dict:
                         #the_index = index_dict[sourcefile]
                         

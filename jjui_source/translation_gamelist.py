@@ -6,7 +6,7 @@ import re
 import time
 
 def read_translation_file( translation_file_name ,text_encoding='utf_8_sig'):
-    f = open( translation_file_name , 'rt',encoding = text_encoding)
+    f = open( translation_file_name , mode ='rt',encoding = text_encoding,errors='backslashreplace')
 
     translation_dict = {}
     # 内部子元素为 dict
