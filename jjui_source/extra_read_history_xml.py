@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
+import sys
 import xml.etree.ElementTree
 
 """
@@ -194,6 +195,7 @@ def getinfo_mame_by_index_1( file_name ,game_name,the_index=0):
         else: return None
 
 
+# 用于下面的函数中
 class The_Target(xml.etree.ElementTree.TreeBuilder):
     
     def __init__(self,):
@@ -263,8 +265,17 @@ def getinfo_mame_by_index_2( file_name ,game_name,the_index=0):
             #print(type(text))
             return text
         else: return None
-    
-getinfo_mame_by_index = getinfo_mame_by_index_2
+
+if sys.version_info < (3, 7):
+    #print("python 3.6 or less")
+    getinfo_mame_by_index = getinfo_mame_by_index_2
+else:
+    #print("python 3.7 or higher")
+    getinfo_mame_by_index = getinfo_mame_by_index_1
+
+
+######################
+# sl
 
 # xml.etree.ElementTree.iterparse
 #   bug ,memroy leak ,python 3.6
@@ -373,7 +384,14 @@ def getinfo_sl_by_index_2( file_name ,sl_id,the_index=0):
             return text
         else: return None
 
-getinfo_sl_by_index = getinfo_sl_by_index_2
+
+if sys.version_info < (3, 7):
+    #print("python 3.6 or less")
+    getinfo_sl_by_index = getinfo_sl_by_index_2
+else:
+    #print("python 3.7 or higher")
+    getinfo_sl_by_index = getinfo_sl_by_index_1
+
 
 def getinfo_by_index( file_name ,item_id ,the_index=0,the_type="mame"):
     if the_type=="mame":

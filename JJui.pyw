@@ -1,7 +1,9 @@
 ﻿# -*- coding: utf_8_sig-*-
 import sys
 import os
+import io
 import builtins
+import locale
 
 gamelist_type="mame" #  "mame"  #"softwarelist"
 
@@ -34,10 +36,8 @@ builtins.__dict__['_'] = translation_holder.translation
 from jjui_source import global_static_filepath  as the_files
 from jjui_source import read_user_config 
 
-
-
 """
-    # A
+    #
     # 切换当前工作目录
         #1 以 python 脚本模式 运行 ，切换到主脚本所在文件夹
         #2 打包为 exe 后，运行，切换到 exe 所在文件夹
@@ -45,7 +45,7 @@ from jjui_source import read_user_config
             打包方式 Nuitka ？？？？？
             打包方式 其它  ？？？？？
 
-    # B
+    #
     # 把翻译符号 _ 弄到 builtins 里 ,要不要弄进去？
         
         # √●×
@@ -68,12 +68,48 @@ from jjui_source import read_user_config
             #   从配置文件获得 翻译文件 位置
             √    读取 ui 翻译
             √    设置全局变量 _ 弄到 builtins 里
-
+    
+    #
+    #
+    本地字符串排序
+    locale.LC_COLLATE
+        字符串排序会用到的区域类别。 将会影响 locale 模块的 strcoll() 和 strxfrm() 函数。
+    
+    locale.setlocale(locale.LC_COLLATE,locale="")
+    a=list('自挂东南枝一龙科卡匕拳佟㐁豈Ơ赵钱孙李二三四')
+    b=sorted(a,key=locale.strxfrm)
+    
+        windows 的值：
+        https://docs.microsoft.com/en-us/windows/win32/Intl/sort-order-identifiers
+            ""
+            zh-CN 拼音
+            zh-CN_stroke 笔画
+            zh-CN_phoneb 似乎没用,Chinese phone book (surname) order，没用
+            zh-TW
+            zh-TW_pronun
+            ......
+    
 """
 
 ####
 ####
 ####
+
+
+# python 3.4.4
+#   命令行模式时，print 函数 兼容，超过 字符集 问题
+#   窗口模式，不用管
+if sys.version_info < (3, 6):
+    try:
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, errors= 'backslashreplace',line_buffering=True)
+        #print("less than 3.6")
+    except:
+        pass
+#print('print')
+#print('print 简体中文')
+#print('print 简体中文 繁體中文')
+#print('print 简体中文 繁體中文 ĀĐ')
+
 
 # 切换工作目录
 def change_working_directory():
@@ -170,6 +206,7 @@ configure_data = global_variable.user_configure_data
 
 
 
+
 # 读取翻译文件
 def get_ui_language_file_path(configure_data):
     language = configure_data["ui_language"]
@@ -185,11 +222,20 @@ ui_language_file_path = get_ui_language_file_path(configure_data)
 if ui_language_file_path == "" : # 原始 ，中文，不翻译
     pass
 else: # 其它语言
-    print(ui_language_file_path)
-    print(ui_language_file_path)
+    print()
+    print("ui language file:")
     print(ui_language_file_path)
     translation_holder.get_translation_dict_from_file( ui_language_file_path )
 
+
+# 字符串排序 locale.setlocale,locale.LC_COLLATE，locale.strxfrm()
+# 拼音、笔画
+if configure_data["use_locale_sort"]:
+    try:
+        locale.setlocale(locale.LC_COLLATE,locale= configure_data["locale_name"] )
+        global_variable.flag_setlocale_LC_COLLATE = True
+    except:
+        global_variable.flag_setlocale_LC_COLLATE = False
 
 #####
 #####
@@ -198,4 +244,3 @@ else: # 其它语言
 from jjui_source import ui_main
 
 ui_main.main()
-

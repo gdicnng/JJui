@@ -216,6 +216,90 @@ def parse_mame_xml( xml_file_name , mame_type = "mame0162"):
     print(count)
     return( machine_dict  )
 
+# 大量重复字符串，处理一下
+#   相同的字符串，占用了不同的空间，
+#   重新赋值一下，可能会 节约 些空间
+def about_some_same_strings(machine_dict):
+    
+    # 游戏名： 
+        # 'name' 和 id 应该是一样的
+        # 生成 id 时,用 'name' 复制的
+    # 'cloneof' ,所有内容，都是 游戏名 id ，重复的
+    # 'romof',所有内容，都是 游戏名 id ，重复的
+    def func_1(original_data):
+        #['name', 'status', 'translation', 'description', 'year', 'sourcefile', 'manufacturer', 'cloneof', 'savestate', 'romof']
+        the_key_list = ['cloneof','romof']
+        
+        # dict 游戏名→游戏名
+        game_name_dict = { game_name : game_name for game_name in original_data }
+        
+        for the_key in the_key_list:
+            print()
+            print(the_key)
+            
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    # 原始值
+                    the_old_value = game_info[the_key]
+                    
+                    # 重新赋值
+                    game_info[the_key] = game_name_dict.get(the_old_value,the_old_value)
+        
+        return original_data
+    
+    # 某个key中，有（大量/一些）重复的 字符串，
+    def func_2(original_data):
+        #['name', 'status', 'translation', 'description', 'year', 'sourcefile', 'manufacturer', 'cloneof', 'savestate', 'romof']        
+        the_key_list = [ 
+                'status',# 重复的特别多
+                'year',
+                'sourcefile',
+                'manufacturer',
+                'savestate',# 重复的特别多
+                ]
+        
+        for the_key in the_key_list:
+            print()
+            print(the_key)
+            
+            # 原来的值
+            the_value_list = []
+            
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    the_value_list.append( game_info[the_key] )
+            
+            the_value_set = set( the_value_list )
+            
+            the_value_dict = { x : x for x in the_value_set}
+            
+            # 重新赋值
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    the_value = game_info[ the_key ]
+                    game_info[ the_key ] = the_value_dict[ the_value ]
+        
+        return original_data
+    
+    
+    
+    if "kof97k" in machine_dict:
+        print(machine_dict["kof97k"])
+    
+    machine_dict = func_1(machine_dict)
+    
+    if "kof97k" in machine_dict:
+        print()
+        print(machine_dict["kof97k"])
+    
+    machine_dict = func_2(machine_dict)
+    
+    if "kof97k" in machine_dict:
+        print()
+        print(machine_dict["kof97k"])
+    return machine_dict
+
+
 # set_data = {}
 # set_data["all_set"] = set()
 # set_data["clone_set"] = set()
@@ -672,7 +756,7 @@ def dict_to_list(game_list_data):
 
                     #"runnable",
                     #"softwarelist",
-                    '#number', # 测试
+                    
                     ]
     
     
@@ -720,22 +804,20 @@ def prepare_for_gamelist_translation(machine_dict):
         game_info["translation"]=game_info.get("description","")
     return machine_dict
 
-# 添加一组纯数字项 #number
-# 好像 数定排序 快，
-# 测试一下
-def add_number_order(machine_dict):
-    number = 0
-    for game_name in sorted(machine_dict):
-        machine_dict[game_name]["#number"] = number
-        number += 1
-    return machine_dict
+
+
 
 def main(xml_file_name,mame_type="mame0162"):
     
     # version
     mame_version   = get_mame_version(xml_file_name)
-    # game list 清理之前
+    # game list 
     game_list_data = parse_mame_xml(xml_file_name,mame_type)
+    
+    # 大量重复字符串，处理一下
+    game_list_data = about_some_same_strings(game_list_data)
+    
+    
     # set data ,
     #   all_set parent_set clone_set
     set_data       = make_set_data(game_list_data)
@@ -753,8 +835,6 @@ def main(xml_file_name,mame_type="mame0162"):
     # 翻译准备 ，将原 英文内容复制过去
     machine_dict = prepare_for_gamelist_translation(game_list_data)
     
-    # 添加 #number 项，纯数字排序，测试
-    #machine_dict = add_number_order(machine_dict)
     
     # 格式，转为 list
     # 第0项："name" ，这个是 id
@@ -775,209 +855,16 @@ def main(xml_file_name,mame_type="mame0162"):
 
 if __name__ == "__main__":
 
-    flag = False
-    
-    if flag:
-        
-        import pickle
-        import time
-        time_1 = time.time()
-        
-        # xml 文件
-        #xml_file_name = "roms.xml"
-        xml_file_name = "roms_0168.xml"    
-        #xml_file_name = "roms_0241.xml"    
-        
-        flag_test_xml_parse = 1 # game list 清理之前
-        flag_test_get_set_data = 1  # all_set , parent_set, clone_set
-        flag_test_dict_data = 1 # clone_to_parent parent_to_clone
-        flag_test_index = 1 # index    
-        flag_game_list_data_final = 1 # game list 清理之后
-        
-        # version
-        mame_version = get_mame_version(xml_file_name)
-        # game list 清理之前
-        game_list_data = parse_mame_xml(xml_file_name,mame_type="mame")
-        # set data ,
-        #   all_set parent_set clone_set
-        set_data =  make_set_data(game_list_data)    
-        # dict_data
-        #   clone_to_parent parent_to_clone
-        dict_data = make_dict_data(game_list_data)
-        # 内置分类
-        internal_index = make_internal_index(game_list_data,set_data,dict_data)    
-        # 清理 machine_dict
-        machine_dict = clear_game_list_data(game_list_data)
-        
-        
-        # out_game_list.txt
-        if flag_test_xml_parse:
-            # xml_parse
-            # game_list_data 有多余的，还没有清理
-            with open("out_game_list.txt",mode='wt',encoding='utf_8_sig',) as f:
-                
-                print("",file=f)
-                print("test parse xml",file=f)
-                print("game list ,with some more info",file=f)
-                
-                print("",file=f)
-                print( "len",file=f )
-                print( len(game_list_data) ,file=f)
-                # 游戏列表部分
-                #   所有 key
-                def get_all_keys(data):
-                    all_keys=[]
-                    for game,game_info in data.items():
-                        all_keys.extend(  game_info.keys() )
-                    all_keys= sorted ( set(all_keys) )
-                    return all_keys
-                all_keys = get_all_keys(game_list_data)
-                print("",file=f)
-                print("all keys :",file=f)
-                for key in sorted(all_keys):
-                    print( key ,file=f)
-                #   列表
-                print("",file=f)
-                print("game list ,with some more info :",file=f)
-                for game_name in sorted( game_list_data ):
-                    game_info = game_list_data[game_name]
-                    print(game_name,file=f)
-                    #for k,v in game_info.items():
-                    #    print("\t"+k+"\t"+v)
-                    for key in all_keys:
-                        print("\t" + key + "\t" + str(game_info.get(key,"")) ,file=f)
-        
-        # out_set_data.txt
-        if flag_test_get_set_data:
-            with open("out_set_data.txt",mode='wt',encoding='utf_8_sig',) as f:
-                print("",file=f)
-                print("set_data",)
-                print("set_data",file=f)
-                print(len(set_data),file=f)
-                print(sorted(set_data.keys()),file=f)
-                
-                print("",file=f)
-                
-                for key in set_data:
-                    print(key,file=f)
-                    
-                    for game_name in sorted(set_data[key]):
-                        print("\t",end='',file=f)
-                        print(game_name,file=f)
-        
-        # out_dict_data.txt
-        if flag_test_dict_data:
-            with open("out_dict_data.txt",mode='wt',encoding='utf_8_sig',) as f:
-                print("",file=f)
-                print("dict_data",)
-                print("",file=f)
-                
-                #dict_data["clone_to_parent"] = {}
-                #dict_data["parent_to_clone"] = {}
-                
-                for key in dict_data:
-                    print(key,file=f)
-                    for k,v in dict_data[key].items():
-                        print("\t" + k + "\t" + str(v),file=f)
-        
-        # out_intern_index.txt
-        if flag_test_index:
-            with open("out_intern_index.txt",mode='wt',encoding='utf_8_sig',) as f:
-                print("",file=f)
-                print("intern_index",file=f)
-                print("intern_index")
-                
-                # internal_index
-                # {}
-                #       {"gamelist":[],"children":{},}
-                #           {"gamelist":[],}
-                
-                # index_level_1 第一层分类名
-                for index_level_1 in internal_index:
-                    print("",file=f)
-                    print(index_level_1,file=f)
-                    
-                    # 第一层
-                    temp_1 = internal_index[index_level_1]
-                    for game_name in temp_1["gamelist"]:
-                        print("\t" + index_level_1+"\t"+game_name,file=f)
-                    
-                    # 第二层
-                    # index_level_2 第二层分类名
-                    if "children" in temp_1:
-                        for index_level_2 in temp_1["children"]:
-                            temp_2 = temp_1["children"][index_level_2]
-                            for game_name  in temp_2["gamelist"]:
-                                print("\t" + index_level_1+"\t"+index_level_2+"\t"+game_name,file=f)
-        
-        # out_game_list_final
-        # machine_dict
-        if flag_game_list_data_final:
-            with open("out_game_list_final.txt",mode='wt',encoding='utf_8_sig',) as f:
-                print("",file=f)
-
-                def get_all_keys(data):
-                    all_keys=[]
-                    for game,game_info in data.items():
-                        all_keys.extend(  game_info.keys() )
-                    all_keys= sorted ( set(all_keys) )
-                    return all_keys
-                all_keys = get_all_keys(machine_dict)
-
-
-                for game_name in sorted( machine_dict ):
-                    game_info = machine_dict[game_name]
-                    print(game_name,file=f)
-                    #for k,v in game_info.items():
-                    #    print("\t"+k+"\t"+v)
-                    for key in all_keys:
-                        print("\t" + key + "\t" + str(game_info.get(key,"")) ,file=f)
-
-            with open("out_game_list_final_2.txt",mode='wt',encoding='utf_8_sig',) as f:
-                print("",file=f)
-
-                for game_name in sorted( machine_dict ):
-                    game_info = machine_dict[game_name]
-                    print(game_name,file=f)
-                    #for k,v in game_info.items():
-                    #    print("\t"+k+"\t"+v)
-                    for key in game_info:
-                        print("\t" + key + "\t" + str(game_info.get(key,"")) ,file=f)
-      
-        
-        print()
-        print("main output")
-        time_2=time.time()
-        print(time_2-time_1)
-        
-
-        
-
-        
-        
-        
-
-
-        print("finish")
-        time_end=time.time()
-        print(time_end-time_1)
-
-
-
-
-if __name__ == "__main__":
-
-    
     # xml 文件
-    #xml_file_name = "roms.xml"
-    xml_file_name = "roms_0242.xml"    
-    #xml_file_name = "roms_0241.xml"
+    xml_file_name = "roms.xml"
+    #xml_file_name = "roms_0168.xml"    
+    #xml_file_name = "roms_0241.xml"    
     
-    temp_dict=main(xml_file_name)
-    print( len(temp_dict) )
+    data = main(xml_file_name)
     
-    for key in temp_dict:
-        
-        print()
-        print(key)
-        print(len(temp_dict[key]))
+    new_file_name = "cache_data.bin"
+    
+    import pickle
+    with open( new_file_name , 'wb' ) as file:
+        pickle.dump( data , file )
+

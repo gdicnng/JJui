@@ -2,6 +2,7 @@
 import sys
 import os
 import webbrowser
+import locale
 import tkinter as tk
 from tkinter import ttk 
 import tkinter.filedialog
@@ -225,9 +226,13 @@ class MenuBar(ttk.Frame):
         m = tk.Menu(self.new_menu_botton_configure, tearoff=0)
         self.new_menu_botton_configure.configure(menu=m)
         
+        m.add_separator()
+        
         m.add_command(label=_("路径设置"), 
                 command=self.new_func_menu_call_back_set_file_path
                 )
+        
+
         
         m.add_separator()
         
@@ -303,7 +308,22 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_choose_mark_unavailable,
                 variable =self.new_var_tk_unavailable_mark,
                 )
-
+                
+        m.add_separator()
+        self.new_var_tk_use_local_sort = tk.IntVar() # default value 0
+        # 初始化,需从配置文件中，读取值
+        if user_configure["use_locale_sort"]:
+            self.new_var_tk_use_local_sort.set(1)
+        else:
+            self.new_var_tk_use_local_sort.set(0)
+        
+        m.add_checkbutton(label=_("本地排序")+"(" +_("关闭程序，重新打开后生效") +")", 
+                variable = self.new_var_tk_use_local_sort ,
+                command=self.new_func_menu_call_back_use_local_sort
+                )
+        
+        m.add_separator()
+    
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)
         self.new_menu_botton_language.configure(menu=m)
@@ -1037,11 +1057,11 @@ class MenuBar(ttk.Frame):
         # 2
         # folder 路径
         frame2 = ttk.Frame(notebook)
-        notebook.add(frame2, text=_('folders'),sticky=tk.N+tk.E+tk.S+tk.W,)
+        notebook.add(frame2, text=_('目录路径'),sticky=tk.N+tk.E+tk.S+tk.W,)
         
         frame2.columnconfigure(1,weight=1)
         
-        ttk.Label(frame2,text=_("folders 路径")).grid(row=0,column=0,sticky=tk.W+tk.N,)
+        ttk.Label(frame2,text=_("目录路径")).grid(row=0,column=0,sticky=tk.W+tk.N,)
         
         data["folders_path"]=tk.StringVar()
         
@@ -1188,6 +1208,8 @@ class MenuBar(ttk.Frame):
         
         window.wait_window()
     
+
+    
     # 设置→周边延迟显示
     def new_func_menu_call_back_use_extra_delay_time(self,):
         user_configure["extra_delay_time_use_flag"] = self.new_var_tk_extra_delay_use_flag.get()
@@ -1271,6 +1293,26 @@ class MenuBar(ttk.Frame):
         else:
             user_configure["unavailable_mark"] = False
             global_variable.flag_mark_unavailable_game = False
+
+    #游戏列表→使用本地排序
+    def new_func_menu_call_back_use_local_sort(self,):
+        if self.new_var_tk_use_local_sort.get():
+            user_configure["use_locale_sort"] = True
+            
+            if global_variable.flag_setlocale_LC_COLLATE == False :
+                try:
+                    locale.setlocale(locale.LC_COLLATE,locale= user_configure["locale_name"] )
+                    global_variable.flag_setlocale_LC_COLLATE = True
+                except:
+                    global_variable.flag_setlocale_LC_COLLATE = False
+            
+            
+        else:
+            user_configure["use_locale_sort"] = False
+            
+            global_variable.flag_setlocale_LC_COLLATE = False
+            
+        print( user_configure["use_locale_sort"] )
 
     ###############
     # 菜单 callback 函数：关于→关于

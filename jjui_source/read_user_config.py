@@ -173,6 +173,9 @@ def get_configure_file_default_value( ):
         
         ("ui_language",""), # ??
         
+        ("locale_name",""), # locale.setlocale(locale.LC_COLLATE,locale="???")
+        ("use_locale_sort",False), # locale.strxfrm()
+        
         ("gamelist_level",        1),
             # 1，列表 仅一层
             # 2，列表 两层，总是展开，不能收起
@@ -403,6 +406,7 @@ def get_configure_file_value( file_name ):
         "use_shell",
         "zoomed",
         "unavailable_mark",
+        "use_locale_sort",
         ):
         if x in ini_data:
             # 字符 转为 bool

@@ -1,32 +1,53 @@
-.. JJui-docs documentation master file, created by
-   sphinx-quickstart on Sat Aug 28 19:26:01 2021.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-=====================================
-JJui 文档
-=====================================
+=====================
+总目录
+=====================
 
 
 .. toctree::
    :glob:
-   :maxdepth: 2
-   :caption: 目录:
+   :maxdepth: 1
    
+   jjui/index
    
-   jjui/jjui
-   jjui/run_0
-   jjui/run_1
-   jjui/mame_configure
+   about/start
+   about/donation
+
+------------------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
    
-   
-   jjui/jjui2
+   mame/index
+
+UI 配合 MAME ，内容待补充
+
+第三方 MAME ，内容待补充
+
+--------------------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
    
    python/index
+
+----------------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
    
-   about/start   
-   about/donation
-   about/more
+   command_line/index
+
+-------------------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+   
+   relative_path/index
 
 
 
+..   xxx * :ref:`search`

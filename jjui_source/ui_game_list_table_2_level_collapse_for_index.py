@@ -266,8 +266,8 @@ class GameList_for_index_2(GameList_for_index):
     def new_func_bindings_for_receive_virtual_event(self,):
         pass
     
-    def new_func_show_gamelist_again(self,):
-        pass
+    #def new_func_show_gamelist_again(self,):
+    #    pass
     
     def new_func_unbind_some_bindings(self):
         header = self.new_ui_header
@@ -277,9 +277,9 @@ class GameList_for_index_2(GameList_for_index):
         header.tag_unbind( "header_backgroud_rectangle",'<Button-1>',)
         
         #header.bind( '<Configure>',self.new_func_header_resize)
-        header.unbind( '<Configure>',)
+        #header.unbind( '<Configure>',)
         #table.bind('<Configure>',  self.new_func_table_binding_resize)
-        table.unbind('<Configure>',)
+        #table.unbind('<Configure>',)
 
 
 # new bindings
@@ -293,11 +293,18 @@ class GameList_for_index_3(GameList_for_index_2):
     def new_func_bindings(self,):
         super().new_func_bindings()
         
-        self.bind('<Configure>',self.new_func_self_resize)
+        #self.bind('<Configure>',self.new_func_self_resize)
     
     
     def new_func_self_resize(self,event):
+        print(event.height)
         self.new_func_refresh_all()
+        print("aaaa")
+    def new_func_table_binding_resize(self,event):
+        print("xxxxx")
+        print(event.height)
+        print(event.width)
+        super().new_func_table_binding_resize(event)
         
         
 GameList = GameList_for_index_3

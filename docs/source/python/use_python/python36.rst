@@ -218,7 +218,7 @@ https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
 	或者
 	pythonw.exe JJui.pyw
 	
-		（如果 python.exe 不在环境变量里，那你得把它替换为完整的路径
+		（如果 python.exe 不在 PATH 里，那你得把它替换为完整的路径
 		（比如 C:\xxxx\yyyy\zzz\????\python.exe 这种可能很长的一串路径
 
 

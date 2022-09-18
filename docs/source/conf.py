@@ -1,7 +1,3 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
@@ -20,9 +16,14 @@
 project = 'JJui-docs'
 copyright = '2022, gdicnng'
 author = 'gdicnng'
-
+release = '2.0'
 # The full version, including alpha/beta/rc tags
-release = 'v1.0'
+
+# 选项
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-html_theme_options
+
+
+
 
 
 # -- General configuration ---------------------------------------------------
@@ -55,31 +56,105 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
+#html_theme = 'python_docs_theme'
+#html_theme = 'classic'
+#html_theme = 'sphinxdoc'
+# alabaster classic sphinx_rtd_theme
+
+# python 2 classic
+# python 3 theme
+# python_docs_theme
+#   https://sphinx-themes.org/sample-sites/python-docs-theme/
+#   pip install python-docs-theme
+
+# sphinx_rtd_theme
+#   $ pip install sphinx-rtd-theme
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
+###'<project> v<revision> documentation'
+html_title = ''
+# 此值为空时，python 3 docs 顶部 少一节
+# 此值不为这 每个网页标题后缀
+##
+# 设置为空
+# 默认值： '<project> v<revision> documentation'
+# The “title” for HTML documentation generated with Sphinx’s own templates. This is appended to the <title> tag of individual pages, and used in the navigation bar as the “topmost” element. It defaults to '<project> v<revision> documentation'.
+
+
+
 ######
 ######
 ######
 # 自己添加
 #自己添加 1
-html_theme_options = {
+if html_theme == 'alabaster':
+    html_theme_options = {
+        # https://www.sphinx-doc.org/en/master/usage/theming.html#builtin-themes
+        # https://alabaster.readthedocs.io/en/latest/customization.html
+        'caption_font_family' : 'SimHei,KaiTi,NSimSun,SimSun',# alabaster theme
+        'code_font_family': 'NSimSun,SimSun,SimHei,KaiTi',# alabaster theme
+        'font_family' : 'NSimSun,SimSun,SimHei,KaiTi',# alabaster theme
+        'head_font_family' : 'SimHei,KaiTi,NSimSun,SimSun',# alabaster theme
+        'show_relbars' : 'true',# alabaster theme
+        'show_powered_by': 'true',# alabaster theme
+        'fixed_sidebar' : 'false',# alabaster theme，目录条不同主体内容一起上下滚动
+        'body_max_width' : 'none',# 主体内容宽度不限，basic theme
+        'page_width' : 'none' ,# 主体内容宽度不限，alabaster theme
+        'globaltoc_maxdepth' : -1 ,# basic theme
+    #    'nosidebar' : 'true',# basic theme
+        'sidebar_collapse':'true',# alabaster theme
+        'globaltoc_collapse':'true',# basic
+    }
+elif html_theme == 'classic': # python 2
+    # python doc 2
+    html_theme_options ={
+        'body_max_width' : 'none',# 主体内容宽度不限，basic theme
+        'globaltoc_collapse' : 'true',# basic theme 
+            # Only expand subsections of the current document in globaltoc.html
+        'globaltoc_maxdepth' : '-1',# basic theme
+        'bodyfont':'NSimSun,SimSun,SimHei,KaiTi',# basic
+        'headfont':'SimHei,KaiTi,NSimSun,SimSun',# basic
+    }
+elif html_theme == "python_docs_theme": # python 3
+    # python doc 3
+    # pip install python-docs-theme
+    
+    #'<project> v<revision> documentation'
+    html_title = project
+    #html_title = ""
+    # 每一个页面 后缀，如果不为空，感觉烦人
+    # 如果 设为空 ，
+        # 此 主题 顶部 目录  a >> b >> c >> ..... ，
+        # b 处，显示空白
+    
+    # inherit = default
+    # inherit = classic
+    # inherit = basic
+    html_theme_options ={
+        'body_max_width' : 'none',# 主体内容宽度不限，basic theme
+        'globaltoc_collapse':'true',# basic,
+        'globaltoc_maxdepth' : '-1',# basic theme
+        'root_name' : 'JJui',
+        'root_url' : '/index.html', # 空的，无效
+        'root_icon':'', 
+        'root_include_title':True, 
+            # a >> b >> c >> ..... ， 头部目录，显示/不显示 b
+            # 头部 第一个 a ，删不掉
 
-    'caption_font_family' : 'SimHei,KaiTi,NSimSun,SimSun',# alabaster theme
-    'code_font_family': 'NSimSun,SimSun,SimHei,KaiTi',# alabaster theme
-    'font_family' : 'NSimSun,SimSun,SimHei,KaiTi',# alabaster theme
-    'head_font_family' : 'SimHei,KaiTi,NSimSun,SimSun',# alabaster theme
-    'show_relbars' : 'true',# alabaster theme
-    'show_powered_by': 'true',# alabaster theme
-    'fixed_sidebar' : 'true',# alabaster theme，目录条不同主体内容一起上下滚动
-    'body_max_width' : 'none',# 主体内容宽度不限，basic theme
-    'page_width' : 'none' ,# 主体内容宽度不限，alabaster theme
-#    'globaltoc_maxdepth' : 3 ,# basic theme
-#    'nosidebar' : 'true',# basic theme
-}
+    }
+elif html_theme == 'sphinx_rtd_theme':# inherit  basic
+    html_static_path = ['_static_rtd',]
+    html_css_files = ['custom.css',]
+        # 添加 custom.css ，改变宽度
+    html_theme_options ={
+        # 页面宽度 怎样 不限制 ？
+        'collapse_navigation':True,
+    }
 # SimSun 宋体
 # SimHei 黑体
 # NSimSun 新宋体
@@ -96,11 +171,6 @@ html_theme_options = {
 # show_powered_by
 # show_relbars: true or false - used to display next and previous links above and below the main page content. If you only want to display one, this setting can be further overridden through the show_relbar_top and show_relbar_bottom settings.
 
-
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
 
 
 # 自己添加 3
@@ -129,11 +199,7 @@ html_output_encoding = 'utf-8'
 # ?????? 无效？theme alabaster 'show_powered_by' : 'false',
 # html_show_sphinx = False
 
-html_title = ''
-# 每个网页标题后缀
-# 设置为空
-# 默认值： '<project> v<revision> documentation'
-# The “title” for HTML documentation generated with Sphinx’s own templates. This is appended to the <title> tag of individual pages, and used in the navigation bar as the “topmost” element. It defaults to '<project> v<revision> documentation'.
+
 
 #import jieba
 html_search_language = 'zh'
@@ -144,14 +210,18 @@ html_search_language = 'zh'
 # to enable chinese search
 #html_search_language = 'zh'
 # if you want to use custom jieba dictonary path.
-# if not set , it use  jieba dictonary in default
+# if not set , it use jieba dictonary in default
 #html_search_options = {'dict': jieba.DEFAULT_DICT}
 #html_search_options = {'dict': '/home/my/my_dictonary.txt'} 
+############################################
+#   pip install jieba
+import jieba
+html_search_options = {'dict': jieba.DEFAULT_DICT}
 
 
 #测试
 html_sidebars = {
-   '**': ['globaltoc.html',],#'searchbox.html'
+   '**': ['globaltoc.html','searchbox.html'],#'searchbox.html'
    #'**': ['globaltoc.html', 'searchbox.html'],
    #localtoc.html – a fine-grained table of contents of the current document
    #globaltoc.html – a coarse-grained table of contents for the whole documentation set, collapsed
@@ -169,3 +239,12 @@ source_suffix = {
     '.rst': 'restructuredtext',
     #'.md': 'markdown',
 }
+
+
+# If false, no module index is generated.
+html_domain_indices = False
+
+# If false, no index is generated.
+html_use_index = False
+# 不要 索引 
+# 不要 顶部 索引 超链接，看着烦人

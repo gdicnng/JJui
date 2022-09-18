@@ -2,6 +2,7 @@
 import sys
 import os
 import re
+import locale
 
 # 列表 标题 id 范围 ，增加了一个变量，之后等改一下
 # new_func_set_all_columns()
@@ -309,13 +310,23 @@ class Data_Holder_1():
         else:
             def func_for_sort(item_id,temp_dict=self.machine_dict,the_index=the_index):
                 return temp_dict[item_id][the_index]
+            
+            # 本地排序
+            if the_sort_key in ("translation","alt_title"):
+                if global_variable.flag_setlocale_LC_COLLATE:
+                    
+                    def func_for_sort(item_id,temp_dict=self.machine_dict,the_index=the_index):
+                        
+                        return locale.strxfrm(temp_dict[item_id][the_index])
+
+
 
         
         the_id_list.sort(
                 key=func_for_sort,######
                 reverse=reverse,
                 )
-
+    
     
     def get_the_sort_key_and_reverse(self,):
         return self.sort_key , self.sort_reverse
@@ -603,11 +614,44 @@ class GameList_0(ttk.Frame):
     # 纵向 滚动条，控制 table 
     def new_func_y_scrollbar_changed(self,*args):
         self.new_ui_table.yview(*args)
+        
+        # 在 canvas 的 confine=False 时，
+        #   不限制范围，
+        # 在 canvas 的 confine=True 时，默认值
+        #   虽然限制了范围
+        #
+        #   但，
+        #   当表格高度小于 显示高度时，表格下面会有空白
+        #   进度条可能会 拉出 负数，表格下移，空白填充在 表格 之上
+        #
+        #
+        #   增加一个 判断 条件
+        
+        #a=self.new_ui_table.yview()
+        #print(a)
+        #   canvas 显示 <0 部分时
+        #   这个结果也只是 (0,1)
+        #   不好判断
+        
+        y1 = self.new_ui_table.canvasy(0)
+        #print(y1)
+        if y1<0:
+            #print("y<0")
+            self.new_ui_table.yview(tk.MOVETO, 0)
+        
         self.new_func_refresh_table()
+
     # 横向 滚动条 ，控制 header 、 table 俩
     def new_func_x_scrollbar_changed(self,*args):
         self.new_ui_table.xview(*args)
         self.new_ui_header.xview(*args)
+        
+        x1 = self.new_ui_table.canvasx(0)
+        if x1<0:
+            #print("x<0")
+            self.new_ui_table.xview(tk.MOVETO, 0)
+            self.new_ui_header.xview(tk.MOVETO, 0)
+        
         self.new_func_refresh_table()
 
     def new_func_refresh_table(self,event=None):

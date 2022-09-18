@@ -1,0 +1,33 @@
+﻿[FOLDER_SETTINGS]
+RootFolderIcon golden
+SubFolderIcon golden
+
+[ROOT_FOLDER]
+nes
+snes
+gba
+neogeo
+famicom_flop
+megadriv
+
+[aes]
+neogeo
+
+[fc/nes]
+nes
+famicom_flop
+
+[fc/nes fc]
+famicom_flop
+
+[fc/nes nes]
+nes
+
+[gba]
+gba
+
+[md]
+megadriv
+
+[sfc snes]
+snes

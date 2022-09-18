@@ -1,6 +1,22 @@
 ﻿==========================================
-起源
+JJui 网址
 ==========================================
+
+网址
+================
+
+| 本人在琵琶行的 ID ：gdicnng
+| 邮箱：gdicnng@sina.com
+| 源代码 1：https://gitee.com/gdicnng/JJui     (这个网站，现在公开麻烦，算球了)
+| 源代码 2：https://github.com/gdicnng/JJui
+| 发表在 PPX 论坛上的贴子：
+|   https://www.ppxclub.com/forum.php?mod=viewthread&tid=705838
+|   https://www.ppxclub.com/705838-1-1
+| 第一次上传时间： 2021年06月
+
+起源
+=================
+
 | 
 | JJui
 | 街机游戏列表显示器
@@ -17,8 +33,6 @@
 | 
 | 看了篇 Python 的 tkinter 说明
 | 觉得可以动手写一下
-| 很快就把列表显示出来了
-| 但光一个列表不够啊
 | ……
 | 反正到现在
 | 自己觉得
@@ -30,13 +44,9 @@
 | 大概率很难让大家满意
 | 
 | 大家，各位街机游戏爱好者，可以免费使用
-| 
-| 本人在琵琶行的 ID ：gdicnng
-| 邮箱：gdicnng@sina.com
-| 源代码：https://gitee.com/gdicnng/JJui     (这个网站，现在公开麻烦，算球了)
-| 源代码：https://github.com/gdicnng/JJui
-| 发表在 PPX 论坛上的贴子：https://www.ppxclub.com/forum.php?mod=viewthread&tid=705838
-| 第一次上传时间： 2021年06月
+
+
+
 | 
 
 

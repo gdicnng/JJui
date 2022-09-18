@@ -5,9 +5,12 @@
 import math
 import time
 import re
+import locale
 
 import tkinter as tk
 import tkinter.ttk as ttk
+
+from . import global_variable
 
 #from PIL import Image, ImageTk
  
@@ -265,6 +268,14 @@ class Data_Holder_level_2(Data_Holder_level_1):
         else:
             def func_for_sort(item_id,machine_dict=self.machine_dict,the_index=the_index):
                 return machine_dict[item_id][the_index]
+            
+            # 本地排序
+            if the_sort_key in ("translation","alt_title"):
+                if global_variable.flag_setlocale_LC_COLLATE:
+                    
+                    def func_for_sort(item_id,temp_dict=self.machine_dict,the_index=the_index):
+                        
+                        return locale.strxfrm(temp_dict[item_id][the_index])                
 
         
         

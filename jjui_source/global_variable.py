@@ -6,6 +6,11 @@ gamelist_type = "mame"
     # "softwarelist"
     # if global_variable.gamelist_type == "softwarelist":
 
+flag_setlocale_LC_COLLATE = False
+# locale.setlocale(locale.LC_COLLATE,locale="???") 
+# 无效的设置，# locale.Error: unsupported locale setting
+# 如果设置 成功，记录改为 True
+
 # 程序初始化，读取配置文件，然后，再 赋值
 
 user_configure_data = {}

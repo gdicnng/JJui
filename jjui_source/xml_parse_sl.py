@@ -131,8 +131,93 @@ def xml_info_change(xml_info):
         temp = set( xml_info[xml_name]["gamelist"] )
         
         xml_info[xml_name]["gamelist"]  = temp
+
+# 大量重复字符串，处理一下
+#   相同的字符串，占用了不同的空间，
+#   重新赋值一下，可能会 节约 些空间
+def about_some_same_strings(machine_dict):
+    
+    # 游戏名： 
+    #
+    # sl
+    # 'cloneof' ,所有内容，都是 游戏名 id ，重复的
+    def func_1(original_data):
+        #['xml', 'name', 'supported', 'translation', 'year', 'publisher', 'description','alt_title', 'cloneof']
+        the_key_list = ['cloneof',]
+        
+        # dict 游戏名→游戏名
+        game_name_dict = { game_name : game_name for game_name in original_data }
+        
+        for the_key in the_key_list:
+            print()
+            print(the_key)
+            
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    # 原始值
+                    the_old_value = game_info[the_key]
+                    
+                    # 重新赋值
+                    game_info[the_key] = game_name_dict.get(the_old_value,the_old_value)
+        
+        return original_data
+    
+    # 某个key中，有（大量/一些）重复的 字符串，
+    # sl
+    def func_2(original_data):
+        #['xml', 'name', 'supported', 'translation', 'year', 'publisher', 'description','alt_title', 'cloneof']
+        the_key_list = [ 
+                'xml',# 重复的特别多
+                'name',
+                'supported',# 重复的特别多
+                'year',
+                'publisher',
+                ]
+        
+        for the_key in the_key_list:
+            print()
+            print(the_key)
+            
+            # 原来的值
+            the_value_list = []
+            
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    the_value_list.append( game_info[the_key] )
+            
+            the_value_set = set( the_value_list )
+            
+            the_value_dict = { x : x for x in the_value_set}
+            
+            # 重新赋值
+            for game_name,game_info in original_data.items() :
+                if the_key in game_info:
+                    the_value = game_info[ the_key ]
+                    game_info[ the_key ] = the_value_dict[ the_value ]
+        
+        return original_data
     
     
+    
+    if "nes smb1" in machine_dict:
+        print(machine_dict["nes smb1"])
+    
+    machine_dict = func_1(machine_dict)
+    
+    if "nes smb1" in machine_dict:
+        print()
+        print(machine_dict["nes smb1"])
+    
+    machine_dict = func_2(machine_dict)
+    
+    if "nes smb1" in machine_dict:
+        print()
+        print(machine_dict["nes smb1"])
+    return machine_dict
+
+
+
+
 # set_data = {}
 # set_data["all_set"] = set()
 # set_data["clone_set"] = set()
@@ -392,6 +477,10 @@ def main( file_name ,mame_version=""):
     all_info,xml_info = read_xml(file_name)
     #
     machine_dict = all_info
+    
+    # 大量重复字符串，处理一下
+    machine_dict = about_some_same_strings(machine_dict)
+    
     #
     xml_info_change(xml_info) # 转为 set
     
@@ -435,59 +524,4 @@ def main( file_name ,mame_version=""):
 
 if __name__ == "__main__":
 
-    
-    import save_pickle 
-    
-    # xml 文件
-    #xml_file_name = "xml_nes.xml"
-    #xml_file_name = "machine_nes.xml"
-    xml_file_name = "roms_sl.xml"
-    
-    all_data = main( xml_file_name )
-    
-    input()
-    
-    data = all_data
-    
-    f1 = open(r'out.txt', 'wt',encoding="utf_8")    
-    print(data.keys())
-    print(data["mame_version"])
-    print(len(data["machine_dict"]))
-    print(data["set_data"].keys())
-    #for x in data["set_data"]:
-    #    print(x,file=f1)
-    #    for y in data["set_data"][x]:
-    #        print("\t",x,"\t",y,file=f1)
-    print(data["dict_data"].keys())
-    #temp = data["dict_data"]
-    #for x in temp:
-    #    print(x,file=f1)
-    #    for y in temp[x].items():
-    #        print("\t",x,"\t",y,file=f1)    
-    
-    #---------------
-#    print("internal_index")
-#    print(data["internal_index"].keys())
-#    temp = data["internal_index"]
-#    # internal_index["all_set"   ]      = {"gamelist":[],"children":{},}
-#    for x in temp:
-#        print(x,file=f1)
-#        level_1 = temp[x]["gamelist"]
-#        #for y in level_1:
-#        #    print("\t",x,"\t",y,file=f1)
-#        if "children" in temp[x]:
-#            temp_2 = temp[x]["children"]
-#            for y in temp_2.keys():
-#                print(x,"\t",y,file=f1)
-#                if "gamelist" in temp_2[y]:
-#                    level_2 =  temp_2[y]["gamelist"]
-#                    for z in level_2:
-#                        print("\t",x,"\t",y,"\t",z,file=f1)
-    
-    f1.close()
-    
-    save_pickle.save(data,"cache_data_sl.bin")
-    
-
-    
-
+    pass
