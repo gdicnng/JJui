@@ -215,8 +215,11 @@ html_search_language = 'zh'
 #html_search_options = {'dict': '/home/my/my_dictonary.txt'} 
 ############################################
 #   pip install jieba
-import jieba
-html_search_options = {'dict': jieba.DEFAULT_DICT}
+try:
+    import jieba
+    html_search_options = {'dict': jieba.DEFAULT_DICT}
+except:
+    pass
 
 
 #测试

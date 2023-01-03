@@ -9,16 +9,26 @@ def get_mame_version( xml_file_name ):
     
     mame_version = ''
     
+    count = 0
     for (event, elem) in xml.etree.ElementTree.iterparse( xml_file_name ,events=("start","end") ) :
         if event == 'start' : # 找到开始标记
+            count += 1
+            
+            if count > 100: # 找开头，一点点行就。
+                break
+            
             if elem.tag=="mame" : # mame 标签
                 if "build" in elem.attrib : # 版本 标签
                     mame_version = elem.attrib["build"]
                 break
+    
     if mame_version != '':
         print( "mame_version")
         print( mame_version)
-        return mame_version
+    
+    #print("count",end=":")
+    #print(count)
+    return mame_version
 
 # machine_dict
 # machine_dict_delete
@@ -857,8 +867,6 @@ if __name__ == "__main__":
 
     # xml 文件
     xml_file_name = "roms.xml"
-    #xml_file_name = "roms_0168.xml"    
-    #xml_file_name = "roms_0241.xml"    
     
     data = main(xml_file_name)
     
@@ -867,4 +875,5 @@ if __name__ == "__main__":
     import pickle
     with open( new_file_name , 'wb' ) as file:
         pickle.dump( data , file )
+
 

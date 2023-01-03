@@ -371,6 +371,8 @@ class Text_container(ttk.Frame):
             if global_variable.gamelist_type == "softwarelist":
                 if temp == "history.xml":
                     self.new_func_show_history_xml(item_id)
+                elif temp in ("history.dat","sysinfo.dat",):
+                    self.new_func_show_history_dat(temp,item_id)
                 else:
                     print("not for softwarelist")
                     return
@@ -513,7 +515,8 @@ class Text_container(ttk.Frame):
             new_text = []
         
             if game_name == global_variable.current_item:
-                text = extra_history_dat.get_content_by_file_name(path,game_name)
+                text = None
+                text = extra_history_dat.get_content_by_file_name(path,game_name,global_variable.gamelist_type)
                 if text is not None:
                     new_text = text
         
@@ -603,11 +606,18 @@ class Text_container(ttk.Frame):
         
         if game_name == global_variable.current_item:
             
+            text = None
             
             if parent_flag:
-                text = extra_history_dat.get_content_by_file_name_by_index(path,parent_name,the_index=parent_index)
+                text = extra_history_dat.get_content_by_file_name_by_index(
+                        path,parent_name,the_index=parent_index,the_type=global_variable.gamelist_type)
             else:
-                text = extra_history_dat.get_content_by_file_name_by_index(path,game_name,the_index=the_index)
+                text = extra_history_dat.get_content_by_file_name_by_index(
+                        path,game_name,the_index=the_index,the_type=global_variable.gamelist_type)
+
+
+            
+
         
             if text is not None:
                 new_text = text

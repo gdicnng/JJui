@@ -105,6 +105,8 @@ if global_variable.gamelist_type == "softwarelist":
 # ("history.dat","sysinfo.dat",)
 file_pickle_extra_index_history_dat = os.path.join(folder_temporary ,"cache_index_history_dat.bin") 
 file_pickle_extra_index_sysinfo_dat = os.path.join(folder_temporary ,"cache_index_sysinfo_dat.bin") 
+if global_variable.gamelist_type == "softwarelist":
+    file_pickle_extra_index_history_dat = os.path.join(folder_temporary ,"cache_index_history_dat_sl.bin") 
 
 #("mameinfo.dat","messinfo.dat",)
 file_pickle_extra_index_mameinfo_dat = os.path.join(folder_temporary ,"cache_index_mameinfo_dat.bin") 

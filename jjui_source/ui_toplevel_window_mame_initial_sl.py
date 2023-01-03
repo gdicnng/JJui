@@ -241,7 +241,7 @@ class Toplevel_Window(tk.Toplevel):
             
             version_info = binary_content[0].decode(encoding="utf_8", errors='replace')
             
-            self.new_var_version = version_info
+            self.new_var_version = version_info.strip()
             
             print(version_info)
 

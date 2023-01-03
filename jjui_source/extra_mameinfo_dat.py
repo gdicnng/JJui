@@ -10,7 +10,7 @@ from . import extra_history_dat
 
 # 和 history.dat 一样
 
-extra_mameinfo_find = extra_history_dat.extra_history_find
+extra_mameinfo_find = extra_history_dat.extra_history_find_mame
 
 
 def mameinfo_format(content):
@@ -66,7 +66,7 @@ def get_content_by_file_name(file_name,game_name):
 # 驱动部分
 # 和 history.dat 一样
 
-get_index = extra_history_dat.get_index
+get_index = extra_history_dat.get_index_mame
     # def get_index(file_name,):
 
 #################
@@ -78,7 +78,7 @@ get_index = extra_history_dat.get_index
 
 # def extra_history_find_by_index(file_name , game_name,the_index):# 逐行读取，节约内存
 
-extra_mameinfo_find_by_index = extra_history_dat.extra_history_find_by_index
+extra_mameinfo_find_by_index = extra_history_dat.extra_history_find_by_index_mame
 
 
 def get_content_by_file_name_by_index(file_name,game_name,the_index=0):

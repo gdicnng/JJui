@@ -467,9 +467,6 @@ class Misc_functions():
         if other_option:
             for x in other_option:
                 command_list.append( x )
-                
-        
-        
         
         
         content=[]
@@ -505,10 +502,23 @@ class Misc_functions():
     # 二进制字符串列表，检查 字符编码
     def check_binary_string_list_encoding(self,binary_string_list):
         
+        if user_configure["encoding"] :
+            print("user encoding")
+            print(user_configure["encoding"])
+            return user_configure["encoding"]
         
-        encoding_list=["utf_8","gbk","big5"]
+        encoding_list=["utf_8_sig",]
         
-        the_right_encoding = 'utf-8' # 默认值
+        if sys.platform.startswith('win32'):
+            encoding_list=["utf_8_sig","mbcs","gbk"]
+                # utf_8 、utf_8_sig
+                # gbk 其实要比 对应的 ANSI 少一点点，比如欧元符号
+                # big5
+                # mbcs : Windows 专属：根据 ANSI 代码页（CP_ACP）对操作数进行编码。
+        else:
+            encoding_list=["utf_8_sig","gbk"]
+        
+        the_right_encoding = 'utf_8' # 默认值
         
         for the_encoding in encoding_list:
             flag_encoding_is_ok = False
@@ -692,19 +702,19 @@ class Misc_functions():
             user_configure["gamelist_columns_to_show_2"] = get_content(listbox2)
             user_configure["gamelist_columns_to_show_3"] = get_content(listbox3)
             
-            try:
-                del self.gamelist_change_mark # top_binding_gamelist_change 函数中
-                # 删除标记，跳转到第1组
-            except:
-                pass
+            # try:
+            #     del self.gamelist_change_mark # top_binding_gamelist_change 函数中
+            #     # 删除标记，跳转到第1组
+            # except:
+            #     pass
             
-            def get_columns(old_columns): # 检查，有没有超出范围
-                temp_list = []
-                for x in old_columns:
-                    if x in self.tree["columns"]:
-                        temp_list.append(x)
-                new_columns = tuple( temp_list )
-                return new_columns            
+            # def get_columns(old_columns): # 检查，有没有超出范围
+            #     temp_list = []
+            #     for x in old_columns:
+            #         if x in self.tree["columns"]:
+            #             temp_list.append(x)
+            #     new_columns = tuple( temp_list )
+            #     return new_columns            
 
             # 标记为第三组，发信号后，切换到第一组
             global_variable.column_group_counter=3
@@ -1272,6 +1282,10 @@ class Misc_functions():
     def use_user_configure_colours(self,):
         style = ttk.Style()
         
+        if style.theme_use() not in global_variable.internal_themes:
+            print("not internal themes,not use colours")
+            return
+        
         if user_configure["foreground"]:
             
             cf = user_configure["foreground"]
@@ -1432,21 +1446,21 @@ class Misc_functions():
         # ("history.dat","sysinfo.dat",)
         # history.dat
         def make_index_of_history_dat():
-            if global_variable.gamelist_type == "mame":
-                # history.dat
-                path = user_configure["history.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    # file_pickle_extra_index_history_dat
-                    # global_variable.extra_index_for_histroty_dat
-                    
-                    index_dict = extra_history_dat.get_index( path )
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_histroty_dat = index_dict
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_dat)
+            #if global_variable.gamelist_type == "mame":
+            # history.dat
+            path = user_configure["history.dat_path"]
+            path = path.replace(r"'","") # 去掉单引号
+            path = path.replace(r'"',"") # 去掉双引号
+            if os.path.isfile(path) : 
+                index_dict = {}
+                # file_pickle_extra_index_history_dat
+                # global_variable.extra_index_for_histroty_dat
+                
+                index_dict = extra_history_dat.get_index( path ,global_variable.gamelist_type)
+                
+                if index_dict:
+                    global_variable.extra_index_for_histroty_dat = index_dict
+                    save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_dat)
         # sysinfo.dat
         def make_index_of_sysinfo_dat():
             if global_variable.gamelist_type == "mame":
@@ -2422,7 +2436,7 @@ class Misc_functions():
         ttk.Label(window,text= _("默认翻译文件：") + the_file_name,).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
-        ttk.Label(window,text= _(r"默认翻译文件，文字编码为：utf_8_sig")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
+        ttk.Label(window,text= _(r"默认翻译文件，文字编码为：utf_8_bom")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
         ttk.Button(window,text=_("读取默认翻译文件"),width=-1,command = load_default_translation_file).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
@@ -2461,7 +2475,7 @@ class Misc_functions():
         ttk.Label(window,text=_("编码提示：")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
-        ttk.Label(window,text=_("将文本保存为，utf_8_sig （utf-8 带 bom），可以包含多国文字")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
+        ttk.Label(window,text=_("将文本保存为 utf-8 带 bom ，可以包含多国文字")).grid(row=n,column=0,columnspan=2,sticky=tk.W+tk.N,)
         n+=1
         
         window.wait_window()
@@ -2475,7 +2489,7 @@ class Misc_functions():
         size = "400x300"
         window.geometry(size)
         
-        window.title(_("UI 界面翻译"))
+        window.title(_(r"界面翻译/UI translation"))
         
         window.lift()
         window.transient(root_window)
@@ -2519,18 +2533,21 @@ class Misc_functions():
         row+=1
         
         
-        button_chinese = ttk.Button(window,text=_("使用内置中文"),command=for_button_use_internal_language)
+        button_chinese = ttk.Button(window,text=_(r"中文 / Chinese"),command=for_button_use_internal_language)
         button_chinese.grid(row=row,column=0,sticky=tk.W+tk.N)
         row+=1
         
         ttk.Label(window,text="").grid(row=row,column=0,sticky=tk.W+tk.N)
         row+=1
         
-        button_2 = ttk.Button(window,text=_("选择其它翻译文件"),command=for_button_select_other_translation_file)
+        button_2 = ttk.Button(window,text=_(r"选择其它翻译文件 / choose other translation file"),command=for_button_select_other_translation_file)
         button_2.grid(row=row,column=0,sticky=tk.W+tk.N)
         row+=1
         
+        ttk.Label(window,text="").grid(row=row,column=0,sticky=tk.W+tk.N)
+        row+=1
         
+        ttk.Label(window,text=_(r"需关闭程序 / need close this application") ).grid(row=row,column=0,sticky=tk.W+tk.N)
         
         
         window.wait_window()

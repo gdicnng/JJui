@@ -49,13 +49,13 @@ def gameinit_format(content):
 
 def get_content_by_file_name(file_name,game_name):
     #content=extra_history_find(file_name,game_name)
-    content=extra_history_dat.extra_history_find(file_name,game_name)
+    content=extra_history_dat.extra_history_find_mame(file_name,game_name)
     content=gameinit_format(content)
     return content
 
 
 def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
-    content=extra_history_dat.extra_history_find_by_index(file_name,game_name,the_index)
+    content=extra_history_dat.extra_history_find_by_index_mame(file_name,game_name,the_index)
     content=gameinit_format(content)
     return content
 

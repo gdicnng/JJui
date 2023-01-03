@@ -48,6 +48,14 @@ UI 配合 MAME ，内容待补充
    
    relative_path/index
 
+---------------
+
+.. toctree::
+   :glob:
+   :maxdepth: 1
+   
+   lnk/index
+
 
 
 ..   xxx * :ref:`search`

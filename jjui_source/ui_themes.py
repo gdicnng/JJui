@@ -21,18 +21,68 @@ ini_data       = global_variable.user_configure_data
 user_configure = global_variable.user_configure_data
 
 
+
+def menubutton_appearance(root,style):
+        
+        # 菜单按钮，微调
+        # 部分主题 小改 一下
+        # elegance 鼠标通过时，没有任何效果
+        # keramik keramik_alt 背景色不一致，可能用了图片，
+        
+        # ttk.Menubutton style 值
+            # TMenubutton 原始的，
+            # Toolbutton 用的这个
+        
+        
+        theme_name = style.theme_use()
+        
+        def func():
+            # Toolbutton
+            # Ttk::menubutton widgets support the Toolbutton style in all standard themes, which is useful for creating widgets for toolbars. 
+            
+            
+            #style.configure('Flat.Toolbutton', relief='flat')
+            style.configure('NotFlat.Toolbutton', relief='solid')
+            
+            def func_for_enter(event):
+                widget=event.widget
+                #print(widget)
+                widget.configure(style='NotFlat.Toolbutton')
+                #print(widget['style'])
+
+            def func_for_leave(event):
+                widget=event.widget
+                #print(widget)
+                widget.configure(style='Toolbutton')
+                #print(widget['style'])
+            
+            style.configure('Toolbutton',relief='flat')# flat
+            root.bind_class("TMenubutton",'<Enter>', func_for_enter, )
+            root.bind_class("TMenubutton",'<Leave>', func_for_leave, )
+        
+        # style Toolbutton
+        if theme_name in  ("elegance",):
+            func()
+        
+        elif theme_name in ("keramik","keramik_alt"):
+            #背景色不一致，可能用了图片，不管了
+            
+            pass # 不管了
+
+
+  
+
+
 def main(root,style):
     print()
     print("theme in user configure file : {}".format(ini_data["theme"]))
-
-
-    internal_themes = style.theme_names()
     
+    internal_themes = style.theme_names()
     # 记录
     global_variable.internal_themes = internal_themes
     #print()
-    #print( internal_themes )
-
+    #print( internal_themes )    
+    
     ##
 
     themes_to_delete=set()
@@ -71,6 +121,11 @@ def main(root,style):
         if ini_data["theme"] in internal_themes:
             style.theme_use( ini_data["theme"] )
             use_background=True
+            
+            #background = style.configure('.','background')
+            #if background:
+            #    style.configure('Treeview', background=background) 
+            #    style.configure('Treeview', fieldbackground=background)
         
         elif ini_data["theme"] in other_themes :
 
@@ -214,9 +269,24 @@ def main(root,style):
             # aw
             # 总列表，数量多，进度条 不好抓取的主题：
             #   awblack awdark awlight  awwinxpblue
-            elif ini_data["theme"] in ("awarc","awblack","awbreeze","awbreezedark","awclearlooks","awwinxpblue",) :# aw scalable 
+            elif ini_data["theme"] in ("awarc","awblack","awbreeze","awbreezedark","awclearlooks","awwinxpblue","awdark","awlight",) : 
                 #folder_path = r'.\.jjui\themes\awthemes'
                 folder_path = os.path.join(themes_dir,"awthemes")
+                print(folder_path)
+                
+                if sys.platform.startswith('win32'):
+                    if sys.maxsize == 2**31 - 1:
+                        # 判断程序是 32 位的，
+                        # awthemes 需要的库文件 windows 32位、windows 64位
+                        #   r'.\.jjui\themes\awthemes'          # 默认 64位
+                        #   r'.\.jjui\themes\awthemes_32bit'    # 32位
+                        temp = os.path.join(themes_dir,"awthemes_32bit")
+                        if os.path.isdir(temp):
+                            print("windows 32bit")
+                            print("theme path:")
+                            print(temp)
+                            folder_path = temp
+                
                 if os.path.isdir( folder_path ):
                     root.tk.call('lappend', 'auto_path', folder_path)
                     root.tk.call('package', 'require', ini_data["theme"] ,)
@@ -230,29 +300,17 @@ def main(root,style):
                         root.option_add('*Canvas*background', background_colour)
                     if foreground_colour  != "" : 
                         root.option_add('*Text*foreground',  foreground_colour)
-                
-            elif ini_data["theme"] in ("awdark","awlight",) :# aw
-                #folder_path = r'.\.jjui\themes\awthemes'
-                folder_path = os.path.join(themes_dir,"awthemes")
-                if os.path.isdir( folder_path ):
-                    root.tk.call('lappend', 'auto_path', folder_path)
-                    root.tk.call('package', 'require', ini_data["theme"] )
-                    style.theme_use( ini_data["theme"] )
-                    
-                    background_colour  = style.lookup(".","background")
-                    foreground_colour  = style.lookup(".","foreground")
-                    
-                    if background_colour != "" : 
-                        root.option_add('*Text*background', background_colour)
-                        root.option_add('*Canvas*background', background_colour)
-                    if foreground_colour  != "" : 
-                        root.option_add('*Text*foreground',  foreground_colour)
-
+            
         else:
             try:
                 style.theme_use( "clam" )
                 use_background=True
                 ini_data["theme"]=""#重置
+                
+                #background = style.configure('.','background')
+                #if background:
+                #    style.configure('Treeview', background=background) 
+                #    style.configure('Treeview', fieldbackground=background)
             except:
                 pass
 
@@ -373,6 +431,11 @@ def main(root,style):
             if background_colour != "" : 
                 root.option_add('*Toplevel*background', background_colour)
 
+    # 菜单按钮，微调
+    menubutton_appearance(root,style)
+
+
+
 
     ###
     ###
@@ -402,8 +465,6 @@ def main(root,style):
     #for x in style.theme_names():
     #    if x not in internal_themes:
     #        print(x)
-
-    
 
     
     

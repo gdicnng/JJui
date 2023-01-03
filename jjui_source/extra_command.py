@@ -128,22 +128,22 @@ def command_replace(content):
             
             r"_Z"        : r"Ｚ",
 
-            r"_+"  : r"＋",
+            r"_+"  : r"＋",#gb2312
             r"_."  : r"…",
             r"_1"  : r"↙",
             r"_2"  : r"↓",
             r"_3"  : r"↘",
             r"_4"  : r"←",
-            r"_5"  : r"⊕", # # # # #
+            r"_5"  : r"⊕", # gbk  ???
             r"_6"  : r"→",
             r"_7"  : r"↖",
             r"_8"  : r"↑",
             r"_9"  : r"↗",
             r"_N"  : r"Ｎ", # # # # 
             
-            r"@BALL"  : r"⊕",# # # # #
+            r"@BALL"  : r"⊕",# gbk  ???
             
-            r"_a" : r"①",
+            r"_a" : r"①",# ① gb2312
             r"_b" : r"②",
             r"_c" : r"③",
             r"_d" : r"④",
@@ -189,7 +189,7 @@ def command_replace(content):
             r"@2-kick"  : r"两脚同时输入",
             r"@2-punch" : r"两拳同时输入",
             
-            r"@custom1" : r"自定义①",
+            r"@custom1" : r"自定义①",# ① gb2312
             r"@custom2" : r"自定义②",
             r"@custom3" : r"自定义③",
             r"@custom4" : r"自定义④",
@@ -201,7 +201,7 @@ def command_replace(content):
             r"@down"    : r"↓",
             r"@left"    : r"←",
             r"@right"   : r"→",
-            r"@lever"   : r"Φ",
+            r"@lever"   : r"Φ",# gb2312 ?????
             r"@nplayer" : r"Pn",
             r"@1player" : r"P1",
             r"@2player" : r"P2",
@@ -212,21 +212,21 @@ def command_replace(content):
             r"@7player" : r"P7",
             r"@8player" : r"P8",
             
-            r"_`" : r"・",
-            r"_@" : r"◎",
-            r"_)" : r"○",
-            r"_(" : r"●",
-            r"_*" : r"☆",
-            r"_&" : r"★",
-            r"_%" : r"△",
-            r"_$" : r"▲",
-            r"_#" : r"",#  ▣ 25a3 ,gbk 里有 ，没有 ▣
-            r"_]" : r"□",
-            r"_[" : r"■",
-            r"_{" : r"▽",
-            r"_}" : r"▼",
-            r"_<" : r"◇",
-            r"_>" : r"◆",
+            r"_`" : r"・",#gb2312
+            r"_@" : r"◎",#gb2312
+            r"_)" : r"○",#gb2312
+            r"_(" : r"●",#gb2312
+            r"_*" : r"☆",#gb2312
+            r"_&" : r"★",#gb2312
+            r"_%" : r"△",#gb2312
+            r"_$" : r"▲",#gb2312
+            r"_#" : r"",       #gbk 里有 ，没有 ▣ ,▣ 25a3 ,
+            r"_]" : r"□",#gb2312
+            r"_[" : r"■",#gb2312
+            r"_{" : r"▽",       #gbk
+            r"_}" : r"▼",       #gbk
+            r"_<" : r"◇",#gb2312
+            r"_>" : r"◆",#gb2312
             
             r"_|" : r"跳",
             r"_O" : r"按住",

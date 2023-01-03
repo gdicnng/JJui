@@ -38,18 +38,7 @@ from .read_pickle import read as read_pickle
 
 configure_data = global_variable.user_configure_data
 
-# style
-def change_menubutton(style):
-    
-    layout_2=[
-        ('Menubutton.border', {'sticky': 'nswe', 'children': [
-         ('Menubutton.focus', {'sticky': 'nswe', 'children': [
-          ('Menubutton.padding', {'expand': '1', 'sticky': 'we', 'children': [
-           ('Menubutton.label', {'side': 'left', 'sticky': ''})]})]})]})
-                ]
-    
-    # 去掉箭头
-    style.layout('TMenubutton',layout_2)
+
 
 # 读取外部目录数据
     # sl  and  mame
@@ -206,8 +195,6 @@ def main(game_list_data):
     
     
     
-    # ttk.Menubutton 去掉箭头
-    change_menubutton(style)
     
     main_frame = MainFrame(root)
     main_frame.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
@@ -477,42 +464,46 @@ def main(game_list_data):
         else:
             pass
 
-        # 分隔线位置，初始时，根据配置文件，设置一下
-        root.update() # 前边不放一个 update ，就没有效果 ？？？？
-        
-        # 初始时，分隔线,重置位置
-        main_frame.frame_middle.sashpos(0,configure_data["pos1"])
-        main_frame.frame_middle.sashpos(1,configure_data["pos2"])
-        # 还有周边一个分隔线
-        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,configure_data["pos3"])
-        #root.update()
-    
         # 周边，notebook，选择
         try:
             ui_extra.new_ui_notebook.select( configure_data["extra_tab_index"] )
         except:
             pass
-        
         # 初始化，两个 周边 图片 选择条，在 ui 部分已设置
         # 初始化，两个 周边 图片 zip 选择，在 ui 部分已设置
         
         
+        misc_funcs.use_user_configure_row_height()
+        misc_funcs.use_user_configure_row_height_for_header()
+        misc_funcs.use_user_configure_icon_width()
+        
+        # 字体初始化
+        misc_funcs.font_initial()
+        
+        # 测试
+        #misc_funcs.find_widget('Canvas')
+        
+        #颜色
+        if configure_data["use_colour_flag"]:
+            misc_funcs.use_user_configure_colours()
+        
+        
+        # 分隔线位置，初始时，根据配置文件，设置一下
+        root.update() # 前边不放一个 update ，就没有效果 ？？？？
+        
+        # 还有周边一个分隔线
+        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,configure_data["pos3"])
+        #root.update()
+        
+        root.update()
+        # 初始时，分隔线,重置位置
+        main_frame.frame_middle.sashpos(0,configure_data["pos1"])
+        main_frame.frame_middle.sashpos(1,configure_data["pos2"])
+        
     ui_initial()
     
     
-    misc_funcs.use_user_configure_row_height()
-    misc_funcs.use_user_configure_row_height_for_header()
-    misc_funcs.use_user_configure_icon_width()
-    
-    # 字体初始化
-    misc_funcs.font_initial()
-    
-    # 测试
-    #misc_funcs.find_widget('Canvas')
-    
-    #颜色
-    if configure_data["use_colour_flag"]:
-        misc_funcs.use_user_configure_colours()
+
     
     # 目录 选择 上一次的记录
     root.update() # 不然,index 的 Treeview 部件，定位不准

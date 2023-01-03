@@ -64,70 +64,36 @@ class MenuBar(ttk.Frame):
         
         column=0
         
-        self.new_menu_botton_ui = ttk.Menubutton(parent,direction="below",width=0,text=_("UI"),)
+        # style="TMenubutton" 
+            # 默认
+            # 带有箭头符号，可能还有 button 一样的背景图片        
+        # style="Toolbutton"  
+            #   Ttk::menubutton widgets support the Toolbutton style in all standard themes, which is useful for creating widgets for toolbars. 
+        
+        self.new_menu_botton_ui = ttk.Menubutton(parent,direction="below",width=0,text=_("UI"),style="Toolbutton")
         self.new_menu_botton_ui.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
         
-        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("设置"),)
+        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("设置"),style="Toolbutton",)
         self.new_menu_botton_configure.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
-        self.new_menu_botton_gamelist=ttk.Menubutton(parent,direction="below",width=0,text=_("游戏列表"),)
+        self.new_menu_botton_gamelist=ttk.Menubutton(parent,direction="below",width=0,text=_("游戏列表"),style="Toolbutton",)
         self.new_menu_botton_gamelist.grid(row=0,column=column, sticky=(tk.W,))
         column+=1        
         
         
-        self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("帮助"),)
+        self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("帮助"),style="Toolbutton",)
         self.new_menu_botton_about.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
-        self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),)
+        self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),style="Toolbutton",)
         self.new_menu_botton_language.grid(row=0,column=column, sticky=(tk.W,))
         column+=1        
         
     def new_func_bindings(self,):
-        
-        style = ttk.Style()
-        theme_name = style.theme_use()
-        
-        #style.configure('Flat.TMenubutton', relief='flat')
-        style.configure('NotFlat.TMenubutton', relief='solid')
-
-        def func_for_enter(event):
-            widget=event.widget
-            #print(widget)
-            widget.configure(style='NotFlat.TMenubutton')
-        def func_for_leave(event):
-            widget=event.widget
-            #print(widget)
-            widget.configure(style='TMenubutton')
-        
-        # Menubutton,鼠标经过时，显示边框，以区别
-        if theme_name in list( global_variable.internal_themes ) + [
-                "smog",
-                "plastik",
-                "keramik",
-                "keramik_alt",
-                "itft1",
-                "elegance",
-                "breeze",
-                "blue",
-                "azure",
-                "Breeze",
-                
-                ]:
-            style.configure('TMenubutton',relief='flat')# flat
-            self.bind_class("TMenubutton",'<Enter>', func_for_enter, )
-            self.bind_class("TMenubutton",'<Leave>', func_for_leave, )
-        
-            # "scidsand",......
-            # "clearlooks",
-            
-            #"breeze-dark", 黑的，边框也是黑的，这种方法，看不出来了
-            #"azure-dark", 黑的，边框也是黑的，这种方法，看不出来了
-        
-        ""
+        pass
 
     def new_func_ui_menu_for_ui(self,):
         m = tk.Menu(self.new_menu_botton_ui, tearoff=0)
@@ -137,8 +103,108 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_change_theme
                 )
         
-        m.add_separator()
+
         
+        if sys.platform.startswith('win32'):
+            m.add_separator()
+            
+            m2 = tk.Menu(m, tearoff=0)
+            
+            m.add_cascade(
+                label=_("高分辨率屏幕"),
+                menu=m2
+                )
+            
+            
+            self.new_var_tk_high_dpi = tk.IntVar() # default value 0
+            self.new_var_tk_high_dpi.set(user_configure["high_dpi"])
+            
+            
+            m2.add_command(
+                label=_("程序关闭，重新打开后生效。"), 
+                state=tk.DISABLED)
+            
+            m2.add_separator()
+            m2.add_radiobutton(
+                label="windows high dpi "+_("不设置"), 
+                value=0,
+                variable=self.new_var_tk_high_dpi,
+                command=self.new_func_set_high_dpi_value,
+                #state=tk.DISABLED
+                )
+            
+            m2.add_separator()
+            m2.add_command(
+                label=r"( Windows Vista, 7, 8 )", 
+                state=tk.DISABLED)
+            m2.add_radiobutton(
+                label="windows high dpi "+_("方法1"), 
+                value=1,
+                variable=self.new_var_tk_high_dpi,
+                command=self.new_func_set_high_dpi_value,
+                #state=tk.DISABLED
+                )
+            
+            m2.add_separator()
+            m2.add_command(
+                label=r"( >= windows 8.1 )", 
+                state=tk.DISABLED)
+            
+            m2.add_radiobutton(
+                label="windows high dpi "+_("方法2"), 
+                value=2,
+                variable=self.new_var_tk_high_dpi,
+                command=self.new_func_set_high_dpi_value,
+                #state=tk.DISABLED
+                )
+            m2.add_radiobutton(
+                label="windows high dpi "+_("方法3"), 
+                value=3,
+                variable=self.new_var_tk_high_dpi,
+                command=self.new_func_set_high_dpi_value,
+                #state=tk.DISABLED
+                )
+            m2.add_radiobutton(
+                label="windows high dpi "+_("方法4"), 
+                value=4,
+                variable=self.new_var_tk_high_dpi,
+                command=self.new_func_set_high_dpi_value,
+                #state=tk.DISABLED
+                )
+            #m2.add_radiobutton(
+            #    label="windows high dpi "+_("方法5"), 
+            #    value=5,
+            #    variable=self.new_var_tk_high_dpi,
+            #    command=self.new_func_set_high_dpi_value,
+            #    #state=tk.DISABLED
+            #    )
+
+            
+            m2.add_separator()
+            m2.add_command(
+                label=_("注"), 
+                state=tk.DISABLED)            
+            m2.add_command(
+                label=_("当屏幕 dpi 太高，用 1:1 显示时，默认字体太小。"), 
+                state=tk.DISABLED)
+            m2.add_command(
+                label=_("如果，在系统中，整体设置了放大，此时，有些软件处理得不好，字体又显示得模糊，"), 
+                state=tk.DISABLED)
+            m2.add_command(
+                label=_("此时，你可以试试以上不同的选项。"), 
+                state=tk.DISABLED)
+            m2.add_separator()
+            m2.add_command(
+                label=_("网上搜到的代码，具体管不管用，不太懂"), 
+                state=tk.DISABLED)
+            m2.add_command(
+                label=_("其中有管用的，那正好"), 
+                state=tk.DISABLED)
+            m2.add_command(
+                label=_("都不管用的话，也就算球了"), 
+                state=tk.DISABLED)
+        
+        m.add_separator()
         self.new_var_tk_scaling_use_flag = tk.IntVar() # default value 0
         # 初始化,从配置文件中，读取值
         if user_configure["tk_scaling_use_flag"] not in (0,1):
@@ -152,7 +218,7 @@ class MenuBar(ttk.Frame):
                 )
         
         m.add_command(
-                label=_(r"设置 tk scaling 缩放 值"), 
+                label=_(r"手动设置 tk scaling 缩放 值"), 
                 command=self.new_func_menu_call_back_set_tk_scaling_number
                 )
         
@@ -192,18 +258,22 @@ class MenuBar(ttk.Frame):
 
         m.add_separator()
         
+        m.add_command(
+            label=_("仅内置主题（第三方主题，可以在对应的配置文件中编辑颜色）"), 
+            state=tk.DISABLED)
+        
         self.new_var_tk_use_colour_flag = tk.IntVar() # default value 0
         if user_configure["use_colour_flag"] not in (0,1):
             user_configure["use_colour_flag"] = 0
         self.new_var_tk_use_colour_flag.set( user_configure["use_colour_flag"] )
         
         m.add_checkbutton(
-                label=_(r"启用自定义颜色(关闭程序，重新打开)"), 
+                label= _("内置主题") + ' ' + _(r"启用自定义颜色") + ' ' + _("需关闭、重新打开程序"), 
                 variable = self.new_var_tk_use_colour_flag ,
                 command=self.new_func_menu_call_back_use_colours,
                 )
         
-        m.add_command(label=_(r"自定义一些颜色"), 
+        m.add_command(label=_("内置主题")+ ' ' + _(r"自定义部分颜色"), 
                 command=self.new_func_menu_call_back_set_colours
                 )
         
@@ -245,7 +315,7 @@ class MenuBar(ttk.Frame):
         self.new_var_tk_extra_delay_use_flag.set(user_configure["extra_delay_time_use_flag"])
         
         m.add_checkbutton(
-                label=_(_("周边延迟显示")), 
+                label=_("周边延迟显示"), 
                 variable = self.new_var_tk_extra_delay_use_flag ,
                 command=self.new_func_menu_call_back_use_extra_delay_time,
                 )
@@ -266,7 +336,7 @@ class MenuBar(ttk.Frame):
         self.new_menu_botton_gamelist.configure(menu=m)
         
         
-        m.add_separator()
+        #m.add_separator()
         m.add_command(label=_(r"刷新列表，split/分离模式 (不具体校验文件，只检查有没有压缩包/文件夹)"), 
                 command=misc_funcs.gamelist_available_refresh
                 )
@@ -279,21 +349,23 @@ class MenuBar(ttk.Frame):
                 state=tk.DISABLED,
                 )
         
-        m.add_separator()
+        
         
         if global_variable.gamelist_type == "softwarelist":
             pass
         else:
+            m.add_separator()
             m.add_command(label=_(r"拥有列表 过滤"), 
                     command=misc_funcs.gamelist_available_filter
                     )
         
-            m.add_separator()
         
-
+        m.add_separator()
+        m.add_command(label=_("选择列表显示项目"),
+                command = misc_funcs.header_pop_up_menu_callback_choose_columns
+                )
         
-        
-        
+        m.add_separator()
         self.new_var_tk_unavailable_mark = tk.IntVar() # default value 0
             # 初始化,需从配置文件中，读取值
         
@@ -308,7 +380,8 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_choose_mark_unavailable,
                 variable =self.new_var_tk_unavailable_mark,
                 )
-                
+        
+        
         m.add_separator()
         self.new_var_tk_use_local_sort = tk.IntVar() # default value 0
         # 初始化,需从配置文件中，读取值
@@ -322,7 +395,8 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_use_local_sort
                 )
         
-        m.add_separator()
+
+
     
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)
@@ -330,13 +404,16 @@ class MenuBar(ttk.Frame):
         
         m.add_separator()
         
-        m.add_command(label=_(r"UI 界面翻译") + _("（关闭程序，重新打开后生效）"), 
+        m.add_command( label=_(r"界面翻译 / UI translation") , 
                 command=misc_funcs.ui_select_translation
+                )
+        m.add_command(label= _("关闭程序，重新打开后生效"), 
+                state="disabled"
                 )
         
         m.add_separator()
         
-        m.add_command(label=_(r"游戏列表翻译"),
+        m.add_command(label=_(r"游戏列表翻译 / gamelist translation"),
                 command=misc_funcs.gamelist_reload_translation
                 )
         
@@ -484,6 +561,13 @@ class MenuBar(ttk.Frame):
         
         
         window.wait_window()
+
+    # high dpi 值
+    def new_func_set_high_dpi_value(self,):
+        user_configure["high_dpi"] = self.new_var_tk_high_dpi.get()
+        print()
+        print( "high dpi : " )
+        print( user_configure["high_dpi"] )
 
     # 菜单 callback 函数：UI→启用放大倍数
     def new_func_menu_call_back_use_tk_scaling(self,):

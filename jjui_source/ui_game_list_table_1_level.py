@@ -176,10 +176,10 @@ class Data_Holder_1():
             self.clone_set       = self.internal_data['set_data']["clone_set"]
             
             self.parent_to_clone = self.internal_data['dict_data']["parent_to_clone"]
-            self.parent_to_clone_keys = self.parent_to_clone.keys()
+            self.parent_to_clone_keys = set(self.parent_to_clone.keys())
             
             self.clone_to_parent = self.internal_data['dict_data']["clone_to_parent"]
-            self.clone_to_parent_keys = self.clone_to_parent.keys()
+            # self.clone_to_parent_keys = set(self.clone_to_parent.keys())
             
     
     # 点击目录 切换列表，用这个
@@ -2511,7 +2511,7 @@ class GameList_7(GameList_6):
     def new_func_ui_pop_up_menu_for_table(self,):
         self.new_ui_pop_up_menu_for_table = tk.Menu(self , tearoff=0)
         
-        self.new_ui_pop_up_menu_for_table.add_separator()
+        #self.new_ui_pop_up_menu_for_table.add_separator()
         
         self.new_ui_pop_up_menu_for_table.add_command(
                 label=_("运行游戏"),
@@ -2586,8 +2586,47 @@ class GameList_7(GameList_6):
                 label=_("目录修改，从指定目录删除选中内容"),
                 command = self.new_func_table_pop_up_menu_callback_delete_items_from_a_index,
                     )
-        ""
-
+        
+        # 显示信息
+        # id
+        # translation
+        # description
+        
+        self.new_ui_pop_up_menu_for_table.add_separator()
+        
+        self.new_ui_pop_up_menu_for_table.add_command(
+                label=_(""), # id
+                state="disabled",
+                #command = 
+                    )
+        # 记录 index
+        self.new_var_table_menu_index_for_item_id = self.new_ui_pop_up_menu_for_table.index(tk.END)
+        
+        self.new_ui_pop_up_menu_for_table.add_command(
+                label=_(""), # translation
+                state="disabled",
+                #command = 
+                    )
+        # 记录 index
+        self.new_var_table_menu_index_for_item_translation = self.new_ui_pop_up_menu_for_table.index(tk.END)        
+        
+        self.new_ui_pop_up_menu_for_table.add_command(
+                label=_(""), # description
+                state="disabled",
+                #command = 
+                    )
+        # 记录 index
+        self.new_var_table_menu_index_for_item_description = self.new_ui_pop_up_menu_for_table.index(tk.END)
+        
+        if global_variable.gamelist_type == "softwarelist" :
+            self.new_ui_pop_up_menu_for_table.add_command(
+                    label=_(""), # alt_title
+                    state="disabled",
+                    #command = 
+                        )
+            # 记录 index
+            self.new_var_table_menu_index_for_item_alt_title = self.new_ui_pop_up_menu_for_table.index(tk.END)
+        
     def new_func_ui_pop_up_menu_for_header(self,):
         self.new_ui_pop_up_menu_for_header = tk.Menu(self , tearoff=0)
         
@@ -2640,6 +2679,29 @@ class GameList_7(GameList_6):
         else:
             print("not editable")
             the_menu.entryconfig( the_index, state="disabled",)
+        
+        # id
+        # description
+        # translation
+        # alt_title
+        item_id = global_variable.current_item
+        item_detail = global_variable.machine_dict[ item_id ]
+        # id
+        the_menu.entryconfig( self.new_var_table_menu_index_for_item_id, label=item_id,)
+        # description
+        if "description" in global_variable.columns_index:
+            the_menu.entryconfig( self.new_var_table_menu_index_for_item_description, label=item_detail[ global_variable.columns_index["description"] ],)
+        # translation
+        if "translation" in global_variable.columns_index:
+            the_menu.entryconfig( self.new_var_table_menu_index_for_item_translation, label=item_detail[ global_variable.columns_index["translation"] ],)
+        
+        # alt_title
+        if global_variable.gamelist_type == "softwarelist":
+            if "alt_title" in global_variable.columns_index:
+                temp = item_detail[ global_variable.columns_index["alt_title"] ]
+                if not temp : temp = "-" # 如果是空字符，改为 - 
+                the_menu.entryconfig( self.new_var_table_menu_index_for_item_alt_title, label=temp,)
+        
         
         try:
             the_menu.tk_popup(event.x_root, event.y_root)

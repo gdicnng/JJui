@@ -2,6 +2,7 @@
 import os
 import sys
 import re
+import codecs
 
 from . import global_variable
 from .global_static import columns
@@ -163,6 +164,9 @@ def get_configure_file_default_value( ):
         # Ture False , 
         # subprocess.Popen() 函数中，windows 中用 True
         
+        ("high_dpi",0 ),
+        
+        ("encoding","" ),
         
         ("size","800x600"),
         ("zoomed",False),
@@ -195,7 +199,7 @@ def get_configure_file_default_value( ):
         
         
         
-        ("use_colour_flag",0 ), #
+        ("use_colour_flag",1 ), #
         ("foreground","black" ), #
         ("background","grey90" ), 
         ("selectforeground","white" ), #
@@ -376,6 +380,14 @@ def get_configure_file_value( file_name ):
 
     # 部分 数据校验
     
+    # ("encoding","" ),
+    if "encoding" in ini_data:
+        if ini_data["encoding"]:
+            try :
+                codecs.lookup(ini_data["encoding"])
+            except:
+                ini_data["encoding"]=ini_default["encoding"]
+    
     # "tk_scaling_number" 大于0, 默认值为0 不修改
     # 整数，或 浮点数 
     for x in ("tk_scaling_number",):
@@ -433,6 +445,7 @@ def get_configure_file_value( file_name ):
               #"menu_font_size",
               #"label_font_size",
               "others_font_size",
+              "high_dpi",
                   ):
         if x in ini_data:
             # 字符 转为 int

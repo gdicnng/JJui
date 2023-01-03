@@ -4,6 +4,7 @@ import os
 import sys
 import re
 
+
 # gamelist_type="mame" #  "softwarelist"
 
 import tkinter as tk
@@ -20,6 +21,7 @@ from .read_pickle import read as read_pickle
 
 from . import read_user_config
 from . import ui_themes
+from . import ui_high_dpi
 
 
 
@@ -86,18 +88,20 @@ def gamelist_data_file_exist():
 def main():
     
     root=tk.Tk()
+    
     # 记录
     global_variable.root_window = root
+    
+    # windows 10 high dpi
+    ui_high_dpi.main(root,configure_data["high_dpi"])
     
     # 记录
     num = root.tk.call('tk', 'scaling', )
     global_variable.tk_scaling_number_0 = num
     
     if configure_data["tk_scaling_number"]:
-        try:
-            root.tk.call('tk', 'scaling', configure_data["tk_scaling_number"])
-        except:
-            pass
+        try:root.tk.call('tk', 'scaling', configure_data["tk_scaling_number"])
+        except:pass
     
     style=ttk.Style()
     
@@ -119,10 +123,9 @@ def main():
     # bug fix
     # 放在 style.theme_use("xxxxxx") 后面 ，才有用
     # ？？？？？                   
-
-
-    #str_title = _(r"JJui 街机游戏列表显示器 v.2.0.test  ----  ")
-    str_title = _(global_static.title_string)
+    
+    # 标题 前一段 ；标题 后一段  ，需 读取 mame 版本信息后，再添加
+    str_title = global_static.version_string + " - " + _(global_static.title_string) + " - "
     root.title( str_title )
     
     # 图标
@@ -132,10 +135,7 @@ def main():
     except:
         pass
     
-    background = style.configure('.','background')
-    if background:
-        style.configure('Treeview', background=background) 
-        style.configure('Treeview', fieldbackground=background)    
+
     
     
     # 初始化窗口

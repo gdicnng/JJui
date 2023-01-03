@@ -18,6 +18,8 @@ from .ui__window import Window_with_scrollbar
 from .ui__text_with_scrollbar import Text_with_scrollbar
 from . import xml_parse_mame
 from . import translation_gamelist
+from . import misc
+
 
 configure_data = global_variable.user_configure_data
 
@@ -30,6 +32,8 @@ if __name__ == "__main__" :
 # new_var_
 # new_func_
 # new_ui_
+
+
 
 # initial_window
 class Toplevel_Window(tk.Toplevel):
@@ -185,6 +189,10 @@ class Toplevel_Window(tk.Toplevel):
         
         xml_type =  self.new_var_type.get()
         
+        # 命令行 -help ，版本信息
+        self.new_var_versio=""
+        self.new_func_export_version_info()
+        
         # 导出 xml
         self.new_func_export_xml(xml_type)
         
@@ -199,6 +207,42 @@ class Toplevel_Window(tk.Toplevel):
             os.remove( the_files.file_xml_mame )
         
         self.destroy()
+
+
+    # 导出版本信息
+    #   -version
+    #   或者
+    #   -help
+    def new_func_export_version_info(self,):
+        
+        mame_path      = self.new_var_mame_path.get()
+        
+        command = "-help"
+        
+        flag_use_shell = configure_data["use_shell"]
+        
+        p=subprocess.Popen( args   = [mame_path,command,] ,
+                                # command = "-listxml"
+                            shell  = flag_use_shell, 
+                            stdout=subprocess.PIPE , 
+                            stderr=subprocess.STDOUT ,
+                            stdin=subprocess.PIPE,
+                            )
+        
+        binary_content = []
+        
+        for binary_line in p.stdout:
+            binary_content.append( binary_line )
+        
+        if binary_content:
+            
+            encoding = misc.check_binary_string_list_encoding(binary_content)
+            
+            version_info = binary_content[0].decode(encoding=encoding, errors='replace')
+            
+            self.new_var_version = version_info.strip()
+            
+            print(version_info)
 
     def new_func_export_xml(self,xml_type="mame0162"):
         if xml_type=="mame0162":
@@ -323,7 +367,11 @@ class Toplevel_Window(tk.Toplevel):
             
         if len( data["machine_dict"] ) == 0 : 
             return None
-            
+        
+        if not data["mame_version"]:
+            if self.new_var_version:
+                data["mame_version"] = self.new_var_version
+        
         # 翻译
         # from . import translation_gamelist
         translation_dict={}

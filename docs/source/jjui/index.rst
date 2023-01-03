@@ -16,6 +16,7 @@ JJui 简单说明
    jjui
    run_0
    run_1
+   clear
    
    jjui_version2
    

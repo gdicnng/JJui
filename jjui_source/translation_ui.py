@@ -89,20 +89,20 @@ translation_holder = Translation_Dict()
 
 
 if __name__ == "__main__" :
-
-    file_name = "lang_test.txt"
-    #translation_holder
-    
-    translation_holder.get_translation_dict_from_file(file_name)
-    
-    for k,v in translation_holder.translation_dict.items():
-        print()
-        print(k)
-        print(v)
-    
-    
-    _ = translation_holder.translation
-    print(_(""))
-    print(_("abc"))
-    print(_("bbc"))
-    print(_("test"))
+    pass
+    # file_name = "lang_test.txt"
+    # #translation_holder
+    # 
+    # translation_holder.get_translation_dict_from_file(file_name)
+    # 
+    # for k,v in translation_holder.translation_dict.items():
+    #     print()
+    #     print(k)
+    #     print(v)
+    # 
+    # 
+    # _ = translation_holder.translation
+    # print(_(""))
+    # print(_("abc"))
+    # print(_("bbc"))
+    # print(_("test"))

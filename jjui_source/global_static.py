@@ -9,9 +9,10 @@ if __name__ =="__main__":
 
 from . import global_variable
 
-title_string=r"JJui (v.2.0.test) -- MAME 街机游戏列表显示器 -- "
+version_string=r"JJui (v.2.0.1 test)"
+title_string = r"MAME 街机游戏列表显示器"
 if global_variable.gamelist_type == "softwarelist":
-    title_string=r"JJui (v.2.0.test) -- MAME Software List(软件列表) -- "
+    title_string= r"MAME Software List(软件列表)"
 
 # 游戏列表
 # 读取哪些
@@ -132,6 +133,7 @@ extra_text_types =  (
 if global_variable.gamelist_type == "softwarelist":
     extra_text_types =  (
             "history.xml",
+            "history.dat"
             )
 
 # ui ,extra ，文档，第二类，出招表
