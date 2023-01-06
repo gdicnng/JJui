@@ -463,8 +463,21 @@ def main(game_list_data):
             root.wm_state("zoomed")
         else:
             pass
-
+        
+        # 周边图片区 分隔线
+        # 分隔线位置，初始时，根据配置文件，设置一下
+        root.update() # 前边不放一个 update ，就没有效果 ？？？？
+        
+        # 周边一个分隔线
+        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,configure_data["pos3"])
+        #root.update()
+        
+        root.update()
+        
         # 周边，notebook，选择
+        #   因为默认先显示的 图片区
+        #   先调整 图片分隔线 位置，再选择 周边 区域
+        #   图片区，能见的时候，调整分隔线，似乎才有用
         try:
             ui_extra.new_ui_notebook.select( configure_data["extra_tab_index"] )
         except:
@@ -488,12 +501,7 @@ def main(game_list_data):
             misc_funcs.use_user_configure_colours()
         
         
-        # 分隔线位置，初始时，根据配置文件，设置一下
-        root.update() # 前边不放一个 update ，就没有效果 ？？？？
-        
-        # 还有周边一个分隔线
-        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,configure_data["pos3"])
-        #root.update()
+
         
         root.update()
         # 初始时，分隔线,重置位置

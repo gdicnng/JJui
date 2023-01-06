@@ -9,7 +9,7 @@ d178bad8edd7f2d4ec6e7dff6a8bdbb1 *jjui_source\extra_history_dat.py
 c21a355ccb75c7067905536c7382b3cf *jjui_source\folders_read.py
 56e8fae7bbaf74fad4da03ffc25921ee *jjui_source\folders_save.py
 5f376cb10b68cd829760c12bcd84a289 *jjui_source\folders_search.py
-b9140a4e1b32ef0567bb78fd9c423c06 *jjui_source\global_static.py
+7af3bb8fae1ecbee0904eef794834c21 *jjui_source\global_static.py
 eac937d74792b91f8804a91a1b7a3f45 *jjui_source\global_static_filepath.py
 cf39cfd70422d2b3c7a98ce76caf2fd6 *jjui_source\global_static_key_word_translation.py
 705e48378b7ca3943e46303e4d69af12 *jjui_source\global_variable.py
@@ -30,7 +30,7 @@ b714cc0ede3d5f7e13fd8b9c8719d3eb *jjui_source\ui_game_list_table_1_level.py
 770e966f9bcde44bede0bb2f29b41c70 *jjui_source\ui_high_dpi.py
 48cf3773cd3275a424068caf55bc9ddd *jjui_source\ui_index.py
 fe85e57788333b1c0ba4aa1b87c39540 *jjui_source\ui_main.py
-919fe065f7074ebb528b194a53782353 *jjui_source\ui_main_window.py
+10d38aa3ebba6caa247ba2104bf95e96 *jjui_source\ui_main_window.py
 438178b98c376fd0f7ccb9a7fb5bb6f2 *jjui_source\ui_menubar.py
 96fe72977b2b07c34574c7858c157d8d *jjui_source\ui_misc.py
 94307088dd6eb6681454c0dc940ed991 *jjui_source\ui_statesbar.py
