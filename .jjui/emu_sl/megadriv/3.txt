@@ -1,5 +1,7 @@
 ﻿%mame%
+
 command megadrij
+command -cart
 %xml:software%
 
 command -statename

@@ -10,21 +10,29 @@ import locale
 import tkinter as tk
 import tkinter.ttk as ttk
 
+from PIL import Image, ImageTk
+# Pillow
+# DeprecationWarning: 
+# BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+# Use Resampling.BILINEAR instead.
+# 老的 Image.BILINEAR 就是 int 2
+# 新的 Image.Resampling.BILINEAR 是 <enum 'Resampling'>，
+#   新版本还没有出来，不知道直接用 2 ，可不可以
+try:
+    bilinear = Image.Resampling.BILINEAR
+except:
+    bilinear = Image.BILINEAR
+
 from . import global_variable
 
-#from PIL import Image, ImageTk
- 
 if __name__ == "__main__" :
     import builtins
     from .translation_ui  import translation_holder
     builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_static_filepath as the_files # 图标 图片 路径
-
-from PIL import Image, ImageTk
-
-
 from . import ui_game_list_table_2_level
+
 Data_Holder_base = ui_game_list_table_2_level.Data_Holder
 GameList_base    = ui_game_list_table_2_level.GameList
 
@@ -724,8 +732,8 @@ class GameList_level_2_collapse(GameList_base):
     def new_func_icon_bitmap_resize(self,):
         new_size = (self.new_var_icon_width ,self.new_var_icon_width )
         
-        plus_temp  = self.new_image_plus_original.resize( new_size,Image.BILINEAR, )
-        minus_temp = self.new_image_minus_original.resize(new_size,Image.BILINEAR, )
+        plus_temp  = self.new_image_plus_original.resize( new_size,bilinear, )
+        minus_temp = self.new_image_minus_original.resize(new_size,bilinear, )
         
         self.new_image_plus =ImageTk.BitmapImage(plus_temp,foreground=self.new_var_foreground)
         self.new_image_minus=ImageTk.BitmapImage(minus_temp,foreground=self.new_var_foreground)

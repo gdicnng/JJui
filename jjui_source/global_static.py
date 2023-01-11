@@ -9,7 +9,7 @@ if __name__ =="__main__":
 
 from . import global_variable
 
-version_string=r"JJui (v.2.0.2 test)"
+version_string=r"JJui (v.2.0.3 test)"
 title_string = r"MAME 街机游戏列表显示器"
 if global_variable.gamelist_type == "softwarelist":
     title_string= r"MAME Software List(软件列表)"

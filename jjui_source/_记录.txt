@@ -1,0 +1,50 @@
+﻿稍微做个记录吧
+https://www.ppxclub.com/forum.php?mod=viewthread&tid=705838
+
+v.2.0.3 :
+	PPXCLUB 49楼，s1w27345 ，反应有问题，sl 初始化时。
+	我用他说的版本，试了一下，没有发现什么。
+	但是换更早的 0.162 ，初始化时，确实有点问题，
+	但和 s1w27345 反应的 是不是 相同的问题，不好说。
+	解决 0.162 初始化 的 问题。
+		在解析 xml 中，需要得到的是 文本，但 xml.etree.ElementTree.Element.text 有可能反回值为 None 。
+	
+	和此差不多的，解析 xml ，有没有可能有其它的意外，
+	比如 id 是大写？ id 前后有空格 ？
+	应该没有什么问题，到现在也没有看到有什么问题，但谁知道呢。
+	id 最重要 稍微处一下吧，其它就不管了。
+	
+	看到了一条 Pillow 的提示
+	DeprecationWarning: BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+	Use Resampling.BILINEAR instead.
+	虽然目前还没有出 Pillow 10 ，但还是改一下吧
+	
+	既然试了一下 0.162 版 SL
+	命令行中
+	mame.exe nes smb1
+		这样能打开来
+	mame.exe nes -cart nes:smb1
+		这样能打开来
+	mame.exe nes nes:smb1
+		这样不能；但 新版本 能
+	SL 的 几个 配置样本 文件，(.jjui\emu_sl\*\*.txt)，稍微改一下，以适应 老的 0.162 等
+
+2023-01-09：
+	仅更新列表，software list 列表，其中 的 FC ／ NES 部分的列表。
+
+v.2.0.2
+	2023-01-05
+	
+	v2.0.1 发现个比较明显的问题，启动时，如果周边启动是文本区，那么 图片区 分隔条 位置 不正确。
+	紧急修理一下
+
+v2.0.1
+	2023-01-03
+
+之前的
+	大都记不得了
+	
+	用户群体少，提意见的人也很少。
+	PPXCLUB 贴子里 有几条意见。
+	PPXCLUB 的 lanyer 在 QQ 里，提过许多意见。
+

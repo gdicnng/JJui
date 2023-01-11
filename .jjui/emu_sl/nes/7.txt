@@ -1,5 +1,6 @@
 ﻿%mame%
 command famicom
+command -cart
 %xml:software%
 
 command -statename

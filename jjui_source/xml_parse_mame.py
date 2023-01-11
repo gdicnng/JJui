@@ -68,7 +68,7 @@ def parse_mame_xml( xml_file_name , mame_type = "mame0162"):
             #if elem.attrib["name"]=="kof97" :
             if( "name" in elem.attrib ):
                 
-                game_name = elem.attrib["name"]
+                game_name = elem.attrib["name"].strip().lower()
                 
                 count += 1
                 if count % 1000 == 0:
@@ -218,6 +218,26 @@ def parse_mame_xml( xml_file_name , mame_type = "mame0162"):
                 temp_dict["number_sample"]      = number_sample
                 temp_dict["number_softwarelist"]= number_softwarelist
                 
+                # 清理
+                # Element.text 的值，有可能是 None
+                # 其实，不需要清理，似乎也没问题，
+                # 但是 0.162 MAME software list 遇到问题了
+                for the_key in temp_dict:
+                    
+                    # 如果值为 None
+                    if temp_dict[the_key ] is None:
+                        temp_dict[the_key ] = ""
+                    
+                    # 如果值为 str ，正好不管
+                    
+                    # 如果值类型为 list，再搜其中的内容
+                    # 应该没有其它类型了
+                    elif type( temp_dict[ the_key ] )==list:
+                        temp_list  = temp_dict[ the_key ]
+                        for n in range( len(temp_list) ):
+                            if temp_list[n] is None:
+                                temp_list[n]=""
+                
                 machine_dict[ game_name ] = temp_dict
 
             elem.clear()
@@ -359,7 +379,7 @@ def make_dict_data(machine_dict):
     # clone_to_parent
     for game_name,game_info in machine_dict.items():
         if "cloneof" in game_info : 
-            dict_data["clone_to_parent"][game_name] = game_info["cloneof"]
+            dict_data["clone_to_parent"][game_name] = game_info["cloneof"].strip().lower()
         #if "romof" in game_info :
         #    dict_data["romof"][game_name] = game_info["romof"]
     

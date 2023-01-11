@@ -1,5 +1,6 @@
 ﻿%mame%
 command fds
+command -flop
 %xml:software%
 
 command -statename

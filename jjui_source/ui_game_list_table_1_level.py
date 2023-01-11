@@ -15,6 +15,17 @@ from tkinter import ttk
 from tkinter import font as tk_font
 
 from PIL import Image, ImageTk
+# Pillow
+# DeprecationWarning: 
+# BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+# Use Resampling.BILINEAR instead.
+# 老的 Image.BILINEAR 就是 int 2
+# 新的 Image.Resampling.BILINEAR 是 <enum 'Resampling'>，
+#   新版本还没有出来，不知道直接用 2 ，可不可以
+try:
+    bilinear = Image.Resampling.BILINEAR
+except:
+    bilinear = Image.BILINEAR
  
 if __name__ == "__main__" :
     import builtins
@@ -800,19 +811,19 @@ class GameList_1(GameList_0):
         new_size = ( self.new_var_icon_width,self.new_var_icon_width )
         
         self.new_image_image_black  = ImageTk.PhotoImage( 
-                self.new_image_black_original.resize(  new_size,Image.BILINEAR, ) )
+                self.new_image_black_original.resize(  new_size,bilinear, ) )
         
         self.new_image_image_green  = ImageTk.PhotoImage( 
-                self.new_image_green_original.resize(  new_size,Image.BILINEAR, ) )
+                self.new_image_green_original.resize(  new_size,bilinear, ) )
         
         self.new_image_image_yellow = ImageTk.PhotoImage( 
-                self.new_image_yellow_original.resize( new_size,Image.BILINEAR, ) )
+                self.new_image_yellow_original.resize( new_size,bilinear, ) )
         
         self.new_image_image_red    = ImageTk.PhotoImage( 
-                self.new_image_red_original.resize(    new_size,Image.BILINEAR, ) )
+                self.new_image_red_original.resize(    new_size,bilinear, ) )
                 
         self.new_image_image_not_have    = ImageTk.PhotoImage( 
-                self.new_image_not_have_original.resize(    new_size,Image.BILINEAR, ) )
+                self.new_image_not_have_original.resize(    new_size,bilinear, ) )
     
     def new_func_set_colour_and_font(self,
                 foreground=None,

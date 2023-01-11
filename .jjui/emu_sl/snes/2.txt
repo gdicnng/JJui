@@ -1,5 +1,6 @@
 ﻿%mame%
 command snespal
+command -cart
 %xml:software%
 
 command -statename

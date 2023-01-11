@@ -28,6 +28,17 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
+# Pillow
+# DeprecationWarning: 
+# BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+# Use Resampling.BILINEAR instead.
+# 老的 Image.BILINEAR 就是 int 2
+# 新的 Image.Resampling.BILINEAR 是 <enum 'Resampling'>，
+#   新版本还没有出来，不知道直接用 2 ，可不可以
+try:
+    bilinear = Image.Resampling.BILINEAR
+except:
+    bilinear = Image.BILINEAR
 
 if __name__ == "__main__" :
     import builtins
@@ -124,7 +135,7 @@ class Image_area(ttk.Frame):
             # 清理 先
             self.new_ui_canvas.delete('all',)
             
-            temp = self.new_var_current_image.resize( image_current_size,Image.BILINEAR, )
+            temp = self.new_var_current_image.resize( image_current_size,bilinear, )
             #size_temp = temp.size
             #print("image size \t",end='')
             #print(size_temp)

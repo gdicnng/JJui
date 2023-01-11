@@ -12,8 +12,18 @@ if __name__ == "__main__" :
     from .translation_ui  import translation_holder
     builtins.__dict__['_'] = translation_holder.translation
 
-
 from PIL import Image, ImageTk
+# Pillow
+# DeprecationWarning: 
+# BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+# Use Resampling.BILINEAR instead.
+# 老的 Image.BILINEAR 就是 int 2
+# 新的 Image.Resampling.BILINEAR 是 <enum 'Resampling'>，
+#   新版本还没有出来，不知道直接用 2 ，可不可以
+try:
+    bilinear = Image.Resampling.BILINEAR
+except:
+    bilinear = Image.BILINEAR
 
 from . import global_variable
 from . import global_static
@@ -1555,14 +1565,14 @@ class MenuBar(ttk.Frame):
             a=800/size_1[0]
             new_size_1 = (int(size_1[0]*a),int(size_1[1]*a))
             
-            image_zhifubao = image_zhifubao.resize( new_size_1,Image.BILINEAR, )
+            image_zhifubao = image_zhifubao.resize( new_size_1,bilinear, )
             image_zhifubao = ImageTk.PhotoImage( image_zhifubao  )
             
             #size_2=image_weixin.size
             #b=800/size_2[0]
             #new_size_2 = ( int(size_2[0]*b),int(size_2[1]*b))
             
-            #image_weixin = image_weixin.resize( new_size_2,Image.BILINEAR, )
+            #image_weixin = image_weixin.resize( new_size_2,bilinear, )
             #image_weixin = ImageTk.PhotoImage( image_weixin )
             
             t.image_create(tk.END,image=image_zhifubao)

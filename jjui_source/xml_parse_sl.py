@@ -42,7 +42,7 @@ def read_xml( file_name ):
     
         if elem.tag=="softwarelist":
             
-            xml_name        = elem.attrib.get("name","")
+            xml_name        = elem.attrib.get("name","").strip().lower()
             
             #xml_description = elem.attrib.get("description","")
             xml_info[xml_name] = {
@@ -64,7 +64,7 @@ def read_xml( file_name ):
                     
                     temp_dict["xml"] = xml_name
                     
-                    software_name = child.attrib["name"]
+                    software_name = child.attrib["name"].strip().lower()
                     
                     # id
                     software_id   = "".join( ( xml_name," ",software_name ) )
@@ -81,7 +81,7 @@ def read_xml( file_name ):
                     #   原来的 cloneof → name
                     #   改为   cloneof → xml + 空格 + name
                     if "cloneof" in temp_dict:
-                        temp_parent_id = temp_dict["cloneof"]
+                        temp_parent_id = temp_dict["cloneof"].strip().lower()
                         parent_id      = xml_name + " " +  temp_parent_id
                         temp_dict["cloneof"] = parent_id
                     
@@ -106,7 +106,15 @@ def read_xml( file_name ):
                             if grand_child.attrib["name"]=="alt_title":
                                 temp_dict["alt_title"] = grand_child.attrib["value"]
                             
-
+                    
+                    # 清理
+                    # Element.text 的值，有可能是 None
+                    # 新版本好像 也没有问题
+                    # 0.162 有遇到此问题
+                    for the_key in temp_dict:
+                        if temp_dict[the_key ] is None:
+                            temp_dict[the_key ] = ""
+                    
                     all_info[ software_id ] = temp_dict
             
 
