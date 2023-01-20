@@ -1,0 +1,590 @@
+version #2.2	版本 #2.2
+version 0	版本 0
+Version 0.3	版本 0.3
+Version 0.98 beta	版本 0.98 beta
+Version 01-DEC-81	版本 01-DEC-81
+Version 01.11.85	版本 01.11.85
+Version 01.19.89	版本 01.19.89
+Version 01.23.88	版本 01.23.88
+Version 01.24.86	版本 01.24.86
+Version 01.27.85	版本 01.27.85
+Version 01.27.88	版本 01.27.88
+Version 01.27.89	版本 01.27.89
+Version 01.29.87	版本 01.29.87
+Version 01.31.87	版本 01.31.87
+Version 01.31.89	版本 01.31.89
+Version 01331	版本 01331
+Version 02.01.87	版本 02.01.87
+Version 02.05.86	版本 02.05.86
+Version 02.09.89	版本 02.09.89
+Version 02.28.89	版本 02.28.89
+Version 03-FEB-1989	版本 03-FEB-1989
+Version 03.07.86	版本 03.07.86
+Version 03.11.86	版本 03.11.86
+Version 03.12.86	版本 03.12.86
+Version 03.13.86	版本 03.13.86
+Version 03.19.86	版本 03.19.86
+Version 04.13.84	版本 04.13.84
+Version 04.19.88	版本 04.19.88
+Version 04.25.85	版本 04.25.85
+Version 04421	版本 04421
+Version 05-SEP-81	版本 05-SEP-81
+Version 05.01.87	版本 05.01.87
+Version 05.23.87	版本 05.23.87
+Version 050187	版本 050187
+Version 06	版本 06
+Version 06.01.87	版本 06.01.87
+Version 06.05.86	版本 06.05.86
+Version 06.12.85	版本 06.12.85
+Version 06.24.86	版本 06.24.86
+Version 06.29.84	版本 06.29.84
+Version 06401	版本 06401
+Version 07	版本 07
+Version 07.05.89	版本 07.05.89
+Version 07.24.87	版本 07.24.87
+Version 08-OCT-85	版本 08-OCT-85
+Version 08.02.89	版本 08.02.89
+Version 08.05.84	版本 08.05.84
+Version 08.09.83	版本 08.09.83
+Version 08.15.83	版本 08.15.83
+Version 08.17.87	版本 08.17.87
+Version 08.31.86	版本 08.31.86
+Version 09.04.87	版本 09.04.87
+Version 09.08.86	版本 09.08.86
+Version 09.12.86	版本 09.12.86
+Version 09.13.84	版本 09.13.84
+Version 09.14.87	版本 09.14.87
+Version 09.15.87	版本 09.15.87
+Version 09.19.83	版本 09.19.83
+Version 09.20.84	版本 09.20.84
+Version 09.23.85	版本 09.23.85
+Version 09.27.85	版本 09.27.85
+Version 1	版本 1
+version 1	版本 1
+Version 1.0	版本 1.0
+version 1.0	版本 1.0
+Version 1.0 07-Jun-88	版本 1.0 07-Jun-88
+Version 1.0 08	版本 1.0 08
+Version 1.0 12-Aug-88	版本 1.0 12-Aug-88
+Version 1.0 final beta	版本 1.0 final beta
+Version 1.0+	版本 1.0+
+Version 1.0.1	版本 1.0.1
+Version 1.00	版本 1.00
+Version 1.00.00	版本 1.00.00
+Version 1.00A	版本 1.00A
+Version 1.01	版本 1.01
+Version 1.01 28-Sep-88	版本 1.01 28-Sep-88
+Version 1.02	版本 1.02
+Version 1.03	版本 1.03
+Version 1.04	版本 1.04
+Version 1.09	版本 1.09
+Version 1.0a	版本 1.0a
+Version 1.0I	版本 1.0I
+Version 1.0M	版本 1.0M
+Version 1.1	版本 1.1
+version 1.1	版本 1.1
+Version 1.1 07-Oct-88	版本 1.1 07-Oct-88
+Version 1.1 17-Nov-88	版本 1.1 17-Nov-88
+Version 1.1 25-Jul-88	版本 1.1 25-Jul-88
+Version 1.1.1	版本 1.1.1
+Version 1.1.2	版本 1.1.2
+Version 1.10	版本 1.10
+Version 1.11	版本 1.11
+Version 1.12	版本 1.12
+Version 1.14	版本 1.14
+Version 1.1a	版本 1.1a
+Version 1.1A	版本 1.1A
+Version 1.1B	版本 1.1B
+Version 1.1b	版本 1.1b
+Version 1.1C	版本 1.1C
+Version 1.2	版本 1.2
+version 1.2	版本 1.2
+Version 1.2 16-Nov-87	版本 1.2 16-Nov-87
+Version 1.2.2	版本 1.2.2
+Version 1.20	版本 1.20
+Version 1.20 Release 1.00	版本 1.20 Release 1.00
+Version 1.21	版本 1.21
+Version 1.22	版本 1.22
+Version 1.23	版本 1.23
+Version 1.25B	版本 1.25B
+Version 1.2A	版本 1.2A
+Version 1.3	版本 1.3
+version 1.3	版本 1.3
+Version 1.3.1	版本 1.3.1
+Version 1.30	版本 1.30
+Version 1.30 Release 2.00	版本 1.30 Release 2.00
+Version 1.36	版本 1.36
+Version 1.3a	版本 1.3a
+Version 1.4	版本 1.4
+version 1.4	版本 1.4
+Version 1.4 - 022988	版本 1.4 - 022988
+Version 1.4+	版本 1.4+
+Version 1.46	版本 1.46
+Version 1.4? 16-Jan-90	版本 1.4? 16-Jan-90
+Version 1.5	版本 1.5
+version 1.5	版本 1.5
+Version 1.6	版本 1.6
+version 1.6	版本 1.6
+Version 1.7	版本 1.7
+version 1.7	版本 1.7
+Version 1.8	版本 1.8
+version 1.8	版本 1.8
+Version 1.8 21-Dec-88	版本 1.8 21-Dec-88
+Version 1.80	版本 1.80
+Version 10.18.88	版本 10.18.88
+Version 10.84	版本 10.84
+version 1005	版本 1005
+version 1035	版本 1035
+Version 11-Aug-89	版本 11-Aug-89
+Version 11.04.83	版本 11.04.83
+Version 11.24.88	版本 11.24.88
+version 1100	版本 1100
+Version 12-Jan-89	版本 12-Jan-89
+Version 12.14.87	版本 12.14.87
+Version 12.15.87	版本 12.15.87
+Version 12.21.89	版本 12.21.89
+Version 12.29.88	版本 12.29.88
+Version 12501	版本 12501
+Version 12511	版本 12511
+version 1260	版本 1260
+Version 13-JUL-1989	版本 13-JUL-1989
+Version 13501	版本 13501
+version 1361	版本 1361
+version 1470	版本 1470
+Version 15-Sep-87	版本 15-Sep-87
+version 1500	版本 1500
+Version 15521	版本 15521
+Version 15531	版本 15531
+Version 16	版本 16
+version 1654	版本 1654
+Version 18-JAN-89	版本 18-JAN-89
+Version 18-Jul-89	版本 18-Jul-89
+version 1930	版本 1930
+Version 1982-01-14	版本 1982-01-14
+Version 1982.0	版本 1982.0
+Version 1982.1	版本 1982.1
+Version 1983	版本 1983
+Version 1983-01-12	版本 1983-01-12
+Version 1984	版本 1984
+Version 1984-01-31	版本 1984-01-31
+Version 1984-03-14	版本 1984-03-14
+Version 1984-06-05	版本 1984-06-05
+Version 1984-08-22	版本 1984-08-22
+Version 1984-09-27	版本 1984-09-27
+Version 1984-10-05	版本 1984-10-05
+Version 1984-11-01	版本 1984-11-01
+Version 1984-11-26	版本 1984-11-26
+Version 1985-03-01	版本 1985-03-01
+Version 1985-08-30	版本 1985-08-30
+Version 1985-09-10	版本 1985-09-10
+Version 1985-12-02	版本 1985-12-02
+Version 1986-01-01	版本 1986-01-01
+Version 1986-11-01	版本 1986-11-01
+Version 1986-11-17	版本 1986-11-17
+Version 1987-05-04	版本 1987-05-04
+Version 1987-08-12	版本 1987-08-12
+Version 1987-10-31	版本 1987-10-31
+Version 1987.08.24	版本 1987.08.24
+Version 1988-09-28	版本 1988-09-28
+Version 2	版本 2
+version 2	版本 2
+Version 2.0	版本 2.0
+Version 2.0-1984	版本 2.0-1984
+Version 2.0-1984-10-26	版本 2.0-1984-10-26
+Version 2.0-1989-04-21	版本 2.0-1989-04-21
+Version 2.00	版本 2.00
+Version 2.01	版本 2.01
+Version 2.02	版本 2.02
+Version 2.03	版本 2.03
+Version 2.0A	版本 2.0A
+Version 2.1	版本 2.1
+Version 2.1+	版本 2.1+
+Version 2.1.6	版本 2.1.6
+Version 2.10	版本 2.10
+Version 2.11	版本 2.11
+Version 2.12	版本 2.12
+Version 2.12C	版本 2.12C
+Version 2.1e	版本 2.1e
+Version 2.2	版本 2.2
+Version 2.25a	版本 2.25a
+Version 2.3	版本 2.3
+Version 2.4.3	版本 2.4.3
+Version 2.49B	版本 2.49B
+Version 2.5	版本 2.5
+Version 2.6	版本 2.6
+Version 2.7	版本 2.7
+Version 2.8:3 - 1.1:2	版本 2.8:3 - 1.1:2
+Version 20-Jan-87	版本 20-Jan-87
+version 21	版本 21
+Version 25-Sep-89	版本 25-Sep-89
+Version 26-APR-86	版本 26-APR-86
+Version 26-JAN-82	版本 26-JAN-82
+version 28.7	版本 28.7
+Version 28701	版本 28701
+Version 29-APR-82	版本 29-APR-82
+Version 29-Aug-89	版本 29-Aug-89
+Version 29.06.84	版本 29.06.84
+Version 3	版本 3
+version 3	版本 3
+Version 3.0	版本 3.0
+Version 3.0-1984-02-06	版本 3.0-1984-02-06
+Version 3.0-1984-05-25	版本 3.0-1984-05-25
+Version 3.00	版本 3.00
+Version 3.02	版本 3.02
+Version 3.0a	版本 3.0a
+Version 3.0A	版本 3.0A
+Version 3.1	版本 3.1
+Version 3.1.6	版本 3.1.6
+Version 3.10	版本 3.10
+Version 3.1c	版本 3.1c
+Version 3.1E	版本 3.1E
+Version 3.2	版本 3.2
+Version 3.2.0	版本 3.2.0
+Version 3.20	版本 3.20
+Version 3.3	版本 3.3
+Version 3.3.1	版本 3.3.1
+Version 3.30	版本 3.30
+Version 3.30A	版本 3.30A
+Version 3.30B	版本 3.30B
+Version 3.31	版本 3.31
+Version 3.33	版本 3.33
+Version 3.4	版本 3.4
+Version 3.5	版本 3.5
+Version 3.6	版本 3.6
+Version 3.7	版本 3.7
+Version 3.8	版本 3.8
+Version 4	版本 4
+Version 4.0	版本 4.0
+Version 4.00	版本 4.00
+Version 4.01	版本 4.01
+Version 4.1	版本 4.1
+Version 4.1.5	版本 4.1.5
+Version 4.1.6	版本 4.1.6
+Version 4.14	版本 4.14
+Version 4.2	版本 4.2
+Version 4.3	版本 4.3
+Version 4.4	版本 4.4
+Version 4.4B	版本 4.4B
+Version 4.4C	版本 4.4C
+Version 4.4D	版本 4.4D
+Version 4.5	版本 4.5
+Version 4.7	版本 4.7
+Version 4.8	版本 4.8
+Version 435.04	版本 435.04
+Version 464	版本 464
+Version 5	版本 5
+Version 5.0	版本 5.0
+Version 5.0 Revision C	版本 5.0 修订 C
+Version 5.0 Revision F	版本 5.0 修订 F
+Version 5.0 Revision G	版本 5.0 修订 G
+Version 5.00	版本 5.00
+Version 5.01	版本 5.01
+Version 5.02	版本 5.02
+Version 5.1	版本 5.1
+Version 5.2	版本 5.2
+Version 5.3	版本 5.3
+Version 5.31	版本 5.31
+Version 5.4	版本 5.4
+Version 5.5	版本 5.5
+Version 5.502.1231.2001	版本 5.502.1231.2001
+Version 51016	版本 51016
+Version 5220C	版本 5220C
+version 566	版本 566
+Version 6.0	版本 6.0
+Version 6.0 Beta 1	版本 6.0 Beta 1
+Version 6.0 Beta 2	版本 6.0 Beta 2
+Version 6.0 Revision A	版本 6.0 修订 A
+Version 6.0 Revision B	版本 6.0 修订 B
+Version 6.00	版本 6.00
+Version 6.1	版本 6.1
+Version 6.2	版本 6.2
+Version 6.20	版本 6.20
+Version 6.21	版本 6.21
+Version 6.22	版本 6.22
+Version 6.3	版本 6.3
+Version 6.4	版本 6.4
+version 6.4	版本 6.4
+Version 6.5	版本 6.5
+Version 6.6	版本 6.6
+version 600	版本 600
+Version 6128	版本 6128
+version 6128	版本 6128
+version 6175	版本 6175
+version 6385	版本 6385
+version 7.0	版本 7.0
+Version 7.0	版本 7.0
+Version 7.1	版本 7.1
+Version 7.2	版本 7.2
+Version 7.3	版本 7.3
+Version 7.4	版本 7.4
+version 7234	版本 7234
+version 7331	版本 7331
+version 7334	版本 7334
+version 7482	版本 7482
+version 7532	版本 7532
+version 770	版本 770
+Version 8.1	版本 8.1
+Version 8.2	版本 8.2
+Version 8.3	版本 8.3
+Version 8.4	版本 8.4
+version 8014	版本 8014
+version 810	版本 810
+version 820	版本 820
+version 822	版本 822
+Version 84-01	版本 84-01
+Version 84-02	版本 84-02
+version 8481	版本 8481
+Version 85-02	版本 85-02
+version 860	版本 860
+version 875	版本 875
+Version 9.0	版本 9.0
+Version 9.1	版本 9.1
+version 920	版本 920
+Version 925.01	版本 925.01
+version 950	版本 950
+version 985	版本 985
+Version A	版本 A
+Version A.00	版本 A.00
+Version A.02	版本 A.02
+Version A01	版本 A01
+Version A04	版本 A04
+Version Amiga Italian v1.5 19891229	版本 Amiga Italian v1.5 19891229
+Version Angelus	版本 Angelus
+Version B	版本 B
+Version B.00	版本 B.00
+Version B.01	版本 B.01
+Version B.02	版本 B.02
+Version B.1A 09-DEC-82	版本 B.1A 09-DEC-82
+Version B1	版本 B1
+Version B1R	版本 B1R
+Version B:00 1981-01-03	版本 B:00 1981-01-03
+Version Basic 1.0	版本 Basic 1.0
+Version BASIC 1.1	版本 BASIC 1.1
+Version Basic 1.1	版本 Basic 1.1
+Version basic 1.1	版本 basic 1.1
+Version Blue	版本 蓝
+version C	版本 C
+Version C.00	版本 C.00
+Version C3	版本 C3
+Version Cheat-Mode reconnected	版本 Cheat-Mode reconnected
+Version CPC 464	版本 CPC 464
+Version CPC 6128	版本 CPC 6128
+Version CPC 664-6128	版本 CPC 664-6128
+Version de Demo	版本 de Demo
+Version double size	版本 double size
+Version GOLD	版本 GOLD
+Version J4.05	版本 J4.05
+Version J5.00	版本 J5.00
+Version June 27	版本 June 27
+Version Junior	版本 Junior
+Version Microstrad	版本 Microstrad
+version N4TKER09	版本 N4TKER09
+version N4TKER18	版本 N4TKER18
+Version PV3S2V1	版本 PV3S2V1
+Version Senior	版本 Senior
+Version Wincpc	版本 Wincpc
+version-2.00	版本-2.00
+version-3.00	版本-3.00
+version_128K_2009-04-04_APLIB	版本_128K_2009-04-04_APLIB
+Version_6128-128K	版本_6128-128K
+Version_Basic_1.1	版本_Basic_1.1
+Verson 3.20	
+Verson 3.30	
+16k version only	16k 版本 only
+Competition Version?	竞赛  版本?
+debug version prototype	debug 版本 原型
+demo version 2	demo 版本 2
+EGA version - first release	EGA 版本 - 第一次发行版
+EGA version - second release	EGA 版本 - 第二次发行版
+Final Version release	最后 版本 发行版
+Modified version cooperating with 64kB RAM	修改 版本 cooperating with 64kB RAM
+Series 5 Version D	系列 5 版本 D
+shareware version - Mr. Disk release	shareware 版本 - Mr. Disk release
+Software Projects - Version 2	Software Projects - 版本 2
+Software Projects -Version 1	Software Projects -版本 1
+Split Version?	Split 版本?
+Tandy version 02.11.24	Tandy 版本 02.11.24
+Tandy version 03.20.21	Tandy 版本 03.20.21
+Tandy Version 03.30.20	Tandy 版本 03.30.20
+Tandy version 3.30.22	Tandy 版本 3.30.22
+v.0.01 - V Version - Hack Level 12	v.0.01 - V 版本 - Hack Level 12
+v.0.01 - W Version - Hack Level 12	v.0.01 - W 版本 - Hack Level 12
+v.0.01 - X Version - Hack Level 12	v.0.01 - X 版本 - Hack Level 12
+v.0.01 - Y Version - Hack Level 12	v.0.01 - Y 版本 - Hack Level 12
+v.0.01 - YY Version - Hack Level 12	v.0.01 - YY 版本 - Hack Level 12
+v.0.01 - Z Version - Hack Level 12	v.0.01 - Z 版本 - Hack Level 12
+	
+$A000 version	$A000 版本
++2 version	+2 版本
+08.31.86 Version	08.31.86 版本
+128 Version	128 版本
+128K version	128K 版本
+128k version	128k 版本
+16-color version	16-color 版本
+16k version	16k 版本
+1980 Version	1980 版本
+1980 version	1980 版本
+1981 Version	1981 版本
+1981-06-22 Version	1981-06-22 版本
+1982 Version	1982 版本
+1983 Version	1983 版本
+1983 version	1983 版本
+1984 Version	1984 版本
+1985 Version	1985 版本
+1986-10-27 Version	1986-10-27 版本
+1987 Version	1987 版本
+1988 Version	1988 版本
+1989 Version	1989 版本
+1994 version	1994 版本
+2 disks version	2 disks 版本
+2 Version	2 版本
+20-Column Version	20-Column 版本
+256-color version	256-色 版本
+26-AUG-1990 Version	26-AUG-1990 版本
+27-JUN-1989 Version	27-JUN-1989 版本
+2DD version	2DD 版本
+2HD version	2HD 版本
+30-JUN-1989 Version	30-JUN-1989 版本
+32k version	32k 版本
+40 column version	40 column 版本
+464 version	464 版本
+48k version	48k 版本
+6128 version	6128 版本
+64K version	64K 版本
+64K Version	64K 版本
+80 column version	80 column 版本
+8021 version	8021 版本
+8050 Version	8050 版本
+Advanced Pinball Simulator Lightgun Version	Advanced Pinball Simulator Lightgun 版本
+All Star Version	全明星 版本
+amended version	修订 版本
+Amsoft Version	Amsoft 版本
+ArchiMENdes Hen Version	ArchiMENdes Hen 版本
+ARP version	ARP 版本
+BASIC version	BASIC 版本
+bear version	bear 版本
+Black version	黑 版本
+blue version	蓝 版本
+Bonus Version	Bonus 版本
+bootleg of CD version	CD 版本 的 盗版
+Budget Sierra Originals Version	Budget Sierra Originals 版本
+Bunka Housou Special Version	Bunka Housou Special 版本
+C04 version	C04 版本
+Cassette Version	Cassette 版本
+cassettte version	cassettte 版本
+CBS Version	CBS 版本
+cheat version	作弊 版本
+Cless Version	Cless 版本
+CoCo 3 Version	CoCo 3 版本
+colour version	colour 版本
+console version	console 版本
+cpm version	cpm 版本
+customised version	customised 版本
+debugged version	debugged 版本
+Development Version	Development 版本
+Disk Version	Disk 版本
+disk version	disk 版本
+DOS 3.3 Version	DOS 3.3 版本
+download version	download 版本
+Dual drive version	Dual drive 版本
+earlier version	早期 版本
+Early Version	早期 版本
+easy version	简单 版本
+EGA 16 colors version	EGA 16 色 版本
+EGA version	EGA 版本
+English version	英语 版本
+Enhanced Version	加强 版本
+extended version	扩展 版本
+Fast Load Version	快速加载 版本
+Fast Version	快速 版本
+female version	女性 版本
+final cassette version	final cassette 版本
+Final Version	最终 版本
+	
+first version	第一版
+fixed version	修正 版本
+Flashload Version	Flashload 版本
+FM Towns Marty version	FM Towns Marty 版本
+French retail version	French retail 版本
+graphic menu version	图形菜单 版本
+Gravis Ultrasound version	Gravis Ultrasound 版本
+Green Cherry version	Green Cherry 版本
+GunStick version	GunStick 版本
+Hard Disk Version	Hard Disk 版本
+hard version	hard 版本
+Includes MO6 Version	Includes MO6 版本
+Infogrames Version	Infogrames 版本
+initial version	initial 版本
+Interface 2 Version	Interface 2 版本
+Java Tea Original version	Java Tea Original 版本
+Jocky Scott Version	Jocky Scott 版本
+later version	later 版本
+Light Phaser version	Light Phaser 版本
+Lite Version	轻 版本
+LOGiN version	LOGiN 版本
+Login Version	Login 版本
+Lupin + Fujiko Version	Lupin + Fujiko 版本
+Lupin + Jigen + Goemon Version	Lupin + Jigen + Goemon 版本
+male version	男性 版本
+man version	男性 版本
+Microdrive Transfer Version	Microdrive Transfer 版本
+mkII version	mkII 版本
+Music Version	音乐 版本
+N-BASIC version	N-BASIC 版本
+N80-BASIC version	N80-BASIC 版本
+N88-BASIC version	N88-BASIC 版本
+non-playing version	non-playing 版本
+Nouvelle Version	Nouvelle 版本
+Nude version	裸 版本
+Older Version	旧 版本
+One disk version	One disk 版本
+one key version	one key 版本
+Otameshi Version	Otameshi 版本
+Paddle Version	Paddle 版本
+PCM8 version	PCM8 版本
+Peter Williamson Version	Peter Williamson 版本
+Physical Version	Physical 版本
+Pocket version	Pocket 版本
+Pre-Release Version	预发布 版本
+Printer Version	Printer 版本
+prototype CES version	原型版 CES 版本
+Revised Version	修订 版本
+Revision 2015 Party version	修订 2015 Party 版本
+ripped from GBA Famicom Mini version	ripped from GBA Famicom Mini 版本
+ROM Version	ROM 版本
+Romik Version	Romik 版本
+Rumble Version	Rumble 版本
+SB2 version	SB2 版本
+SD1 Version	SD1 版本
+second version	第二版
+Single drive version	Single drive 版本
+Slow Load Version	Slow Load 版本
+Slow Version	慢 版本
+Spain retail version	西班牙 零售 版本
+	
+Spanish version	西班牙 版本
+Special Version	特殊 版本
+Split Version	Split 版本
+Student Version	学生 版本
+take version	take 版本
+Tandy version	Tandy 版本
+	
+Tengen version	Tengen 版本
+Test Version	测试 版本
+	
+text menu version	文字菜单 版本
+TMS1100 version	TMS1100 版本
+TownsGEAR V2.1 version	TownsGEAR V2.1 版本
+Turbo Version	加速 版本
+UK retail version	英国 零售 版本
+Ultima Trilogy version	Ultima Trilogy 版本
+Unknown 1982 version	未知的 1982 版本
+VGA 256 colors version	VGA 256 colors 版本
+VGA version	VGA 版本
+vinyl version	vinyl 版本
+White version	白 版本
+windows version	windows 版本
+with 48k version	with 48k 版本
+with SOS revised version	with SOS revised 版本
+YM2610 Version	YM2610 版本
+	

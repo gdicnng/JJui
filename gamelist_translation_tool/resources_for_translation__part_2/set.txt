@@ -1,0 +1,43 @@
+bootleg set 1	盗版 第1套
+bootleg set 2	盗版 第2套
+Jet Set Gertie	
+Jet Set Willy	
+Jet Set Willy 2	
+SDK build set 1	SDK build 第1套
+SDK build set 2	SDK build 第2套
+	
+set 1	第1套
+Set 1	第1套
+set 10	第10套
+set 11	第11套
+set 12	第12套
+set 13	第13套
+set 14	第14套
+set 15	第15套
+set 16	第16套
+set 17	第17套
+set 18	第18套
+set 19	第19套
+set 2	第2套
+Set 2	第2套
+set 2 - alternative	第2套 - 替换版
+set 20	第20套
+set 21	第21套
+set 22	第22套
+set 23	第23套
+set 24	第24套
+set 25	第25套
+set 3	第3套
+set 3 - alternate	第3套 - 替换版
+set 4	第4套
+set 5	第5套
+Set 5	第5套
+set 6	第6套
+set 7	第7套
+set 8	第8套
+set 9	第9套
+
+2 Disks Set
+alt character set
+
+

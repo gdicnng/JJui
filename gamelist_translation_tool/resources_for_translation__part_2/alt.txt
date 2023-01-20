@@ -1,0 +1,120 @@
+﻿alt	替换版
+alt 1	替换版 1
+alt 10	替换版 10
+alt 11	替换版 11
+alt 12	替换版 12
+alt 2	替换版 2
+alt 2 - hard?	替换版 2 - hard?
+alt 2 disk 1	替换版 2 disk 1
+alt 2 disk 2	替换版 2 disk 2
+alt 2 tape 1	替换版 2 tape 1
+alt 2?	替换版 2?
+alt 3	替换版 3
+alt 3?	替换版 3?
+alt 4	替换版 4
+alt 4 fixed?	替换版 4 fixed?
+alt 4?	替换版 4?
+alt 5	替换版 5
+alt 6	替换版 6
+alt 7	替换版 7
+alt 8	替换版 8
+alt 9	替换版 9
+alt a	替换版 a
+alt b	替换版 b
+alt bad?	替换版 坏的?
+alt basic disk	替换版 basic disk
+alt board	替换版 board
+alt character set	替换版 character set
+alt colors	替换版 颜色
+alt colours	替换版 颜色
+alt cover	替换版 cover
+alt crack	替换版 crack
+alt data disk	替换版 data disk
+alt data?	替换版 data?
+alt diks 1	替换版 diks 1
+alt disc 1	替换版 disc 1
+alt disk 1	替换版 disk 1
+alt disk 1?	替换版 disk 1?
+alt disk 1b	替换版 disk 1b
+alt disk 2	替换版 disk 2
+alt disk 2?	替换版 disk 2?
+alt disk 3	替换版 disk 3
+alt disk 4?	替换版 disk 4?
+alt disk 5	替换版 disk 5
+alt disk a	替换版 disk a
+alt disk a 2	替换版 disk a 2
+alt disk c	替换版 disk c
+alt disk d	替换版 disk d
+alt disk1?	替换版 disk1?
+alt disk?	替换版 disk?
+alt disks 1	替换版 disks 1
+alt disks 1-3	替换版 disks 1-3
+alt download date	替换版 download date
+alt fixed?	替换版 fixed?
+alt floppy disk	替换版 floppy disk
+alt format	替换版 format
+alt format 2	替换版 format 2
+alt game disk	替换版 game disk
+alt games	替换版 游戏
+alt games 2	替换版 游戏 2
+alt geimu kyoujin	替换版 geimu kyoujin
+alt kaitou disk	替换版 kaitou disk
+alt loader	替换版 loader
+alt loader 2	替换版 loader 2
+alt logo	替换版 logo
+alt map disk	替换版 map disk
+alt map disk 2	替换版 map disk 2
+alt mapper	替换版 mapper
+alt master disk	替换版 master disk
+alt maybe	替换版 maybe
+alt omake cd	替换版 omake cd
+alt pc8001mkii?	替换版 pc8001mkii?
+alt pcb	替换版 pcb
+alt pcb 2	替换版 pcb 2
+alt player disk	替换版 player disk
+alt program disk	替换版 program disk
+alt program disk 2	替换版 program disk 2
+alt protection	替换版 protection
+alt rom config	替换版 rom config
+alt solo adventure packs	替换版 solo adventure packs
+alt system disk	替换版 system disk
+alt tape 1	替换版 tape 1
+alt tape 3	替换版 tape 3
+alt tapes 1-4	替换版 tapes 1-4
+alt title	替换版 title
+alt tune	替换版 tune
+alt user disk	替换版 user disk
+alt with 6 enemies	替换版 with 6 enemies
+alt. disk 2	替换版. disk 2
+alt. disk 5	替换版. disk 5
+alt. music	替换版. 音乐
+alt. system disk	替换版. system disk
+alt1	替换版1
+alt2	替换版2
+alt?	替换版?
+alt? 2	替换版? 2
+alt? extra disk?	替换版? extra disk?
+
+
+prototype alt	原型 替换版
+hacked alt	hacked 替换版
+hacked? alt	hacked? 替换版
+prototype alt 2	原型 替换版 2
+disk 1 alt 2	disk 1 替换版 2
+ver.1.05 alt disk a	ver.1.05 替换版 disk a
+v1.3 alt	v1.3 替换版
+v1.0 alt	v1.0 替换版
+64k alt	64k 替换版
+64k alt 2	64k 替换版 2
+v1 alt	v1 替换版
+unprotected? alt	未保护? 替换版
+unprotected? alt 2	未保护? 替换版 2
+3rd edition alt?	第3版 替换版?
+6th edition alt?	第6版 替换版?
+demo alt	demo 替换版
+v1.1 alt	v1.1 替换版
+pirate? alt	盗版? 替换版
+
+
+
+

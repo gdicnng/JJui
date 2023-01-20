@@ -1,0 +1,162 @@
+	
+- Release 1	- 发行版 1
+- Release 2	- 发行版 2
+- Spanish Release	- 西班牙语 发行版
+- Spanish Release - Disk 1A	- 西班牙语 发行版 - Disk 1A
+- Spanish Release - Disk 1B	- 西班牙语 发行版 - Disk 1B
+128k + 48k release	128k + 48k 发行版
+128k release	128k 发行版
+16 Blitz Plus release	16 Blitz Plus 发行版
+16 Blitz release	16 Blitz 发行版
+1981 release	1981 发行版
+1983 Penguin Software release	1983 Penguin Software 发行版
+1983 re-release	1983 再发行版
+1985 Polarware Re-release	1985 Polarware 再发行版
+1985 Re-release	1985 再发行版
+1985 release	1985 发行版
+1986 release	1986 发行版
+1988 Re-release	1988 再发行版
+1989 Re-release	1989 再发行版
+1989 Rerelease	1989 再发行版
+1990 Queue re-release	1990 Queue 再发行版
+1990 rerelease	1990 再发行版
+1994 release	1994 发行版
+1995 CD release	1995 CD 发行版
+1998 release	1998 发行版
+1st release	1st 发行版
+2002 fix release	2002 fix 发行版
+2016 cassette release	2016 cassette 发行版
+2nd release	2nd 发行版
+48k release	48k 发行版
+Altaya release	Altaya 发行版
+Alternative release	Alternative 发行版
+Alternative Software release	Alternative Software 发行版
+Australian Release	Australian 发行版
+Beta Release	Beta 发行版
+Big Games release	Big Games 发行版
+Brøderbund release	Brøderbund 发行版
+bugfix release	bug修复 发行版
+Code Masters re-release	Code Masters 再发行版
+	
+DOS release	DOS 发行版
+Dro Soft re-release	Dro Soft 再发行版
+Dro Soft release	Dro Soft 发行版
+DSI Games Re-release	DSI Games 再发行版
+earlier release	早期 发行版
+EGA release	EGA 发行版
+EGA version - first release	EGA 版 - 第一 发行版
+EGA version - second release	EGA 版 - 第二 发行版
+Erbe release	Erbe 发行版
+Eye of Beholder Trilogy release	Eye of Beholder Trilogy 发行版
+faulty release	faulty 发行版
+Final Version release	最终 发行版
+first release	第一版 发行版
+FormGen release	FormGen 发行版
+Hit Squad release	Hit Squad 发行版
+King Software release	King Software 发行版
+Kixx budget release	Kixx budget 发行版
+Kixx re-release	Kixx 再发行版
+Kixx release	Kixx 发行版
+Kixx XL release	Kixx XL 发行版
+Korean release	韩语 发行版
+Korean release of Samurai Shodown II	韩语 发行版 of Samurai Shodown II
+Korean release of Samurai Shodown III	韩语 发行版 of Samurai Shodown III
+Korean release of The Last Blade	韩语 发行版 of The Last Blade
+Krypton Force release	Krypton Force 发行版
+large case release	large case 发行版
+mail order release	mail order 发行版
+Main Street Publishing re-release	Main Street Publishing 再发行版
+Maintenance Release	Maintenance 发行版
+Megapak 8 release	Megapak 8 发行版
+MicroStyle re-release	MicroStyle 再发行版
+Namco release	Namco 发行版
+Original Release?	原始 发行版?
+PC Booter release	PC Booter 发行版
+PC Games release	PC Games 发行版
+PD release APPLE-3-WAP-GAM-03	PD 发行版 APPLE-3-WAP-GAM-03
+pre-release	预览版
+Pre-Release	预览版
+Pre-Release Version	预览版
+Proein release	Proein 发行版
+Random House release	Random House 发行版
+Re-Release	再发行版
+re-release	再发行版
+Re-release	再发行版
+re-release 2002	再发行版 2002
+re-release of Phantis	再发行版 of Phantis
+Re-release?	再发行版?
+release 1	发行版 1
+Release 1	发行版 1
+Release 1.00	发行版 1.00
+Release 1.1	发行版 1.1
+Release 1.2	发行版 1.2
+Release 1.4	发行版 1.4
+Release 1.41	发行版 1.41
+Release 1.45	发行版 1.45
+Release 10	发行版 10
+Release 107	发行版 107
+Release 11	发行版 11
+Release 116	发行版 116
+Release 13	发行版 13
+Release 14	发行版 14
+Release 15	发行版 15
+Release 16	发行版 16
+Release 17	发行版 17
+Release 18	发行版 18
+Release 19	发行版 19
+Release 1A	发行版 1A
+Release 2	发行版 2
+release 2	发行版 2
+Release 2 - 128k	发行版 2 - 128k
+Release 2 - 48k	发行版 2 - 48k
+Release 20	发行版 20
+Release 22	发行版 22
+Release 23	发行版 23
+Release 26	发行版 26
+Release 3	发行版 3
+release 3	发行版 3
+Release 3.0	发行版 3.0
+Release 31	发行版 31
+Release 37	发行版 37
+release 4	发行版 4
+Release 4.0	发行版 4.0
+Release 47	发行版 47
+Release 48	发行版 48
+Release 49	发行版 49
+Release 5	发行版 5
+release 5	发行版 5
+Release 56	发行版 56
+Release 57	发行版 57
+Release 58	发行版 58
+Release 68	发行版 68
+Release 7	发行版 7
+Release 75	发行版 75
+Release 77	发行版 77
+Release 8	发行版 8
+Release 86	发行版 86
+Release 88	发行版 88
+Release 9	发行版 9
+Release 97	发行版 97
+rerelease	再发行版
+Sentient Software release	Sentient Software 发行版
+shareware version - Mr. Disk release	shareware version - Mr. Disk 发行版
+small case release	small case 发行版
+Smash16 release	Smash16 发行版
+Software Entertainment Company release	Software Entertainment Company 发行版
+Special release	特殊 发行版
+Sunburst Communications release	Sunburst Communications 发行版
+System 4 release	System 4 发行版
+The $5 Computer Software Store - Wiz Technology release	The $5 Computer Software Store - Wiz Technology 发行版
+The Hit Squad release	The Hit Squad 发行版
+Thunder Mountain release	Thunder Mountain 发行版
+Titanium Seal release	Titanium Seal 发行版
+Unknown Re-Release	未知 再发行版
+unreleased	未发布
+Unreleased	未发布
+Version 1.20 Release 1.00	版本 1.20 发行版 1.00
+Version 1.30 Release 2.00	版本 1.30 发行版 2.00
+VGA re-release	VGA 再发行版
+VGA release	VGA 发行版
+Web Release Ver.	Web 发行版 Ver.
+Windows 3.x release	Windows 3.x 发行版
+Zoo Digital re-release	Zoo Digital 再发行版

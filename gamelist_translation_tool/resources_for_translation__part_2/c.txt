@@ -1,0 +1,24 @@
+﻿set
+cracked	破解版
+demo
+hacked	修改版
+hack	修改版
+hack?	修改版?
+
+rev	修订版
+prototype	原型版
+pirate	盗版
+bootleg	盗版
+alt	替换版
+original	原作
+version	版本
+release	发行版
+
+demo	演示版
+
+unknown	未知
+
+alternative	替换版
+
+FMG pirate	FMG 盗版
+FDS conversion	FDS 转化版
