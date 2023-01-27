@@ -14,6 +14,8 @@
 
 #
 string_separators_for_second_part    = r"()[]{}"
-string_separators_for_second_part    = string_separators_for_second_part + r"/,&"
+#string_separators_for_second_part    = string_separators_for_second_part + r"/,&"
+# & 这个符号 感觉还是不去掉好一些
+string_separators_for_second_part    = string_separators_for_second_part + r"/,"
 
 

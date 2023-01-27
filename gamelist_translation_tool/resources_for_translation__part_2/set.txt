@@ -37,6 +37,83 @@ set 7	第7套
 set 8	第8套
 set 9	第9套
 
+set 100	第 100 套
+set 101	第 101 套
+set 26	第 26 套
+set 27	第 27 套
+set 28	第 28 套
+set 29	第 29 套
+set 30	第 30 套
+set 31	第 31 套
+set 32	第 32 套
+set 33	第 33 套
+set 34	第 34 套
+set 35	第 35 套
+set 36	第 36 套
+set 37	第 37 套
+set 38	第 38 套
+set 39	第 39 套
+set 40	第 40 套
+set 41	第 41 套
+set 42	第 42 套
+set 43	第 43 套
+set 44	第 44 套
+set 45	第 45 套
+set 46	第 46 套
+set 47	第 47 套
+set 48	第 48 套
+set 49	第 49 套
+set 50	第 50 套
+set 51	第 51 套
+set 52	第 52 套
+set 53	第 53 套
+set 54	第 54 套
+set 55	第 55 套
+set 56	第 56 套
+set 57	第 57 套
+set 58	第 58 套
+set 59	第 59 套
+set 60	第 60 套
+set 61	第 61 套
+set 62	第 62 套
+set 63	第 63 套
+set 64	第 64 套
+set 65	第 65 套
+set 66	第 66 套
+set 67	第 67 套
+set 68	第 68 套
+set 69	第 69 套
+set 70	第 70 套
+set 71	第 71 套
+set 72	第 72 套
+set 73	第 73 套
+set 74	第 74 套
+set 75	第 75 套
+set 76	第 76 套
+set 77	第 77 套
+set 78	第 78 套
+set 79	第 79 套
+set 80	第 80 套
+set 81	第 81 套
+set 82	第 82 套
+set 83	第 83 套
+set 84	第 84 套
+set 85	第 85 套
+set 86	第 86 套
+set 87	第 87 套
+set 88	第 88 套
+set 89	第 89 套
+set 90	第 90 套
+set 91	第 91 套
+set 92	第 92 套
+set 93	第 93 套
+set 94	第 94 套
+set 95	第 95 套
+set 96	第 96 套
+set 97	第 97 套
+set 98	第 98 套
+
+
 2 Disks Set
 alt character set
 

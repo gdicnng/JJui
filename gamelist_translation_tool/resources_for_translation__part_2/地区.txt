@@ -1,0 +1,105 @@
+﻿China	中国
+China?	中国?
+Chinese	中文
+CN	中
+
+taiwan	中国台湾
+taiwan?	中国台湾?
+Hong Kong	中国香港
+
+world	世界
+asia	亚洲
+asia?	亚洲?
+
+Japan	日本
+Japan?	日本?
+
+UK	英国
+UK?	英国?
+United Kingdom	英国
+England	英国
+
+USA	美国
+USA?	美国?
+US	美国
+United States	美国
+America	美国
+americana	美国
+????
+
+Europe	欧洲
+Europe?	欧洲?
+euro	欧
+euro?	欧?
+spain	西班牙
+spain?	西班牙?
+Korea	韩国
+france	法国
+france？	法国？
+Germany	德国
+russia	俄罗斯
+Australia	澳大利亚
+Italy	意大利
+italy?	意大利?
+Italia	意大利
+brazil	巴西
+Finland	芬兰
+Greece	希腊
+Sweden	瑞典
+Canada	加拿大
+Portugal	葡萄牙
+Poland	波兰
+Denmark	丹麦
+
+Netherlands	荷兰
+Netherlands?	荷兰?
+Holland	荷兰
+the Netherlands	荷兰
+Dutch Nederland	荷兰
+
+New Zealand	新西兰
+Latvia	拉脱维亚
+
+
+
+English	英语
+Japanese	日语
+French	法语
+Spanish	西班牙语
+Italian	意大利语
+
+Danish	丹麦语
+Norwegian	挪威语
+Swedish	瑞典语
+German	德语
+Korean	韩语
+Dutch	荷兰语
+Australian	澳大利亚的
+Russian	俄语
+Portuguese	葡萄牙语
+Polish	波兰语
+
+
+us english	美国英语
+uk english	英国英语
+international english	国际英语
+
+jpn	日
+
+Arab	阿拉伯
+Arabic	阿拉伯语
+
+Spa
+Spa?
+Fra
+fra?
+ita
+ita?
+
+
+
+
+
+Public Domain	公共区域
+
+

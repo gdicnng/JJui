@@ -1,0 +1,7 @@
+﻿arcade	街机
+budget	
+sample	样本
+lightgun	光枪
+bugfix	bug修复
+preview	预览
+ultimate	最终的

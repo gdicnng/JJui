@@ -1,0 +1,91 @@
+﻿set
+cocktail set
+no cocktail set
+
+Cracked	破解版
+Cracked?	破解版?
+cleanly cracked
+
+hacked	修改版
+hacked?	修改版?
+hack	修改版
+hack?	修改版?
+
+Unlicensed	未经授权的
+Unlicensed?	未经授权的?
+
+rev	修订版
+rev?	修订版?
+prototype	原型版
+prototype?	原型版?
+
+pirate	盗版
+pirate?	盗版?
+
+bootleg	盗版
+bootleg?	盗版?
+
+alt	替换版
+alt?	替换版?
+alternative	替换版
+alternate	替换版
+alternative?	替换版?
+
+homebrew
+
+original	原作
+original?	原作?
+version	版本
+version?	版本?
+release	发行版
+release?	发行版?
+
+fixed	修复
+fixed?	修复?
+
+plus	＋
+
+trained
+
+early	早期
+later	后期
+later?	后期?
+older	较老的
+older?	较老的?
+new	新的
+newer	较新的
+newer?	较新的?
+earlier	较早的
+harder	较难的
+
+encrypted	加密
+unencrypted	未加密
+decrypted	解密
+
+demo	演示版
+demo?	演示版?
+
+protected	保护版
+unprotected	未保护
+unprotected?	未保护?
+
+incomplete	不完整的
+
+overdumped
+overdumped?
+reproduction
+
+bad	坏的
+bad?	坏的?
+bad header	文件头坏的
+bad header?	文件头坏的?
+
+unknown	未知
+unknown?	未知?
+
+
+
+no cd	无 CD
+
+FMG pirate	FMG 盗版
+FDS conversion	FDS 转化版
