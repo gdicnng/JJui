@@ -12,6 +12,7 @@ hack	修改版
 hack?	修改版?
 
 Unlicensed	未经授权的
+unl	未经授权的
 Unlicensed?	未经授权的?
 
 rev	修订版
