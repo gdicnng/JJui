@@ -70,7 +70,7 @@ Maintenance Release	Maintenance 发行版
 Megapak 8 release	Megapak 8 发行版
 MicroStyle re-release	MicroStyle 再发行版
 Namco release	Namco 发行版
-Original Release?	原始 发行版?
+
 PC Booter release	PC Booter 发行版
 PC Games release	PC Games 发行版
 PD release APPLE-3-WAP-GAM-03	PD 发行版 APPLE-3-WAP-GAM-03
@@ -84,7 +84,7 @@ re-release	再发行版
 Re-release	再发行版
 re-release 2002	再发行版 2002
 re-release of Phantis	再发行版 of Phantis
-Re-release?	再发行版?
+
 release 1	发行版 1
 Release 1	发行版 1
 Release 1.00	发行版 1.00

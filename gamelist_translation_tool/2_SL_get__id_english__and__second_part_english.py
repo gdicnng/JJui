@@ -16,6 +16,9 @@ out_file__id_to_english                 = the_files.file__id_to_english
 out_file__second_part_english           = the_files.file__second_part_english
 
 
+##############
+
+misc.for_print_error_python34()
 
 # 切换工作目录
 # 切换工作目录
@@ -45,6 +48,9 @@ def change_working_directory():
     print(os.getcwd())
 
 change_working_directory()
+
+###############
+
 
 def get_gamelist_from_xml_sl(xml_file_name):
     print()

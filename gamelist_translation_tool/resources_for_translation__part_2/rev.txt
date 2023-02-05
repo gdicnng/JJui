@@ -4,11 +4,11 @@ Rev 1	修订版 1
 rev 1.0	修订版 1.0
 Rev 1.09	修订版 1.09
 rev 13	修订版 13
-rev 1?	修订版 1?
+
 Rev 2	修订版 2
 rev 2	修订版 2
 rev 2.3	修订版 2.3
-rev 2?	修订版 2?
+
 Rev 3	修订版 3
 rev 3	修订版 3
 Rev 4	修订版 4
@@ -51,7 +51,7 @@ rev. 122	修订版 122
 rev. 123	修订版 123
 rev. 13	修订版 13
 rev. 14	修订版 14
-rev. 1?	修订版 1?
+
 rev. 2	修订版 2
 Rev. 2	修订版 2
 Rev. 2.0 patched	修订版 2.0 patched
@@ -61,30 +61,30 @@ rev. 204	修订版 204
 rev. 205	修订版 205
 Rev. 22	修订版 22
 rev. 222	修订版 222
-rev. 2?	修订版 2?
+
 rev. 3	修订版 3
 Rev. 3	修订版 3
 rev. 301	修订版 301
 rev. 305	修订版 305
-rev. 3?	修订版 3?
+
 Rev. 4	修订版 4
 Rev. 4321	修订版 4321
-rev. 4?	修订版 4?
+
 rev. 5	修订版 5
 rev. 5.0	修订版 5.0
 Rev. 5.21	修订版 5.21
-rev. 5?	修订版 5?
+
 rev. 6	修订版 6
 rev. 6.0	修订版 6.0
-rev. 6?	修订版 6?
+
 rev. A	修订版 A
 Rev. A	修订版 A
-rev. A?	修订版 A?
+
 rev. AB	修订版 AB
 Rev. AB	修订版 AB
 rev. B	修订版 B
 Rev. B	修订版 B
-rev. B?	修订版 B?
+
 rev. C	修订版 C
 Rev. C	修订版 C
 Rev. D	修订版 D

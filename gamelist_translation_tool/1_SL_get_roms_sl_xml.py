@@ -11,9 +11,15 @@ import subprocess
 #from source_py_some_scripts import the_second_part 
 #from source_py_some_scripts import split_string_to_two_part 
 #from source_py_some_scripts import multi_space_to_single 
+from source_py_some_scripts import misc 
 from source_py_some_scripts import the_files 
 
 temp_xml_file_name = the_files.file__roms_sl_xml
+
+
+
+
+misc.for_print_error_python34()
 
 # 切换工作目录
 # 切换工作目录
@@ -44,12 +50,12 @@ def change_working_directory():
 
 change_working_directory()
 
+############
 
 if not os.path.isfile(mame_exe_path):
     print("mame exe path is not right")
     print("exit")
     sys.exit()
-
 
 mame_exe_path = os.path.abspath(mame_exe_path)
 mame_folder = os.path.dirname( mame_exe_path )

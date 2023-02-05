@@ -120,7 +120,7 @@ version 1.4	版本 1.4
 Version 1.4 - 022988	版本 1.4 - 022988
 Version 1.4+	版本 1.4+
 Version 1.46	版本 1.46
-Version 1.4? 16-Jan-90	版本 1.4? 16-Jan-90
+
 Version 1.5	版本 1.5
 version 1.5	版本 1.5
 Version 1.6	版本 1.6
@@ -391,7 +391,7 @@ Version_Basic_1.1	版本_Basic_1.1
 Verson 3.20	
 Verson 3.30	
 16k version only	16k 版本 only
-Competition Version?	竞赛  版本?
+
 debug version prototype	debug 版本 原型
 demo version 2	demo 版本 2
 EGA version - first release	EGA 版本 - 第一次发行版
@@ -402,7 +402,7 @@ Series 5 Version D	系列 5 版本 D
 shareware version - Mr. Disk release	shareware 版本 - Mr. Disk release
 Software Projects - Version 2	Software Projects - 版本 2
 Software Projects -Version 1	Software Projects -版本 1
-Split Version?	Split 版本?
+
 Tandy version 02.11.24	Tandy 版本 02.11.24
 Tandy version 03.20.21	Tandy 版本 03.20.21
 Tandy Version 03.30.20	Tandy 版本 03.30.20

@@ -26,7 +26,7 @@ world set 4	世界版 第 4 套
 10p set 1	10p 第 1 套
 10p set 2	10p 第 2 套
 10p set 3	10p 第 3 套
-10p set 4?	10p 第 4 套?
+
 10p set 5	10p 第 5 套
 japan set f-1	日本 f-1
 us set f-2	美 f-2
@@ -35,9 +35,9 @@ korea set 2	韩 第 2 套
 set.1	第1套
 universal set 1	通用的 第 1 套
 universal set 2	通用的 第 2 套
-world? set 1	世界版? 第 1 套
-world? set 2	世界版? 第 2 套
-world? set 3	世界版? 第 3 套
+
+
+
 old ver. set 1	老的 版本 第 1 套
 old ver. set 2	老的 版本 第 2 套
 turbo set 1	加速 第 1 套
@@ -47,8 +47,8 @@ german set 2	德国 第 2 套
 jj1 0.1. set 2	jj1 0.1. 第 2 套
 prototype set 1	原型版 第 1 套
 prototype set 2	版 第 2 套
-us? set 1	美? 第 1 套
-us? set 2	美? 第 2 套
+
+
 old set	老版本
 japan set 4	日本 第 4 套
 us set 3 old version	美 第3套 老版本

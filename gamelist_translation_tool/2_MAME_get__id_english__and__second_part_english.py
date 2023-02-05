@@ -17,6 +17,8 @@ out_file__second_part_english           = the_files.file__second_part_english
 
 
 
+misc.for_print_error_python34()
+
 # 切换工作目录
 # 切换工作目录
     # 到 主 py 脚本所在 文件夹
@@ -45,6 +47,7 @@ def change_working_directory():
     print(os.getcwd())
 
 change_working_directory()
+
 
 def get_gamelist_from_xml_sl(xml_file_name):
     print()
@@ -78,18 +81,41 @@ def get_gamelist_from_xml_sl(xml_file_name):
     return temp_dict
 
 
-def get_gamelist_from_xml_mame(xml_file_name,mame_type = "mame0162"):
+def get_gamelist_from_xml_mame(xml_file_name,):
     print( )
     print( "parse mame xml")
     print( )
     print( "wait for a while ......")
     
+    def get_tag_name():
+        tag_name = "machine"
+        
+        count = 0
+        for (event, elem) in xml.etree.ElementTree.iterparse( xml_file_name,events=("start",),):
+            if elem.tag=="machine":
+                tag_name = "machine"
+                break
+            elif elem.tag == "game":
+                tag_name="game"
+                break
+            
+            count += 1
+            if count >= 10000:
+                break
+        
+        return tag_name
+    
+    node=get_tag_name()
+    print()
+    print("machin or game")
+    print(node)
+    print()
+    #if mame_type == "mame0162" : node="machine"
+    #if mame_type == "mame084"  : node="game"
+    
+    
+    
     machine_dict = {}
-    
-    node="machine"
-    if mame_type == "mame0162" : node="machine"
-    if mame_type == "mame084"  : node="game"
-    
     count = 0
     
     for (event, elem) in xml.etree.ElementTree.iterparse( xml_file_name,events=("end",),):

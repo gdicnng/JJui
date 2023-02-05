@@ -1,0 +1,258 @@
+﻿世界各国对应英文名称、区号、域名汇总
+https://zhuanlan.zhihu.com/p/472694043
+
+North America	北美洲
+USA	美国	USA	+1	.us
+Canada	加拿大	Canada	+1	.ca
+Mexico	墨西哥	Mexico	+52	.mx
+Cuba	古巴	Cuba	+53	.cu
+Jamaica	牙买加	Jamaica	+876	.jm
+Haiti	海地	Haiti	+509	.ht
+Bahamas	巴哈马	Bahamas	+1242	.bs
+Dominica	多米尼克	Dominica	+1767	.dm
+Dominican	多米尼加共和国	Dominican	+1-809/829/849	.do
+Barbados	巴巴多斯	Barbados	+1246	.bb
+Grenada	格林纳达	Grenada	+1473	.gd
+Saint Lucia	圣卢西亚	Saint Lucia	+1-758	.lc
+Antigua and Barbuda	安提瓜和巴布达	Antigua and Barbuda	+268	.ag
+Saint Kitts and Nevis	圣基茨和尼维斯	Saint Kitts and Nevis	+1-869	.kn
+Saint Vincent and the Grenadines	圣文森特和格林纳丁斯	Saint Vincent and the Grenadines	+1784	.vc
+Trinidad and Tobago	特立尼达和多巴哥	Trinidad and Tobago	+1-868	.tt
+====
+Latin America	拉丁美洲
+South America	南美洲
+Argentina	阿根廷	Argentina	54	.ar
+Brasil	巴西	Brasil	55	.br
+Chile	智利	Chile	56	.cl
+Colombia	哥伦比亚	Colombia	57	.co
+Peru	秘鲁	Peru	51	.pe
+Venezuela	委内瑞拉	Venezuela	58	.ve
+Bolivia	玻利维亚	Bolivia	591	.bo
+Ecuador	厄瓜多尔	Ecuador	593	.ec
+Guyana	圭亚那	Guyana	592	.gy
+Paraguay	巴拉圭	Paraguay	595	.py
+Suriname	苏里南	Suriname	i +597	.sr
+Uruguay	乌拉圭	Uruguay	598	.uy
+====
+Central America	中美洲
+Belize	伯利兹	Belize	501	.bz
+Costa Rica	哥斯达黎加	Costa Rica	506	.cr
+Salvador	萨尔瓦多	Salvador	503	.sv
+Guatemala	危地马拉	Guatemala	502	.gt
+Honduras	洪都拉斯	Honduras	504	.hn
+Nicaragua	尼加拉瓜	Nicaragua	505	.ni
+Panama	巴拿马	Panama	507	.pa
+====
+Europe	欧洲
+Western Europe	西欧
+Belgium	比利时	Belgium	32	.be
+France	法国	France	33	.fr
+Ireland	爱尔兰	Ireland	353	.ie
+Luxembourg	卢森堡	Luxembourg	352	.lu
+Monaco	摩纳哥	Monaco	377	.mc
+Netherlands	荷兰	Netherlands	31	.nl
+United Kingdom	英国	United Kingdom	44	.uk
+Austria	奥地利	Austria	43	.at
+Germany	德国	Germany	49	.de
+Liechtenstein	列支敦士登	Liechtenstein	423	.li
+Swiss	瑞士	Swiss	41	.ch
+??
+Switzerland	瑞士
+Northern Europe	北欧
+Denmark	丹麦	Denmark	45	.dk
+Finland	芬兰	Finland	358	.fi
+Iceland	冰岛	Iceland	354	.is
+Norway	挪威	Norway	47	.no
+Sweden	瑞典	Sweden	46	.se
+Eastern Europe	东欧
+Russia	俄罗斯	Russia	7	.ru
+Belarus	白俄罗斯	Belarus	375	.by
+Estonia	爱沙尼亚	Estonia	372	.ee
+Latvia	拉脱维亚	Latvia	371	.lv
+Lithuania	立陶宛	Lithuania	370	.lt
+Moldova	摩尔多瓦	Moldova	373	.md
+Ukraine	乌克兰	Ukraine	380	.ua
+Poland	波兰	Poland	48	.pl
+Slovak	斯洛伐克	Slovak	421	.sk
+Hungary	匈牙利	Hungary	36	.hu
+Czech	捷克	Czech	420	.cz
+Southern Europe	南欧
+Albania	阿尔巴尼亚	Albania	355	.al
+Croatia	克罗地亚	Croatia	385	.hr
+Greece	希腊	Greece	30	.gr
+Italy	意大利	Italy	39	.it
+Macedonia	马其顿	Macedonia	389	.mk
+Malta	马耳他	Malta	356	.mt
+Montenegro	黑山	Montenegro	382	.me
+Portuguese	葡萄牙	Portuguese	351	.pt
+??？
+Portuguese	葡萄牙语
+Portugal	葡萄牙
+Romania	罗马尼亚	Romania	40	.ro
+San Marino	圣马力诺	San Marino	378	.sm
+Serbia	塞尔维亚	Serbia	381	.rs
+Slovenia	斯洛文尼亚	Slovenia	386	.si
+Spain	西班牙	Spain	+34	.es
+Vatican	梵蒂冈	Vatican	+379	.va
+============
+Asia	亚洲
+Eastern Asia	 东亚
+China	中国	China	86	.cn
+Taiwan	中国台湾	Taiwan	886	.tw
+Hong Kong	中国香港	Hong Kong	852	.hk
+Macao	中国澳门	Macao	853	.mo
+Japan	日本	Japan	81	.jp
+North Korea	朝鲜	North Korea	850	.kp
+Korea	韩国	Korea	82	.kr
+Mongolia	蒙古国	Mongolia	976	.mn
+Southeast Asia	东南亚
+Myanmar	缅甸	Myanmar	95	.mm
+Brunei	文莱	Brunei	673	.bn
+Cambodia	柬埔寨	Cambodia	855	.kh
+Timor-Leste	东帝汶	Timor-Leste	670	.tl
+Indonesia	印度尼西亚	Indonesia	62	.id
+Lao	老挝	Lao	856	.la
+Laos	老挝
+Malaysia	马来西亚	Malaysia	60	.my
+Philippines	菲律宾	Philippines	63	.ph
+Singapore	新加坡	Singapore	65	.sg
+Thailand	泰国	Thailand	66	.th
+Vietnam	越南	Vietnam	84	.vn
+Southern Asia	南亚
+Bangladesh	孟加拉	Bangladesh	880	.bd
+Bhutan	不丹	Bhutan	975	.bt
+India	印度	India	91	.in
+Maldives	马尔代夫	Maldives	960	.mv
+Nepal	尼泊尔	Nepal	977	.np
+Pakistan	巴基斯坦	Pakistan	92	.pk
+Sri Lanka	斯里兰卡	Sri Lanka	94	.lk
+Central Asia	中亚
+Kazakhstan	哈萨克斯坦	Kazakhstan	.kz	7
+Kyrgyz？
+Kyrgyzstan	吉尔吉斯斯坦	Kyrgyz	.kg	996
+Tajikistan	塔吉克斯坦	Tajikistan	.tj	992
+Turkmenistan	土库曼斯坦	Turkmenistan	.tm	993
+Uzbekistan	乌兹别克斯坦	Uzbekistan	.uz	998
+Western Asia	西亚
+Middle East	中东
+Afghanistan	阿富汗	Afghanistan	93	.af
+Azerbaijan	阿塞拜疆	Azerbaijan	994	.az
+Bahrain	巴林	Bahrain	973	.bh
+Armenia	亚美尼亚	Armenia	374	.am
+Cyprus	塞浦路斯	Cyprus	357	.cy
+Georgia	格鲁吉亚	Georgia	995	.ge
+Turkey	土耳其	Turkey	90	.tr
+Iran	伊朗	Iran	98	.ir
+Iraq	伊拉克	Iraq	964	.iq
+Israel	以色列	Israel	972	.il
+Jordan	约旦	Jordan	962	.jo
+Kuwait	科威特	Kuwait	965	.kw
+Lebanon	黎巴嫩	Lebanon	961	.lb
+Oman	阿曼	Oman	968	.om
+Palestine	巴勒斯坦	Palestine	970	.ps
+Qatar	卡塔尔	Qatar	974	.qa
+Saudi Arabia	沙特阿拉伯	Saudi Arabia	966	.sa
+Syria	叙利亚	Syria	963	.sy
+UAE	阿联酋	UAE	971	.ae
+Yemen	也门	Yemen	967	.ye
+======
+Africa 	非洲
+Northern Africa	北非
+Middle East	中东
+Western Africa	西非
+Central Africa	中非
+Southern Africa	南非
+Eastern Africa	东非
+Algeria	阿尔及利亚	Algeria	213	.dz
+Egypt	埃及	Egypt	20	.eg
+Libya	利比亚	Libya	218	.ly
+Morocco	摩洛哥	Morocco	212	.ma
+Tunisia	突尼斯	Tunisia	216	.tn
+Sudan	苏丹	Sudan	249	.sd
+South Sudan	南苏丹	South Sudan	211	.ss
+Nigeria	尼日利亚	Nigeria	234	.ng
+Ghana	加纳	Ghana	233	.gh
+Benin	贝宁	Benin	229	.bj
+Burkina Faso	布基纳法索	Burkina Faso	226	.bf
+Chad	乍得	Chad	235	.td
+Cote d'Ivoire	科特迪瓦	Cote d'Ivoire	225	.ci
+Gambia	冈比亚	Gambia	220	.gm
+Guinea	几内亚	Guinea	224	.gn
+Guinea-Bissau	几内亚比绍	Guinea-Bissau	245	.gw
+Liberia	利比里亚	Liberia	231	.lr
+Mali	马里	Mali	223	.ml
+Niger	尼日尔	Niger	227	.ne
+Mauritania	毛里塔尼亚	Mauritania	222	.mr
+Senegal	塞内加尔	Senegal	221	.sn
+Sierra Leone	塞拉利昂	Sierra Leone	232	.sl
+Togo	多哥	Togo	228	.tg
+Cabo Verde	佛得角	Cabo Verde	238	.cv
+Cameroon	喀麦隆	Cameroon	237	.cm
+Equatorial Guinea	赤道几内亚	Equatorial Guinea	240	.gq
+Gabon	加蓬	Gabon	241	.ga
+Congo	刚果共和国	Congo	242	.cg
+Congo	刚果民主共和国	Congo	243	.cd
+Central African	中非	Central African	236	.cf
+Sao Tome and Principe	圣多美和普林西比	Sao Tome and Principe	239	.st
+South Africa	南非	South Africa	27	.za
+Angola	安哥拉	Angola	244	.ao
+Botswana	博茨瓦纳	Botswana	267	.bw
+Comoros	科摩罗	Comoros	269	.km
+Lesotho	莱索托	Lesotho	266	.ls
+Madagascar	马达加斯加	Madagascar	261	.mg
+Malawi	马拉维	Malawi	265	.mw
+Mauritius	毛里求斯	Mauritius	230	.mu
+Mozambique	莫桑比克	Mozambique	258	.mz
+Namibia	纳米比亚	Namibia	264	.na
+Swaziland	斯威士兰	Swaziland	268	.sz
+Zambia	赞比亚	Zambia	260	.zm
+Zimbabwe	津巴布韦	Zimbabwe	263	.zw
+Burundi	布隆迪	Burundi	257	.bi
+Djibouti	吉布提	Djibouti	253	.dj
+Eritrea	厄立特里亚	Eritrea	291	.er
+Ethiopia	埃塞俄比亚	Ethiopia	251	.et
+Kenya	肯尼亚	Kenya	254	.ke
+Rwanda	卢旺达	Rwanda	250	.rw
+Seychelles	塞舌尔	Seychelles	248	.sc
+Somalia	索马里	Somalia	252	.so
+Tanzania	坦桑尼亚	Tanzania	255	.tz
+Uganda	乌干达	Uganda	256	.ug
+===========
+Oceania 	大洋洲
+Australia	澳大利亚	Australia	61	.au
+New Zealand	新西兰	New Zealand	64	.nz
+Fiji	斐济	Fiji	679	.fj
+Palau	帕劳	Palau	680	.pw
+Samoa	萨摩亚	Samoa	685	.ws
+Tonga	汤加	Tonga	676	.to
+Tuvalu	图瓦卢	Tuvalu	688	.tv
+Kiribati	基里巴斯	Kiribati	686	.ki
+Marshall Islands	马绍尔群岛	Marshall Islands	692	.mh
+Micronesia	密克罗尼西亚	Micronesia	691	.fm
+Nauru	瑙鲁	Nauru	674	.nr
+Papua New Guinea	巴布亚新几内亚	Papua New Guinea	675	.pg
+Solomon Islands	所罗门群岛	Solomon Islands	677	.sb
+Vanuatu	瓦努阿图	Vanuatu	678	.vu
+==============
+海外属地与特殊政区
+Christmas Island	圣诞岛（澳大利亚）	Christmas Island	618	.cx
+The Cook Islands	库克群岛（新西兰）	The Cook Islands	682	.ck
+French Polynesia	法属波利尼西亚（法国）	French Polynesia	689	.pf
+Guam	关岛（美国）	Guam	1	.gu
+New Caledonia	新喀里多尼亚（法国）	New Caledonia	687	.nc
+Niue	纽埃	Niue	683	.nu
+Pitcairn Islands	皮特凯恩群岛（英国）	Pitcairn Islands	64	.pn
+Tokelau	托克劳（新西兰）	Tokelau	690	.tk
+=====================
+Anguilla	安圭拉（英国）	Anguilla	1264	.ai
+Aruba	阿鲁巴（荷兰）	Aruba	297	.aw
+Bermuda	百慕大（英国）	Bermuda	1441	.bm
+Cayman Islands	开曼群岛（英国）	Cayman Islands	-344	.ky
+Greenland	格陵兰岛（丹麦）	Greenland	45	.gl
+Netherlands Antilles	荷属安的列斯（荷兰）	Netherlands Antilles	599	.an
+Puerto Rico	波多黎各（美国）	Puerto Rico	-1725	.pr
+Saint-Martin	圣马丁(法国)	Saint-Martin	-720	.mf
+Guyane française	法属圭亚那（法国）	Guyane française	594	.gf
+Falkland Islands	福克兰群岛（英国）	Falkland Islands	500	.fk
+The United States Virgin Islands	美属维尔京群岛（美国）	The United States Virgin Islands	-339	.vi
+The Turks and Caicos Islands	特克斯和凯科斯群岛（英国）	The Turks and Caicos Islands	-648	.tc

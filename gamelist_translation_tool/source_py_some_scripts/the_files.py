@@ -26,4 +26,11 @@ file__translated_for_not_translated_id_english  = r"out_translated__not_translat
 file__translated_for_not_translated_english_lower    = r"out_translated__not_translated__englsih_count.txt"
 file__translated_for_not_translated_2nd_part_english = r"out_translated__not_translated__2nd_part_englsih.txt"
 
+# 追加翻译
+# 第一部分，没有翻译的；只翻译括号后面，第二部分
+file__translated_more_id_chinese                     = r"out_translated_more__id_chinese.txt"
+file__translated_more_id_chinese_chinese             = r"out_translated_more__id_chinese_chinese.txt"
+file__translated_more_id_chinese_english             = r"out_translated_more__id_chinese_english.txt"
+
+
 file__word_frequency_in_part_2="out_word_frequency_in_part_2.txt"

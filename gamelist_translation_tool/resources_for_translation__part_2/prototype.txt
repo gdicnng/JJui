@@ -495,7 +495,7 @@ prototype c	原型版 c
 prototype d	原型版 d
 prototype demo	原型版 演示版
 prototype earlier	原型版 早期
-prototype earlier?	原型版 早期?
+
 prototype early	原型版 早期
 prototype g	原型版 g
 prototype j	原型版 j
@@ -530,10 +530,10 @@ prototype world 2	原型版 世界 2
 prototype world 3	原型版 世界 3
 prototype x11	原型版 x11
 prototype y	原型版 y
-prototype?	原型版?
-prototype? debug	原型版? debug
+
+
 sunsoft prototype	sunsoft 原型版
-v09 prototype?	v09 原型版?
+
 v1.1 prototype	v1.1 原型版
 v1.x prototype	v1.x 原型版
 v6 prototype	v6 原型版
