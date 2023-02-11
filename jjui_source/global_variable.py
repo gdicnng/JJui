@@ -58,7 +58,10 @@ tk_text_1 = None
 tk_text_1 = None
     #文本一
     #文本二
-the_index = None # 退出时，需要记录 目录 的选项
+the_index = None 
+    # 记录 目录 ui 
+    # 退出时，需要记录 目录 的选项
+    # 目录瘦身时，
 
 
 #状态栏 等 
@@ -81,18 +84,27 @@ mame_version =""
 columns      = [] 
     # 所有列，范围
     # 在读取基本数据后，赋值
-columns_index = {} # 
-    # {"name":0,……，……，……，}
-    # 方便对得到 columns 数字 index
-
-machine_dict = {} # game list data，dict 格式，
-    # 在读取基本数据后，赋值
-    # 状态栏得到 id
-    #   然后
+machine_dict = {}
 set_data={}
 dict_data={}
     # 周边用到
 internal_index={}
+#####
+columns_index = {} ##
+    # {"name":0,……，……，……，}
+    # 方便对得到 columns 数字 index
+    # 在读取基本数据后，赋值
+icon_column_index=None ## 如果列表被删空了，用 None
+    # 每个元素中，保存图标颜色相关信息，的项目
+    # 在读取基本数据后，赋值
+search_columns_set=set()##
+    # 列表，搜索设置，选择 搜索哪些 列
+    # 每一初始化为全部
+    # 在读取基本数据后，初始化
+search_ignorecase = 1 # 0
+    # 列表，搜索设置，
+    # 默认忽略大小写,每次初始化为1
+
 ##
 external_index={} 
 # 外置目录,根据 id 分类
@@ -100,8 +112,20 @@ external_index={}
 #   接收目录信号时，刷新列表时，用一下
 #   编辑外部目录时，用一下（在列表右键菜单功能里）
 # .ini .sl_ini
-
-
+############################
+# 拥有列表
+available_set = set()
+# 未拥有列表
+unavailable_set = set()
+# 过滤列表
+available_hide_set = set()
+# 拥有列表 其它过滤项 
+    # 仅 mame
+    # 过滤 bios 、devices、机械 等
+available_filter_set = set()
+filter_set = set() # 全局过滤，每一次初始化为空
+filter_list = set() # 记录 过滤的项目
+#################################
 # 外置目录，只读
 external_index_sl_by_xml     = {} 
 # sl 外置目录,根据 xml 分类,wip
@@ -111,24 +135,16 @@ external_index_sl_by_xml     = {}
 #   编辑外部目录时，不用这个，不使用编辑功能
 #       这样子，简单一点，只需要改前边两处
 # .xml_ini
-
-# 未完成
-external_index_sl_by_machine = {} # sl 外置目录，根据 machine 分类，wip
-
+################
 # 街机部分，按 source 分类
 external_index_by_source = {}
-
-
+# 未完成
+external_index_sl_by_machine = {} # sl 外置目录，根据 machine 分类，wip
 #
 external_index_files_editable =set()
 external_index_files_be_edited=set()
 
-# 拥有列表
-available_set = set()
-# 过滤列表
-available_hide_set = set()
-# 拥有列表 其它过滤项
-available_filter_set = set()
+
 
 
 

@@ -207,20 +207,20 @@ def about_some_same_strings(machine_dict):
     
     
     
-    if "nes smb1" in machine_dict:
-        print(machine_dict["nes smb1"])
+    #if "nes smb1" in machine_dict:
+    #    print(machine_dict["nes smb1"])
     
     machine_dict = func_1(machine_dict)
     
-    if "nes smb1" in machine_dict:
-        print()
-        print(machine_dict["nes smb1"])
+    #if "nes smb1" in machine_dict:
+    #    print()
+    #    print(machine_dict["nes smb1"])
     
     machine_dict = func_2(machine_dict)
     
-    if "nes smb1" in machine_dict:
-        print()
-        print(machine_dict["nes smb1"])
+    #if "nes smb1" in machine_dict:
+     #   print()
+     #   print(machine_dict["nes smb1"])
     return machine_dict
 
 
@@ -414,9 +414,10 @@ def dict_to_list(game_list_data):
     # xml name translation cloneof supported description year publisher alt_title
     # "translation"
     the_key_s =  [
+                    "supported",
+                    
                     "xml",
                     "name",
-                    "supported",
                     "translation",
                     
                     "year",
@@ -442,12 +443,9 @@ def dict_to_list(game_list_data):
     
     # 去掉选错的
     columns=[]
-    columns.append("xml")
-    columns.append("name")
     for x in the_key_s:
         if x in all_keys:
-            if x not in ("xml","name"):
-                columns.append(x)
+            columns.append(x)
 
     
     machine_dict = {}

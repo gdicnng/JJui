@@ -23,6 +23,7 @@ from . import read_user_config
 from . import ui_themes
 from . import ui_high_dpi
 
+from .ui_misc import  misc_funcs # import 在后边，有些变量值，之前，还没有赋值
 
 
 # 因为 global_variable 赋值
@@ -30,8 +31,6 @@ from . import ui_high_dpi
 
 # from . import ui_main_window as main_window
     # 这个 到 最后 import ，因为 global_variable 有些常用变量还没有赋值
-
-configure_data = global_variable.user_configure_data
 
 
 """
@@ -93,14 +92,14 @@ def main():
     global_variable.root_window = root
     
     # windows 10 high dpi
-    ui_high_dpi.main(root,configure_data["high_dpi"])
+    ui_high_dpi.main(root,global_variable.user_configure_data["high_dpi"])
     
     # 记录
     num = root.tk.call('tk', 'scaling', )
     global_variable.tk_scaling_number_0 = num
     
-    if configure_data["tk_scaling_number"]:
-        try:root.tk.call('tk', 'scaling', configure_data["tk_scaling_number"])
+    if global_variable.user_configure_data["tk_scaling_number"]:
+        try:root.tk.call('tk', 'scaling', global_variable.user_configure_data["tk_scaling_number"])
         except:pass
     
     style=ttk.Style()
@@ -135,12 +134,14 @@ def main():
     except:
         pass
     
-
+    start_from_empty_state = False
     
     
     # 初始化窗口
     # 选择模拟器，读取数据，写入数据到 pickle 文件
     if not gamelist_data_file_exist():
+        
+        start_from_empty_state = True
         
         if global_variable.gamelist_type == "softwarelist":
             window_for_initial = initial_window_sl()
@@ -167,6 +168,11 @@ def main():
     # 然后，打开主窗口
     if gamelist_data_file_exist():
         
+        # 如果是 从 初始化 开始的
+        # 此处，保存一下配置文件
+        if start_from_empty_state:
+            misc_funcs.save_user_configure_just_after_initial()
+        
         # 数据文件
         main_data_file_path = the_files.file_pickle_gamelist_data
         try:
@@ -183,12 +189,24 @@ def main():
             global_variable.dict_data      = game_list_data["dict_data"]
             global_variable.set_data       = game_list_data["set_data"]
             global_variable.internal_index = game_list_data["internal_index"]
-
-            global_variable.columns_index = {}
             
+            #
+            global_variable.columns_index = {}
             columns = global_variable.columns
             for index_number in range(len(columns)):
                 global_variable.columns_index[columns[index_number]] = index_number
+            
+            # global_variable.icon_column_index = None # 如果列表被删空了
+            # 每个元素中，图标颜色信息的项目
+            if global_variable.gamelist_type == "mame":
+                global_variable.icon_column_index = global_variable.columns_index.get("status",None)
+            elif  global_variable.gamelist_type == "softwarelist":
+                global_variable.icon_column_index = global_variable.columns_index.get("supported",None)
+            
+            # global_variable.search_columns_set = set()
+            # 列表，搜索限制，选择 搜索哪些 列
+            # 初始化为全部
+            global_variable.search_columns_set = set( global_variable.columns + ["#id",] )
             
             print("")
             print("columns")
@@ -196,6 +214,7 @@ def main():
             print(global_variable.columns_index)
             
         # 拥有列表文件
+        # available_game_list_data
         available_file =  the_files.file_pickle_gamelist_available
         try:
             available_game_list_data = read_pickle( available_file )
@@ -213,10 +232,17 @@ def main():
                 lines = text_file.readlines()
             
             temp = []
-            search_str = r'^\s*(\S.*?)\s*$'
+            #search_str = r'^\s*(\S.*?)\s*$'
+            search_str = r'^(.+)$'
             p=re.compile( search_str, )
             
             for line in lines:
+                
+                line = line.strip()
+                
+                if not line:
+                    continue
+                
                 m=p.search( line ) 
                 if m:
                     temp.append( m.group(1).lower() ) # 转小写
@@ -226,21 +252,23 @@ def main():
             print("hide_set")
             print( len(available_hide_set) )
             print()
-        # 记录
-        global_variable.available_hide_set = available_hide_set
+            
+            # 记录
+            global_variable.available_hide_set = available_hide_set
         
         
         
         
-        from .ui_misc import  misc_funcs # import 在后边，有些变量值，之前，还没有赋值
+        
         
         # 初始化过滤项
+        # 仅 mame ，比如 bios 、devices、机械类 等
         if global_variable.gamelist_type == "softwarelist":
             pass
         else:
             misc_funcs.initial_available_filter_set()
         
-        misc_funcs.set_available_gamelist(available_game_list_data)
+        misc_funcs.set_available_gamelist(available_game_list_data,need_save=False)
 
         #root.deiconify()
         
@@ -248,7 +276,7 @@ def main():
         #######
         from . import ui_main_window as main_window
         
-        main_window.main( game_list_data )
+        main_window.main( game_list_data ,root,style)
     
     
     # alt 键：会打断 进度条 ；会跳转到菜单上，麻烦；……

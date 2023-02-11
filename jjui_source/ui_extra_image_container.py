@@ -45,15 +45,11 @@ if __name__ == "__main__" :
     from .translation_ui  import translation_holder
     builtins.__dict__['_'] = translation_holder.translation
 
-
-
 from . import global_static_filepath as the_files
 from . import global_static
 from . import global_static_key_word_translation 
 from . import global_variable
 
-user_configure       = global_variable.user_configure_data
-clone_to_parent      = global_variable.dict_data['clone_to_parent']
 
 image_types          = global_static.extra_image_types
     # ("snap","titles","flyers",......)
@@ -272,7 +268,7 @@ class Image_container(ttk.Frame):
     def new_func_initialize(self,):
         # 1 选择栏内容
         # 2 zip 标记
-        self.new_var_zip_flag.set( user_configure["extra_image_usezip"] )
+        self.new_var_zip_flag.set( global_variable.user_configure_data["extra_image_usezip"] )
         global_variable.tkint_flag_for_zip_1 = self.new_var_zip_flag
         
         global_variable.Combobox_chooser_image_1 = self.new_ui_image_chooser
@@ -286,7 +282,7 @@ class Image_container(ttk.Frame):
         self.new_ui_image_chooser["values"]= temp
         
         try: # 读取配置文件中 记录的 index
-            n = user_configure["extra_image_chooser_index"] 
+            n = global_variable.user_configure_data["extra_image_chooser_index"] 
             if n < len(image_types):
                 pass
             else:
@@ -368,10 +364,9 @@ class Image_container(ttk.Frame):
 
         temp = temp + "_path" # 匹配，配置文件中的名字
         
-        temp = user_configure[temp] # 从配置文件中，读取路径
+        temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
         
         #print(temp)
-        temp = temp.replace(r"'","") # 去掉单引号
         temp = temp.replace(r'"',"") # 去掉双引号
         
         # 扩展名
@@ -407,9 +402,9 @@ class Image_container(ttk.Frame):
             
             parent_file_name = None 
             
-            if game_name in clone_to_parent:
+            if game_name in global_variable.dict_data['clone_to_parent']:
                 #print("try parent")
-                parent_name = clone_to_parent[game_name]
+                parent_name = global_variable.dict_data['clone_to_parent'][game_name]
                 #parent_file_name = parent_name + ext
                 parent_file_name = self.new_func_get_image_name(parent_name)
                 
@@ -448,10 +443,9 @@ class Image_container(ttk.Frame):
         
         temp = temp + r".zip_path" # 匹配，配置文件中的名字
      
-        temp = user_configure[temp] # 从配置文件中，读取路径
+        temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
     
         #print(temp)
-        temp = temp.replace(r"'","") # 去掉单引号
         temp = temp.replace(r'"',"") # 去掉双引号
         
         #print(temp)
@@ -533,10 +527,10 @@ class Image_container(ttk.Frame):
                 # 如果，本身没有找到，找一下主版本
                 # self.data['dict_data']['clone_to_parent'][]
                 
-                if game_name in clone_to_parent:
+                if game_name in global_variable.dict_data['clone_to_parent']:
                     #print("try parent")
                 
-                    parent_name = clone_to_parent[game_name]
+                    parent_name = global_variable.dict_data['clone_to_parent'][game_name]
                     
                     #parent_file_name = parent_name + ext
                     parent_file_name = self.new_func_get_image_name_for_zip(parent_name)
@@ -582,7 +576,7 @@ class Image_container_2(Image_container):
 
     def new_func_initialize(self,):
     
-        self.new_var_zip_flag.set( user_configure["extra_image_usezip_2"] )
+        self.new_var_zip_flag.set( global_variable.user_configure_data["extra_image_usezip_2"] )
         global_variable.tkint_flag_for_zip_2 = self.new_var_zip_flag
         
         global_variable.Combobox_chooser_image_2 = self.new_ui_image_chooser
@@ -596,7 +590,7 @@ class Image_container_2(Image_container):
         self.new_ui_image_chooser["values"]= temp
         
         try: # 读取配置文件中 记录的 index
-            n = user_configure["extra_image_chooser_2_index"] 
+            n = global_variable.user_configure_data["extra_image_chooser_2_index"] 
             if n < len(image_types):
                 pass
             else:

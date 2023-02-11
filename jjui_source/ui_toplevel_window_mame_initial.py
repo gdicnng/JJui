@@ -16,12 +16,10 @@ from .save_pickle import save as save_pickle
 
 from .ui__window import Window_with_scrollbar
 from .ui__text_with_scrollbar import Text_with_scrollbar
+
 from . import xml_parse_mame
 from . import translation_gamelist
 from . import misc
-
-
-configure_data = global_variable.user_configure_data
 
 if __name__ == "__main__" :
     import builtins
@@ -38,7 +36,7 @@ if __name__ == "__main__" :
 # initial_window
 class Toplevel_Window(tk.Toplevel):
     def __init__(self,
-            #configure_data,
+            #global_variable.user_configure_data,
             #root_window = None,
             #type_mame    = True, # xml 类型
             #type_mame_sl = False,
@@ -55,12 +53,13 @@ class Toplevel_Window(tk.Toplevel):
         self.new_var_tkvar_for_wait = tk.StringVar()
         
         self.new_var_mame_path=tk.StringVar()
-        self.new_var_mame_path.set( configure_data["mame_path"] )
+        self.new_var_mame_path.set( global_variable.user_configure_data["mame_path"] )
         
         #self.new_var_type_mame = type_mame
         
         self.new_var_type = tk.StringVar()
-        self.new_var_type.set("mame0162")
+        #self.new_var_type.set("mame0162")
+        self.new_var_type.set("none")# 自行判断版本吧
         
         self.new_func_ui()
         self.new_func_bindings()
@@ -114,7 +113,8 @@ class Toplevel_Window(tk.Toplevel):
         self.new_var_radiobutton_s = []
         #
         # "mame0162" 不能改了,解析 xml 处用了
-        a_radiobutton = make_a_radiobutton(r,c,"mame0162",      _("主列表，mame版本 >= 0.162，用 -listxml 命令导出数据"));c+=1
+        #a_radiobutton = make_a_radiobutton(r,c,"mame0162",      _("主列表，mame版本 >= 0.162，用 -listxml 命令导出数据"));c+=1
+        a_radiobutton = make_a_radiobutton(r,c,"none",      _("主列表，mame版本 >= 0.84，用 -listxml 命令导出数据"));c+=1
         self.new_var_radiobutton_s.append( a_radiobutton )
         r+=1;c=0
         #make_a_radiobutton(r,c,"mame_sl",   _("mame > 0.162,Software List 软件列表"));c+=1
@@ -123,13 +123,13 @@ class Toplevel_Window(tk.Toplevel):
         #
         #r+=1;c=0
         # "mame084" 不能改了,解析 xml 处用了
-        a_radiobutton =make_a_radiobutton(r,c,"mame084",_("0.162 > mame版本 >= 0.84，用 -listxml 命令导出数据，xml 中标签为 game"),3);c+=1
-        self.new_var_radiobutton_s.append( a_radiobutton )
-        r+=1;c=0
+        #a_radiobutton =make_a_radiobutton(r,c,"mame084",_("0.162 > mame版本 >= 0.84，用 -listxml 命令导出数据，xml 中标签为 game"),3);c+=1
+        #self.new_var_radiobutton_s.append( a_radiobutton )
+        #r+=1;c=0
         
-        a_radiobutton = make_a_radiobutton(r,c,"mame00",_("mame版本 < 0.84，用 -listinfo 命令导出数据"),3,state="disabled");c+=1
-        self.new_var_radiobutton_s.append( a_radiobutton )
-        r+=1;c=0
+        #a_radiobutton = make_a_radiobutton(r,c,"mame00",_("mame版本 < 0.84，用 -listinfo 命令导出数据"),3,state="disabled");c+=1
+        #self.new_var_radiobutton_s.append( a_radiobutton )
+        #r+=1;c=0
         
         #
         #r+=1;c=0
@@ -188,6 +188,8 @@ class Toplevel_Window(tk.Toplevel):
         
         
         xml_type =  self.new_var_type.get()
+        xml_type =  None
+        # 自行 判断版本 ,xml 用 game 还是 machine
         
         # 命令行 -help ，版本信息
         self.new_var_versio=""
@@ -200,11 +202,14 @@ class Toplevel_Window(tk.Toplevel):
         self.new_func_parse_xml(xml_type)
         
         
-        configure_data["mame_path"] = self.new_var_mame_path.get()
+        global_variable.user_configure_data["mame_path"] = self.new_var_mame_path.get()
         
         # 删除文件
         if os.path.isfile( the_files.file_xml_mame ):
-            os.remove( the_files.file_xml_mame )
+            try:
+                os.remove( the_files.file_xml_mame )
+            except:
+                pass
         
         self.destroy()
 
@@ -219,7 +224,7 @@ class Toplevel_Window(tk.Toplevel):
         
         command = "-help"
         
-        flag_use_shell = configure_data["use_shell"]
+        flag_use_shell = global_variable.user_configure_data["use_shell"]
         
         p=subprocess.Popen( args   = [mame_path,command,] ,
                                 # command = "-listxml"
@@ -249,6 +254,8 @@ class Toplevel_Window(tk.Toplevel):
             command = "-listxml"
         elif xml_type== "mame084":
             command = "-listxml"
+        elif xml_type==None:
+            command = "-listxml"
             
         self.new_func_text_insert_string( _("导出 xml") )
         self.new_func_text_insert_string( "\n" )
@@ -258,7 +265,7 @@ class Toplevel_Window(tk.Toplevel):
         
         xml_file_name  = the_files.file_xml_mame
         mame_path      = self.new_var_mame_path.get()
-        flag_use_shell = configure_data["use_shell"]
+        flag_use_shell = global_variable.user_configure_data["use_shell"]
         
         try:
             if os.path.isfile(xml_file_name):
@@ -382,7 +389,7 @@ class Toplevel_Window(tk.Toplevel):
                 translation_dict={}
         
         if len( translation_dict ) > 0 :
-            data["machine_dict"] = translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
+            translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
         
         # 保存
         # from .save_pickle import save as save_pickle

@@ -50,6 +50,13 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
         self.items_opened = set()
         self.items_opened_for_search = set()
     
+    def clear(self):
+        
+        super().clear()
+        
+        self.items_opened.clear()
+        self.items_opened_for_search.clear()
+    
     # derived
     # 点击目录 切换列表，用这个
     #def generate_new_list_by_id(self,the_id_list):
@@ -251,77 +258,45 @@ class Data_Holder_level_2_collapse_2(Data_Holder_level_2_collapse):
     
     # search
     #   和前面两个列表，搜索范围不同
-    #   第第一个列表，分组方式不同
-    def generate_new_list_by_search(self,the_search_string,the_search_range=None):
+    #   和第一个列表，分组方式不同
+    def generate_new_list_by_search(self,search_string,):
         print()
         print("generate_new_list_by_search")
         t1=time.time()
         # 标记重置
         self.flag_search = True
         
-        the_search_string = the_search_string.lower()
+        # 范围
+        # 第一层 | 第二层
+        # ( self.items_in_level_1 | self.items_have_parent )
+        the_id_s = self.items_in_level_1 | self.items_have_parent
+        new_list = self.for_search( the_id_s ,search_string )
         
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
-        
-        # self.gamelist_to_show
-        #   搜这个
-        new_list = []
-        # 范围1 ，第一层
-        for item_id in self.items_in_level_1: 
-            for x in self.machine_dict[item_id]: # 全搜
-                if the_search_string in x.lower() :
-                    new_list.append(item_id)
-                    break
-        # 范围2，第二层
-        for item_id in self.items_have_parent:
-            for x in self.machine_dict[item_id]: # 全搜
-                if the_search_string in x.lower() :
-                    new_list.append(item_id)
-                    break
-
         self.generate_new_list_by_id(new_list,from_index=False)
         
         t2=time.time()
         print("generate_new_list_by_search,time : {}".format(t2-t1))
     
     # search_regular
-    def generate_new_list_by_search_regular(self,the_search_string,the_search_range=None):
+    #   和前面两个列表，搜索范围不同
+    #   和第一个列表，分组方式不同
+    def generate_new_list_by_search_regular(self,search_string,the_search_range=None):
         t1=time.time()
         # 标记重置
         self.flag_search = True
         
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
+        #################
         
-        
-        #self.gamelist_to_show
-        # 搜这个
-        new_list = []
-        
-        p=re.compile(the_search_string,re.IGNORECASE)
-        
-        # 范围1，第一层
-        for item_id in self.items_in_level_1:
-            for x in self.machine_dict[item_id]: # 全搜 # 限制搜索项目
-                if  p.search(x) :
-                    new_list.append(item_id)
-                    break
-        # 范围2，第二层
-        for item_id in self.items_have_parent:
-            for x in self.machine_dict[item_id]: # 全搜 # 限制搜索项目
-                if  p.search(x) :
-                    new_list.append(item_id)
-                    break
+        # 范围
+        # 第一层 | 第二层
+        # ( self.items_in_level_1 | self.items_have_parent )
+        the_id_s = self.items_in_level_1 | self.items_have_parent
+        new_list = self.for_search_regular( the_id_s,search_string )
         
         self.generate_new_list_by_id(new_list,from_index=False)
         
         t2=time.time()
-        print("generate_new_list_by_search,time : {}".format(t2-t1))
-    
-    
+        print("generate_new_list_by_search_regular,time : {}".format(t2-t1))
     
     
     # 多选模式，全选功能
@@ -330,7 +305,7 @@ class Data_Holder_level_2_collapse_2(Data_Holder_level_2_collapse):
             return self.items_in_level_1_for_search | self.items_have_parent_for_search
         else:
             return self.items_in_level_1 | self.items_have_parent
-
+    
     # 多选模式 
     # ctrl + 鼠标 
     # 一个一个选
@@ -351,8 +326,8 @@ class Data_Holder_level_2_collapse_2(Data_Holder_level_2_collapse):
             return set()
         else:
             return set(self.parent_to_clone[ the_item ]) & items_have_parent
-            
-
+    
+    
     # 多选模式，选中第一层，如果第二层没有展开，也一起选中，
     # 根据选中的 id ，得到 其 包含 第二层的 id
     def get_hide_children(self,old_items):
@@ -398,7 +373,7 @@ class GameList_level_2_collapse(GameList_base):
     def __init__(self, parent,*args,**kwargs):
         
         super().__init__(parent,*args,**kwargs)
-        self.new_var_table_type = "mame 2 level , collapes"
+        self.new_var_table_type = "mame 2 level , collapes" # 这个值别改了，在别的角本里被用了
         
         self.new_var_data_holder = Data_Holder()
         
@@ -955,14 +930,42 @@ class GameList_level_2_collapse_3(GameList_level_2_collapse_2):
     #   导出全部内容
     #       第1 第2 列表相同
     #       第3 列表需要修改
-    def new_func_table_pop_up_menu_callback_export_gamelist(self,):
-        if not self.new_var_list_to_show: return
+    def new_func_table_pop_up_menu_callback_export_gamelist(self,only_id=True):
+        
+        if not self.new_var_list_to_show: 
+            try:
+                os.remove(out_file_path)
+            except:
+                pass
+            return
         
         out_file_path = the_files.file_txt_export
         
-        with open(out_file_path,mode="wt",encoding="utf_8") as f:
-            for item_id in sorted( self.new_var_data_holder.get_current_list_all_id() ):
-                print(item_id,file=f)
+        
+        if only_id:
+            with open(out_file_path,mode="wt",encoding="utf_8") as f:
+                for item_id in sorted( self.new_var_data_holder.get_current_list_all_id() ):
+                    f.write(item_id)
+                    f.write("\n")
+        else:
+            with open(out_file_path,mode="wt",encoding="utf_8") as f:
+                header_list = self.new_func_get_columns_to_show()
+                
+                for item_id in sorted( self.new_var_data_holder.get_current_list_all_id() ):
+                    game_info = self.new_var_the_original_gamelist_dict[ item_id ]
+                    
+                    for the_header_id in header_list:
+                        if the_header_id=="#id":
+                            f.write(item_id)
+                            f.write("\t")
+                        else:
+                            if the_header_id in  global_variable.columns_index:
+                                the_index = global_variable.columns_index[ the_header_id ]
+                                temp = game_info[the_index]
+                                f.write(temp)
+                                f.write("\t")
+                    
+                    f.write("\n")
 
 
 GameList = GameList_level_2_collapse_3

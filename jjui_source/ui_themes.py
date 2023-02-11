@@ -14,14 +14,6 @@ if __name__ == "__main__" :
 from . import global_variable
 from . import global_static_filepath as the_files
 
-#from .ui_misc import  misc_funcs
-
-themes_dir = the_files.folder_themes
-ini_data       = global_variable.user_configure_data
-user_configure = global_variable.user_configure_data
-
-
-
 def menubutton_appearance(root,style):
         
         # 菜单按钮，微调
@@ -69,11 +61,10 @@ def menubutton_appearance(root,style):
             
             pass # 不管了
 
-
-  
-
-
 def main(root,style):
+    ini_data     = global_variable.user_configure_data
+    themes_dir   = the_files.folder_themes
+    
     print()
     print("theme in user configure file : {}".format(ini_data["theme"]))
     

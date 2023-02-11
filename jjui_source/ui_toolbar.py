@@ -10,6 +10,7 @@ if __name__ == "__main__" :
     builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_variable
+from . import ui_small_windows
 
 class ToolBar(ttk.Frame):
     def __init__(self ,parent,*args,**kwargs):
@@ -70,10 +71,15 @@ class ToolBar(ttk.Frame):
         top_button_clear = ttk.Button(parent,takefocus=False,text=_('清空'),width=-1,command=self.new_func_generate_virtual_event_GameListSearchClear)
         top_button_clear.grid(row=0,column=column,sticky=(tk.W,))
         column+=1
+        
+        #top_button_clear = ttk.Button(parent,takefocus=False,text=_('搜索设置'),width=-1,command=ui_small_windows.window_for_gamelist_set_search_columns)
+        #top_button_clear.grid(row=0,column=column,sticky=(tk.W,))
+        #column+=1
     
     def new_func_bindings(self,):
         self.bind_all('<<CurrentGame>>',self.new_func_binding_virtual_event_receive_CurrentGame,"+")
         self.new_ui_entry_search.bind('<Return>',self.new_func_generate_virtual_event_GameListSearch)
+        self.new_ui_entry_search.bind('<Control-Return>',self.new_func_generate_virtual_event_GameListSearchRegular)
 
     # <<GameListChangeColumnsToShow>>
     # 1组，2组，3组，方便查看不同内容
@@ -121,7 +127,7 @@ class ToolBar(ttk.Frame):
     
     #<<GameListSearchRegular>>
     # self.new_var_data_for_virtual_event_search
-    def new_func_generate_virtual_event_GameListSearchRegular(self):
+    def new_func_generate_virtual_event_GameListSearchRegular(self,event=None):
         ""
         string_for_search = self.new_var_data_for_search.get()
         

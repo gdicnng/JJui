@@ -37,7 +37,11 @@ from . import global_static_filepath as the_files # 图标 图片 路径
 
 from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as  Treeview_with_scrollbar
 
+from . import misc
+from . import  ui_small_windows
 from .ui_misc import  misc_funcs
+
+
 
 #from . import initial_data
 #from . import data_key_word_translation
@@ -117,6 +121,8 @@ class Data_Holder_1():
     
     """
 
+    parent_to_clone_keys = set( global_variable.dict_data["parent_to_clone"].keys() )
+
     def __init__(self,internal_data=None,external_index=None):
         
         self.gamelist_to_show = []
@@ -130,7 +136,7 @@ class Data_Holder_1():
         #self.default_sort_key     = "name"
         self.default_sort_key     = "#0"
         
-        self.filter_set = set() # 过滤内容
+
         
             # 要不要再加速？挺麻烦
             #self.all_set_after_filter   = set()
@@ -187,11 +193,20 @@ class Data_Holder_1():
             self.clone_set       = self.internal_data['set_data']["clone_set"]
             
             self.parent_to_clone = self.internal_data['dict_data']["parent_to_clone"]
-            self.parent_to_clone_keys = set(self.parent_to_clone.keys())
+            
+            #self.parent_to_clone_keys = set(self.parent_to_clone.keys())
+            # 此变量 设在 最前面
             
             self.clone_to_parent = self.internal_data['dict_data']["clone_to_parent"]
             # self.clone_to_parent_keys = set(self.clone_to_parent.keys())
             
+    
+    def clear(self):
+        self.gamelist_to_show.clear()
+        self.gamelist_to_show_for_search.clear()
+    
+    def clear_search(self):
+        pass
     
     # 点击目录 切换列表，用这个
     def generate_new_list_by_id(self,the_id_list,):
@@ -217,16 +232,16 @@ class Data_Holder_1():
             the_id_list = set(the_id_list)
         
         # 范围 限制
-        if self.filter_set:
+        if global_variable.filter_set:
             if self.all_set is the_id_list: 
                 # all_set ,如果相同
                 # 这样会不会快一点？ 
                 # 主要也就是 all_set 内容太多，有点慢。
                 
                 # python 3.6 ，还真快了一点，因为 & 交集反回 要生一个新的 set ?
-                the_id_list_new = self.all_set - self.filter_set
+                the_id_list_new = self.all_set - global_variable.filter_set
             else:
-                the_id_list_new = self.all_set & the_id_list - self.filter_set
+                the_id_list_new = self.all_set & the_id_list - global_variable.filter_set
             
         else:
             if self.all_set is the_id_list: #
@@ -381,9 +396,6 @@ class Data_Holder_1():
     def get_the_original_gamelist_dict(self,):
         return self.machine_dict
     
-    def get_the_original_columns(self,):
-        return self.internal_data["columns"]
-
     def get_current_gamelist_number(self,):
         if self.flag_search:
             return len( self.gamelist_to_show_for_search )
@@ -396,70 +408,160 @@ class Data_Holder_2(Data_Holder_1):
         super().__init__(internal_data,external_index)
     
     
-    def generate_new_list_by_search(self,the_search_string,the_search_range=None):
+    def generate_new_list_by_search(self,search_string,):
         t1=time.time()
+        
         # 标记重置
         self.flag_search = True
         
-        the_search_string = the_search_string.lower()
-        
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
-        
-        # 全搜
         #self.gamelist_to_show
-        # 搜这个
-        new_list = []
-        for item_id in self.gamelist_to_show:
-            for x in self.machine_dict[item_id]:
-                if the_search_string in x.lower() :
-                    new_list.append(item_id)
-                    break
-        
-        self.gamelist_to_show_for_search = new_list
-        
-        # 限制搜索项目
-        
+        self.gamelist_to_show_for_search = self.for_search( self.gamelist_to_show , search_string )
         
         self.sort_the_list(self.sort_key , self.sort_reverse)
-        
         
         t2=time.time()
         print("generate_new_list_by_search,time : {}".format(t2-t1))
 
-    def generate_new_list_by_search_regular(self,the_search_string,the_search_range=None):
+    def generate_new_list_by_search_regular(self,search_string,):
         t1=time.time()
         # 标记重置
         self.flag_search = True
         
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
-        
-        # 全搜
-        #self.gamelist_to_show
-        # 搜这个
-        new_list = []
-        
-        p=re.compile(the_search_string,re.IGNORECASE)
-        
-        for item_id in self.gamelist_to_show:
-            for x in self.machine_dict[item_id]:
-                if  p.search(x) :
-                    new_list.append(item_id)
-                    break
-        
-        self.gamelist_to_show_for_search = new_list
-        
-        # 限制搜索项目
-        
+        # self.gamelist_to_show
+        self.gamelist_to_show_for_search = self.for_search_regular(self.gamelist_to_show,search_string)
         
         self.sort_the_list(self.sort_key , self.sort_reverse)
         
-        
         t2=time.time()
-        print("generate_new_list_by_search,time : {}".format(t2-t1))
+        print("generate_new_list_by_search_regular,time : {}".format(t2-t1))
+
+    def for_search(self,the_id_s,search_string):
+        # for id in the_id_s
+        
+        # id 是否搜索
+        if "#id" in global_variable.search_columns_set:
+            search_id_or_not = True
+        else:
+            search_id_or_not = False
+
+        # 列范围
+        column_index_list=[]
+        for x in global_variable.search_columns_set:
+            if x in global_variable.columns_index:
+                number = global_variable.columns_index[x]
+                column_index_list.append(number)
+        column_index_list.sort()
+        
+
+        
+        def search_ignore_case(search_id_or_not=True,column_index_list=None):
+            print("search_ignore_case")
+            
+            the_search_string = search_string.lower()
+            
+            if column_index_list is None:
+                column_index_list=[]
+            
+            new_list = []
+            
+            for item_id in the_id_s:
+                if search_id_or_not:
+                    # 搜索 key
+                    if the_search_string in item_id.lower():
+                        new_list.append(item_id)
+                        continue
+                
+                # 搜索 value
+                item_info =  self.machine_dict[item_id]
+                for n in column_index_list:
+                    if the_search_string in item_info[n].lower() :
+                        new_list.append(item_id)
+                        break
+            return new_list
+        
+        def search_normal_case(search_id_or_not=True,column_index_list=None):
+            print("search_normal_case")
+            the_search_string = search_string
+            
+            if column_index_list is None:
+                column_index_list=[]
+            
+            new_list = []
+            
+            for item_id in the_id_s:
+                if search_id_or_not:
+                    # 搜索 key
+                    if the_search_string in item_id:
+                        new_list.append(item_id)
+                        continue
+                
+                # 搜索 value
+                item_info =  self.machine_dict[item_id]
+                for n in column_index_list:
+                    if the_search_string in item_info[n] :
+                        new_list.append(item_id)
+                        break
+            return new_list
+        
+        
+        if global_variable.search_ignorecase:# 忽略大小写
+            search_result = search_ignore_case(search_id_or_not,column_index_list)
+        else:
+            search_result = search_normal_case(search_id_or_not,column_index_list)
+        
+        return search_result
+    
+    def for_search_regular(self,the_id_s,search_string):
+        # for id in the_id_s
+        
+        # id 是否搜索
+        if "#id" in global_variable.search_columns_set:
+            search_id_or_not = True
+        else:
+            search_id_or_not = False
+        
+        # 列范围
+        column_index_list=[]
+        for x in global_variable.search_columns_set:
+            if x in global_variable.columns_index:
+                number = global_variable.columns_index[x]
+                column_index_list.append(number)
+        column_index_list.sort()
+        
+        # 大小写
+        if global_variable.search_ignorecase:# 忽略大小写
+            p=re.compile(search_string,re.IGNORECASE)
+        else:
+            p=re.compile(search_string,)        
+        
+        def start_search(search_id_or_not=True,column_index_list=None):
+            
+            #
+            if column_index_list is None:
+                column_index_list=[]
+            
+            new_list = []
+            #
+            for item_id in the_id_s:
+                if search_id_or_not:
+                    # 搜 key
+                    if p.search(item_id) :
+                        new_list.append(item_id)
+                        continue
+                
+                # 搜 value
+                item_info =  self.machine_dict[item_id]
+                for n in column_index_list:
+                    if p.search(item_info[n]) :
+                        new_list.append(item_id)
+                        break
+
+            return new_list
+        
+        
+        search_result = start_search(search_id_or_not,column_index_list)
+        
+        return search_result
 
     def is_current_list_empty(self,):
         if self.gamelist_to_show: return False # 不空
@@ -551,7 +653,8 @@ class GameList_0(ttk.Frame):
             # "other_option" = []
             # "hide" = True
         # 初始化
-        self.new_var_data_for_StartGame["type"]         = "mame" # 这个一直不变
+        self.new_var_data_for_StartGame["type"]         = "mame" 
+            # 这个一直不变 ,SL 列表 初始化 时，在后面，会为 softwarelist
         self.new_var_data_for_StartGame["emu_number"]   = -1 # -1 ，表示默认；1-9 用于对应数字键
         self.new_var_data_for_StartGame["id"]           = None
         self.new_var_data_for_StartGame["other_option"] = []
@@ -593,7 +696,7 @@ class GameList_0(ttk.Frame):
         
         self.new_ui_table = tk.Canvas(parent,
             #bg="grey90",
-            takefocus=1,
+            #takefocus=1,
             #height =self.new_var_total_height,
             #width  =self.new_var_total_width,
             borderwidth=0,
@@ -706,7 +809,7 @@ class GameList_1(GameList_0):
         style=ttk.Style()
         
         print("")
-        print("initial colours")
+        print("table initial colours")
         
         def get_selectforeground(class_name):# treeview
             colour = None
@@ -909,8 +1012,6 @@ class GameList_1(GameList_0):
             
             self.new_func_refresh_all()
         
-
-        
 # 添加 数据
 # table refresh
 class GameList_2(GameList_1):
@@ -922,6 +1023,11 @@ class GameList_2(GameList_1):
         
         super().__init__(parent,*args,**kwargs)
         
+        
+        # 图标信息，保存在 哪一列 
+        self.new_var_icon_column_index_in_header = 0
+        
+        
         self.new_var_list_to_show = []
             # 此列表，仅保留 id ，
         self.new_var_row_numbers  = 0
@@ -929,14 +1035,11 @@ class GameList_2(GameList_1):
         self.new_var_the_original_gamelist_dict = {}
             # 只保留 id 的话，读取数据原始数据
             # 方便通过 id 得到数据
-        self.new_var_the_original_columns = [] 
-            # 列标题 id 
-        self.new_var_the_original_columns_index={} 
-            # 由 列标题 id ，得到 数字index
+
         
-        self.new_var_all_columns     = [] # 不含 icon column
+        self.new_var_all_columns     = [] # 不含 icon column ，，由外部设置，表格列 + id 列
         self.new_var_columns_to_show = [] # 不含 icon column
-        self.new_var_column_width    = {}
+        self.new_var_column_width    = {} # 各列 宽度
         
         self.new_var_data_holder = Data_Holder()
         
@@ -986,7 +1089,7 @@ class GameList_2(GameList_1):
         
         # 接收
         self.new_var_virtual_event_name_received_from_index=r'<<IndexBeChosen>>'
-        # 生成
+        # 生成 ,显示到 状态栏
         self.new_var_data_for_CurrentGameListNumber = 0
         self.new_var_virtual_event_name_CurrentGameListNumber=r'<<CurrentGameListNumber>>'
         
@@ -1000,25 +1103,23 @@ class GameList_2(GameList_1):
     #    super().new_func_bindings()
     #    
 
-    
     def new_func_bindings_for_receive_virtual_event(self,):
         self.bind_all(self.new_var_virtual_event_name_received_from_index, # virtual event name 
                 self.new_func_bindings_receive_virtual_event_from_index )
     
     # 初始化，feed data
-    def new_func_feed_data(self,internal_data=None,external_index=None):
+    def new_func_feed_data(self,internal_data=None,external_index=None,available_games=None):
+        
+        if available_games is None:
+            available_games=set()
+            ####
+        
         self.new_var_data_holder.feed_data(internal_data,external_index)
         
         self.new_var_the_original_gamelist_dict = self.new_var_data_holder.get_the_original_gamelist_dict() # 原始的游戏列表，
     
-        self.new_var_the_original_columns = self.new_var_data_holder.get_the_original_columns()
+
         
-        self.new_var_the_original_columns_index_dict={}
-        
-        for n in range( len(self.new_var_the_original_columns) ):
-            column_id = self.new_var_the_original_columns[n]
-            
-            self.new_var_the_original_columns_index_dict[column_id]=n
     
     
     # 初始化，列项目，
@@ -1044,7 +1145,7 @@ class GameList_2(GameList_1):
         # 其它列
         for column in self.new_var_all_columns :# 不含 icon 列
             self.new_var_column_width[column] = default_width
-        
+    
     
     # 初始化，列宽度 设置
     def new_func_set_column_width(self,**kwargs):
@@ -1086,6 +1187,15 @@ class GameList_2(GameList_1):
     
     def new_func_get_columns_to_show(self,):
         return self.new_var_columns_to_show
+    
+    def new_func_set_icon_column_index_in_header(self,number):
+        
+        if number is None:
+            # 使用 单一 图标
+            self.new_func_table_choose_icon_image = self.new_func_table_choose_icon_image_single
+        else:
+            self.new_var_icon_column_index_in_header = number
+
     # 刷新 总
     #   1 宽度 改变时，需重置此项,head bingdings 里面
     #   2 for
@@ -1145,17 +1255,12 @@ class GameList_2(GameList_1):
     # for
     # self.new_func_refresh_all() 
     def new_func_get_all_columns_width(self,):
-        
-        if not self.new_var_columns_to_show:
-            return 0
-        
         total_width=0
-        
         # 图标列 
         total_width += self.new_var_column_width[ self.new_var_icon_column_id ]
         
         # 其它列
-        for x in self.new_var_columns_to_show:
+        for x in self.new_var_columns_to_show: # 不含图标列
             total_width += self.new_var_column_width[x]
         
         return total_width
@@ -1171,7 +1276,6 @@ class GameList_2(GameList_1):
         event_info = gameindex_window.new_var_data_for_virtual_event
         print(event_info)
         
-
         
         if event_info is None : 
             # 记录
@@ -1209,13 +1313,6 @@ class GameList_2(GameList_1):
         # 记录
         self.new_var_remember_last_index_data = event_info
         
-        internal_data  = self.new_var_data_holder.internal_data
-        external_index = self.new_var_data_holder.external_index
-        internal_index = internal_data["internal_index"]
-        
-        
-        #all_set        = internal_data["set_data"]["all_set"]        
-        
         # mame
         def get_id_list():
             
@@ -1224,82 +1321,39 @@ class GameList_2(GameList_1):
             #  或者是 set 
             # 之后都要转为 set ，方便 检查 重复的、方便 限制 范围 
             
+            
+            if len(event_info) == 2:
+                index_id_1 = event_info[1]
+                index_id_2 = None
+            elif len(event_info) == 3:
+                index_id_1 = event_info[1]
+                index_id_2 = event_info[2]
+            
             # 内置目录
+            #   这两现在是单独的
+            #   available_set
+            #   unavailable_set
             if event_info[0]=="internal":
-                if len(event_info)==2:# 第一层
-                    the_id_list = internal_index[event_info[1]]["gamelist"]
-                if len(event_info)==3:# 第二层
-                    the_id_list = internal_index[event_info[1]]["children"][event_info[2]]["gamelist"]
+                if index_id_1 in ("available_set","unavailable_set"):
+                    the_id_list = misc.get_id_list_for_available_or_unavailable( index_id_1 )
+                else:
+                    the_id_list = misc.get_id_list_from_internal_index(index_id_1,index_id_2)
             
             # 外置目录
             elif event_info[0]=="external_ini_file":
-                if len(event_info)==2:# 第一层
-                    the_id_list = external_index[event_info[1]]["ROOT_FOLDER"]
-                if len(event_info)==3:# 第二层
-                    the_id_list = external_index[event_info[1]][event_info[2]]
+                the_id_list = misc.get_id_list_from_external_index(index_id_1,index_id_2)
             
-            # 外置目录，只读，以 source 分类
+            # mame ,外置目录,只读 ,以 source 分类
             elif event_info[0]=="external_source_ini":
-                the_source_list = []
-                if len(event_info)==2:# 第一层
-                    the_source_list = global_variable.external_index_by_source[event_info[1]]["ROOT_FOLDER"]
-                elif len(event_info)==3:# 第二层
-                    the_source_list = global_variable.external_index_by_source[event_info[1]][event_info[2]]
-                
-                temp_list = []
-                
-                try:
-                    for the_source in the_source_list :
-                        if the_source in internal_index["sourcefile"]["children"]:
-                            temp_list.extend( internal_index["sourcefile"]["children"][the_source]["gamelist"] )
-                except:
-                    temp_list = []
-                
-                the_id_list = temp_list
-                
-
-                
+                if global_variable.gamelist_type == "mame":
+                    the_id_list = misc.get_id_list_from_external_index_by_source( index_id_1 , index_id_2 )
+            
+            # SL, ,外置目录,只读 ,以 xml 分类
+            elif event_info[0]=="external_xml_ini":
+                if global_variable.gamelist_type == "softwarelist":
+                    the_id_list = misc.get_id_list_from_external_index_sl_by_xml( index_id_1 , index_id_2 )
             
             return the_id_list
-        
-        # software list 略有补充
-        if global_variable.gamelist_type == "softwarelist":
-            #"external_xml_ini"
-            
-            def get_id_list():
-                
-                the_id_list = [] #默认值 空
-                # 类型是 list
-                #  或者是 set 
-                # 之后都要转为 set ，方便 检查 重复的、方便 限制 范围 
-                
-                # 内置目录
-                if event_info[0]=="internal":
-                    if len(event_info)==2:# 第一层
-                        the_id_list = internal_index[event_info[1]]["gamelist"]
-                    if len(event_info)==3:# 第二层
-                        the_id_list = internal_index[event_info[1]]["children"][event_info[2]]["gamelist"]
-                
-                # 外置目录
-                elif event_info[0]=="external_ini_file":
-                    if len(event_info)==2:# 第一层
-                        the_id_list = external_index[event_info[1]]["ROOT_FOLDER"]
-                    if len(event_info)==3:# 第二层
-                        the_id_list = external_index[event_info[1]][event_info[2]]
-                
-                elif event_info[0]=="external_xml_ini":
-                    if len(event_info)==2:# 第一层
-                        the_xml_list = global_variable.external_index_sl_by_xml[event_info[1]]["ROOT_FOLDER"]
-                    if len(event_info)==3:# 第二层
-                        the_xml_list = global_variable.external_index_sl_by_xml[event_info[1]][event_info[2]]
-                    
-                    xml_dict = internal_data["xml"]
-                    for xml_name in the_xml_list:
-                        if xml_name in xml_dict:
-                            the_id_list.extend(  xml_dict[xml_name]  )
-                
-                return the_id_list
-        
         
         the_id_list = get_id_list()
         
@@ -1470,7 +1524,7 @@ class GameList_2(GameList_1):
         ####
         #visible_column_id_and_column_index = []
         #for column_id in visible_column_id:
-        #    column_index = self.new_var_the_original_columns_index_dict[column_id]
+        #    column_index = global_variable.columns_index[column_id]
         #    visible_column_id_and_column_index.append( (column_id,column_index) )
             
             
@@ -1491,10 +1545,15 @@ class GameList_2(GameList_1):
                             ),
                        )
 
-        def draw_content(row,width_start,game_info,y1,y2,background,foreground):
+        def draw_content(row,width_start,item_id,game_info,y1,y2,background,foreground):
+            y_center = int( (y1+y2)/2 )
             #for column_id,column_index in visible_column_id_and_column_index:
             for column_id in visible_column_id:
-                column_index = self.new_var_the_original_columns_index_dict[column_id]
+                if column_id=="#id":
+                    column_text = item_id
+                else:
+                    column_index = global_variable.columns_index[column_id]
+                    column_text = game_info[column_index]
             
                 cell_width = self.new_var_column_width[ column_id ]
                 # 每一格，画一个长方形，做背景
@@ -1512,10 +1571,10 @@ class GameList_2(GameList_1):
                 # 每一格，文字内容
                 self.new_ui_table.create_text( 
                         width_start + self.new_var_space_before_cell , 
-                        int((y1+y2)/2),
+                        y_center,
                         anchor=tk.W,
-                        #text = str(game_info[column_index]),
-                        text = game_info[column_index],
+                        #text = str(column_text),
+                        text = column_text,
                         font=self.new_var_font,
                         state='disabled',
                         fill=foreground,
@@ -1567,7 +1626,7 @@ class GameList_2(GameList_1):
                     self.new_func_table_draw_icon_colunm(row,item_id,game_info,line_position_y1,line_position_y2,self.new_var_selectforeground)
                     width_start+=icon_column_width
                 #内容
-                draw_content(row,width_start,game_info,line_position_y1,line_position_y2,
+                draw_content(row,width_start,item_id,game_info,line_position_y1,line_position_y2,
                         self.new_var_selectbackground,self.new_var_selectforeground)
             else:
                 # 背景
@@ -1577,7 +1636,7 @@ class GameList_2(GameList_1):
                     self.new_func_table_draw_icon_colunm(row,item_id,game_info,line_position_y1,line_position_y2,self.new_var_foreground)
                     width_start+=icon_column_width
                 # 内容
-                draw_content(row,width_start,game_info,line_position_y1,line_position_y2,
+                draw_content(row,width_start,item_id,game_info,line_position_y1,line_position_y2,
                         self.new_var_background,self.new_var_foreground)
 
     
@@ -1603,17 +1662,14 @@ class GameList_2(GameList_1):
                         
                         item_id,
                         )
-    
-
     # for
     # self.new_func_table_draw_icon_colunm()
     def new_func_table_choose_icon_image(self,game_info):
         
         # 元素为 list 格式
-        # 元素第0个为 "name"
-        # 元素第1个为 "status"
+        # "status"
         
-        status = game_info[1]
+        status = game_info[ self.new_var_icon_column_index_in_header ]
         
         if status=="good":
             return self.new_image_image_green
@@ -1623,6 +1679,9 @@ class GameList_2(GameList_1):
             return self.new_image_image_red
         else:
             return self.new_image_image_black
+    def new_func_table_choose_icon_image_single(self,game_info):
+        
+        return self.new_image_image_black
     # for
     # self.new_func_table_draw_icon_colunm()
     def new_func_table_draw_icon_image(self,x,y,image,item_id,):#state='disabled'
@@ -1852,9 +1911,6 @@ class GameList_4(GameList_3):
         
         # 点击标题，排序
         header.tag_bind( "header_backgroud_rectangle",'<Button-1>',self.new_func_header_binding_click)
-
-       
-    
     
     def new_func_header_resize(self,event):
         self.new_func_refresh_header()
@@ -2215,7 +2271,7 @@ class GameList_5(GameList_4):
         #self.new_var_data_for_CurrentGame = item_id
         global_variable.current_item = item_id
         self.event_generate( self.new_var_virtual_event_name_CurrentGame )
-        
+    
 
 
 # bindings 
@@ -2540,6 +2596,24 @@ class GameList_7(GameList_6):
                     command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(other_option=["-multikeyboard", ] )
                     )#"-multikeyboard"
         
+        menu_run_other_way = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
+        self.new_ui_pop_up_menu_for_table.add_cascade(
+                label=_("自定义运行方式"),
+                menu=menu_run_other_way
+                )
+        ###########
+        # 子菜单
+        for number in (1,2,3,4,5,6,7,8,9,0):
+            menu_run_other_way.add_command(
+                    label=str(number),
+                    command = lambda emu_number = number : self.new_func_table_pop_up_menu_callback_start_game( emu_number=emu_number )
+                    )
+        menu_run_other_way.add_command(label=_("需要你自己设定好对应的参数"),state = "disabled")
+        menu_run_other_way.add_command(label=_("按数字键也是一样的"),state = "disabled")
+        menu_run_other_way.add_command(label=_("按 Ctrl + 数字键，将保留 UI"),state = "disabled")
+        menu_run_other_way.add_command(label=_("具体查看说明"),state = "disabled")
+        ###########
+        
         if global_variable.gamelist_type == "mame" :
             self.new_ui_pop_up_menu_for_table.add_separator()
             
@@ -2560,7 +2634,7 @@ class GameList_7(GameList_6):
                     command = lambda : self.new_func_table_pop_up_menu_callback_show_info(other_option=["-listxml", ] )
                     )
             self.new_ui_pop_up_menu_for_table.add_command(
-                    label=_("显示roms信息，-listxml -nodtd 去文件头（含大量其它信息）"),
+                    label=_("显示roms信息，-listxml -nodtd（同上，去掉文件头）"),
                     command = lambda : self.new_func_table_pop_up_menu_callback_show_info(other_option=["-listxml","-nodtd" ] )
                     )
         
@@ -2569,14 +2643,34 @@ class GameList_7(GameList_6):
         
         out_file_path = the_files.file_txt_export
         
-        self.new_ui_pop_up_menu_for_table.add_command(
+        menu_export = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
+        
+        self.new_ui_pop_up_menu_for_table.add_cascade(
+                label = _("导出") ,
+                menu  = menu_export,
+                    )
+        
+        menu_export.add_separator()
+        
+        menu_export.add_command(
+                label=_("导出当前列表 id 到：") + out_file_path ,
+                command = lambda : self.new_func_table_pop_up_menu_callback_export_gamelist(only_id=True),
+                    )
+        menu_export.add_command(
                 label=_("导出当前列表到：") + out_file_path ,
-                command = self.new_func_table_pop_up_menu_callback_export_gamelist,
+                command = lambda : self.new_func_table_pop_up_menu_callback_export_gamelist(only_id=False),
                     )
-        self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("导出选中内容到：") + out_file_path,
-                command = self.new_func_table_pop_up_menu_callback_export_select_items,
+        menu_export.add_command(
+                label=_("导出列表选中项 id 到：") + out_file_path,
+                command = lambda : self.new_func_table_pop_up_menu_callback_export_select_items(only_id=True),
                     )
+        menu_export.add_command(
+                label=_("导出列表选中项到：") + out_file_path,
+                command = lambda : self.new_func_table_pop_up_menu_callback_export_select_items(only_id=False),
+                    )
+        menu_export.add_separator()
+        
+        
         self.new_ui_pop_up_menu_for_table.add_separator()
         
         self.new_ui_pop_up_menu_for_table.add_command(
@@ -2602,41 +2696,57 @@ class GameList_7(GameList_6):
         # id
         # translation
         # description
+        # alt_title # 仅 SL
+        # #current_column
         
         self.new_ui_pop_up_menu_for_table.add_separator()
         
+        # id
         self.new_ui_pop_up_menu_for_table.add_command(
                 label=_(""), # id
-                state="disabled",
-                #command = 
+                #state="disabled",
+                command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("id",),
                     )
         # 记录 index
         self.new_var_table_menu_index_for_item_id = self.new_ui_pop_up_menu_for_table.index(tk.END)
         
+        # translation
         self.new_ui_pop_up_menu_for_table.add_command(
                 label=_(""), # translation
-                state="disabled",
-                #command = 
+                #state="disabled",
+                command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("translation",),
                     )
         # 记录 index
-        self.new_var_table_menu_index_for_item_translation = self.new_ui_pop_up_menu_for_table.index(tk.END)        
+        self.new_var_table_menu_index_for_item_translation = self.new_ui_pop_up_menu_for_table.index(tk.END)
         
+        # description
         self.new_ui_pop_up_menu_for_table.add_command(
                 label=_(""), # description
-                state="disabled",
-                #command = 
+                #state="disabled",
+                command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("description",),
                     )
         # 记录 index
         self.new_var_table_menu_index_for_item_description = self.new_ui_pop_up_menu_for_table.index(tk.END)
         
+        # alt_title # 仅 SL
         if global_variable.gamelist_type == "softwarelist" :
             self.new_ui_pop_up_menu_for_table.add_command(
                     label=_(""), # alt_title
-                    state="disabled",
-                    #command = 
+                    #state="disabled",
+                    command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("alt_title",),
                         )
             # 记录 index
             self.new_var_table_menu_index_for_item_alt_title = self.new_ui_pop_up_menu_for_table.index(tk.END)
+        
+        # #current_column
+        self.new_ui_pop_up_menu_for_table.add_command(
+                label=_("-"), # #current_column
+                #state="disabled",
+                command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content(r"#current_column",),
+                    )
+        # 记录 index
+        self.new_var_table_menu_index_for_item_current_column = self.new_ui_pop_up_menu_for_table.index(tk.END)
+                
         
     def new_func_ui_pop_up_menu_for_header(self,):
         self.new_ui_pop_up_menu_for_header = tk.Menu(self , tearoff=0)
@@ -2644,7 +2754,7 @@ class GameList_7(GameList_6):
         self.new_ui_pop_up_menu_for_header.add_separator()
         
         self.new_ui_pop_up_menu_for_header.add_command(label=_("选择列表显示项目"),
-                command = misc_funcs.header_pop_up_menu_callback_choose_columns
+                command = ui_small_windows.header_pop_up_menu_callback_choose_columns
                 )
     
     
@@ -2655,14 +2765,61 @@ class GameList_7(GameList_6):
             self.new_ui_pop_up_menu_for_header.grab_release()
 
 
-    def new_func_table_show_pop_up_menu(self,event=None):
+    def new_func_table_show_pop_up_menu(self,event):
+        # 确定点击的 列 ，
+        # 以显示 此单元格的内容
+        def get_the_colunm_be_clicked():
+            x=event.x
+            x=self.new_ui_table.canvasx(x)
+            #print(x)
+            #默认值
+            current_column_index = -1
+            
+            # 如果，在 icon column ，赋值为 -1
+            icon_column_id = self.new_var_icon_column_id
+            columns_width  = self.new_var_column_width
+            icon_width     = columns_width[ icon_column_id ]
+            if x <= icon_width:
+                #print("icon row")
+                return current_column_index
+            
+            # 如果，超出范围
+            if x >= self.new_func_get_all_columns_width():
+                #print("out of range")
+                return current_column_index
+            
+            # 在范围内
+            #self.new_var_column_width
+            headers_list = self.new_var_columns_to_show
+            
+            width_start = icon_width
+            
+            for header_id in headers_list:
+                width = self.new_var_column_width[ header_id ]
+                width_end = width_start + width
+                
+                if x > width_start:
+                    if x <= width_end:
+                        if header_id=="#id": # #id 列
+                            return current_column_index
+                        current_column_index = global_variable.columns_index[header_id]
+                        break
+                
+                width_start = width_end
+            
+            return current_column_index
+        
+        current_column_index = get_the_colunm_be_clicked()
+        #print()
+        #print("current_column_index")
+        #print(current_column_index)
         
         # 前当目录可删除标记
         flag_current_list_editable = False
         
         event_info = self.new_var_remember_last_index_data 
         
-        external_index = self.new_var_data_holder.external_index
+        
         
         # 外置目录
         the_file_name   = "" # 用于对比文件名，不能乱改
@@ -2685,16 +2842,17 @@ class GameList_7(GameList_6):
         the_menu.entryconfig( the_index ,label = _("删减当前目录，删除选中内容。")+the_last_string ,)
         
         if flag_current_list_editable:
-            print("editable")
+            #print("editable")
             the_menu.entryconfig( the_index, state="normal",)
         else:
-            print("not editable")
+            #print("not editable")
             the_menu.entryconfig( the_index, state="disabled",)
         
         # id
         # description
         # translation
         # alt_title
+        # #current_column
         item_id = global_variable.current_item
         item_detail = global_variable.machine_dict[ item_id ]
         # id
@@ -2710,22 +2868,48 @@ class GameList_7(GameList_6):
         if global_variable.gamelist_type == "softwarelist":
             if "alt_title" in global_variable.columns_index:
                 temp = item_detail[ global_variable.columns_index["alt_title"] ]
-                if not temp : temp = "-" # 如果是空字符，改为 - 
-                the_menu.entryconfig( self.new_var_table_menu_index_for_item_alt_title, label=temp,)
+                if temp:
+                    the_menu.entryconfigure( self.new_var_table_menu_index_for_item_alt_title, state="normal",label=temp)
+                else : 
+                    temp="-"
+                    the_menu.entryconfigure(self.new_var_table_menu_index_for_item_alt_title,state="disabled",label=temp)
         
+        # #current_column
+        # self.new_var_table_menu_index_for_item_current_column
+        if current_column_index >= 0:
+            
+            temp = item_detail[current_column_index]
+            
+            # 复重的内容，不显示了
+            the_header_id = global_variable.columns[current_column_index]
+            if global_variable.gamelist_type == "softwarelist":
+                if the_header_id in ("alt_title","description","translation"):
+                    temp = ""
+            elif global_variable.gamelist_type == "mame":
+                if the_header_id in ("alt_title","description","translation"):
+                    temp = ""
+            
+            if temp :
+                the_menu.entryconfigure( self.new_var_table_menu_index_for_item_current_column, state="normal",label=temp)
+            else:
+                temp = "-"
+                the_menu.entryconfigure( self.new_var_table_menu_index_for_item_current_column,state="disabled",label=temp)
+        else:
+            temp = "-"
+            the_menu.entryconfigure( self.new_var_table_menu_index_for_item_current_column,state="disabled",label=temp)
         
         try:
             the_menu.tk_popup(event.x_root, event.y_root)
         finally:
             the_menu.grab_release()
 
-    def new_func_table_pop_up_menu_callback_start_game(self,other_option=None,hide=True):
+    def new_func_table_pop_up_menu_callback_start_game(self,other_option=None,hide=True,emu_number=-1):
         if other_option is None:
             other_option=[]
         
         item_id = self.new_var_remember_select_row_id
         
-        self.new_var_data_for_StartGame["emu_number"]  = -1
+        self.new_var_data_for_StartGame["emu_number"]  = emu_number # 默认 -1
         self.new_var_data_for_StartGame["id"]          = item_id
         self.new_var_data_for_StartGame["other_option"]= other_option
         self.new_var_data_for_StartGame["hide"]        = hide
@@ -2750,24 +2934,80 @@ class GameList_7(GameList_6):
     # 导出列表
     # 第1 第2 列表相同
     # 第3 列表需要修改
-    def new_func_table_pop_up_menu_callback_export_gamelist(self,):
-        if not self.new_var_list_to_show: return
+    def new_func_table_pop_up_menu_callback_export_gamelist(self,only_id=True):
         
         out_file_path = the_files.file_txt_export
         
-        with open(out_file_path,mode="wt",encoding="utf_8") as f:
-            for item_id in self.new_var_list_to_show:
-                print(item_id,file=f)
+        if not self.new_var_list_to_show: 
+            try:
+                os.remove(out_file_path)
+            except:
+                pass
+            return
+        
+        if only_id:
+            with open(out_file_path,mode="wt",encoding="utf_8_sig") as f:
+                for item_id in sorted( self.new_var_list_to_show ):
+                    f.write(item_id)
+                    f.write("\n")
+        else:
+            with open(out_file_path,mode="wt",encoding="utf_8_sig") as f:
+                
+                header_list = self.new_func_get_columns_to_show()
+                
+                
+                for item_id in sorted( self.new_var_list_to_show ):
+                    
+                    game_info = self.new_var_the_original_gamelist_dict[ item_id ]
+                    
+                    for the_header_id in header_list:
+                        if the_header_id=="#id":
+                            f.write(item_id)
+                            f.write("\t")
+                        else:
+                            if the_header_id in  global_variable.columns_index:
+                                the_index = global_variable.columns_index[ the_header_id ]
+                                temp = game_info[the_index]
+                                f.write(temp)
+                                f.write("\t")
+                    
+                    f.write("\n")
+
     
     # 导出选中项
-    def new_func_table_pop_up_menu_callback_export_select_items(self,):
-        if not self.new_var_list_to_show: return
+    def new_func_table_pop_up_menu_callback_export_select_items(self,only_id=True):
         
         out_file_path = the_files.file_txt_export
         
-        with open(out_file_path,mode="wt",encoding="utf_8") as f:
-            for item_id in sorted(self.new_var_remember_selected_items):
-                print(item_id,file=f)
+        if not self.new_var_list_to_show: 
+            try :    os.remove(out_file_path)
+            except : pass
+            return
+        
+        if only_id:
+            with open(out_file_path,mode="wt",encoding="utf_8_sig") as f:
+                for item_id in sorted(self.new_var_remember_selected_items):
+                    f.write(item_id)
+                    f.write("\n")
+        else:
+            with open(out_file_path,mode="wt",encoding="utf_8_sig") as f:
+                header_list = self.new_func_get_columns_to_show()
+                
+                for item_id in sorted(self.new_var_remember_selected_items):
+                    
+                    game_info = self.new_var_the_original_gamelist_dict[ item_id ]
+                    
+                    for the_header_id in header_list:
+                        if the_header_id=="#id":
+                            f.write(item_id)
+                            f.write("\t")
+                        else:
+                            if the_header_id in  global_variable.columns_index:
+                                the_index = global_variable.columns_index[ the_header_id ]
+                                temp = game_info[the_index]
+                                f.write(temp)
+                                f.write("\t")
+                    f.write("\n")
     
     # 目录编辑，当前选中目录，删除
     def new_func_table_pop_up_menu_callback_delete_items_from_remembered_index(self,):
@@ -2783,6 +3023,38 @@ class GameList_7(GameList_6):
     def new_func_table_pop_up_menu_callback_delete_items_from_a_index(self,):
         # 后面修改
         pass        
+
+    # 右键菜单，显示的 英文 、中文 等，点击 复制
+    def new_func_table_pop_up_menu_callback_click_to_copy_content(self,clounm):
+        
+        the_menu  = self.new_ui_pop_up_menu_for_table
+        
+        # self.new_var_table_menu_index_for_item_id
+        # self.new_var_table_menu_index_for_item_description
+        # self.new_var_table_menu_index_for_item_translation
+        
+        # if global_variable.gamelist_type == "softwarelist" :
+                # self.new_var_table_menu_index_for_item_alt_title
+        if clounm == "id":
+            the_menu_index = self.new_var_table_menu_index_for_item_id
+        elif clounm == "description":
+            the_menu_index = self.new_var_table_menu_index_for_item_description
+        elif clounm == "translation":
+            the_menu_index = self.new_var_table_menu_index_for_item_translation
+        elif clounm == "alt_title":
+            the_menu_index = self.new_var_table_menu_index_for_item_alt_title
+        elif clounm == r"#current_column":
+            the_menu_index = self.new_var_table_menu_index_for_item_current_column
+        else:
+            return
+        
+
+        temp = the_menu.entrycget( the_menu_index, "label",)
+        print( temp )
+        self.clipboard_clear()
+        self.clipboard_append(temp)
+
+
 
 # 接收信号 ，来自 top 菜单，搜索信号，接收
 # 接收信号 ，来自 top 菜单，定位信号，接收
@@ -2834,7 +3106,7 @@ class GameList_8(GameList_7):
         #self.new_var_remember_select_row_id     = None
         
         
-        self.new_var_data_holder.generate_new_list_by_search(string_for_search)
+        self.new_var_data_holder.generate_new_list_by_search( string_for_search )
         
         self.new_func_table_reload_the_game_list()
     
@@ -2927,14 +3199,12 @@ class GameList_9(GameList_8):
 
     def __init__(self, parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
-        
-
-
-
+    
     def new_func_bindings(self,):
         super().new_func_bindings()
         
-        self.bind('<Return>', self.new_func_table_binding_press_enter,)
+        self.bind('<KeyPress-Return>', self.new_func_table_binding_press_enter,)
+        self.bind('<Control-KeyPress-Return>', lambda event:self.new_func_table_binding_press_enter(event,hide= False,) )
     
     
     # derived
@@ -2969,7 +3239,7 @@ class GameList_9(GameList_8):
         # 猛虎 反应 的卡输入法的问题，会不会就在这里 ?
         return "break" 
 
-    def new_func_table_binding_press_enter(self,event):
+    def new_func_table_binding_press_enter(self,event,hide=True):
         print()
         print("press enter")
         #self.new_var_remember_select_row_id
@@ -2990,7 +3260,7 @@ class GameList_9(GameList_8):
                 self.new_var_data_for_StartGame["emu_number"]   = -1
                 self.new_var_data_for_StartGame["id"]           = item_id
                 self.new_var_data_for_StartGame["other_option"].clear()
-                self.new_var_data_for_StartGame["hide"]         = True
+                self.new_var_data_for_StartGame["hide"]         = hide
                 
                 self.event_generate(self.new_var_virtual_event_name_StartGame)
         else: #    = -1
@@ -3189,7 +3459,7 @@ class GameList_11(GameList_10):
             # 具体数据中，external_index ，删除 选中内容
         # 3
             # 重载列表
-        external_index = self.new_var_data_holder.external_index
+        external_index = global_variable.external_index
         
         if self.new_var_remember_last_index_data is None :
             return
@@ -3242,7 +3512,7 @@ class GameList_11(GameList_10):
                 # 第二层 id 为: 文件名路径|分类名
         # 2
             # 具体数据中，external_index ，添加 选中内容
-        external_index = self.new_var_data_holder.external_index
+        external_index = global_variable.external_index
         
         if not self.new_var_remember_selected_items:
             return
@@ -3364,7 +3634,7 @@ class GameList_11(GameList_10):
                 # 第二层 id 为: 文件名路径|分类名
         # 2
             # 具体数据中，external_index ，删除 选中内容
-        external_index = self.new_var_data_holder.external_index
+        external_index = global_variable.external_index
         
         if not self.new_var_remember_selected_items:
             return
@@ -3493,7 +3763,6 @@ class GameList_12(GameList_11):
     def new_func_bindings(self,):
         super().new_func_bindings()
         
-        
         self.bind("<KeyPress-1>",self.new_func_table_binding_key_1_to_9)
         self.bind("<KeyPress-2>",self.new_func_table_binding_key_1_to_9)
         self.bind("<KeyPress-3>",self.new_func_table_binding_key_1_to_9)
@@ -3503,12 +3772,25 @@ class GameList_12(GameList_11):
         self.bind("<KeyPress-7>",self.new_func_table_binding_key_1_to_9)
         self.bind("<KeyPress-8>",self.new_func_table_binding_key_1_to_9)
         self.bind("<KeyPress-9>",self.new_func_table_binding_key_1_to_9)
+        self.bind("<KeyPress-0>",self.new_func_table_binding_key_1_to_9)
+        
+        self.bind("<Control-KeyPress-1>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-2>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-3>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-4>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-5>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-6>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-7>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-8>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-9>",self.new_func_table_binding_key_ctrl_1_to_9)
+        self.bind("<Control-KeyPress-0>",self.new_func_table_binding_key_ctrl_1_to_9)
         
 
 
     def new_func_table_binding_key_1_to_9(self,event):
-        #print()
-        #print("1 - 9")
+        # 添加 0
+        print()
+        print("key press : ",event.keysym)
         #print(event.keysym)
         
         if not self.new_var_list_to_show :
@@ -3525,11 +3807,41 @@ class GameList_12(GameList_11):
             return
         
         self.new_var_data_for_StartGame["emu_number"]   = int(event.keysym)
+        #self.new_var_data_for_StartGame["emu_number"]   = int(event.char)
         self.new_var_data_for_StartGame["id"]           = item_id
         self.new_var_data_for_StartGame["other_option"].clear()
         self.new_var_data_for_StartGame["hide"]         = True
         
         self.event_generate(self.new_var_virtual_event_name_StartGame)
+
+    def new_func_table_binding_key_ctrl_1_to_9(self,event):
+        # 添加 0
+        print()
+        print("key press : Ctrl + ",event.keysym)
+        #print(event.keysym)
+        
+        if not self.new_var_list_to_show :
+            return
+        
+        row_number = self.new_var_remember_select_row_number
+        
+        if row_number < 0 :
+            return
+        
+        item_id    = self.new_var_remember_select_row_id
+        
+        if item_id != self.new_var_list_to_show [ row_number ] :
+            return
+        
+        self.new_var_data_for_StartGame["emu_number"]   = int(event.keysym)
+        #self.new_var_data_for_StartGame["emu_number"]   = int(event.char)
+        self.new_var_data_for_StartGame["id"]           = item_id
+        self.new_var_data_for_StartGame["other_option"].clear()
+        self.new_var_data_for_StartGame["hide"]         = False
+        
+        self.event_generate(self.new_var_virtual_event_name_StartGame)
+
+
 
 
 # 99
@@ -3567,7 +3879,7 @@ class GameList_99(GameList_12):
         ##############################
         ##############################
         
-        # 图标，有时候会卡住某个形状，没有转回来
+        # 鼠标 指示 图，有时候会卡住某个形状，没有转回来
         #   干脆转一下算了
         self.new_ui_table.bind("<Enter>",
                 lambda event : self.new_ui_table.configure(cursor='') )
@@ -3646,6 +3958,10 @@ class GameList_99(GameList_12):
         self.new_var_remember_last_index_data = None
         self.new_var_remember_select_row_number = -1
         
+        self.new_var_list_to_show.clear()
+        
+        self.new_var_data_holder.clear()
+        
         self.new_func_table_clear() # 清理显示内容
 
     # table 测试用
@@ -3702,6 +4018,7 @@ class GameList_99(GameList_12):
     
     # test
     def new_func_find_root_window(self,event):
+        # new_func_find_root_window() ???
         root_window=None
         
         def get_root(window):
@@ -3740,14 +4057,8 @@ class GameList_100(GameList_99):
     def new_func_table_choose_icon_image(self,game_info):
         
         # 元素为 list 格式
-        # 元素第0个为 "name"
-        # 元素第1个为 "status"
-        
-        # for sl
-        # 0 xml
-        # 1 name
-        # 2 "supported"
-        status = game_info[2]
+        # "supported"
+        status = game_info[ self.new_var_icon_column_index_in_header ]
         
         if status=="yes":
             return self.new_image_image_green
@@ -3762,9 +4073,9 @@ class GameList_100(GameList_99):
 
 
 
-
+# mame
 GameList     = GameList_99
-
+# softwarelist
 if global_variable.gamelist_type == "softwarelist":
     GameList = GameList_100
 

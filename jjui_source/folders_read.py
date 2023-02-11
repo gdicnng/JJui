@@ -150,46 +150,48 @@ def read_folder_ini_3( file_name ):
     #    mameui ，分类名， [] ,后面可以有空格
     #    mameui ，分类名， 可以为空 .* 不用 .+
     #search_str = r'^\[(.*)\]\s*$'
-    search_str = r'^\s*\[(.*)\]\s*$'
+    search_str = r'^\[(.*)\]$'
         # 查找分类标题 [...]
     p=re.compile( search_str, )
     #p=re.compile(search_str, re.IGNORECASE)
     
-    #   mameui,游戏名，前后，可以有空格
-    # software list 中间正好有 空格
-    search_str_2 = r'^\s*(\S.*?)\s*$'
-    #search_str_2 = r'^(.+)$' 
+    search_str_2 = r'^(.*)$'
         # 内容
     p2=re.compile( search_str_2, )
-    
-    #search_str_3 = r'^\s*([^\s].*?)\s*$'
-    #search_str_3 = r'^(.+)$'
+    # 这种有空格
         # FOLDER_SETTINGS
-        # SubFolderIcon folder 
-        # 因为有这种，连空格也读取了
-    #p3=re.compile( search_str_3, )
+        #   SubFolderIcon folder
+    # SL 也有空格
+        # nes smb1
     
-    search_str_empty =r'^\s*$'
-    #空行
-    p_empty = re.compile( search_str_empty , )
-
     if content == None:
         return None # 之前 读取 文本 的错误
     else:
-        for line in content:
         
-            # 空行测试
-            m=p_empty.search( line ) 
-            if m : 
+        #index_counter = 0
+        for line in content:
+            
+            line=line.strip()
+            
+            if not line:
                 continue
             
             #  标题 行 测试
             m=p.search( line ) 
             if m:
+                
                 # 是标题
                 #print (m.group())  # The entire match
                 #print (m.group(1)) # The first parenthesized subgroup.
                 mark = m.group(1)
+                
+                # FOLDER_SETTINGS
+                if mark.lower() == "folder_settings":
+                    mark="FOLDER_SETTINGS"
+                # ROOT_FOLDER
+                if mark.lower() == "root_folder":
+                    mark="ROOT_FOLDER"
+                
                 mark_list.append(mark)
                 if mark not in temp_dict: # 第一次，出始化
                     temp_dict[mark] = []
@@ -215,13 +217,10 @@ def read_folder_ini_3( file_name ):
     # 没有 "ROOT_FOLDER" ，mameui 也行
     # mameui 大写
     #
-    # 没有任何分类，直接列表，kof97、kov……，mameui报错
-    #
     # 空文件，mameui 也行，也可以添加新游戏在其中
     #
-
-    
-    
+    # 没有任何分类，直接列表，kof97、kov……，mameui报错
+    #   
     
     # 如果没有
     # 添加一个空的

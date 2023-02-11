@@ -1,0 +1,13 @@
+﻿inkscape
+	M
+		字体 Source Han Sans SC 
+		Heavy
+		字体大小 拉大
+	克隆一个
+		旋转
+		
+		字体还不够大，
+			缩放 按 px 缩放到470
+
+gimp
+	480x480

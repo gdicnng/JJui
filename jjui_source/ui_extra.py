@@ -13,7 +13,6 @@ from . import global_variable
 from .ui_extra_image_container import Image_container,Image_container_2
 from .ui_extra_text_container import Text_container,Text_container_2
 
-user_configure = global_variable.user_configure_data 
 
 class Extra(ttk.Frame):
     def __init__(self ,parent,*args,**kwargs):
@@ -114,9 +113,9 @@ class Extra(ttk.Frame):
         
         item_id = global_variable.current_item
         
-        if user_configure["extra_delay_time_use_flag"]:
+        if global_variable.user_configure_data["extra_delay_time_use_flag"]:
             
-            extra_delay_time=user_configure["extra_delay_time"]
+            extra_delay_time=global_variable.user_configure_data["extra_delay_time"]
             
             # 取消 after
             if self.new_var_remember_after is not None:

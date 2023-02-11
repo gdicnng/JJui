@@ -32,8 +32,6 @@ if __name__ == "__main__" :
     from .translation_ui  import translation_holder
     builtins.__dict__['_'] = translation_holder.translation
 
-
-
 #from . import global_static_filepath as the_files
 from . import global_static
 from . import global_static_key_word_translation 
@@ -49,10 +47,6 @@ from . import extra_command_english
 
 from . import read_pickle
 
-
-
-user_configure       = global_variable.user_configure_data
-#clone_to_parent      = global_variable.dict_data['clone_to_parent']
 
 text_types          = global_static.extra_text_types
 text_types_2        = global_static.extra_text_types_2
@@ -260,7 +254,7 @@ class Text_container(ttk.Frame):
         global_variable.Combobox_chooser_text_1 = self.new_ui_text_chooser
         
         global_variable.tkint_flag_for_text_index_1 = self.new_var_index_flag
-        self.new_var_index_flag.set( user_configure["extra_text_use_index_1"] )
+        self.new_var_index_flag.set( global_variable.user_configure_data["extra_text_use_index_1"] )
         
         # 记录 
         global_variable.tk_text_1 = self.new_ui_text_area.new_ui_text
@@ -287,7 +281,7 @@ class Text_container(ttk.Frame):
         self.new_ui_text_chooser["values"]= temp
         
         try: # 读取配置文件中 记录的 index
-            n = user_configure["extra_text_chooser_index"] 
+            n = global_variable.user_configure_data["extra_text_chooser_index"] 
             if n < len(text_types):
                 pass
             else:
@@ -393,8 +387,7 @@ class Text_container(ttk.Frame):
     #   no index
     def new_func_show_history_xml_not_use_index(self,game_name):
 
-        path = user_configure["history.xml_path"]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data["history.xml_path"]
         path = path.replace(r'"',"") # 去掉双引号
         
         if not os.path.isfile(path) : return
@@ -420,8 +413,7 @@ class Text_container(ttk.Frame):
     # history.xml 
     #   index
     def new_func_show_history_xml_use_index(self,game_name):
-        path = user_configure["history.xml_path"]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data["history.xml_path"]
         path = path.replace(r'"',"") # 去掉双引号
     
         if not os.path.isfile(path) : 
@@ -506,8 +498,7 @@ class Text_container(ttk.Frame):
 
         data_type =  data_type + "_path" # "history.dat_path"
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if os.path.isfile(path):
@@ -541,8 +532,7 @@ class Text_container(ttk.Frame):
         
         #data_type =  data_type + "_path" # "history.dat_path"
         
-        path = user_configure[ data_type + "_path" ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type + "_path" ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if not os.path.isfile(path) : 
@@ -645,9 +635,8 @@ class Text_container(ttk.Frame):
         #data_type =   data_type + "_path"
         # path = self.ini_data[ "mameinfo.dat_path" ]
         # path = self.ini_data[ "messinfo.dat_path" ]
-        path = user_configure[ data_type + "_path" ]
+        path = global_variable.user_configure_data[ data_type + "_path" ]
         
-        path = path.replace(r"'","") # 去掉单引号
         path = path.replace(r'"',"") # 去掉双引号 
         
         print(path)
@@ -727,8 +716,7 @@ class Text_container(ttk.Frame):
         
         #data_type =  data_type + "_path" # "history.dat_path"
         
-        path = user_configure[ data_type + "_path" ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type + "_path" ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if not os.path.isfile(path) : 
@@ -920,8 +908,7 @@ class Text_container(ttk.Frame):
         
         data_type =  data_type + "_path" # "gameinit.dat_path"
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if os.path.isfile(path):
@@ -961,8 +948,7 @@ class Text_container(ttk.Frame):
         
         data_type =  data_type + "_path" # "history.dat_path"
         
-        path = user_configure[ data_type ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if not os.path.isfile(path) : 
@@ -1012,7 +998,7 @@ class Text_container_2(Text_container):
         global_variable.Combobox_chooser_text_2 = self.new_ui_text_chooser
         
         global_variable.tkint_flag_for_text_index_2 = self.new_var_index_flag
-        self.new_var_index_flag.set( user_configure["extra_text_use_index_2"] )
+        self.new_var_index_flag.set( global_variable.user_configure_data["extra_text_use_index_2"] )
         
         # 记录 
         global_variable.tk_text_2 = self.new_ui_text_area.new_ui_text
@@ -1042,7 +1028,7 @@ class Text_container_2(Text_container):
         #print(temp)
         
         try: # 读取配置文件中 记录的 index
-            n = user_configure["extra_command_type_chooser_index"] 
+            n = global_variable.user_configure_data["extra_command_type_chooser_index"] 
             if n < len(text_types_2):
                 pass
             else:
@@ -1090,8 +1076,7 @@ class Text_container_2(Text_container):
         
         
         path = data_type + "_path" # "command.dat_path"
-        path = user_configure[path]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[path]
         path = path.replace(r'"',"") # 去掉双引号 
         
         print(path)
@@ -1154,8 +1139,7 @@ class Text_container_2(Text_container):
     def new_func_show_command_dat_use_index(self,data_type,game_name,):
         
         #data_type =  data_type + "_path" # "history.dat_path"
-        path = user_configure[ data_type + "_path" ]
-        path = path.replace(r"'","") # 去掉单引号
+        path = global_variable.user_configure_data[ data_type + "_path" ]
         path = path.replace(r'"',"") # 去掉双引号 
         
         if not os.path.isfile(path) : 

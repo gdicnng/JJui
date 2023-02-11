@@ -28,6 +28,9 @@ from . import read_user_config
 from . import save_pickle 
 from . import read_pickle 
 from . import translation_gamelist 
+from . import folders_save
+
+from . import misc 
 
 # 周边建目录用
 from . import extra_read_history_xml 
@@ -36,13 +39,6 @@ from . import extra_mameinfo_dat
 from . import extra_command 
 from . import extra_command_english 
 from . import extra_gameinit_dat 
-
-
-
-user_configure = global_variable.user_configure_data
-root_window    = global_variable.root_window
-root           = global_variable.root_window
-columns_translation = key_word_translation.columns_translation
 
 
 class Misc_functions():
@@ -71,8 +67,8 @@ class Misc_functions():
         if game_type == "mame":
             if emu_number   == -1 : # 默认 MAME
                 self.call_mame( game_id, other_option, hide)
-            elif emu_number in( 1,2,3,4,5,6,7,8,9):
-                self.get_other_emu_configure(game_id,emu_number)
+            elif emu_number in( 0,1,2,3,4,5,6,7,8,9,):
+                self.get_other_emu_configure(game_id,emu_number,hide)
         
         elif game_type == "softwarelist":
             if emu_number   == -1 : # 默认 值
@@ -80,8 +76,8 @@ class Misc_functions():
             
             if emu_number   == -1:
                 pass
-            elif emu_number in (1,2,3,4,5,6,7,8,9,):
-                self.get_other_emu_configure_sl(game_id,emu_number)
+            elif emu_number in ( 0,1,2,3,4,5,6,7,8,9,):
+                self.get_other_emu_configure_sl(game_id,emu_number,hide)
     
     # start_game mame
     def call_mame(self,game_name,other_option=None,hide=True):
@@ -107,14 +103,14 @@ class Misc_functions():
         if hide: # 打开游戏，隐藏 UI
             self.start_emu_by_subprocess(
                     command_list,
-                    shell=user_configure["use_shell"],
+                    shell=global_variable.user_configure_data["use_shell"],
                     cwd=mame_dir,
                     hide=True
                     )
         else: # 打开游戏，保留 UI
             self.start_emu_by_subprocess(
                     command_list,
-                    shell=user_configure["use_shell"],
+                    shell=global_variable.user_configure_data["use_shell"],
                     cwd=mame_dir,
                     hide=False
                     )
@@ -142,13 +138,13 @@ class Misc_functions():
             # 但根据 猛虎 的反应，按数字键，也会卡，那可能就不是这一处的影响
             
             # https://stackoverflow.com/questions/4299432
-                # root.focus_set()
+                # global_variable.root_window.focus_set()
                 # 这能管用吗 算球了，反正 iconify() 暂时有效
             
             
-            root_window.iconify() #
-            root_window.withdraw()
-            #root_window.wm_state("withdrawn")
+            global_variable.root_window.iconify() #
+            global_variable.root_window.withdraw()
+            #global_variable.root_window.wm_state("withdrawn")
             
             proc = subprocess.Popen(
                     command_list,
@@ -157,13 +153,13 @@ class Misc_functions():
                     )
             
             proc.wait()
-            root_window.deiconify()
+            global_variable.root_window.deiconify()
             
-            root_window.wait_visibility()
+            global_variable.root_window.wait_visibility()
             
             # 列表要不要刷新一下？
                 # 应该不用了
-            #root_window.update()
+            #global_variable.root_window.update()
                 # 不能刷新太早了
                 # 太早，不可见时，设置的　刷新无效
                 # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
@@ -174,7 +170,7 @@ class Misc_functions():
             except:
                 pass
             
-            root_window.lift()
+            global_variable.root_window.lift()
         
         else:
             subprocess.Popen(
@@ -185,30 +181,30 @@ class Misc_functions():
     
     
     def get_mame_path_and_working_directory(self,):
-    # mame_exe
-    # mame_dir
-    #   用于 subprocess.Popen 函数
+        # mame_exe
+        # mame_dir
+        #   用于 subprocess.Popen 函数
     
         # 如果存在此文件，设为绝对值
         # 如果不存在此文件，当成 ，它 在 系统 环境变量 里
-        if os.path.isfile( user_configure["mame_path"] ):
-            mame_exe = os.path.abspath( user_configure["mame_path"] )
+        if os.path.isfile( global_variable.user_configure_data["mame_path"] ):
+            mame_exe = os.path.abspath( global_variable.user_configure_data["mame_path"] )
         else:
-            mame_exe = user_configure["mame_path"]
+            mame_exe = global_variable.user_configure_data["mame_path"]
     
         mame_working_directory = None # 默认值
         
         # 如果已设置
-        #if user_configure["mame_working_directory"] :
-        if os.path.isdir( user_configure["mame_working_directory"] ):
-            mame_working_directory = os.path.abspath( user_configure["mame_working_directory"] )
+        #if global_variable.user_configure_data["mame_working_directory"] :
+        if os.path.isdir( global_variable.user_configure_data["mame_working_directory"] ):
+            mame_working_directory = os.path.abspath( global_variable.user_configure_data["mame_working_directory"] )
         # 默认值
         #   如果值 没有 设置 ，为空
         #   自动设置为 mame 所在文件夹
         else:
-            #user_configure["mame_working_directory"] == "" :
-            if os.path.isfile( user_configure["mame_path"] ):
-                temp                   = os.path.dirname( user_configure["mame_path"] )
+            #global_variable.user_configure_data["mame_working_directory"] == "" :
+            if os.path.isfile( global_variable.user_configure_data["mame_path"] ):
+                temp                   = os.path.dirname( global_variable.user_configure_data["mame_path"] )
                 mame_working_directory = os.path.abspath( temp )
                 
 
@@ -216,7 +212,7 @@ class Misc_functions():
         return (mame_exe , mame_working_directory)
     
     # start_game mame 1 - 9
-    def get_other_emu_configure(self,item_id,emu_number):
+    def get_other_emu_configure(self,item_id,emu_number,hide=True):
         
         # item_id 为 machine
         # emu_number
@@ -318,13 +314,13 @@ class Misc_functions():
         # start game
         self.start_emu_by_subprocess(
                     command_list,
-                    shell=user_configure["use_shell"],
+                    shell=global_variable.user_configure_data["use_shell"],
                     cwd=cwd,
-                    hide=True
+                    hide=hide
                     )
     
     # start_game SL 1 - 9
-    def get_other_emu_configure_sl(self,item_id,emu_number):
+    def get_other_emu_configure_sl(self,item_id,emu_number,hide=True):
         
         # item_id 为 xml + name
         # emu_number
@@ -435,9 +431,9 @@ class Misc_functions():
         # start game
         self.start_emu_by_subprocess(
                     command_list,
-                    shell=user_configure["use_shell"],
+                    shell=global_variable.user_configure_data["use_shell"],
                     cwd=cwd,
-                    hide=True
+                    hide=hide,
                     )
     
     ###############
@@ -472,7 +468,7 @@ class Misc_functions():
         content=[]
         binary_content = []
         p = subprocess.Popen( command_list, 
-                            shell=user_configure["use_shell"],
+                            shell=global_variable.user_configure_data["use_shell"],
                             stdout=subprocess.PIPE , 
                             stderr=subprocess.STDOUT ,
                             stdin=subprocess.PIPE,
@@ -502,10 +498,10 @@ class Misc_functions():
     # 二进制字符串列表，检查 字符编码
     def check_binary_string_list_encoding(self,binary_string_list):
         
-        if user_configure["encoding"] :
+        if global_variable.user_configure_data["encoding"] :
             print("user encoding")
-            print(user_configure["encoding"])
-            return user_configure["encoding"]
+            print(global_variable.user_configure_data["encoding"])
+            return global_variable.user_configure_data["encoding"]
         
         encoding_list=["utf_8_sig",]
         
@@ -553,7 +549,7 @@ class Misc_functions():
         #size += self.get_root_window_x_y()
         window.geometry(size)
         
-        window.transient(root)
+        window.transient(global_variable.root_window)
         window.lift()
         #window.grab_set()
         
@@ -583,278 +579,11 @@ class Misc_functions():
 
         window.wait_window()
     ##########
-    ##########
-    # gamelist ，标题处，右键 菜单 ，选择 显示 哪些 列
-    # a topleve window 
-    def header_pop_up_menu_callback_choose_columns( self ,):
-        # a topleve window 
-        # -------------------------------
-        # |所有项| 第1组 | 第2组 | all |
-        # |  0   |   1   |   2   |  3  |
-        # |      |       |       |     |
-        # |      |       |       |     |
-        # |      |       |       |     |
-        # |      |       |       |     |
-        # |      |       |       |     |
-        # |      |       |       |     |
-        # -------------------------------
-        #                       确定   |
-        # -------------------------------
-        
-        # user_configure
-            # user_configure["gamelist_columns_to_show_1"] # 第1组
-            # user_configure["gamelist_columns_to_show_2"] # 第2组
-            # user_configure["gamelist_columns_to_show_3"]           # 第3组
-        # self.data_from_main
-            # "columns"                                   # 第0组 ,所有项
-            # "columns_translation"
-        
-        # self.gamelist_change_mark
-            # top_binding_gamelist_change 函数中
-            
-        # self.tree
-        
-        # self.menu_call_back_function_save_ini_data()
-        
-        window = tk.Toplevel()
-        window.resizable(width=True, height=True)
-        window.title(_("选择游戏列表显示项目"))
-        
-        #size = "400x300"
-        #window.geometry( size )
-             
-        window.lift(root)
-        window.transient(root)
-        #window.grab_set()
-        
-        
-        def add_to(add_to_a_listbox):# 第0组，选中项，添加到 另一组
-            # listbox0
-            a_listbox = add_to_a_listbox
-            for x in listbox0.curselection():# 得到 index ，tuple 格式
-                content=listbox0.get(x)
-                if content in a_listbox.get(0,tk.END) :
-                    print("already have")
-                else:
-                    a_listbox.insert(tk.END,content)  
-
-        def delete_from_a_listbox(a_listbox):# 第1、2、3组，中，删除选中项
-            x = a_listbox.curselection() # 得到 index ，tuple 格式
-            if len(x) == 1 : # 如果不是 空 tuple ,且，只选中一项
-                index = x[0]
-                a_listbox.delete( index )
-                a_listbox.selection_set( index )# 选中
-        
-        def move_up(a_listbox):# listbox 中的选项，选中项，向上移
-            x = a_listbox.curselection() # 得到 index ，tuple 格式
-            if len(x) == 1 : # 如果不是 空 tuple ,且，只选中一项
-                index = x[0]
-                if index>0: # 如果不是在最上边
-                    content = a_listbox.get(index) 
-                    a_listbox.delete(index) # 删除
-                    a_listbox.insert(index-1,content) # 重新添加到上一行
-                    a_listbox.selection_set(index-1)# 选中
-        
-        def move_down(a_listbox):# listbox 中的选项，选中项，向下移
-            x = a_listbox.curselection() # 得到 index ，tuple 格式
-            if len(x) == 1 : # 如果不是 空 tuple ,且，只选中一项
-                index = x[0]
-                if index < a_listbox.size() - 1 : # 如果不是在最下边
-                    content = a_listbox.get(index) 
-                    a_listbox.delete(index) # 删除
-                    a_listbox.insert(index+1,content) # 重新添加到下一行
-                    a_listbox.selection_set(index+1)# 选中
-        
-        def button_ok():
-        
-            print("button_ok")
-            
-            def get_content(a_listbox):
-                
-                temp_list = []
-                
-                for x in range(a_listbox.size()):
-                
-                    content = a_listbox.get(x)
-                    
-                    flag = False 
-                    
-                    # 有翻译的项目
-                    for column in columns_translation:
-                        if content == columns_translation[column]:
-                            flag = True
-                            temp_list.append(column)
-                            break
-                    
-                    # 无翻译译的项目
-                    if not flag:
-                        temp_list.append(content)
-                
-                return tuple( temp_list )
-            
-            
-            
-            print(get_content(listbox1))
-            print(get_content(listbox2))
-            print(get_content(listbox3))
-            
-            user_configure["gamelist_columns_to_show_1"] = get_content(listbox1)
-            user_configure["gamelist_columns_to_show_2"] = get_content(listbox2)
-            user_configure["gamelist_columns_to_show_3"] = get_content(listbox3)
-            
-            # try:
-            #     del self.gamelist_change_mark # top_binding_gamelist_change 函数中
-            #     # 删除标记，跳转到第1组
-            # except:
-            #     pass
-            
-            # def get_columns(old_columns): # 检查，有没有超出范围
-            #     temp_list = []
-            #     for x in old_columns:
-            #         if x in self.tree["columns"]:
-            #             temp_list.append(x)
-            #     new_columns = tuple( temp_list )
-            #     return new_columns            
-
-            # 标记为第三组，发信号后，切换到第一组
-            global_variable.column_group_counter=3
-            
-            # 用 root 发信号
-            # 用这个 toplevel ，似乎root收不到
-            root.event_generate(r"<<GameListChangeColumnsToShow>>",)
-
-            self.save_user_configure()
-            
-            
-            window.destroy()
-
-
-        #window.rowconfigure(0,weight=1)
-        window.columnconfigure(0,weight=1)
-        window.columnconfigure(1,weight=1)
-        window.columnconfigure(2,weight=1)
-        window.columnconfigure(3,weight=1)
-        
-        frame0 = ttk.Frame(window,)
-        frame1 = ttk.Frame(window,)
-        frame2 = ttk.Frame(window,)
-        frame3 = ttk.Frame(window,)
-        
-        
-        the_text  =_("第1组，程序一开始显示的内容")
-        the_text +="\n"
-        the_text +=_("后面的第2组、第3组，主要是为了方便切换显示不同的内容")
-        the_text +="\n"
-        the_text +=_("不需要的话，可以不用去管 第2组、第3组")
-
-        ttk.Label(window,text=the_text).grid(row=2,column=0,columnspan=4,sticky=(tk.W,tk.N),)
-        
-        button_ok = ttk.Button(window,text=_("确认，确认后跳转到第1组"),command=button_ok)
-        button_ok.grid(row=8,column=0,columnspan=4,sticky=(tk.E),)
-        
-        frame0.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-        frame1.grid(row=0,column=1,sticky=(tk.W,tk.N,tk.E,tk.S),)
-        frame2.grid(row=0,column=2,sticky=(tk.W,tk.N,tk.E,tk.S),)
-        frame3.grid(row=0,column=3,sticky=(tk.W,tk.N,tk.E,tk.S),)
-        
-        for x in (frame0,frame1,frame2,frame3,):
-            #x.rowconfigure(0,weight=1)
-            x.columnconfigure(0,weight=1)
-        
-        h = len( global_variable.columns )
-        
-        # frame0
-        ttk.Label(frame0,text=_("内容")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
-        
-        listbox0 = tk.Listbox(frame0,height=h, )
-        listbox0.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-        
-        for x in global_variable.columns:
-            if x in columns_translation:
-                listbox0.insert(tk.END,columns_translation[x])
-            else:
-                listbox0.insert(tk.END,x)
-        
-        button_add_to_1=ttk.Button(frame0,text=_("添加到第1组"),width=-1,command=lambda x=None: add_to(listbox1))
-        button_add_to_2=ttk.Button(frame0,text=_("添加到第2组"),width=-1,command=lambda x=None: add_to(listbox2))
-        button_add_to_3=ttk.Button(frame0,text=_("添加到第3组"),width=-1,command=lambda x=None: add_to(listbox3))
-        
-        button_add_to_1.grid()
-        button_add_to_2.grid()
-        button_add_to_3.grid()
-        
-        # frame1
-        ttk.Label(frame1,text=_("第1组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
-        listbox1 = tk.Listbox(frame1,height=h, )
-        listbox1.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-
-        for x in user_configure["gamelist_columns_to_show_1"]:
-            if x in columns_translation:
-                listbox1.insert(tk.END,columns_translation[x])
-            else:
-                listbox1.insert(tk.END,x)
-        
-        button_delete_from_1=ttk.Button( frame1 ,width=-1,text=_("从第1组移除"),command=lambda x=None:delete_from_a_listbox(listbox1))
-        button_delete_from_1.grid()
-        
-        button_move_up_1=ttk.Button( frame1 ,width=-1,text=_("上移"),command=lambda x=None:move_up(listbox1))
-        button_move_up_1.grid()
-        
-        button_move_down_1=ttk.Button( frame1 ,width=-1,text=_("下移"),command=lambda x=None:move_down(listbox1))
-        button_move_down_1.grid()
-
-        # frame2
-        ttk.Label(frame2,text=_("第2组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
-        listbox2 = tk.Listbox(frame2,height=h, )
-        listbox2.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-
-        for x in user_configure["gamelist_columns_to_show_2"]:
-            if x in columns_translation:
-                listbox2.insert(tk.END,columns_translation[x])
-            else:
-                listbox2.insert(tk.END,x)
-
-        button_delete_from_2=ttk.Button( frame2 ,text=_("从第2组移除"),command=lambda x=None:delete_from_a_listbox(listbox2))
-        button_delete_from_2.grid()
-        
-        button_move_up_2=ttk.Button( frame2 ,width=-1,text=_("上移"),command=lambda x=None:move_up(listbox2))
-        button_move_up_2.grid()
-        
-        button_move_down_2=ttk.Button( frame2 ,width=-1,text=_("下移"),command=lambda x=None:move_down(listbox2))
-        button_move_down_2.grid()
-
-        # frame3
-        ttk.Label(frame3,text=_("第3组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
-        listbox3 = tk.Listbox(frame3,height=h, )
-        listbox3.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-
-        for x in user_configure["gamelist_columns_to_show_3"]:
-            if x in columns_translation:
-                listbox3.insert(tk.END,columns_translation[x])
-            else:
-                listbox3.insert(tk.END,x)
-                
-        button_delete_from_3=ttk.Button( frame3 ,text=_("从第3组移除"),command=lambda x=None:delete_from_a_listbox(listbox3))
-        button_delete_from_3.grid()
-        
-        button_move_up_3=ttk.Button( frame3 ,width=-1,text=_("上移"),command=lambda x=None:move_up(listbox3))
-        button_move_up_3.grid()
-        
-        button_move_down_3=ttk.Button( frame3 ,width=-1,text=_("下移"),command=lambda x=None:move_down(listbox3))
-        button_move_down_3.grid()
-        
-        
-        window.wait_window()    
-    ##########
-    ##########
-    # 
-    
     # font 初始化
     def font_initial(self,):
+        print("")
         print("font_initial")
-        print("font_initial")
-        print("font_initial")
-        print("font_initial")
+        print("")
         
         all_font = tkfont.families()
         
@@ -868,11 +597,11 @@ class Misc_functions():
         
         # gamelist font
         font_name = default_name
-        if user_configure["gamelist_font"] in all_font:
-            font_name = user_configure["gamelist_font"]
+        if global_variable.user_configure_data["gamelist_font"] in all_font:
+            font_name = global_variable.user_configure_data["gamelist_font"]
         font_size = default_size
-        if user_configure["gamelist_font_size"] != 0: 
-            font_size = user_configure["gamelist_font_size"]
+        if global_variable.user_configure_data["gamelist_font_size"] != 0: 
+            font_size = global_variable.user_configure_data["gamelist_font_size"]
         # 记录
         global_variable.font_gamelist=tkfont.Font( font=(font_name, font_size,),)
         # 执行
@@ -884,11 +613,11 @@ class Misc_functions():
         the_size = font_defualt.actual("size")
         #
         font_name = the_name
-        if user_configure["gamelist_header_font"] in all_font:
-            font_name = user_configure["gamelist_header_font"]
+        if global_variable.user_configure_data["gamelist_header_font"] in all_font:
+            font_name = global_variable.user_configure_data["gamelist_header_font"]
         font_size = the_size
-        if user_configure["gamelist_header_font_size"] != 0:
-            font_size = user_configure["gamelist_header_font_size"]
+        if global_variable.user_configure_data["gamelist_header_font_size"] != 0:
+            font_size = global_variable.user_configure_data["gamelist_header_font_size"]
         # 记录
         global_variable.font_gamelist_header=tkfont.Font( font=(font_name, font_size,),)
         # 执行
@@ -896,11 +625,11 @@ class Misc_functions():
         
         # text font 1
         font_name = default_name
-        if user_configure["text_font"] in all_font:
-            font_name = user_configure["text_font"]
+        if global_variable.user_configure_data["text_font"] in all_font:
+            font_name = global_variable.user_configure_data["text_font"]
         font_size = default_size
-        if user_configure["text_font_size"] != 0: 
-            font_size = user_configure["text_font_size"]
+        if global_variable.user_configure_data["text_font_size"] != 0: 
+            font_size = global_variable.user_configure_data["text_font_size"]
         # 记录
         global_variable.font_text=tkfont.Font( font=(font_name, font_size,),)
         # 执行
@@ -908,11 +637,11 @@ class Misc_functions():
 
         # text font 2
         font_name = default_name
-        if user_configure["text_2_font"] in all_font:
-            font_name = user_configure["text_2_font"]
+        if global_variable.user_configure_data["text_2_font"] in all_font:
+            font_name = global_variable.user_configure_data["text_2_font"]
         font_size = default_size
-        if user_configure["text_2_font_size"] != 0: 
-            font_size = user_configure["text_2_font_size"]
+        if global_variable.user_configure_data["text_2_font_size"] != 0: 
+            font_size = global_variable.user_configure_data["text_2_font_size"]
         # 记录
         global_variable.font_text_2=tkfont.Font( font=(font_name, font_size,),)
         # 执行
@@ -920,11 +649,11 @@ class Misc_functions():
         
         # others font
         font_name = default_name
-        if user_configure["others_font"] in all_font:
-            font_name = user_configure["others_font"]
+        if global_variable.user_configure_data["others_font"] in all_font:
+            font_name = global_variable.user_configure_data["others_font"]
         font_size = default_size
-        if user_configure["others_font_size"] != 0: 
-            font_size = user_configure["others_font_size"]
+        if global_variable.user_configure_data["others_font_size"] != 0: 
+            font_size = global_variable.user_configure_data["others_font_size"]
         # 记录
         global_variable.font_others=tkfont.Font( font=(font_name, font_size,),)
         # 执行
@@ -976,10 +705,10 @@ class Misc_functions():
             for x in the_entry_list:
                 x.configure(font=the_font)
             
-            root_window.option_add("*TCombobox*Listbox.font", the_font)
-            root_window.option_add("*font", the_font)
-            root_window.option_add('*Text*font', the_font)
-            root_window.option_add('*Listbox*font', the_font)            
+            global_variable.root_window.option_add("*TCombobox*Listbox.font", the_font)
+            global_variable.root_window.option_add("*font", the_font)
+            global_variable.root_window.option_add('*Text*font', the_font)
+            global_variable.root_window.option_add('*Listbox*font', the_font)            
             
             # combobox
             the_combobox_list = self.find_widget("TCombobox")
@@ -1020,7 +749,7 @@ class Misc_functions():
         window.geometry( size )
         
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         
         window.columnconfigure(1,weight=1)
         
@@ -1116,28 +845,28 @@ class Misc_functions():
     def for_save_font(self,):
         # 游戏列表字体
         the_font = global_variable.font_gamelist
-        user_configure["gamelist_font"]      = the_font.actual("family")
-        user_configure["gamelist_font_size"] = the_font.actual("size")
+        global_variable.user_configure_data["gamelist_font"]      = the_font.actual("family")
+        global_variable.user_configure_data["gamelist_font_size"] = the_font.actual("size")
         
         # 游戏列表 标题 字体
         the_font = global_variable.font_gamelist_header
-        user_configure["gamelist_header_font"]      = the_font.actual("family")
-        user_configure["gamelist_header_font_size"] = the_font.actual("size")
+        global_variable.user_configure_data["gamelist_header_font"]      = the_font.actual("family")
+        global_variable.user_configure_data["gamelist_header_font_size"] = the_font.actual("size")
         
         # 文本字体 一
         the_font = global_variable.font_text
-        user_configure["text_font"]      = the_font.actual("family")
-        user_configure["text_font_size"] = the_font.actual("size")
+        global_variable.user_configure_data["text_font"]      = the_font.actual("family")
+        global_variable.user_configure_data["text_font_size"] = the_font.actual("size")
         
         # 文本字体 二
         the_font = global_variable.font_text_2
-        user_configure["text_2_font"]      = the_font.actual("family")
-        user_configure["text_2_font_size"] = the_font.actual("size")
+        global_variable.user_configure_data["text_2_font"]      = the_font.actual("family")
+        global_variable.user_configure_data["text_2_font_size"] = the_font.actual("size")
         
         # others font
         the_font = global_variable.font_others
-        user_configure["others_font"]      = the_font.actual("family")
-        user_configure["others_font_size"] = the_font.actual("size")
+        global_variable.user_configure_data["others_font"]      = the_font.actual("family")
+        global_variable.user_configure_data["others_font_size"] = the_font.actual("size")
         
     # row height
     def use_user_configure_row_height(self,):
@@ -1148,15 +877,15 @@ class Misc_functions():
         
         
         style = ttk.Style()
-        if user_configure["row_height"] > 0:
+        if global_variable.user_configure_data["row_height"] > 0:
             # Treeview
-            style.configure('Treeview', rowheight = user_configure["row_height"])
+            style.configure('Treeview', rowheight = global_variable.user_configure_data["row_height"])
             
             # 自制 table
             print(len(global_variable.all_tables))
             for table in global_variable.all_tables:
                 
-                table.new_func_set_row_height( user_configure["row_height"] )
+                table.new_func_set_row_height( global_variable.user_configure_data["row_height"] )
         
     # row height for header
     def use_user_configure_row_height_for_header(self,):
@@ -1165,17 +894,17 @@ class Misc_functions():
             # 自制 table 设置
         # text row height
         
-        if user_configure["row_height_for_header"] > 0:
+        if global_variable.user_configure_data["row_height_for_header"] > 0:
 
             # 自制 table
             for table in global_variable.all_tables:
-                table.new_func_set_row_height_for_header( user_configure["row_height_for_header"] )
+                table.new_func_set_row_height_for_header( global_variable.user_configure_data["row_height_for_header"] )
     
     # icon width
     def use_user_configure_icon_width(self,):
         # 自制 table
         for table in global_variable.all_tables:
-            table.new_func_set_icon_width( user_configure["icon_size"] )
+            table.new_func_set_icon_width( global_variable.user_configure_data["icon_size"] )
     ################
     #############
     # colours
@@ -1187,7 +916,7 @@ class Misc_functions():
         size = "400x300"
         window.geometry( size )
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         window.configure(background="grey95")
         
         frame = tk.Frame(window)
@@ -1237,9 +966,9 @@ class Misc_functions():
             label = tk.Label(frame,borderwidth=4,relief="raised" ,text=" "*15)
             label.grid(row=row_number,column=1,sticky=tk.W+tk.N,)
             
-            if user_configure[key_word]:
+            if global_variable.user_configure_data[key_word]:
                 try:
-                    label.configure( background = user_configure[key_word] )
+                    label.configure( background = global_variable.user_configure_data[key_word] )
                 except:
                     pass
             
@@ -1267,7 +996,7 @@ class Misc_functions():
             for key_word in colour_widgets:
                 widget=colour_widgets[key_word]
                 #print(widget["background"])
-                user_configure[key_word] = widget["background"]
+                global_variable.user_configure_data[key_word] = widget["background"]
             
             self.use_user_configure_colours()
         
@@ -1286,9 +1015,9 @@ class Misc_functions():
             print("not internal themes,not use colours")
             return
         
-        if user_configure["foreground"]:
+        if global_variable.user_configure_data["foreground"]:
             
-            cf = user_configure["foreground"]
+            cf = global_variable.user_configure_data["foreground"]
             
             style.configure('.',foreground = cf)
             
@@ -1310,14 +1039,14 @@ class Misc_functions():
             for text in (global_variable.tk_text_1,global_variable.tk_text_2):
                 text.configure(foreground=cf)
             
-            root.option_add('*Toplevel*foreground', cf)
-            root.option_add('*Text*foreground', cf)
-            root.option_add('*Listbox*foreground', cf)
-            root.option_add("*TCombobox*Listbox.foreground ", cf)
+            global_variable.root_window.option_add('*Toplevel*foreground', cf)
+            global_variable.root_window.option_add('*Text*foreground', cf)
+            global_variable.root_window.option_add('*Listbox*foreground', cf)
+            global_variable.root_window.option_add("*TCombobox*Listbox.foreground ", cf)
 
-        if user_configure["background"]:
+        if global_variable.user_configure_data["background"]:
             
-            c = user_configure["background"]
+            c = global_variable.user_configure_data["background"]
             
             style.configure('.',background       = c)
             #style.configure('.', fieldbackground = c)
@@ -1357,13 +1086,13 @@ class Misc_functions():
                 canvas.configure(background=c)
             
             # tk.Toplevle
-            root.option_add('*Toplevel*background', c)
-            root.option_add('*Listbox*background', c)
-            root.option_add('*Text*background', c)
-            root.option_add('*Canvas*background', c)
+            global_variable.root_window.option_add('*Toplevel*background', c)
+            global_variable.root_window.option_add('*Listbox*background', c)
+            global_variable.root_window.option_add('*Text*background', c)
+            global_variable.root_window.option_add('*Canvas*background', c)
     
-        if user_configure["selectforeground"]:
-            c_sf = user_configure["selectforeground"]
+        if global_variable.user_configure_data["selectforeground"]:
+            c_sf = global_variable.user_configure_data["selectforeground"]
             
             style.configure('.',selectforeground = c_sf)
             
@@ -1375,8 +1104,8 @@ class Misc_functions():
             for text in (global_variable.tk_text_1,global_variable.tk_text_2):
                 text.configure(selectforeground=c_sf)
         
-        if user_configure["selectbackground"]:
-            c_sb = user_configure["selectbackground"]
+        if global_variable.user_configure_data["selectbackground"]:
+            c_sb = global_variable.user_configure_data["selectbackground"]
             
             style.configure('.',selectbackground = c_sb)
             
@@ -1388,8 +1117,8 @@ class Misc_functions():
             for text in (global_variable.tk_text_1,global_variable.tk_text_2):
                 text.configure(selectbackground=c_sb)
         
-        if user_configure["background_for_panedwindow"]:
-            style.configure('TPanedwindow',background =user_configure["background_for_panedwindow"])
+        if global_variable.user_configure_data["background_for_panedwindow"]:
+            style.configure('TPanedwindow',background =global_variable.user_configure_data["background_for_panedwindow"])
     
     ##########
     ##########
@@ -1421,14 +1150,13 @@ class Misc_functions():
         #text_holder.new_func_insert_string("\n")
         #text_holder.new_func_insert_string( _("请耐心等待)" + "......"))
         
-        root_window.iconify()
+        global_variable.root_window.iconify()
         
         # history.xml
         def make_index_of_history_xml():
             
             # 文件路径
-            path = user_configure["history.xml_path"]
-            path = path.replace(r"'","") # 去掉单引号
+            path = global_variable.user_configure_data["history.xml_path"]
             path = path.replace(r'"',"") # 去掉双引号
             
             if os.path.isfile(path) : 
@@ -1448,8 +1176,7 @@ class Misc_functions():
         def make_index_of_history_dat():
             #if global_variable.gamelist_type == "mame":
             # history.dat
-            path = user_configure["history.dat_path"]
-            path = path.replace(r"'","") # 去掉单引号
+            path = global_variable.user_configure_data["history.dat_path"]
             path = path.replace(r'"',"") # 去掉双引号
             if os.path.isfile(path) : 
                 index_dict = {}
@@ -1465,8 +1192,7 @@ class Misc_functions():
         def make_index_of_sysinfo_dat():
             if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = user_configure["sysinfo.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["sysinfo.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1485,8 +1211,7 @@ class Misc_functions():
         def make_index_of_mameinfo_dat():
             if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = user_configure["mameinfo.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["mameinfo.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1503,8 +1228,7 @@ class Misc_functions():
         def make_index_of_messinfo_dat():
             if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = user_configure["messinfo.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["messinfo.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1523,8 +1247,7 @@ class Misc_functions():
         def make_index_of_command_dat():
             if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = user_configure["command.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["command.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1538,8 +1261,7 @@ class Misc_functions():
         def make_index_of_command_english_dat():
             if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = user_configure["command_english.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["command_english.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1557,8 +1279,7 @@ class Misc_functions():
 
             if global_variable.gamelist_type == "mame":
                 # gameinit.dat
-                path = user_configure["gameinit.dat_path"]
-                path = path.replace(r"'","") # 去掉单引号
+                path = global_variable.user_configure_data["gameinit.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
@@ -1587,9 +1308,9 @@ class Misc_functions():
         
         
         print("finish")
-        root_window.update()
-        root_window.deiconify()
-        root_window.lift()
+        global_variable.root_window.update()
+        global_variable.root_window.deiconify()
+        global_variable.root_window.lift()
         
         #window.wait_window()
         ""
@@ -1604,19 +1325,19 @@ class Misc_functions():
     # save
     def user_configure_get_window_size(self,):
         # 主窗口大小
-        height = root_window.winfo_height() 
-        width  = root_window.winfo_width()
+        height = global_variable.root_window.winfo_height() 
+        width  = global_variable.root_window.winfo_width()
         # 得到的结果不准确，因为 菜单 ？？
-        # 在 设置 root.geometry 之后，马上 root.update() 一下，就准确了
+        # 在 设置 global_variable.root_window.geometry 之后，马上 global_variable.root_window.update() 一下，就准确了
         # why ?
         # # #
         # 转为字符串 如 800x600
         size = str(width) + "x" + str(height)
-        user_configure["size"] = size
+        global_variable.user_configure_data["size"] = size
         
         print("")
         print("window size")
-        print(user_configure["size"])
+        print(global_variable.user_configure_data["size"])
     
     def user_configure_get_window_size_and_position(self,):
         print("")
@@ -1624,38 +1345,38 @@ class Misc_functions():
         
         # windows 
         if sys.platform.startswith("win") : # or sys.platform.startswith("darwin")
-            #  root_window.geometry() ，
+            #  global_variable.root_window.geometry() ，
             # 因为这个值在最大化时，反回的位置不太对
             
-            if root_window.wm_state() == "zoomed" : # 最大化
-                user_configure["zoomed"] = True
+            if global_variable.root_window.wm_state() == "zoomed" : # 最大化
+                global_variable.user_configure_data["zoomed"] = True
             else:
-                user_configure["zoomed"] = False
+                global_variable.user_configure_data["zoomed"] = False
                 
-                size  =  root_window.geometry() 
-                user_configure["size"] = size
+                size  =  global_variable.root_window.geometry() 
+                global_variable.user_configure_data["size"] = size
             
             return
         
         # 其它
-        size  =  root_window.geometry() 
+        size  =  global_variable.root_window.geometry() 
             # windows 最大化时，这个值反回的位置不太对
             # 其它没试过
-        user_configure["size"] = size
+        global_variable.user_configure_data["size"] = size
         
         
-        print(user_configure["size"])
+        print(global_variable.user_configure_data["size"])
     
     def user_configure_get_widget_position(self,):
         # 分隔线位置
         if global_variable.PanedWindow is not None:
             # 目录 游戏列表 ，分隔条 位置
-            user_configure["pos1"] = global_variable.PanedWindow.sashpos(0,)
+            global_variable.user_configure_data["pos1"] = global_variable.PanedWindow.sashpos(0,)
             # 游戏开表 周边 ，分隔条 位置
-            user_configure["pos2"] = global_variable.PanedWindow.sashpos(1,)
+            global_variable.user_configure_data["pos2"] = global_variable.PanedWindow.sashpos(1,)
         if global_variable.PanedWindow_2 is not None:
             # 图片处还有一条分隔线
-            user_configure["pos3"] = global_variable.PanedWindow_2.sashpos(0,)
+            global_variable.user_configure_data["pos3"] = global_variable.PanedWindow_2.sashpos(0,)
     
     def user_configure_get_widget_option(self,):
         
@@ -1668,37 +1389,37 @@ class Misc_functions():
             for x in columns_width:
                 columns_width[x] = int(columns_width[x])
             
-            user_configure["gamelist_columns_width"] = columns_width
-            print(user_configure["gamelist_columns_width"])
+            global_variable.user_configure_data["gamelist_columns_width"] = columns_width
+            print(global_variable.user_configure_data["gamelist_columns_width"])
         
         # 周边，notebook tab 选择记录
         if global_variable.Notebook_for_extra is not None:
-            user_configure["extra_tab_index"] = global_variable.Notebook_for_extra.index( global_variable.Notebook_for_extra.select() )
+            global_variable.user_configure_data["extra_tab_index"] = global_variable.Notebook_for_extra.index( global_variable.Notebook_for_extra.select() )
         
         # 图片区 是否使用 zip 选项记录
         if global_variable.tkint_flag_for_zip_1 is not None:
-            user_configure["extra_image_usezip"] = global_variable.tkint_flag_for_zip_1.get()
+            global_variable.user_configure_data["extra_image_usezip"] = global_variable.tkint_flag_for_zip_1.get()
         if global_variable.tkint_flag_for_zip_2 is not None:
-            user_configure["extra_image_usezip_2"] = global_variable.tkint_flag_for_zip_2.get()
+            global_variable.user_configure_data["extra_image_usezip_2"] = global_variable.tkint_flag_for_zip_2.get()
         # 文本区 是否使用 建立目录 记录
         if global_variable.tkint_flag_for_text_index_1 is not None:
-            user_configure["extra_text_use_index_1"] = global_variable.tkint_flag_for_text_index_1.get()
+            global_variable.user_configure_data["extra_text_use_index_1"] = global_variable.tkint_flag_for_text_index_1.get()
         if global_variable.tkint_flag_for_text_index_2 is not None:
-            user_configure["extra_text_use_index_2"] = global_variable.tkint_flag_for_text_index_2.get()
+            global_variable.user_configure_data["extra_text_use_index_2"] = global_variable.tkint_flag_for_text_index_2.get()
         
         # Combobox 选项记录
         #图片一
         if global_variable.Combobox_chooser_image_1 is not None:
-            user_configure["extra_image_chooser_index"] = global_variable.Combobox_chooser_image_1.current()
+            global_variable.user_configure_data["extra_image_chooser_index"] = global_variable.Combobox_chooser_image_1.current()
         #图片二
         if global_variable.Combobox_chooser_image_2 is not None:
-            user_configure["extra_image_chooser_2_index"] = global_variable.Combobox_chooser_image_2.current()
+            global_variable.user_configure_data["extra_image_chooser_2_index"] = global_variable.Combobox_chooser_image_2.current()
         #文本一
         if global_variable.Combobox_chooser_text_1 is not None:
-            user_configure["extra_text_chooser_index"] = global_variable.Combobox_chooser_text_1.current()
+            global_variable.user_configure_data["extra_text_chooser_index"] = global_variable.Combobox_chooser_text_1.current()
         #文本二
         if global_variable.Combobox_chooser_text_2 is not None:
-            user_configure["extra_command_type_chooser_index"] = global_variable.Combobox_chooser_text_2.current()
+            global_variable.user_configure_data["extra_command_type_chooser_index"] = global_variable.Combobox_chooser_text_2.current()
     
     def user_configure_get_index_last_record(self,):
         # 记录 treeview 中的 iid_string ，
@@ -1711,9 +1432,26 @@ class Misc_functions():
                     iid_string += x + "|"
                 if iid_string:
                     iid_string=iid_string[0:-1]
-            user_configure["index_be_chosen"] = iid_string
+            global_variable.user_configure_data["index_be_chosen"] = iid_string
             print(iid_string)
         
+    
+    def save_user_configure_just_after_initial(self,):
+        # 刚初始化之后，
+        # 有些选项 不能 读取 ，
+        # 仅保存 现有 选项
+        try:
+            #read_user_config.write_ini(ini_file_name,ini_dict,order = None)
+            read_user_config.write_ini(
+                    the_files.file_ini_configure,
+                    global_variable.user_configure_data,
+                    order = global_variable.user_configure_data_order)
+            print("")
+            print("after initial")
+            print("save configure file")
+            #print( global_variable.user_configure_data["mame_path"] )
+        except:
+            pass
     
     def save_user_configure(self,):
         
@@ -1730,6 +1468,7 @@ class Misc_functions():
                     global_variable.user_configure_data,
                     order = global_variable.user_configure_data_order)
             print("save configure file")
+            print( global_variable.user_configure_data["mame_path"] )
         except:
             pass
     
@@ -1748,6 +1487,17 @@ class Misc_functions():
         self.user_configure_get_widget_position()
         
         self.save_user_configure()
+    ###################
+    # save ，目录 编辑后 保存
+    def new_func_index_popup_menu_function_save(self,event=None):
+        # global_variable.external_index_files_be_edited
+        for x in global_variable.external_index_files_be_edited :
+            try:
+                folders_save.save(x , global_variable.external_index[x])
+                print("save",x)
+            except:
+                pass
+        global_variable.external_index_files_be_edited = set() # 重置
     
     #######################
     def find_widget(self,class_name):
@@ -1761,7 +1511,7 @@ class Misc_functions():
 
                 find_childen(child)
         
-        find_childen(root_window)
+        find_childen(global_variable.root_window)
         
         # 结果
         #if result : 
@@ -1780,31 +1530,20 @@ class Misc_functions():
         else:
             available_items = set(available_items)
         
-        #global_variable.internal_index
-        #global_variable.set_data
-        
         #global_variable.available_set
+        #global_variable.unavailable_set
         #global_variable.available_hide_set
         
         # 记录 
         # 拥有部分
-        global_variable.available_set = available_items
+        global_variable.available_set   = available_items
+        global_variable.unavailable_set = global_variable.set_data["all_set"] - available_items
         
         # 保存数据
         if need_save :
             #the_files.file_pickle_gamelist_available
             save_pickle.save(available_items,the_files.file_pickle_gamelist_available)
         
-        # 拥有部分添加到目录，
-        # 需要，先过滤一下
-            # 过滤项 1，隐藏项
-            # 过滤项 2，过滤项
-        global_variable.internal_index["available_set"]  = {"gamelist":[],"children":{},}
-        global_variable.internal_index["available_set"]["gamelist"] = available_items - global_variable.available_hide_set - global_variable.available_filter_set
-        
-        # 未拥有部分，添加到目录
-        global_variable.internal_index["unavailable_set"]  = {"gamelist":[],"children":{},}
-        global_variable.internal_index["unavailable_set"]["gamelist"]  = global_variable.set_data["all_set"] - available_items
     
     
     
@@ -1824,7 +1563,7 @@ class Misc_functions():
         
         self.set_available_gamelist(temp_set,need_save=True)
         
-        root_window.event_generate('<<RequestForAvailableGameList>>')
+        global_variable.root_window.event_generate('<<RequestForAvailableGameList>>')
         
     # 刷新 拥有列表 merged
     def gamelist_available_refresh_2(self,):
@@ -1842,168 +1581,42 @@ class Misc_functions():
         
         self.set_available_gamelist(temp_set,need_save=True)
         
-        root_window.event_generate('<<RequestForAvailableGameList>>')
+        global_variable.root_window.event_generate('<<RequestForAvailableGameList>>')
     
-    # 拥有列表 过滤
-        # 窗口
-    def gamelist_available_filter(self,):
-        window = tk.Toplevel()
-        
-        window.resizable(width=True, height=True)
-        
-        size = "400x300" 
-        window.geometry(size)
-        
-        window.title(_("拥有列表过滤"))
-        
-             
-        window.lift()
-        window.transient(root_window)
-        
-        
-        available_filter_bios = tk.IntVar()
-        available_filter_device = tk.IntVar()
-        available_filter_mechanical = tk.IntVar()
-        available_filter_no_roms = tk.IntVar()
-        
-        def for_ok_button():
-            global user_configure
-        
-            window.destroy()
-            
-            # 转为 set 先，之后转回来
-            user_configure["filter"] = set(user_configure["filter"])
-            
-            if available_filter_bios.get():
-                user_configure["filter"].add("bios")
-            else :
-                user_configure["filter"].discard("bios")
-
-            if available_filter_device.get():
-                user_configure["filter"].add("device")
-            else:
-                user_configure["filter"].discard("device")
-
-            if available_filter_mechanical.get():
-                user_configure["filter"].add("mechanical")
-            else:
-                user_configure["filter"].discard("mechanical")
-            
-            # 格式转回来
-            user_configure["filter"] = list( user_configure["filter"] ) 
-            
-            global_variable.available_filter_set = set() # 重置 ，重新计算
-            
-            for x in user_configure["filter"]:
-                if x in global_variable.internal_index:
-                    global_variable.available_filter_set.update( set(global_variable.internal_index[x]["gamelist"]) )
-            
-            print('available_set')
-            print( len(global_variable.available_set) )
-            print("available_filter_set")
-            print( len(global_variable.available_filter_set) )
-            print("filter list")
-            print( user_configure["filter"] )
-            
-            # 更新目录
-            global_variable.internal_index["available_set"]  = {"gamelist":[],"children":{},}
-            
-            global_variable.internal_index["available_set"]["gamelist"] = global_variable.available_set - global_variable.available_hide_set - global_variable.available_filter_set
-            
-            # 显示目录
-            root_window.event_generate('<<RequestForAvailableGameList>>')
-
-        
-        if 'bios'       in user_configure["filter"] :
-            available_filter_bios.set(1)
-        else:
-            available_filter_bios.set(0)
-        
-        if 'device'     in user_configure["filter"]: 
-            available_filter_device.set(1)
-        else:
-            available_filter_device.set(0)
-        
-        if 'mechanical' in user_configure["filter"] : 
-            available_filter_mechanical.set(1)
-        else:
-            available_filter_mechanical.set(0)
-        
-        n=0
-        if 'bios' in global_variable.internal_index:
-            bios_set_checkbutton  = ttk.Checkbutton(window, text="bios",variable=available_filter_bios)
-            bios_set_checkbutton.grid(row=n,column=0,sticky=(tk.W,tk.N),)
-            n+=1
-
-        if "device" in global_variable.internal_index:
-            device_set_checkbutton = ttk.Checkbutton(window, text="device",variable= available_filter_device )
-            device_set_checkbutton.grid(row=n,column=0,sticky=(tk.W,tk.N),)
-            n+=1
-
-        if "mechanical" in global_variable.internal_index:
-            mechanical_set_checkbutton = ttk.Checkbutton(window, text="mechanical",variable=available_filter_mechanical)
-            mechanical_set_checkbutton.grid(row=n,column=0,sticky=(tk.W,tk.N),)
-            n+=1
-        
-        #if "no_roms" in 
-
-            
-        button=ttk.Button(window,text=_("确认"),command=for_ok_button)
-        button.grid(row=n,column=0,sticky=(tk.W,tk.N),) 
-        
-        window.wait_window()
-
     # 初始化 ui_main.py
     def initial_available_filter_set(self,):
         
-        global_variable.available_filter_set = set()
+        global_variable.available_filter_set.clear()
         
-        for x in user_configure["filter"]:
-            if x in global_variable.internal_index:
-                global_variable.available_filter_set.update( set(global_variable.internal_index[x]["gamelist"]) )
-
-    # 刷新列表
-    # 找到拥有的 *.zip 、*.7z 、文件夹
-    def get_files_names_in_rompath(self,merged = False):
-        ### ###
-        # 还有一种情况 
-        # 路径里有变量：$HOME/mame/roms
-            ####
-            # 有变量的，到底有几种格式？  
+        for x in global_variable.user_configure_data["filter"]:
+            # 目前都是 目录 第一层 的
+            temp = misc.get_id_list_from_internal_index(x)
+            
+            global_variable.available_filter_set.update( temp )
 
 
-        # 仅检查文件 存在 与否
-        # 不深度检查文件的 正确性、完整性
-        # *.zip 、*.7x 、文件夹
+    def get_roms_folder_list(self,):
+        roms_folder_list = []
         
-        # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下            
+        # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下
 
         rom_path = self.get_rompath_from_command_line()
         
         (mame_exe , mame_dir) = self.get_mame_path_and_working_directory()
         
         if rom_path:
-            rom_path = rom_path.replace(r"'","") # 去掉单引号
             rom_path = rom_path.replace(r'"',"") # 去掉双引号
-        
-        temp_set = set()
-        
-        temp=[]
         
         for x in rom_path.split(r';'):
             if x:
-                print(x)
-
                 #######
                 # rompath ，记录的相对路径，是相对于模拟器的
-                
-                
                 ### ###
                 # 还有一种情况
                 # 路径里有变量：$HOME/mame/roms
                     ####
                     # 有变量的，到底有几种格式？
-                    
+                
                 # 情况1，如果有变量，展开，
                 temp_path = x
                 try:
@@ -2013,6 +1626,7 @@ class Misc_functions():
 
                 if os.path.isabs(temp_path): # 如果是，绝对路径，不用转换
                     y = temp_path
+                    roms_folder_list.append( y )
                 else: # 如果是，相对路径，转换
                     if mame_dir != None:# 已设置 mame 工作文件夹
                         # mame 所在文件夹 ,绝对路径
@@ -2022,30 +1636,51 @@ class Misc_functions():
                         # 相对转换路径后的绝对路径
                         y = os.path.join(mame_folders,temp_path)
                         
-                        y = os.path.abspath( y )
-                        
+                        if os.path.isdir(y):
+                            y = os.path.abspath( y )
+                            roms_folder_list.append( y )
                     else:# 未设置 mame 工作文件夹，且不是默认值
                         #当成与 jjui 同文件夹对待？
                         y = x
+                        if os.path.isdir(y):
+                            y = os.path.abspath( y )
+                            roms_folder_list.append( y )
+        return roms_folder_list
 
-                print(y)
+    # 刷新列表
+    # 找到拥有的 *.zip 、*.7z 、文件夹
+    def get_files_names_in_rompath(self,merged = False):
+        # 仅检查文件 存在 与否
+        # 不深度检查文件的 正确性、完整性
+        # *.zip 、*.7x 、文件夹
+        temp=[]
+        
+        roms_folder_list = self.get_roms_folder_list()
+        print()
+        print(roms_folder_list)
+        print()
+        
+        for a_folder in roms_folder_list:
+            if not os.path.isdir(a_folder):
+                continue
+            
+            (dirpath, dirnames, filenames) = next( os.walk(a_folder) )
+            
+            # 文件夹
+            for name in dirnames:
+                temp.append( name.lower() )
+            
+            # zip or 7z
+            for name in filenames:
                 
-                if os.path.isdir(y):
+                name_lower=name.lower()
                 
-                    files_zip = glob.glob( os.path.join(y,"*.zip") )
-                    for a in files_zip:
-                        temp.append(  os.path.basename(a).lower()[0:-4] )# zip
+                if name_lower.endswith(r".zip") :
+                    temp.append(name_lower[0:-4]) # .zip
+                elif name_lower.endswith(r".7z"):
+                    temp.append(name_lower[0:-3]) # .7z
                     
-                    files_7z  = glob.glob( os.path.join(y,"*.7z") )
-                    for b in files_7z:
-                        temp.append(  os.path.basename(b).lower()[0:-3] )# 7z
-                    
-                    files_all = glob.glob( os.path.join(y,"*") )
-                    files_left = set(files_all) - set(files_zip) - set(files_7z)
-                    for c in files_left:
-                        if os.path.isdir(c):
-                            temp.append(  os.path.basename(c).lower() )
-
+        
         temp_set = set( temp )
         
         temp_set = global_variable.set_data['all_set'] & temp_set
@@ -2076,128 +1711,75 @@ class Misc_functions():
     # 找到拥有的 *.zip 、*.7z 、文件夹
     # copy 上面的
     def get_files_names_in_rompath_sl(self,merged = False):
-        ### ###
-        # 还有一种情况 
-        # 路径里有变量：$HOME/mame/roms
-            ####
-            # 有变量的，到底有几种格式？  
-
-
         # 仅检查文件 存在 与否
         # 不深度检查文件的 正确性、完整性
         # *.zip 、*.7x 、文件夹
         
         # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下            
         
+        roms_folder_list = self.get_roms_folder_list()
+        
         temp_set = set()
         
         xml_dict = global_variable.dict_data["xml"]
         
-        rom_path = self.get_rompath_from_command_line()
-        
-        (mame_exe , mame_dir) = self.get_mame_path_and_working_directory()
-        
-        if rom_path:
-            rom_path = rom_path.replace(r"'","") # 去掉单引号
-            rom_path = rom_path.replace(r'"',"") # 去掉双引号
-        
-        
         temp={}
         
-        for x in rom_path.split(r';'): # x 每一条路径
-            if x:
-                print(x)
-
-                #######
-                # rompath ，记录的相对路径，是相对于模拟器的
-                
-                
-                ### ###
-                # 还有一种情况
-                # 路径里有变量：$HOME/mame/roms
-                    ####
-                    # 有变量的，到底有几种格式？
-                    
-                # 情况1，如果有变量，展开，
-                temp_path = x
-                try:
-                    temp_path = os.path.expandvars( x )
-                except:
-                    temp_path = x
-
-                if os.path.isabs(temp_path): # 如果是，绝对路径，不用转换
-                    y = temp_path
-                else: # 如果是，相对路径，转换
-                    if mame_dir != None:# 已设置 mame 工作文件夹
-                        # mame 所在文件夹 ,绝对路径
-                        mame_folders = mame_dir
-                        mame_folders = os.path.abspath( mame_folders )
-                        
-                        # 相对转换路径后的绝对路径
-                        y = os.path.join(mame_folders,temp_path)
-                        
-                        y = os.path.abspath( y )
-                        
-                    else:# 未设置 mame 工作文件夹，且不是默认值
-                        #当成与 jjui 同文件夹对待？
-                        y = x
-
-                print(y)
-                
-                # y 为 rom_path 当中的，一条单路径
-                if os.path.isdir(y): # 已将 x 转换一下
-                    
-                    (dirpath, dirnames, filenames) = next( os.walk(y) )
-                    
-                    del dirpath
-                    del filenames
-                    
-                    for a_folder_name in dirnames:
-                        xml_name = a_folder_name.lower() 
-                        # a_folder_name.lower() 
-                        
-                        if xml_name in xml_dict:
-                            
-                            
-                            
-                            z=os.path.join(y,a_folder_name) 
-                            # z 是 xml 名称的 子文件夹路径
-                            
-                            print("\t" ,end="")
-                            print(z)
-
-                            # z, ????\nes
-                            # z, ????\gba
-                            # z, ????\.....
-
-                            if os.path.isdir( z ): 
-                                if xml_name not in temp:
-                                    temp[xml_name]= [] # 初始化
-                                
-                                files_zip = glob.glob( os.path.join(z,"*.zip") )
-                                for a in files_zip:
-                                    temp[xml_name].append(  xml_name+" "+os.path.basename(a).lower()[0:-4] )# zip
-                                
-                                files_7z  = glob.glob( os.path.join(z,"*.7z") )
-                                for b in files_7z:
-                                    temp[xml_name].append(  xml_name+" "+os.path.basename(b).lower()[0:-3] )# 7z
-                        
-                                files_all = glob.glob( os.path.join(z,"*") )
-                                files_left = set(files_all) - set(files_zip) - set(files_7z)
-                                for c in files_left:
-                                    if os.path.isdir(c):
-                                        temp[xml_name].append(  xml_name+" "+os.path.basename(c).lower() )
         
+        # 扫描
+        for a_folder in roms_folder_list:
+            if not os.path.isdir(a_folder):
+                continue
+            
+            (dirpath, dirnames, filenames) = next( os.walk(a_folder) )
+            
+            for sub_folder_name in dirnames:
+                xml_name = sub_folder_name.lower()
+                if xml_name in xml_dict:
+                    z=os.path.join(dirpath,sub_folder_name)
+                    z=os.path.abspath(z)
+                    # z 是 xml 名称的 子文件夹路径
+                    
+                    print("\t" ,end="")
+                    print(z)
+
+                    # z, ????\nes
+                    # z, ????\gba
+                    # z, ????\.....
+
+                    if os.path.isdir( z ): 
+                        
+                        if xml_name not in temp:
+                            temp[xml_name]= [] # 初始化
+                        
+                        (dirpath_2, dirnames_2, filenames_2) = next( os.walk(z) )
+                        
+                        # 文件夹
+                        for name in dirnames_2:
+                            temp[xml_name].append( xml_name + " " + name.lower())
+                        
+                        # zip or 7z
+                        for name in filenames_2:
+                            
+                            name_lower=name.lower()
+                            
+                            if name_lower.endswith(r".zip") :# .zip
+                                temp[xml_name].append( xml_name + " " + name_lower[0:-4])
+                            elif name_lower.endswith(r".7z"):# .7z
+                                temp[xml_name].append( xml_name + " " + name_lower[0:-3])
+        
+        # 交集
         for xml_name in temp:
             #temp[xml_name] = set( temp[xml_name] )# 转为 set
             temp[xml_name] = set( temp[xml_name] ) & xml_dict[xml_name] 
-            # 交集
-        
         
         temp_set = set() 
         
+        a_temp_list = []
         for xml_name in temp:
-            temp_set.update( temp[xml_name] )
+            a_temp_list.extend(temp[xml_name])
+        temp_set = set(a_temp_list)
+        del a_temp_list
         
         # merged
         if merged :
@@ -2244,7 +1826,7 @@ class Misc_functions():
         content=[]
         binary_content = []
         sub_process = subprocess.Popen( command_list, 
-                            shell=user_configure["use_shell"],
+                            shell=global_variable.user_configure_data["use_shell"],
                             stdout=subprocess.PIPE , 
                             stderr=subprocess.STDOUT ,
                             stdin=subprocess.PIPE,
@@ -2291,7 +1873,7 @@ class Misc_functions():
         window.title(_("导入翻译文件"))
         
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         #window.grab_set()
         
         #window.rowconfigure(0, weight=1)
@@ -2343,19 +1925,21 @@ class Misc_functions():
                 return 0
             
             # 列表更新
-            global_variable.machine_dict = translation_gamelist.add_translation( translation_dict , global_variable.machine_dict ,global_variable.columns)
+            translation_gamelist.add_translation( 
+                translation_dict ,
+                global_variable.machine_dict ,
+                global_variable.columns,
+                )
+            
             global_variable.the_showing_table.new_func_refresh_table()
             
-            # 文件更新
-            data = {}
-            data = read_pickle.read(file_pickle_gamelist_data_file_name)
+            #global_variable.all_data["machine_dict"] = global_variable.machine_dict
             
-            if data:
-                
-                data["machine_dict"] = translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
-                
-                save_pickle.save(data,file_pickle_gamelist_data_file_name)
-
+            # 文件更新
+            save_pickle.save(global_variable.all_data , file_pickle_gamelist_data_file_name)
+            
+            del translation_dict
+            del translationed_set
             
             
             window.destroy()
@@ -2411,18 +1995,20 @@ class Misc_functions():
                 return 0
             
             # 列表更新
-            global_variable.machine_dict = translation_gamelist.add_translation( translation_dict , global_variable.machine_dict ,global_variable.columns)
+            translation_gamelist.add_translation( 
+                translation_dict ,
+                global_variable.machine_dict ,
+                global_variable.columns,
+                )
             global_variable.the_showing_table.new_func_refresh_table()
             
-            # 文件更新
-            data = {}
-            data = read_pickle.read(file_pickle_gamelist_data_file_name)
+            #global_variable.all_data["machine_dict"] = global_variable.machine_dict
             
-            if data:
-                
-                data["machine_dict"] = translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
-                
-                save_pickle.save(data,file_pickle_gamelist_data_file_name)
+            # 文件更新
+            save_pickle.save( global_variable.all_data ,file_pickle_gamelist_data_file_name)
+            
+            del translation_dict
+            del translationed_set
             
             window.destroy()
 
@@ -2456,7 +2042,7 @@ class Misc_functions():
             file_name = filedialog.askopenfilename(initialdir=".")
             if file_name:
                 new_file_path.set(file_name)
-            window.lift(root_window)
+            window.lift(global_variable.root_window)
         
         ttk.Button(window,text=_("选择"),width=-1,command=choose_file).grid(row=n,column=0,sticky=tk.W+tk.N,)
         
@@ -2492,13 +2078,13 @@ class Misc_functions():
         window.title(_(r"界面翻译/UI translation"))
         
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         
         # filedialog
         #file_path = filedialog.askopenfilename( initialdir="." ,filetypes=[( _(".exe 文件"),"*.exe"),(_("所有文件"),"*")],)
         
         def for_button_use_internal_language():
-            user_configure["ui_language"] = ""
+            global_variable.user_configure_data["ui_language"] = ""
             
             window.destroy()
             
@@ -2521,7 +2107,7 @@ class Misc_functions():
                 
                 print(the_path)
                 
-                user_configure["ui_language"] = the_path
+                global_variable.user_configure_data["ui_language"] = the_path
                 
                 window.destroy()
                 
@@ -2565,7 +2151,7 @@ class Misc_functions():
             pass
         
         #sys.exit()
-        #print(r"root.destroy()")
+        #print(r"global_variable.root_window.destroy()")
         global_variable.root_window.destroy()
     #################
     #################

@@ -32,9 +32,31 @@ def get_mame_version( xml_file_name ):
 
 # machine_dict
 # machine_dict_delete
-def parse_mame_xml( xml_file_name , mame_type = "mame0162"):
+def parse_mame_xml( xml_file_name , mame_type = None):
     print( )
     print( "parse mame xml")
+    
+    def get_tag_name(xml_file_name):
+        tag_name = "machine"
+        
+        count = 0
+        for (event, elem) in xml.etree.ElementTree.iterparse( xml_file_name,events=("start",),):
+            if elem.tag=="machine":
+                tag_name = "machine"
+                break
+            elif elem.tag == "game":
+                tag_name="game"
+                break
+            
+            count += 1
+            if count >= 10000:
+                break
+        
+        print()
+        print("tag name")
+        print(tag_name)
+        print()
+        return tag_name
     
     machine_dict = {}
         # a dict of dicts
@@ -45,8 +67,11 @@ def parse_mame_xml( xml_file_name , mame_type = "mame0162"):
     print( "parsing xml ....")
     
     node="machine"
-    if mame_type == "mame0162" : node="machine"
-    if mame_type == "mame084"  : node="game"
+    if   mame_type == "mame0162" : node="machine"
+    elif mame_type == "mame084"  : node="game"
+    elif mame_type == None       : node = get_tag_name(xml_file_name)
+    elif mame_type == "none"     : node = get_tag_name(xml_file_name)
+    
     
     count = 0
     
@@ -313,20 +338,20 @@ def about_some_same_strings(machine_dict):
     
     
     
-    if "kof97k" in machine_dict:
-        print(machine_dict["kof97k"])
+    #if "kof97k" in machine_dict:
+    #    print(machine_dict["kof97k"])
     
     machine_dict = func_1(machine_dict)
     
-    if "kof97k" in machine_dict:
-        print()
-        print(machine_dict["kof97k"])
+    #if "kof97k" in machine_dict:
+    #    print()
+    #    print(machine_dict["kof97k"])
     
     machine_dict = func_2(machine_dict)
     
-    if "kof97k" in machine_dict:
-        print()
-        print(machine_dict["kof97k"])
+    #if "kof97k" in machine_dict:
+    #    print()
+    #    print(machine_dict["kof97k"])
     return machine_dict
 
 
@@ -708,6 +733,62 @@ def make_internal_index(machine_dict,set_data,dict_data):
     
     return internal_index
 
+# 老版本，有些空 目录 项目，清理一下
+def clean_internal_index(the_index):
+    print()
+    print("internal index ,delete some empty")
+    #the_index = internal_index
+    
+    # 先删第二层
+    def clean_level_2():
+        
+        #
+        list_to_delete=[]
+        
+        for id_1 in the_index:
+            if "children" in the_index[id_1]:
+                for id_2 in the_index[id_1]["children"]:
+                    if "gamelist" in the_index[id_1]["children"][id_2]:
+                        # 如果有 "gamelist"元素
+                        if not the_index[id_1]["children"][id_2]["gamelist"]:
+                            #del the_index[id_1]["children"][id_2]
+                            list_to_delete.append( (the_index[id_1]["children"],id_2) )
+                    else:
+                        # 如果没有"gamelist"元素，直接删
+                        # del the_index[id_1]["children"][id_2]
+                        list_to_delete.append( (the_index[id_1]["children"],id_2) )
+        
+        for a_dict,a_key in list_to_delete:
+            del a_dict[a_key]
+    
+    #再删第一层
+    def clean_level_1():
+        
+        # 如果没有子元素，先删除 "children" 节点
+        for id_1 in the_index:
+            if "children" in the_index[id_1]:
+                if not the_index[id_1]["children"]:
+                    del the_index[id_1]["children"]
+        
+        # 还有 "children" 节点 的，不管了
+        
+        # 没有 "children" 节点 的，再看看它 “gamelist” 是不是空的
+        list_to_delete=[]
+        for id_1 in the_index:
+            if "children" not in the_index[id_1]:
+                if "gamelist" not in the_index[id_1]:
+                    #del the_index[id_1]
+                    list_to_delete.append( (the_index,id_1) ,)
+                else:
+                    if not the_index[id_1]["gamelist"]:
+                        #del the_index[id_1]
+                        list_to_delete.append( (the_index,id_1), )
+        for a_dict,a_key in list_to_delete:
+            del a_dict[a_key]
+    
+    clean_level_2()
+    clean_level_1()
+
 # 清理 game list data
 def clear_game_list_data(game_list_data):
     machine_dict = {}
@@ -762,10 +843,10 @@ def dict_to_list(game_list_data):
     # return columns,machine_dict
     
     
-    #第一项 "name"         ，id ，高频使用
-    #第二项 "status"       ，决定图标颜色，也是高频使用
+
+    #"status"       ，决定图标颜色，也是高频使用
     the_key_s =  [
-                    "name",
+                    #"name", 不要这一项了 ，和 id 重复了
                     "status",
                     
                     "translation",
@@ -802,11 +883,11 @@ def dict_to_list(game_list_data):
     
     # 去掉选错的
     columns=[]
-    columns.append("name")
+    #columns.append("name") #不要这一项了
     columns.append("status")
     for x in the_key_s:
         if x in all_keys:
-            if x not in ("name","status"):
+            if x not in ("status",):# "name","status"
                 columns.append(x)
 
     
@@ -837,7 +918,7 @@ def prepare_for_gamelist_translation(machine_dict):
 
 
 
-def main(xml_file_name,mame_type="mame0162"):
+def main(xml_file_name,mame_type=None): # mame_type="mame0162"
     
     # version
     mame_version   = get_mame_version(xml_file_name)
@@ -856,6 +937,9 @@ def main(xml_file_name,mame_type="mame0162"):
     dict_data      = make_dict_data(game_list_data)
     # 内置分类
     internal_index = make_internal_index(game_list_data,set_data,dict_data)
+    # 清理 # 老版本 会有 空目录
+    clean_internal_index(internal_index)
+    
     
   #  # 清理 game_list_data 多余的内容
   # 不需要了，之后转为 list

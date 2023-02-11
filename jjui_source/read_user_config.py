@@ -10,7 +10,8 @@ from .global_static import columns
 # 在下面 ini_default 中使用
 columns_width = {  
         "#0":55,
-        "name":120,
+        #"name":120,
+        "#id":120,
         "year":50,
         "sourcefile":80,
         "manufacturer":100,
@@ -21,13 +22,14 @@ columns_width = {
         "savestate":50,
         }
 
-gamelist_columns_to_show_1=("name","translation","year","sourcefile","manufacturer",)
-gamelist_columns_to_show_2=("name","description","year","sourcefile","manufacturer",)
-gamelist_columns_to_show_3=("name","translation","description","year","sourcefile","manufacturer","cloneof","status","savestate")
+gamelist_columns_to_show_1=("#id","translation","year","sourcefile","manufacturer",)
+gamelist_columns_to_show_2=("#id","description","year","sourcefile","manufacturer",)
+gamelist_columns_to_show_3=("#id","translation","description","year","sourcefile","manufacturer","cloneof","status","savestate")
 
 if global_variable.gamelist_type == "softwarelist":
     columns_width = {  
             "#0":55,
+            "#id":120,
             "xml":120,
             "name":120,
             "year":50,
@@ -42,7 +44,7 @@ if global_variable.gamelist_type == "softwarelist":
             }
     gamelist_columns_to_show_1=("xml","name","translation","alt_title","year","publisher",)
     gamelist_columns_to_show_2=("xml","name","description","alt_title","year","publisher",)
-    gamelist_columns_to_show_3=("xml","name","translation","description","alt_title","year","publisher","cloneof","supported")
+    gamelist_columns_to_show_3=("xml","name","translation","description","alt_title","year","publisher","cloneof","supported","#id")
 
 # return temp_dict
 # 读取文本，尚未校验

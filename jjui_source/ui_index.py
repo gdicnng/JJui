@@ -5,9 +5,9 @@ import os
 import time
 
 if __name__ == "__main__" :
-	import builtins
-	from .translation_ui  import translation_holder
-	builtins.__dict__['_'] = translation_holder.translation
+    import builtins
+    from .translation_ui  import translation_holder
+    builtins.__dict__['_'] = translation_holder.translation
 
 
 import tkinter as tk
@@ -21,8 +21,9 @@ from . import global_static
 from . import global_variable
 
 from . import folders_search 
-from . import folders_read 
-from . import folders_save 
+#from . import folders_read 
+#from . import folders_save 
+from .ui_misc import misc_funcs
 
 
 
@@ -30,10 +31,13 @@ from . import folders_save
 # 外部目录 就保留 图标列，用 iid 标记类型，其它的不要了
 #
 # iid 为
+#   添加 internal available_set 、internal unavailable_set
 #   内置目录 第一层 : internal|一级目录名
 #   内置目录 第二层 : internal|一级目录名|二级分类名
 #   外置目录 第一层 : external_ini_file|文件名
 #   外置目录 第二层 : external_ini_file|文件名|分类名
+#
+#
 #
 #   问题
 #      | 字符在 windows 中，不可以用作文件名
@@ -96,7 +100,7 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_ui_index_popup_menu.add_command(label=_("计数"),
                 command = self.new_func_index_popup_menu_function_index_count)
         self.new_ui_index_popup_menu.add_command(label=_("保存"),
-                command = self.new_func_index_popup_menu_function_save)
+                command = misc_funcs.new_func_index_popup_menu_function_save)
         #self.new_ui_index_popup_menu.add_command(label="显示横向滚动条",command = self.new_func_index_popup_menu_function_show_scrollbar_h)
         #self.new_ui_index_popup_menu.add_command(label="收起横向滚动条",command = self.new_func_index_popup_menu_function_hide_scrollbar_h)
 
@@ -200,21 +204,10 @@ class GameIndex(Treeview_with_scrollbar):
         
         #tkinter.messagebox.showinfo(title=None, message=None, **options)
         tkinter.messagebox.showinfo(title=_("目录数量"),message=the_text)
-
-    # 右键菜单，保存
-    def new_func_index_popup_menu_function_save(self,event=None):
-        # global_variable.external_index_files_be_edited
-        for x in global_variable.external_index_files_be_edited :
-            print(x)
-            try:
-                folders_save.save(x , global_variable.external_index[x])
-            except:
-                pass
-        global_variable.external_index_files_be_edited = set() # 重置
-    
     
     # 生成 virtual event
     def new_func_index_generate_virtual_event(self,iid):
+        #   添加 internal available_set、internal unavailable_set
         #   内置目录 第一层 : internal|一级目录名
         #   内置目录 第二层 : internal|一级目录名|二级分类名
         #   外置目录 第一层 : external_ini_file|文件名
@@ -238,6 +231,7 @@ class GameIndex(Treeview_with_scrollbar):
         # 生成 virtual event 
         #   '<<IndexBeChosen>>'
         # 用于记录信息的变量，self.new_var_data_for_virtual_event=None 
+        #         添加 internal available_set、internal unavailable_set
         #         内置目录 第一层 : ("internal",一级目录名)
         #         内置目录 第二层 : ("internal",一级目录名1，二级分类名)
         #         外置目录 第一层 : ("external_ini_file",文件名)
@@ -311,11 +305,19 @@ class GameIndex(Treeview_with_scrollbar):
         pass
         
     # 添加内容 内置目录
-    def new_func_index_set_content_internal(self,internal_index,translation_dict=None,index_order=None):
+    def new_func_index_set_content_internal(self,
+            internal_index,
+            #available_set=None,
+            #unavailable_set=None,
+            translation_dict=None,
+            index_order=None,
+            ):
         print()
         print("internal index feed data")
         t1=time.time()
         
+        #if available_set is None:available_set=set()
+        #if unavailable_set is None:unavailable_set=set()
         if translation_dict is None : translation_dict = {}
         if index_order is None      : index_order = []
         
@@ -327,6 +329,23 @@ class GameIndex(Treeview_with_scrollbar):
         # import global_static
         #translation=key_word_translation.index_translation
         
+        def add_available_set():
+            
+            id_string = "internal" + "|" + "available_set"
+            
+            if "available_set" in translation:
+                tree.insert('','end',iid=id_string ,text = translation["available_set"] ,) 
+            else:
+                tree.insert('','end',iid=id_string ,text = "available_set" ,)
+        def add_unavailable_set():
+            id_string = "internal" + "|" + "unavailable_set"
+            
+            if "unavailable_set" in translation:
+                tree.insert('','end',iid=id_string ,text = translation["unavailable_set"] ,) 
+            else:
+                tree.insert('','end',iid=id_string ,text = "unavailable_set" ,)
+        
+        
         if index_order:
         
         #index_order=global_static.index_order
@@ -334,7 +353,15 @@ class GameIndex(Treeview_with_scrollbar):
             # list_data
             # 第一层 
             for x in index_order:
-                if x in internal_index:
+                
+                if x in ("available_set","unavailable_set"): 
+                # 之前 这两在 internal_index 中，现在 单独拿出来
+                    if x == "available_set":
+                        add_available_set()
+                    if x == "unavailable_set":
+                        add_unavailable_set()
+                
+                elif x in internal_index:
                     id_string = "internal" + "|" + x
                     
                     if x in translation:
@@ -348,13 +375,15 @@ class GameIndex(Treeview_with_scrollbar):
             for x in index_order:
                 if x in internal_index:
                     parent_id_string = "internal" + "|" + x
-                    for y in sorted( internal_index[x]["children"]):
-                        id_string = parent_id_string + "|" + y
-                        tree.insert(parent_id_string,'end',iid=id_string ,text = y ,) 
+                    if "children" in internal_index[x]:
+                        for y in sorted( internal_index[x]["children"]):
+                            id_string = parent_id_string + "|" + y
+                            tree.insert(parent_id_string,'end',iid=id_string ,text = y ,) 
 
         else:
             # list_data
             # 第一层 
+            temp_list = internal_index.keys() + ["available_set","unavailable_set"] 
             for x in sorted(internal_index.keys()):
                 id_string = "internal" + "|" + x
                 
@@ -369,16 +398,15 @@ class GameIndex(Treeview_with_scrollbar):
 
             for x in internal_index:
                 parent_id_string = "internal" + "|" + x
-                for y in sorted( internal_index[x]["children"]):
-                    id_string = parent_id_string + "|" + y
-                    tree.insert(parent_id_string,'end',iid=id_string ,text = y ,)
+                if "children" in internal_index[x]:
+                    for y in sorted( internal_index[x]["children"]):
+                        id_string = parent_id_string + "|" + y
+                        tree.insert(parent_id_string,'end',iid=id_string ,text = y ,)
         t2=time.time()
         print(t2-t1)
 
     # 添加内容 外置目录
     def new_func_index_set_content_external_ini(self,external_index_data):
-        # from . import folders_read 
-        # from . import folders_search 
         
         print()
         print("external index feed data")
@@ -429,8 +457,7 @@ class GameIndex(Treeview_with_scrollbar):
     # 添加内容 外置目录 ，只读目录，仅 sl 列表的功能
     # 以 xml 分类
     def new_func_index_set_content_external_xml_ini(self,external_index_data):
-        # from . import folders_read 
-        # from . import folders_search 
+
         
         print()
         print("external index feed data")
@@ -481,8 +508,6 @@ class GameIndex(Treeview_with_scrollbar):
     # 添加内容 外置目录 ，只读目录，仅 mame 列表的功能
     # 以 source 分类
     def new_func_index_set_content_external_source_ini(self,external_index_data):
-        # from . import folders_read 
-        # from . import folders_search 
         
         print()
         print("external index feed data")

@@ -11,7 +11,7 @@ from . import global_variable
 # 游戏列表 列标题
 columns_translation = {
         # "#0":"",
-        "name"        :_("缩写"),
+        "#id"         :_("缩写"),
         "year"        :_("年代"),
         "sourcefile"  :_("源代码"),
         "manufacturer":_("制造商"),
@@ -25,6 +25,7 @@ if global_variable.gamelist_type == "softwarelist":
     columns_translation = {
             # "#0":"",
             #"xml"         :_(""),
+            "#id"         :_("id"),
             "name"        :_("缩写"),
             "year"        :_("年代"),
             "publisher"   :_("出版商"),

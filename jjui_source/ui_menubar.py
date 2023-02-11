@@ -28,20 +28,174 @@ except:
 from . import global_variable
 from . import global_static
 from . import global_static_filepath as the_files
+from . import misc
 
 from . import read_user_config
+
+
+from . import ui_small_windows
 
 from .ui_misc import  misc_funcs
 from .ui__scrollable_frame_in_cavans import Scrollable_Frame_Container
 
-
-user_configure    = global_variable.user_configure_data
-default_configure = global_variable.user_configure_data_default
-root_window       = global_variable.root_window
-
 image_types   = global_static.extra_image_types
 text_types    = global_static.extra_text_types
 text_types_2  = global_static.extra_text_types_2
+
+a_long_text = """
+JJui:
+    在 PPXCLUB 发布的贴子：
+        https://www.ppxclub.com/forum.php?mod=viewthread&tid=705838
+        www.ppxclub.com/705838-1-1
+
+    源代码
+        github
+        https://github.com/gdicnng/JJui
+
+    在线文档：
+        readthedocs 的 在线文档 功能，不知道效果怎样
+        网址：
+        jjui.readthedocs.io
+        jjui.rtfd.io
+
+    百度网盘：
+        不知道百度网盘的链接能活多久
+        链接：https://pan.baidu.com/s/1guTSDIWr66S6ewIdyMQPjA 
+        提取码：r9b9 
+
+MAME 
+    官网
+        https://www.mamedev.org/
+    源代码 
+        https://github.com/mamedev/mame
+    在线文档：
+        https://docs.mamedev.org/
+    下载页面：
+        https://www.mamedev.org/release.html
+        https://www.mamedev.org/oldrel.html
+        https://github.com/mamedev/mame/releases/
+        https://sourceforge.net/projects/mame/files/mame/
+
+MESS 原来的网站：
+    http://mess.redump.net/
+    0.162 版本以后，MAME 合并了 MESS 。
+    如果你要查看 MESS 的说明，也许 原来的网站 更有针对性一点。
+
+
+
+PPXCLUB
+    https://www.ppxclub.com
+    中文论坛，街机 以及 其它机种 怀旧玩家 还是有一些人的。
+
+简体中文游戏列表： 
+    https://www.ppxclub.com/609487-1-1
+
+M+GUI 前端，1.8.2:
+    https://www.ppxclub.com/669953-1-1
+    这个原来是 MamePlus 上用的，后来 MamePlus 不更新了，大家直接拿到原版 MAME 上用。
+    这个老长时间没有人更新一下了
+
+MxUI 前端:
+    https://www.ppxclub.com/671046-1-1
+
+MamePlus ：
+    第三方的 MAME 。
+    0.168 版本之后，不再更新。
+    中文支持得好，不过后来到 0.168 版本以后，没有大神去更新了。而且后期的版本，维护的大神人少，bug 可能比较多。
+    如果不介意用旧版本的话，也是不错的选择。
+    如果国内网站上找到的资源，一般都应该带有完整的中文语言包，当然最好自己检查一下。
+    如果国外网站上找到的资源，可能中文语言包会有缺失。
+    模拟器下载：
+        PPXCLUB 论坛 kof2112 编译的版本：https://www.ppxclub.com/601010-1-1
+        这里有几个版本：http://sourceforge.net/projects/mameplus
+        这里也有，不过语言包不一定全：http://www.progettosnaps.net/mameplus/
+
+mame32m、mame32k：
+        第三方的 MAME 。
+        原始的 mame32m、mame32k，早已停更了。
+        然而 Creamymami 一直有在整这个。
+            https://www.ppxclub.com/1287-1-1
+            C大的版本
+            中文列表。
+            可以联机。
+            核心版本很老。
+            （因为核心版本老，有兴趣的话，最好在自己电脑上试一下，兼容性怎样）
+            如果电脑上使用正常的话，因为核心版本老，所以占用资源少。
+            因为核心是老版本的，作弊码格式需要用老版本的。
+            mame32m 中文作弊码：https://www.ppxclub.com/691039-1-1
+
+周边图片等资源：
+    jjsnake 中文出招表：
+        https://www.ppxclub.com/130735-1-1
+        MamePlus 在游戏中，Tab 菜单中可以显示出招表。
+        JJui 可以显示出招表
+        MxUI 可以显示出招表
+        M+GUI 可以显示出招表，目录不分层
+    
+    MAME 作弊码
+        Pugsy's Cheats
+            http://cheat.retrogames.com/
+            http://www.mamecheat.co.uk
+            http://www.mamecheat.co.uk/forums
+        Wayder's Cheats
+            https://wayder.web.fc2.com/
+            https://ss1.xrea.com/nekoziman.s601.xrea.com/cheat/
+    
+    progettosnaps
+        http://www.progettosnaps.net/
+        大量图片等资源
+    
+    mameUI
+        http://www.mameui.info/
+        一款第三方的 MAME ，英文版
+        已经停止更新了
+        它这上面提供的 游戏截图包 ，要简洁一点。
+
+roms 管理软件：
+    ClrMamePro：
+        http://mamedev.emulab.it/clrmamepro/
+
+FB 系列的街机模拟器
+    支持的街机游戏也很多。
+    会用并喜欢用 MAME 的话，就不需要的这个了。
+    如果不喜欢 MAME 街机模拟器 的话，可以试试这一类。
+FBAS
+    FBAS 发布页面（和 mame32m 、mame32k 在一起）：
+    https://www.ppxclub.com/1287-1-1
+        (这个可能简单点，本身带了简体中文语言包，不用到处去找语言包)
+    中文作弊码：
+    https://www.ppxclub.com/133649-1-1
+FBA (FB Alpha)：
+    http://www.fbalpha.com
+    简体中文菜单：官网有，可下载
+    繁体中文菜单：https://www.ppxclub.com/686323-1-1
+    简体中文游戏列表：https://neo-source.com/index.php?topic=3227  第27楼
+    简体中文游戏列表：https://www.ppxclub.com/685486-1-1
+    作弊码：https://www.ppxclub.com/143980-1-1
+FBNeo
+    (FBA 团队散了，继续另外搞的大佬把名字改成了 FBNeo )
+    论坛 ：https://neo-source.com
+    代码 ：https://github.com/finalburnneo/FBNeo
+    下载 ：https://github.com/finalburnneo/FBNeo/releases
+    语言包：https://www.ppxclub.com/692732-1-1
+    kof2112 编译的程序 ：https://www.ppxclub.com/688355-1-1
+    作弊码 https://github.com/finalburnneo/FBNeo-cheats
+    中文作弊码的话，用上边提到的以前 FBA 的资源，应该也是可以的。
+
+retroarch
+    https://www.retroarch.com/
+    这一个大杂烩
+    里面有收集各种模拟器
+    其中也有 mame 核心、fbn 核心
+    
+
+其它：
+    ......
+    ......
+    ......
+
+"""
+
 
 class MenuBar(ttk.Frame):
     def __init__(self ,parent,*args,**kwargs):
@@ -51,18 +205,18 @@ class MenuBar(ttk.Frame):
         self.new_func_ui()
         self.new_func_bindings()
 
-        
         self.new_func_ui_menu_for_ui()
-        
+        self.new_func_ui_menu_for_language()
         self.new_func_ui_menu_for_configure()
         
         self.new_func_ui_menu_for_index()
         
         self.new_func_ui_menu_for_gamelist()
+        self.new_func_ui_menu_for_extra()
+        
+        
         
         self.new_func_ui_menu_for_about()
-        
-        self.new_func_ui_menu_for_language()
 
     def new_func_ui(self,):
         
@@ -79,29 +233,36 @@ class MenuBar(ttk.Frame):
             # 带有箭头符号，可能还有 button 一样的背景图片        
         # style="Toolbutton"  
             #   Ttk::menubutton widgets support the Toolbutton style in all standard themes, which is useful for creating widgets for toolbars. 
-        
         self.new_menu_botton_ui = ttk.Menubutton(parent,direction="below",width=0,text=_("UI"),style="Toolbutton")
         self.new_menu_botton_ui.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
+        self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),style="Toolbutton",)
+        self.new_menu_botton_language.grid(row=0,column=column, sticky=(tk.W,))
+        column+=1
         
-        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("设置"),style="Toolbutton",)
+        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("路径"),style="Toolbutton",)
         self.new_menu_botton_configure.grid(row=0,column=column, sticky=(tk.W,))
+        column+=1
+        
+        self.new_menu_botton_index=ttk.Menubutton(parent,direction="below",width=0,text=_("目录"),style="Toolbutton",)
+        self.new_menu_botton_index.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
         self.new_menu_botton_gamelist=ttk.Menubutton(parent,direction="below",width=0,text=_("游戏列表"),style="Toolbutton",)
         self.new_menu_botton_gamelist.grid(row=0,column=column, sticky=(tk.W,))
-        column+=1        
-        
-        
-        self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("帮助"),style="Toolbutton",)
-        self.new_menu_botton_about.grid(row=0,column=column, sticky=(tk.W,))
         column+=1
         
-        self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),style="Toolbutton",)
-        self.new_menu_botton_language.grid(row=0,column=column, sticky=(tk.W,))
-        column+=1        
         
+        self.new_menu_botton_extra=ttk.Menubutton(parent,direction="below",width=0,text=_("周边"),style="Toolbutton",)
+        self.new_menu_botton_extra.grid(row=0,column=column, sticky=(tk.W,))
+        column+=1
+        
+        
+        self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("其它"),style="Toolbutton",)
+        self.new_menu_botton_about.grid(row=0,column=column, sticky=(tk.W,))
+        column+=1
+    
     def new_func_bindings(self,):
         pass
 
@@ -127,7 +288,7 @@ class MenuBar(ttk.Frame):
             
             
             self.new_var_tk_high_dpi = tk.IntVar() # default value 0
-            self.new_var_tk_high_dpi.set(user_configure["high_dpi"])
+            self.new_var_tk_high_dpi.set(global_variable.user_configure_data["high_dpi"])
             
             
             m2.add_command(
@@ -217,9 +378,9 @@ class MenuBar(ttk.Frame):
         m.add_separator()
         self.new_var_tk_scaling_use_flag = tk.IntVar() # default value 0
         # 初始化,从配置文件中，读取值
-        if user_configure["tk_scaling_use_flag"] not in (0,1):
-            user_configure["tk_scaling_use_flag"] = 0
-        self.new_var_tk_scaling_use_flag.set(user_configure["tk_scaling_use_flag"])
+        if global_variable.user_configure_data["tk_scaling_use_flag"] not in (0,1):
+            global_variable.user_configure_data["tk_scaling_use_flag"] = 0
+        self.new_var_tk_scaling_use_flag.set(global_variable.user_configure_data["tk_scaling_use_flag"])
             
         m.add_checkbutton(
                 label=_(r"启用 tk scaling 缩放（关闭程序，重新打开后生效）"), 
@@ -273,9 +434,9 @@ class MenuBar(ttk.Frame):
             state=tk.DISABLED)
         
         self.new_var_tk_use_colour_flag = tk.IntVar() # default value 0
-        if user_configure["use_colour_flag"] not in (0,1):
-            user_configure["use_colour_flag"] = 0
-        self.new_var_tk_use_colour_flag.set( user_configure["use_colour_flag"] )
+        if global_variable.user_configure_data["use_colour_flag"] not in (0,1):
+            global_variable.user_configure_data["use_colour_flag"] = 0
+        self.new_var_tk_use_colour_flag.set( global_variable.user_configure_data["use_colour_flag"] )
         
         m.add_checkbutton(
                 label= _("内置主题") + ' ' + _(r"启用自定义颜色") + ' ' + _("需关闭、重新打开程序"), 
@@ -315,31 +476,24 @@ class MenuBar(ttk.Frame):
 
         
         m.add_separator()
-        
-        self.new_var_tk_extra_delay_use_flag = tk.IntVar() # default value 0
-        # 初始化,需从配置文件中，读取值
-        
-        # 范围 
-        if user_configure["extra_delay_time_use_flag"] not in (0,1):
-            user_configure["extra_delay_time_use_flag"] = 1
-        self.new_var_tk_extra_delay_use_flag.set(user_configure["extra_delay_time_use_flag"])
-        
-        m.add_checkbutton(
-                label=_("周边延迟显示"), 
-                variable = self.new_var_tk_extra_delay_use_flag ,
-                command=self.new_func_menu_call_back_use_extra_delay_time,
-                )
-        
-        m.add_command(label=_("周边延迟时间设置"), 
-                command=self.new_func_menu_call_back_set_extra_delay_time
-                )
-        
-        m.add_command(label=_("周边文档，建目录加速"), 
-                command=misc_funcs.extra_docs_make_index
-                )
     
     def new_func_ui_menu_for_index(self,):
-        pass
+        m = tk.Menu(self.new_menu_botton_index, tearoff=0)
+        self.new_menu_botton_index.configure(menu=m)
+        
+        m.add_command(  label=_("保存"), 
+                        command=misc_funcs.new_func_index_popup_menu_function_save,
+                )
+        m.add_command(  label=_("修改自定义目录以后，记得手动保存一下"),state="disabled")
+        m.add_separator()
+        
+        m.add_command(  label=_("瘦身"), 
+                        command=ui_small_windows.window_for_choose_unwanted_internal_index
+                )
+        m.add_command(  label=_("谨慎操作！"), 
+                        state="disabled"
+                )
+        m.add_separator()
     
     def new_func_ui_menu_for_gamelist(self,):
         m = tk.Menu(self.new_menu_botton_gamelist, tearoff=0)
@@ -366,13 +520,20 @@ class MenuBar(ttk.Frame):
         else:
             m.add_separator()
             m.add_command(label=_(r"拥有列表 过滤"), 
-                    command=misc_funcs.gamelist_available_filter
+                    command=ui_small_windows.window_for_gamelist_available_filter
                     )
         
+        m.add_separator()
+        m.add_command(label=_(r"全局 过滤"), 
+                command=ui_small_windows.window_for_gamelist_filter
+                )
+        m.add_command(label=_(r"程序关闭后，不会保存这个值"), 
+                state=tk.DISABLED,
+                )
         
         m.add_separator()
         m.add_command(label=_("选择列表显示项目"),
-                command = misc_funcs.header_pop_up_menu_callback_choose_columns
+                command = ui_small_windows.header_pop_up_menu_callback_choose_columns
                 )
         
         m.add_separator()
@@ -380,9 +541,9 @@ class MenuBar(ttk.Frame):
             # 初始化,需从配置文件中，读取值
         
         # 全局记录 bool
-        global_variable.flag_mark_unavailable_game = user_configure["unavailable_mark"]
+        global_variable.flag_mark_unavailable_game = global_variable.user_configure_data["unavailable_mark"]
         
-        if user_configure["unavailable_mark"] :# bool
+        if global_variable.user_configure_data["unavailable_mark"] :# bool
             self.new_var_tk_unavailable_mark.set(1)
             
         m.add_checkbutton(
@@ -395,7 +556,7 @@ class MenuBar(ttk.Frame):
         m.add_separator()
         self.new_var_tk_use_local_sort = tk.IntVar() # default value 0
         # 初始化,需从配置文件中，读取值
-        if user_configure["use_locale_sort"]:
+        if global_variable.user_configure_data["use_locale_sort"]:
             self.new_var_tk_use_local_sort.set(1)
         else:
             self.new_var_tk_use_local_sort.set(0)
@@ -405,9 +566,65 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_use_local_sort
                 )
         
+        m.add_separator()
+        m.add_command(label=_("搜索 设置"),
+                command = ui_small_windows.window_for_gamelist_set_search_columns
+                )
+        m.add_command(label=_(r"程序关闭后，不会保存这个值"), 
+                state=tk.DISABLED,
+                )
+        
+        m.add_separator()
+        m.add_command(label=_("列表瘦身，谨慎操作"),
+                state=tk.DISABLED,
+                )
+        
+        m.add_command(label=_("列表瘦身，删除不需要的列"),
+                command=ui_small_windows.window_for_choose_unwanted_game_list_column,
+                )
 
-
+        #子菜单
+        m_sub_delete = tk.Menu(m,tearoff=0)
+        m.add_cascade(label=_("列表瘦身，删除不需要的行"),menu=m_sub_delete)
+        m_sub_delete.add_command(label=_("删除不需要的行，删除当前目录中的条目"),
+                command=misc.delete_current_rows_in_game_list,
+                )
+        m_sub_delete.add_command(label=_("删除不需要的行，仅保留当前目录，删除其它条目"),
+                command=lambda reverse=True :misc.delete_current_rows_in_game_list(reverse=reverse)
+                )
     
+    def new_func_ui_menu_for_extra(self,):
+        m = tk.Menu(self.new_menu_botton_extra, tearoff=0)
+        self.new_menu_botton_extra.configure(menu=m)
+        #self.new_menu_botton_extra
+        
+        
+        self.new_var_tk_extra_delay_use_flag = tk.IntVar() # default value 0
+        # 初始化,需从配置文件中，读取值
+        
+        # 范围 
+        if global_variable.user_configure_data["extra_delay_time_use_flag"] not in (0,1):
+            global_variable.user_configure_data["extra_delay_time_use_flag"] = 1
+        self.new_var_tk_extra_delay_use_flag.set(global_variable.user_configure_data["extra_delay_time_use_flag"])
+        
+        m.add_checkbutton(
+                label=_("周边延迟显示"), 
+                variable = self.new_var_tk_extra_delay_use_flag ,
+                command=self.new_func_menu_call_back_use_extra_delay_time,
+                )
+        
+        m.add_command(label=_("周边延迟时间设置"), 
+                command=self.new_func_menu_call_back_set_extra_delay_time
+                )
+        
+        m.add_separator()
+        
+        m.add_command(label=_("周边文档，建目录加速"), 
+                command=misc_funcs.extra_docs_make_index
+                )
+        
+        m.add_separator()
+
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)
         self.new_menu_botton_language.configure(menu=m)
@@ -437,29 +654,58 @@ class MenuBar(ttk.Frame):
         
         m.add_separator()
         
-        m.add_command(label=_("关于"),
+        m.add_command(label=_("起源"),
                 command=self.new_func_menu_call_back_window_about
                 )
+        m.add_separator()
+        
+        m.add_command(label=_("赞助"),
+                command=self.new_func_menu_call_back_window_donation
+                )
+        m.add_separator()
+        
+        m.add_command(
+                label=_("打开本地 使用说明：")+the_files.file_html_index, 
+                command=self.new_func_menu_call_back_open_html_file
+                )
+        m.add_command(
+            label=_("如果使用说明，没有放在一起，另外下载后，再看"), 
+            state=tk.DISABLED)
+        m.add_command(
+            label=_("如果使用说明没有正确打开，可以找到文件，手动打开"), 
+            state=tk.DISABLED)
         
         m.add_separator()
         
         m.add_command(
-                label=_("打开帮助文档：")+the_files.file_html_index, 
-                command=self.new_func_menu_call_back_open_html_file
-                )
-                
+            label=_("打开在线 使用说明：jjui.readthedocs.io"), 
+            command=lambda url = "https://jjui.readthedocs.io":self.new_func_menu_call_back_open_url(url=url)
+            )
         m.add_command(
-            label=_("如果帮助文档没有正确打开，可以找到文件，手动打开"), 
+            label=_("打开在线 使用说明：jjui.rtfd.io"), 
+            command=lambda url = "https://jjui.rtfd.io":self.new_func_menu_call_back_open_url(url=url)
+            )
+        
+        m.add_command(
+            label=_("readthedocs 的免费在线文档功能，不知道网站连接的效果好不好"), 
             state=tk.DISABLED)
         
+        # new_func_menu_call_back_open_url
         m.add_separator()
         
         m.add_command(
             label   = _("查看当前 python 版本"), 
             command = self.new_func_menu_call_back_show_python_version
             )
-    
-    
+        m.add_separator()
+        
+        m.add_command(
+            label   = _("一些网站链接"), 
+            command = self.new_func_menu_call_back_some_website
+            )
+        
+        m.add_separator()
+
     
     # 菜单 callback 函数：UI→切换主题
     # a topleve window 
@@ -481,7 +727,7 @@ class MenuBar(ttk.Frame):
         window.geometry( size )
              
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         #window.grab_set()
         
         window.columnconfigure(0,weight=1)
@@ -494,7 +740,7 @@ class MenuBar(ttk.Frame):
                 pass
             else:
                 the_theme =  theme_names_1[index]
-                user_configure["theme"] =  the_theme
+                global_variable.user_configure_data["theme"] =  the_theme
                 window.destroy()
                 print( the_theme )
         
@@ -506,7 +752,7 @@ class MenuBar(ttk.Frame):
             else:
                 the_theme =  theme_names_2[index]
                 print( the_theme )
-                user_configure["theme"] =  the_theme
+                global_variable.user_configure_data["theme"] =  the_theme
                 window.destroy()
         
         notebook = ttk.Notebook( window,)
@@ -520,7 +766,7 @@ class MenuBar(ttk.Frame):
         temp_string += style.theme_use() # 当前使用的主题
         temp_string += "\n"
         temp_string += _("设置中的主题为：")
-        temp_string += user_configure["theme"]
+        temp_string += global_variable.user_configure_data["theme"]
         temp_string += "\n"
         temp_string += _(" (关闭程序，重新打开后生效)")
         
@@ -574,18 +820,18 @@ class MenuBar(ttk.Frame):
 
     # high dpi 值
     def new_func_set_high_dpi_value(self,):
-        user_configure["high_dpi"] = self.new_var_tk_high_dpi.get()
+        global_variable.user_configure_data["high_dpi"] = self.new_var_tk_high_dpi.get()
         print()
         print( "high dpi : " )
-        print( user_configure["high_dpi"] )
+        print( global_variable.user_configure_data["high_dpi"] )
 
     # 菜单 callback 函数：UI→启用放大倍数
     def new_func_menu_call_back_use_tk_scaling(self,):
-        user_configure["tk_scaling_use_flag"] = self.new_var_tk_scaling_use_flag.get()
-        print( user_configure["tk_scaling_use_flag"] )
-        #if user_configure["tk_scaling_use_flag"]:
-        #    root_window.tk.call('tk', 'scaling', user_configure["tk_scaling_number"])
-        #    root_window.update()
+        global_variable.user_configure_data["tk_scaling_use_flag"] = self.new_var_tk_scaling_use_flag.get()
+        print( global_variable.user_configure_data["tk_scaling_use_flag"] )
+        #if global_variable.user_configure_data["tk_scaling_use_flag"]:
+        #    global_variable.root_window.tk.call('tk', 'scaling', global_variable.user_configure_data["tk_scaling_number"])
+        #    global_variable.root_window.update()
         #else:
         #    pass
         ""
@@ -605,7 +851,7 @@ class MenuBar(ttk.Frame):
         #window.geometry( size )
         
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         #window.grab_set()
         
         window.columnconfigure(0,weight=1)
@@ -614,7 +860,7 @@ class MenuBar(ttk.Frame):
         
         #num_0 =  self.ini_data["tk_scaling_number"]
         
-        ttk.Label(window,text=_("已设定的值为：")+ str(user_configure["tk_scaling_number"]) ).grid(row=0,column=0,sticky=tk.N+tk.W,)
+        ttk.Label(window,text=_("已设定的值为：")+ str(global_variable.user_configure_data["tk_scaling_number"]) ).grid(row=0,column=0,sticky=tk.N+tk.W,)
         
 
         ttk.Label(window,text="").grid(row=1,column=0,sticky=tk.N+tk.W,)
@@ -628,14 +874,14 @@ class MenuBar(ttk.Frame):
                 the_number = eval( the_number )
                 if type( the_number ) == int:
                     if the_number > 0 :
-                        user_configure["tk_scaling_number"] = the_number
+                        global_variable.user_configure_data["tk_scaling_number"] = the_number
                     else:
-                        user_configure["tk_scaling_number"] = 0
+                        global_variable.user_configure_data["tk_scaling_number"] = 0
                 elif type( the_number ) == float :
                     if the_number > 0.01 :
-                        user_configure["tk_scaling_number"] = the_number
+                        global_variable.user_configure_data["tk_scaling_number"] = the_number
                     else:
-                        user_configure["tk_scaling_number"] = 0
+                        global_variable.user_configure_data["tk_scaling_number"] = 0
                 
             except:
                 pass
@@ -744,8 +990,8 @@ class MenuBar(ttk.Frame):
                     textvariable=choose_value ,
                     state="readonly" , )
         chooser.grid(row=3,column=0,sticky=tk.W+tk.N)
-        if user_configure["row_height"] in range(201):
-            chooser.set(user_configure["row_height"])
+        if global_variable.user_configure_data["row_height"] in range(201):
+            chooser.set(global_variable.user_configure_data["row_height"])
         else:
             chooser.set(0)
         
@@ -756,8 +1002,8 @@ class MenuBar(ttk.Frame):
             temp_number = int( temp_number )
             print(temp_number)
             
-            user_configure["row_height"]=temp_number
-            print(user_configure["row_height"])
+            global_variable.user_configure_data["row_height"]=temp_number
+            print(global_variable.user_configure_data["row_height"])
             
             if temp_number > 0:
                 misc_funcs.use_user_configure_row_height()
@@ -807,8 +1053,8 @@ class MenuBar(ttk.Frame):
                     textvariable=choose_value ,
                     state="readonly" , )
         chooser.grid(row=3,column=0,sticky=tk.W+tk.N)
-        if user_configure["row_height_for_header"] in range(201):
-            chooser.set(user_configure["row_height_for_header"])
+        if global_variable.user_configure_data["row_height_for_header"] in range(201):
+            chooser.set(global_variable.user_configure_data["row_height_for_header"])
         else:
             chooser.set(0)
         
@@ -819,8 +1065,8 @@ class MenuBar(ttk.Frame):
             temp_number = int( temp_number )
             print(temp_number)
             
-            user_configure["row_height_for_header"]=temp_number
-            print(user_configure["row_height_for_header"])
+            global_variable.user_configure_data["row_height_for_header"]=temp_number
+            print(global_variable.user_configure_data["row_height_for_header"])
             
             if temp_number > 0:
                 misc_funcs.use_user_configure_row_height_for_header()
@@ -857,9 +1103,9 @@ class MenuBar(ttk.Frame):
         
         
         tkint_var = tk.IntVar()
-        if user_configure["icon_size"] > 0:
-            tkint_var.set(user_configure["icon_size"])
-        elif user_configure["icon_size"] == 0:
+        if global_variable.user_configure_data["icon_size"] > 0:
+            tkint_var.set(global_variable.user_configure_data["icon_size"])
+        elif global_variable.user_configure_data["icon_size"] == 0:
             tkint_var.set( 16 )
         
         
@@ -876,7 +1122,7 @@ class MenuBar(ttk.Frame):
             if number > 2:
                 tkint_var.set( number-1 )
         def for_ok():
-            user_configure["icon_size"] = tkint_var.get()
+            global_variable.user_configure_data["icon_size"] = tkint_var.get()
             misc_funcs.use_user_configure_icon_width()
         
         button_plus = ttk.Button(window,text=" + ",command=for_plus)
@@ -915,8 +1161,8 @@ class MenuBar(ttk.Frame):
     
     # 是否启用颜色
     def new_func_menu_call_back_use_colours(self,):
-        user_configure["use_colour_flag"] = self.new_var_tk_use_colour_flag.get()
-        print( user_configure["use_colour_flag"] )
+        global_variable.user_configure_data["use_colour_flag"] = self.new_var_tk_use_colour_flag.get()
+        print( global_variable.user_configure_data["use_colour_flag"] )
     
     # 颜色 选择
     def new_func_menu_call_back_set_colours(self,):
@@ -939,7 +1185,7 @@ class MenuBar(ttk.Frame):
         #window.geometry( size )
              
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         #window.grab_set()
         
         # ttk.Notebook
@@ -962,15 +1208,15 @@ class MenuBar(ttk.Frame):
         # |                                                 OK Button|
         # ------------------------------------------------------------
         
-        #user_configure
+        #global_variable.user_configure_data
         
         data ={}
         
         def for_ok_button():
 
             for x in data:
-                if x in user_configure:
-                    user_configure[x] = data[x].get()
+                if x in global_variable.user_configure_data:
+                    global_variable.user_configure_data[x] = data[x].get()
                 else:
                     print(x)
                     print("a wrong key")
@@ -1045,8 +1291,8 @@ class MenuBar(ttk.Frame):
             # self.data_from_main["ini_default"]
                 # temp_string 是 key 值
                 # tk_var 是前边定义 data 中的 data[temp_string]
-            if temp_string in default_configure:
-                tk_var.set( default_configure[temp_string] )
+            if temp_string in global_variable.user_configure_data_default:
+                tk_var.set( global_variable.user_configure_data_default[temp_string] )
             
 
         window.columnconfigure(0,weight=1)
@@ -1116,7 +1362,7 @@ class MenuBar(ttk.Frame):
         data["mame_path"]=tk.StringVar()
         entry_mame_path = ttk.Entry(frame1,textvariable=data["mame_path"],state="disabled")
         entry_mame_path.grid(row=0,column=1,sticky=tk.W+tk.N+tk.E,)
-        data["mame_path"].set( user_configure["mame_path"] )
+        data["mame_path"].set( global_variable.user_configure_data["mame_path"] )
         
         button_mame_default = ttk.Button(frame1,text=_("默认值"),width=-1,state="disabled",command=lambda a=data["mame_path"],b="mame_path" : set_default_value(a,b),)
         button_mame_default.grid(row=0,column=2,sticky=tk.W+tk.N,)
@@ -1131,7 +1377,7 @@ class MenuBar(ttk.Frame):
         data["mame_working_directory"] = tk.StringVar()
         entry_mame_working_directory = ttk.Entry(frame1,textvariable=data["mame_working_directory"],state="disabled",)
         entry_mame_working_directory.grid(row=1,column=1,sticky=tk.W+tk.N+tk.E,)
-        data["mame_working_directory"].set( user_configure["mame_working_directory"] )
+        data["mame_working_directory"].set( global_variable.user_configure_data["mame_working_directory"] )
         
         button_mame_working_directory_default=ttk.Button(frame1,text=r"默认值",width=-1,state="disabled",command=lambda a=data["mame_working_directory"],b="mame_working_directory" : set_default_value(a,b),)
         button_mame_working_directory_default.grid(row=1,column=2,sticky=tk.W+tk.N,)
@@ -1161,7 +1407,7 @@ class MenuBar(ttk.Frame):
         
         ttk.Entry(frame2,textvariable=data["folders_path"],width=50).grid(row=0,column=1,sticky=tk.W+tk.N+tk.E,)
         
-        data["folders_path"].set( user_configure["folders_path"] )
+        data["folders_path"].set( global_variable.user_configure_data["folders_path"] )
         
         ttk.Button(frame2,text=r"...",width=-1,command=lambda x=data["folders_path"]: choose_folder(x)).grid(row=0,column=2,sticky=tk.W+tk.N,)
         
@@ -1178,7 +1424,7 @@ class MenuBar(ttk.Frame):
         frame3.columnconfigure(1,weight=1)
         
         # 图片名 snap
-        # 路径变量名 user_configure["snap_path"]
+        # 路径变量名 global_variable.user_configure_data["snap_path"]
         temp = {}
             # snap:snap_path ,
         for x in image_types:
@@ -1194,7 +1440,7 @@ class MenuBar(ttk.Frame):
             
             ttk.Entry(frame3,textvariable=data[temp_str],width=50).grid(row=n,column=1,sticky=tk.W+tk.N+tk.E,)
             
-            data[temp_str].set( user_configure[temp_str] )
+            data[temp_str].set( global_variable.user_configure_data[temp_str] )
             
             ttk.Button(frame3,text=r"...",width=-1,command=lambda a=data[temp_str]: choose_folder(a)).grid(row=n,column=2,sticky=tk.W+tk.N,)
 
@@ -1214,7 +1460,7 @@ class MenuBar(ttk.Frame):
         frame4.columnconfigure(1,weight=1)
         
         #图片名 snap
-        #路径变量名 user_configure["snap.zip_path"]
+        #路径变量名 global_variable.user_configure_data["snap.zip_path"]
         temp = {}
             # snap:snap.zip_path ,
         for x in image_types:
@@ -1230,7 +1476,7 @@ class MenuBar(ttk.Frame):
             
             ttk.Entry(frame4,textvariable=data[temp_str],width=50).grid(row=n,column=1,sticky=tk.W+tk.N+tk.E,)
             
-            data[temp_str].set( user_configure[temp_str] )
+            data[temp_str].set( global_variable.user_configure_data[temp_str] )
             
             ttk.Button(frame4,text=r"...",width=-1,command=lambda a=data[temp_str]: choose_zip_file(a),).grid(row=n,column=2,sticky=tk.W+tk.N,)
             
@@ -1252,7 +1498,7 @@ class MenuBar(ttk.Frame):
         temp_types = sorted(temp_types)
         
         #文档名 command.dat
-        #路径变量名 user_configure["command.dat_path"]
+        #路径变量名 global_variable.user_configure_data["command.dat_path"]
         temp = {}
             # command.dat : command.dat_path ,
         for x in temp_types:
@@ -1268,7 +1514,7 @@ class MenuBar(ttk.Frame):
             
             ttk.Entry(frame5,textvariable=data[temp_str],width=50).grid(row=n,column=1,sticky=tk.W+tk.N+tk.E,)
             
-            data[temp_str].set( user_configure[temp_str] )
+            data[temp_str].set( global_variable.user_configure_data[temp_str] )
             
             if x == "history.xml": 
                 # xml 格式
@@ -1306,9 +1552,9 @@ class MenuBar(ttk.Frame):
     
     # 设置→周边延迟显示
     def new_func_menu_call_back_use_extra_delay_time(self,):
-        user_configure["extra_delay_time_use_flag"] = self.new_var_tk_extra_delay_use_flag.get()
+        global_variable.user_configure_data["extra_delay_time_use_flag"] = self.new_var_tk_extra_delay_use_flag.get()
         
-        print( user_configure["extra_delay_time_use_flag"] )
+        print( global_variable.user_configure_data["extra_delay_time_use_flag"] )
     
     # 设置→周边延迟 时间设置
     def new_func_menu_call_back_set_extra_delay_time(self,):
@@ -1320,10 +1566,10 @@ class MenuBar(ttk.Frame):
         #window.geometry( size )
         
         window.lift()
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         window.columnconfigure(0,weight=1)
         
-        delay_time = user_configure["extra_delay_time"]
+        delay_time = global_variable.user_configure_data["extra_delay_time"]
         
         if type(delay_time) != int :
             delay_time = 50 # 默认值
@@ -1370,8 +1616,8 @@ class MenuBar(ttk.Frame):
         
         
         def for_ok_button():
-            user_configure["extra_delay_time"] = tkint_var.get()
-            print( user_configure["extra_delay_time"] )
+            global_variable.user_configure_data["extra_delay_time"] = tkint_var.get()
+            print( global_variable.user_configure_data["extra_delay_time"] )
         
         ok_button = ttk.Button(window,text=_("确定"),command=for_ok_button)
         ok_button.grid()
@@ -1382,31 +1628,31 @@ class MenuBar(ttk.Frame):
     # 游戏列表
     def new_func_menu_call_back_choose_mark_unavailable(self,):
         if self.new_var_tk_unavailable_mark.get():
-            user_configure["unavailable_mark"] = True
+            global_variable.user_configure_data["unavailable_mark"] = True
             global_variable.flag_mark_unavailable_game = True
         else:
-            user_configure["unavailable_mark"] = False
+            global_variable.user_configure_data["unavailable_mark"] = False
             global_variable.flag_mark_unavailable_game = False
 
     #游戏列表→使用本地排序
     def new_func_menu_call_back_use_local_sort(self,):
         if self.new_var_tk_use_local_sort.get():
-            user_configure["use_locale_sort"] = True
+            global_variable.user_configure_data["use_locale_sort"] = True
             
             if global_variable.flag_setlocale_LC_COLLATE == False :
                 try:
-                    locale.setlocale(locale.LC_COLLATE,locale= user_configure["locale_name"] )
+                    locale.setlocale(locale.LC_COLLATE,locale= global_variable.user_configure_data["locale_name"] )
                     global_variable.flag_setlocale_LC_COLLATE = True
                 except:
                     global_variable.flag_setlocale_LC_COLLATE = False
             
             
         else:
-            user_configure["use_locale_sort"] = False
+            global_variable.user_configure_data["use_locale_sort"] = False
             
             global_variable.flag_setlocale_LC_COLLATE = False
             
-        print( user_configure["use_locale_sort"] )
+        print( global_variable.user_configure_data["use_locale_sort"] )
 
     ###############
     # 菜单 callback 函数：关于→关于
@@ -1426,7 +1672,7 @@ class MenuBar(ttk.Frame):
         about_window.title(_("关于"))
         about_window.geometry(size)
              
-        about_window.transient(root_window)
+        about_window.transient(global_variable.root_window)
         about_window.lift()
         #about_window.grab_set()
         
@@ -1585,12 +1831,88 @@ class MenuBar(ttk.Frame):
         
         about_window.wait_window()
     
+    def new_func_menu_call_back_window_donation(self,):
+        about_window = tk.Toplevel()
+        
+        about_window.resizable(width=True, height=True)
+
+        #temp = self.get_root_window_x_y() # 'wxh±x±y' ±x±y
+        #size = "800x600" + temp
+        size = "800x600" 
+        #print()
+        #print(temp)
+        #print(size)
+        
+        about_window.title(_("赞助"))
+        about_window.geometry(size)
+             
+        about_window.transient(global_variable.root_window)
+        about_window.lift()
+        #about_window.grab_set()
+        
+        about_window.rowconfigure(0, weight=1)
+        about_window.columnconfigure(0, weight=1)
+
+        text=_("支付宝二维码：")
+        text+="\n"
+        text+="\n"
+        
+        t = tk.Text(about_window,undo=False,padx=10,pady=10,spacing1=2,spacing2=2,spacing3=2)
+        
+        scrollbar_1 = ttk.Scrollbar( about_window, orient=tk.VERTICAL, command=t.yview)
+        
+        scrollbar_2 = ttk.Scrollbar( about_window, orient=tk.HORIZONTAL, command=t.xview)
+        
+        t.configure(yscrollcommand=scrollbar_1.set)
+        t.configure(xscrollcommand=scrollbar_2.set)
+        
+        t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
+        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=(tk.N,tk.S))
+        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        
+        
+        
+        try:
+            print(the_files.image_path_zhifubao)
+            image_zhifubao = Image.open( the_files.image_path_zhifubao )
+            #image_weixin = Image.open(   self.data_from_main['image_path_weixin'])
+            
+            size_1=image_zhifubao.size
+            a=800/size_1[0]
+            new_size_1 = (int(size_1[0]*a),int(size_1[1]*a))
+            
+            image_zhifubao = image_zhifubao.resize( new_size_1,bilinear, )
+            image_zhifubao = ImageTk.PhotoImage( image_zhifubao  )
+            
+            #size_2=image_weixin.size
+            #b=800/size_2[0]
+            #new_size_2 = ( int(size_2[0]*b),int(size_2[1]*b))
+            
+            #image_weixin = image_weixin.resize( new_size_2,bilinear, )
+            #image_weixin = ImageTk.PhotoImage( image_weixin )
+            t.insert("1.0", text, )
+            
+            t.image_create(tk.END,image=image_zhifubao)
+            t.insert("1.0", "\n", )
+            #t.image_create(tk.END,image=image_weixin)
+        except:
+            pass
+        
+        t["state"]="disabled"
+        
+        about_window.wait_window()
+        
+    
     # 菜单 callback 函数：关于→文档
     def new_func_menu_call_back_open_html_file(self,):
         html_file = the_files.file_html_index
         if os.path.isfile(html_file):
             html_file = os.path.abspath(html_file)
             webbrowser.open(url=html_file,)
+    
+    def new_func_menu_call_back_open_url(self,event=None,url=None):
+        if url is not None:
+            webbrowser.open(url=url,)
     
     def new_func_menu_call_back_show_python_version(self,):
         python_version  = str(sys.version)
@@ -1607,7 +1929,7 @@ class MenuBar(ttk.Frame):
         window.title(_("查看 python 版本"))
         
              
-        window.transient(root_window)
+        window.transient(global_variable.root_window)
         window.lift()
         
         ttk.Label(window,text="").grid(sticky=tk.W)
@@ -1620,7 +1942,54 @@ class MenuBar(ttk.Frame):
         
         
         window.wait_window()
+    
+    def new_func_menu_call_back_some_website(self,):
 
+        about_window = tk.Toplevel()
+        
+        about_window.resizable(width=True, height=True)
+
+        #temp = self.get_root_window_x_y() # 'wxh±x±y' ±x±y
+        #size = "800x600" + temp
+        size = "800x600" 
+        #print()
+        #print(temp)
+        #print(size)
+        
+        about_window.title(_("关于"))
+        about_window.geometry(size)
+             
+        about_window.transient(global_variable.root_window)
+        about_window.lift()
+        #about_window.grab_set()
+        
+        about_window.rowconfigure(0, weight=1)
+        about_window.columnconfigure(0, weight=1)
+
+        
+        text = a_long_text
+
+        
+        t = tk.Text(about_window,undo=False,padx=10,pady=10,spacing1=2,spacing2=2,spacing3=2)
+        
+        scrollbar_1 = ttk.Scrollbar( about_window, orient=tk.VERTICAL, command=t.yview)
+        
+        scrollbar_2 = ttk.Scrollbar( about_window, orient=tk.HORIZONTAL, command=t.xview)
+        
+        t.configure(yscrollcommand=scrollbar_1.set)
+        t.configure(xscrollcommand=scrollbar_2.set)
+        
+        t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
+        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=(tk.N,tk.S))
+        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        
+        t.insert("1.0", text, )
+        
+        
+        t["state"]="disabled"
+        
+        about_window.wait_window()
+    
 
 
     # 菜单 callback 函数：保存设置

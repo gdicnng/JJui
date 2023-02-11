@@ -24,6 +24,7 @@ from .ui_statesbar       import StatesBar
 from .ui_game_list_table_1_level import GameList
 from .ui_game_list_table_2_level import GameList as GameList_2
 from .ui_game_list_table_2_level_collapse import GameList as GameList_3
+#GameList_3 = GameList
 
 from .ui_extra           import Extra
 from .ui_statesbar       import StatesBar
@@ -33,19 +34,13 @@ from . import folders_read
 from .ui_misc import  misc_funcs
 
 
-
 from .read_pickle import read as read_pickle
-
-configure_data = global_variable.user_configure_data
-
-
 
 # 读取外部目录数据
     # sl  and  mame
 def get_external_index_data(folders_path):
     
-    # 去掉 双引号，单引号
-    folders_path = folders_path.replace(r"'","")
+    # 去掉 双引号
     folders_path = folders_path.replace(r'"',"")
 
     # 分类列表文件  
@@ -88,8 +83,7 @@ def get_external_index_data(folders_path):
 #       .source_ini
 def get_external_read_only_index_data(folders_path,file_extension):
     
-    # 去掉 双引号，单引号
-    folders_path = folders_path.replace(r"'","")
+    # 去掉 双引号
     folders_path = folders_path.replace(r'"',"")
 
     # 分类列表文件  
@@ -130,46 +124,60 @@ def add_game_list(
             parent_window ,
             game_list_data,
             external_index,
-            configure_data,
+            
             ):
-        
+            # global_variable.user_configure_data,
         gamelist_window = gamelist_table_type( parent_window, )
         gamelist_window.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
         
         # 添加数据
         gamelist_window.new_func_feed_data(game_list_data,external_index)
         # 添加数据，所有列范围
-        gamelist_window.new_func_set_all_columns( columns = global_variable.columns )
+        gamelist_window.new_func_set_all_columns( columns = global_variable.columns + ["#id",] ) # 增加 id 一列
         # 添加数据，列宽度
-        gamelist_window.new_func_set_column_width( **configure_data["gamelist_columns_width"] )
+        gamelist_window.new_func_set_column_width( **global_variable.user_configure_data["gamelist_columns_width"] )
         # 添加数据，要显示的 列
-        gamelist_window.new_func_set_columns_to_show( columns = configure_data["gamelist_columns_to_show_1"] )
+        gamelist_window.new_func_set_columns_to_show( columns = global_variable.user_configure_data["gamelist_columns_to_show_1"] )
         # 添加数据，列标题 翻译
         gamelist_window.new_func_header_set_column_translation( key_word_translation.columns_translation )
+        # 图标列
+        gamelist_window.new_func_set_icon_column_index_in_header( global_variable.icon_column_index )
         
         return gamelist_window
 
+def hide_other_table():
+    
+    # global_variable.the_showing_table 记录在 列表 new_func_show_gamelist_again 函数
+    current_table = global_variable.the_showing_table
+    
+    for table in global_variable.all_tables:
+        if table is not current_table:
+            if table.winfo_ismapped():
+                table.grid_remove()
 
 
-def main(game_list_data):
-    root  = global_variable.root_window
-    style = ttk.Style()
+def main(game_list_data,root,style):
     
     # 读取外部目录
-    external_index=get_external_index_data(configure_data["folders_path"])
+    print()
+    print("reading data from external index")
+    external_index=get_external_index_data(global_variable.user_configure_data["folders_path"])
     
     # 读取外部目录 ,只读目录，
     # sl 部分，按 xml 分类
     if global_variable.gamelist_type == "softwarelist":
-        external_index_by_xml=get_external_read_only_index_data(configure_data["folders_path"],".xml_ini")
+        print()
+        print("reading data from external index ,SL only by xml")
+        external_index_by_xml=get_external_read_only_index_data(global_variable.user_configure_data["folders_path"],".xml_ini")
         # 记录
         global_variable.external_index_sl_by_xml = external_index_by_xml
     # mame 部分按 source 分类
     elif global_variable.gamelist_type == "mame":
-        external_index_by_source=get_external_read_only_index_data(configure_data["folders_path"],".source_ini")
+        print()
+        print("reading data from external index ,mame only by source")
+        external_index_by_source=get_external_read_only_index_data(global_variable.user_configure_data["folders_path"],".source_ini")
         # 记录
         global_variable.external_index_by_source = external_index_by_source
-
     
     # 记录
     global_variable.external_index = external_index
@@ -184,6 +192,7 @@ def main(game_list_data):
     #print(global_variable.external_index_files_editable)
     
     
+    
     root.rowconfigure(0, weight=1)#
     root.columnconfigure(0, weight=1)
     
@@ -191,10 +200,6 @@ def main(game_list_data):
     title_string = root.title()
     title_string = title_string + game_list_data["mame_version"]
     root.title(title_string)
-    
-    
-    
-    
     
     main_frame = MainFrame(root)
     main_frame.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
@@ -245,30 +250,29 @@ def main(game_list_data):
             main_frame.middle_2,
             game_list_data,
             external_index ,
-            configure_data,
+            #global_variable.user_configure_data,
             )
     gamelist_table_2 = add_game_list ( 
             GameList_2,
             main_frame.middle_2,
             game_list_data,
             external_index ,
-            configure_data,
+            #global_variable.user_configure_data,
             )
     gamelist_table_2_collapse = add_game_list ( 
             GameList_3,
             main_frame.middle_2,
             game_list_data,
             external_index ,
-            configure_data,
+            #global_variable.user_configure_data,
             )
     # 置顶一种
-    if configure_data["gamelist_level"] == 2:
+    if global_variable.user_configure_data["gamelist_level"] == 2:
         gamelist_table_2.new_func_show_gamelist_again()
-    elif configure_data["gamelist_level"] == 3:
+    elif global_variable.user_configure_data["gamelist_level"] == 3:
         gamelist_table_2_collapse.new_func_show_gamelist_again()
     else:# 默认 1
         gamelist_table_1.new_func_show_gamelist_again()
-    
     # 记录
     global_variable.all_tables.append(gamelist_table_1)
     global_variable.all_tables.append(gamelist_table_2)
@@ -304,6 +308,7 @@ def main(game_list_data):
                 （记忆置顶的 列表，在列表 new_func_show_gamelist_again() 中弄）
             bind ,重新 bind 一下
             清空另外两列表
+            隐藏其它列表
             目录信号重新发一下，以刷新列表
             
         """
@@ -325,7 +330,7 @@ def main(game_list_data):
         ### 把选中列表置顶
         
         # 1 ,2 ,3 
-        temp = configure_data["gamelist_level"]
+        temp = global_variable.user_configure_data["gamelist_level"]
         
         if temp not in (1,2,3) : temp=1
         
@@ -333,10 +338,10 @@ def main(game_list_data):
         
         if temp > 3: temp = 1
         
-        configure_data["gamelist_level"] = temp
+        global_variable.user_configure_data["gamelist_level"] = temp
         
         print(temp)
-        print(configure_data["gamelist_level"])
+        print(global_variable.user_configure_data["gamelist_level"])
         
         def clear_other_table(the_table):
             for table in (gamelist_table_1,gamelist_table_2,gamelist_table_2_collapse):
@@ -346,12 +351,17 @@ def main(game_list_data):
                     print("table clear:")
                     print(table)
         
-        
         def show_the_chosen_table(the_table):
+            
+            # 显示
+            if not the_table.winfo_ismapped():
+                the_table.grid()
+            the_table.new_func_show_gamelist_again()
             
             clear_other_table(the_table) # 清理
             
-            the_table.new_func_show_gamelist_again()
+            # 隐藏 其它
+            hide_other_table()
             
             
             root.event_generate('<<RequestForIndexInfo>>')
@@ -362,9 +372,9 @@ def main(game_list_data):
             if type(columns_width) == dict:
                 the_table.new_func_set_column_width(**columns_width)
             
-            # 列范围
-            if columns_to_show:
-                the_table.new_func_set_columns_to_show(columns_to_show)
+            # 列范围 
+            #if columns_to_show: #非空，不管了
+            the_table.new_func_set_columns_to_show(columns_to_show)
             
             
             #the_table.new_func_refresh_all()
@@ -376,6 +386,7 @@ def main(game_list_data):
             show_the_chosen_table(gamelist_table_2_collapse)
         else   :# temp==1
             show_the_chosen_table(gamelist_table_1)
+
     # 接收，列表 列项目 切换：1组、2组、3组
     # 1组、2组 方便 中英文 切换显示；
     # 第3组，显示整体
@@ -401,15 +412,15 @@ def main(game_list_data):
         
         # 根据计数，切换列表
         if temp == 2:
-            columns = configure_data["gamelist_columns_to_show_2"]
+            columns = global_variable.user_configure_data["gamelist_columns_to_show_2"]
             top_table.new_func_set_columns_to_show( columns )
             print(columns)
         elif temp == 3:
-            columns = configure_data["gamelist_columns_to_show_3"]
+            columns = global_variable.user_configure_data["gamelist_columns_to_show_3"]
             top_table.new_func_set_columns_to_show( columns )
             print(columns)
         else:# temp == 1
-            columns = configure_data["gamelist_columns_to_show_1"]
+            columns = global_variable.user_configure_data["gamelist_columns_to_show_1"]
             top_table.new_func_set_columns_to_show( columns )
             print(columns)
         
@@ -422,7 +433,39 @@ def main(game_list_data):
     ##################
     ##################
     ##################
-
+    
+    
+    def just_for_test(event):
+        table=global_variable.the_showing_table
+        print()
+        print("table")
+        print(table)
+        
+        parent = table.winfo_parent()
+        parent = root.nametowidget(parent)
+        print()
+        print("table's parent")
+        print(parent)
+        
+        print()
+        print("parent's other child")
+        child_list = parent.winfo_children()
+        for child in child_list :
+            print()
+            
+            if child is table:
+                print("the currnet table")
+                
+            print(child)
+            print("is maped ?")
+            if child.winfo_ismapped():
+                print("mapped")
+            else:
+                print("not mapped")
+    
+        
+        
+    
     def some_bindings():
         root.bind('<<GamelistChangeGroupMode>>',virtual_event_receive_for_change_gamelist_group_mode)
         
@@ -430,6 +473,8 @@ def main(game_list_data):
         
         root.bind("<<StartGame>>",misc_funcs.start_game)
         root.bind("<<MameShowInfo>>",misc_funcs.mame_show_info)
+        
+        root.bind("<Control-KeyPress-t>",just_for_test)
     
     some_bindings()
     
@@ -451,15 +496,15 @@ def main(game_list_data):
         
         # 窗口大小
         #root.update()
-        if configure_data["size"] != "" :
+        if global_variable.user_configure_data["size"] != "" :
             try:
-                root.geometry( configure_data["size"] )
+                root.geometry( global_variable.user_configure_data["size"] )
             except:
                 pass
         #root.update()
         
         # 窗口最大化，初始
-        if configure_data["zoomed"]:
+        if global_variable.user_configure_data["zoomed"]:
             root.wm_state("zoomed")
         else:
             pass
@@ -469,7 +514,7 @@ def main(game_list_data):
         root.update() # 前边不放一个 update ，就没有效果 ？？？？
         
         # 周边一个分隔线
-        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,configure_data["pos3"])
+        ui_extra.new_ui_extra_image_panedwindow.sashpos(0,global_variable.user_configure_data["pos3"])
         #root.update()
         
         root.update()
@@ -479,7 +524,7 @@ def main(game_list_data):
         #   先调整 图片分隔线 位置，再选择 周边 区域
         #   图片区，能见的时候，调整分隔线，似乎才有用
         try:
-            ui_extra.new_ui_notebook.select( configure_data["extra_tab_index"] )
+            ui_extra.new_ui_notebook.select( global_variable.user_configure_data["extra_tab_index"] )
         except:
             pass
         # 初始化，两个 周边 图片 选择条，在 ui 部分已设置
@@ -497,7 +542,7 @@ def main(game_list_data):
         #misc_funcs.find_widget('Canvas')
         
         #颜色
-        if configure_data["use_colour_flag"]:
+        if global_variable.user_configure_data["use_colour_flag"]:
             misc_funcs.use_user_configure_colours()
         
         
@@ -505,8 +550,8 @@ def main(game_list_data):
         
         root.update()
         # 初始时，分隔线,重置位置
-        main_frame.frame_middle.sashpos(0,configure_data["pos1"])
-        main_frame.frame_middle.sashpos(1,configure_data["pos2"])
+        main_frame.frame_middle.sashpos(0,global_variable.user_configure_data["pos1"])
+        main_frame.frame_middle.sashpos(1,global_variable.user_configure_data["pos2"])
         
     ui_initial()
     
@@ -515,9 +560,13 @@ def main(game_list_data):
     
     # 目录 选择 上一次的记录
     root.update() # 不然,index 的 Treeview 部件，定位不准
-    global_variable.the_index.new_func_index_initial_select( configure_data["index_be_chosen"] )
+    global_variable.the_index.new_func_index_initial_select( global_variable.user_configure_data["index_be_chosen"] )
 
     # 初始化 拥有列表 过滤选项 
     # 在 ui_main.py 中过滤的
+    
+    #隐藏 其它 两个列表
+    # 放在 update 之后，不然 还没有 map 好
+    hide_other_table()
     
     root.protocol("WM_DELETE_WINDOW", misc_funcs.exit_2)

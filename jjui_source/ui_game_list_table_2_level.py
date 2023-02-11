@@ -24,13 +24,32 @@ from . import ui_game_list_table_1_level
 Data_Holder_level_1 = ui_game_list_table_1_level.Data_Holder
 GameList_level_1    = ui_game_list_table_1_level.GameList
 
+def get_parent_have_more_than_1_children():
+    # 子元素 大于 1 个的，子元素需要 排序
+    
+    temp = []
+    parent_to_clone = global_variable.dict_data["parent_to_clone"]
+    
+    for parent_id in parent_to_clone :
+        if len( parent_to_clone[parent_id] ) > 1:
+            temp.append( parent_id )
+    
+    temp = set( temp )
+    
+    return temp
+
+
 class Data_Holder_level_2(Data_Holder_level_1):
     """
     
     双层列表 数据
     
     """
-
+    
+    # 子元素 大于 1 个的，子元素需要 排序
+    parent_have_more_than_1_children = get_parent_have_more_than_1_children()
+    
+    
     def __init__(self,*args,**kwagrs):
         super().__init__(*args,**kwagrs)
         
@@ -59,7 +78,7 @@ class Data_Holder_level_2(Data_Holder_level_1):
         #   要快一点
         #self.gamelist_data_for_level_2_template={}
         
-        self.parent_have_more_than_1_children = set()
+        
         
     # derived
     def feed_data(self,internal_data=None,external_index=None):
@@ -74,13 +93,19 @@ class Data_Holder_level_2(Data_Holder_level_1):
         #            parent_id : [] 
         #                    for parent_id in self.parent_to_clone
         #                    }
-        if self.internal_data:
-            temp = []
-            for parent_id in self.parent_to_clone :
-                if len( self.parent_to_clone[parent_id] ) > 1:
-                    temp.append( parent_id )
-            self.parent_have_more_than_1_children = set( temp )
 
+    def clear(self):
+        
+        super().clear()
+        
+        self.items_in_level_1.clear()
+        self.items_in_level_1_for_search.clear()
+        
+        self.items_have_child.clear()
+        self.items_have_child_for_search.clear()
+        
+        self.items_have_parent.clear()
+        self.items_have_parent_for_search.clear()
 
     # derived
     # 点击目录 切换列表，用这个
@@ -108,13 +133,13 @@ class Data_Holder_level_2(Data_Holder_level_1):
             the_id_list = set(the_id_list)
         
         # 范围 限制
-        if self.filter_set:
+        if global_variable.filter_set:
             if self.all_set is the_id_list: # all_set 加点速
-                temp_parent_set = self.parent_set - self.filter_set
-                temp_clone_set  = self.clone_set  - self.filter_set
+                temp_parent_set = self.parent_set - global_variable.filter_set
+                temp_clone_set  = self.clone_set  - global_variable.filter_set
             else:
-                temp_parent_set = the_id_list & self.parent_set - self.filter_set
-                temp_clone_set  = the_id_list & self.clone_set  - self.filter_set
+                temp_parent_set = the_id_list & self.parent_set - global_variable.filter_set
+                temp_clone_set  = the_id_list & self.clone_set  - global_variable.filter_set
         else:
             if self.all_set is the_id_list: # all_set 加点速
                 temp_parent_set = self.parent_set
@@ -335,43 +360,15 @@ class Data_Holder_level_2_2(Data_Holder_level_2):
     # for search
     #   同样是搜索第一层
     #   但是新列表，分组方式不同
-    def generate_new_list_by_search(self,the_search_string,the_search_range=None):
+    def generate_new_list_by_search(self,search_string,):
         print()
         print("generate_new_list_by_search")
         t1=time.time()
         # 标记重置
         self.flag_search = True
         
-        the_search_string = the_search_string.lower()
-        
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
-        
-        # self.gamelist_to_show
-        #   搜这个
-        new_list = []
-        for item_id in self.gamelist_to_show:
-            for x in self.machine_dict[item_id]: # 全搜
-                if the_search_string in x.lower() :
-                    new_list.append(item_id)
-                    break
-        
-        # the_id_list = set(new_list)
-        # #print(len(new_list))
-        # #print(len(the_id_list))
-        # 
-        # temp_parent_set = the_id_list & self.parent_set
-        # temp_clone_set  = the_id_list & self.clone_set
-        # 
-        # if temp_parent_set and temp_clone_set:
-        #     print("  level_2")
-        #     self.get_list_of_2_level(temp_parent_set,temp_clone_set)
-        # else:
-        #     print("  level_1")
-        #     self.get_list_of_1_level_only_parent_or_only_clone(temp_parent_set,temp_clone_set)
-        # 
-        # self.sort_the_list(self.sort_key , self.sort_reverse)
+        # self.gamelist_to_show 
+        new_list = self.for_search( self.gamelist_to_show ,search_string )
         
         self.generate_new_list_by_id(new_list,from_index=False)
         
@@ -379,32 +376,18 @@ class Data_Holder_level_2_2(Data_Holder_level_2):
         print("generate_new_list_by_search,time : {}".format(t2-t1))
 
     # for search re
-    def generate_new_list_by_search_regular(self,the_search_string,the_search_range=None):
+    def generate_new_list_by_search_regular(self,search_string,):
         t1=time.time()
         # 标记重置
         self.flag_search = True
         
-        #if the_search_range is None:
-        #    the_search_range = []
-        #
-        
-        
-        #self.gamelist_to_show
-        # 搜这个
-        new_list = []
-        
-        p=re.compile(the_search_string,re.IGNORECASE)
-        
-        for item_id in self.gamelist_to_show:
-            for x in self.machine_dict[item_id]: # 全搜 # 限制搜索项目
-                if  p.search(x) :
-                    new_list.append(item_id)
-                    break
+        # self.gamelist_to_show 
+        new_list = self.for_search_regular( self.gamelist_to_show ,search_string )
         
         self.generate_new_list_by_id(new_list,from_index=False)
         
         t2=time.time()
-        print("generate_new_list_by_search,time : {}".format(t2-t1))
+        print("generate_new_list_by_search_regular,time : {}".format(t2-t1))
 
 class Data_Holder_level_2_3(Data_Holder_level_2_2):
 

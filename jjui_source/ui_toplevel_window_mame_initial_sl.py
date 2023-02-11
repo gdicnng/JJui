@@ -20,8 +20,6 @@ from . import xml_parse_mame
 from . import xml_parse_sl
 from . import translation_gamelist
 
-configure_data = global_variable.user_configure_data
-
 if __name__ == "__main__" :
     import builtins
     from .translation_ui  import translation_holder
@@ -35,7 +33,7 @@ if __name__ == "__main__" :
 # initial_window
 class Toplevel_Window(tk.Toplevel):
     def __init__(self,
-            #configure_data,
+            #global_variable.user_configure_data,
             #root_window = None,
             #type_mame    = True, # xml 类型
             #type_mame_sl = False,
@@ -52,7 +50,7 @@ class Toplevel_Window(tk.Toplevel):
         self.new_var_tkvar_for_wait = tk.StringVar()
         
         self.new_var_mame_path=tk.StringVar()
-        self.new_var_mame_path.set( configure_data["mame_path"] )
+        self.new_var_mame_path.set( global_variable.user_configure_data["mame_path"] )
         
         #self.new_var_type_mame = type_mame
         
@@ -200,12 +198,15 @@ class Toplevel_Window(tk.Toplevel):
         self.new_func_parse_xml(xml_type)
         
         
-        configure_data["mame_path"] = self.new_var_mame_path.get()
+        global_variable.user_configure_data["mame_path"] = self.new_var_mame_path.get()
         
         # 删除文件
         if xml_type=="SoftwareList":
             if os.path.isfile( the_files.file_xml_mame_softwarelist ):
-                os.remove( the_files.file_xml_mame_softwarelist )
+                try:
+                    os.remove( the_files.file_xml_mame_softwarelist )
+                except:
+                    pass
         elif xml_type=="mame":
             if os.path.isfile( the_files.file_xml_mame ):
                 os.remove( the_files.file_xml_mame )
@@ -222,7 +223,7 @@ class Toplevel_Window(tk.Toplevel):
         
         command = "-help"
         
-        flag_use_shell = configure_data["use_shell"]
+        flag_use_shell = global_variable.user_configure_data["use_shell"]
         
         p=subprocess.Popen( args   = [mame_path,command,] ,
                                 # command = "-listxml"
@@ -268,7 +269,7 @@ class Toplevel_Window(tk.Toplevel):
             xml_file_name  = the_files.file_xml_mame_softwarelist
         
         mame_path      = self.new_var_mame_path.get()
-        flag_use_shell = configure_data["use_shell"]
+        flag_use_shell = global_variable.user_configure_data["use_shell"]
         
         try:
             if os.path.isfile(xml_file_name):
@@ -461,7 +462,7 @@ class Toplevel_Window(tk.Toplevel):
                 translation_dict={}
         
         if len( translation_dict ) > 0 :
-            data["machine_dict"] = translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
+            translation_gamelist.add_translation( translation_dict , data["machine_dict"] ,data["columns"])
         
         # 保存
         # from .save_pickle import save as save_pickle

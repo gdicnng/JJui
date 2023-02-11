@@ -80,6 +80,8 @@ file_html_index     = os.path.join(folder_temporary ,"docs","index.html")
 folder_images = os.path.join(folder_source_file,"images")
 
 image_path_icon_main     = os.path.join(folder_images,"for-icon.png")
+if global_variable.gamelist_type == "softwarelist":
+    image_path_icon_main     = os.path.join(folder_images,"for-icon-2.png")
 image_path_image_no      = os.path.join(folder_images,"no_image.png")
 
 image_path_icon_black    = os.path.join(folder_images,"black.png")
