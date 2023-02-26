@@ -2,22 +2,17 @@
 #import sys
 #import os
 
-import math
+#import math
 import time
-import re
+#import re
 import locale
 
-import tkinter as tk
-import tkinter.ttk as ttk
+#import tkinter as tk
+#import tkinter.ttk as ttk
 
 from . import global_variable
 
 #from PIL import Image, ImageTk
- 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 #from . import global_static_filepath as the_files # 图标 图片 路径
 from . import ui_game_list_table_1_level
@@ -117,9 +112,8 @@ class Data_Holder_level_2(Data_Holder_level_1):
         # self.parent_to_clone = {}
         # self.clone_to_parent = {}
         
-        print("")
+        #print("")
         print(" generate_new_list")
-        time_1 = time.time()
         
         # 标记重置
         if from_index:
@@ -148,9 +142,6 @@ class Data_Holder_level_2(Data_Holder_level_1):
                 temp_parent_set = the_id_list & self.parent_set
                 temp_clone_set  = the_id_list & self.clone_set
         
-        time_2 = time.time()
-        print(" generate_new_list time_A:{}".format(time_2-time_1))
-        
         
         if temp_parent_set and temp_clone_set:
             print("  level_2")
@@ -161,16 +152,8 @@ class Data_Holder_level_2(Data_Holder_level_1):
         
         #self.gamelist_to_show.clear() 
         
-        time_3=time.time()
-        print(" generate_new_list time_B:{}".format(time_3-time_2))
-        
-
-        
         self.sort_the_list(self.sort_key , self.sort_reverse)
         
-        time_4=time.time()
-        print(" generate_new_list time_C:{}".format(time_4-time_3))
-        print(" generate_new_list time  :{}".format(time_4-time_1))
     
     # for self.generate_new_list_by_id()
     def get_list_of_1_level_only_parent_or_only_clone(self,temp_parent_set=None,temp_clone_set=None):
@@ -204,8 +187,6 @@ class Data_Holder_level_2(Data_Holder_level_1):
             self.items_have_parent = set()
     # for self.generate_new_list_by_id()
     def get_list_of_2_level(self,temp_parent_set=None,temp_clone_set=None):
-
-        time_1 = time.time()
         
         # 得到分组需要的一些 set 
         def get_some_set():
@@ -236,10 +217,6 @@ class Data_Holder_level_2(Data_Holder_level_1):
         
         clone_have_parent,clone_no_parnet,parent_have_clone = get_some_set()
         
-        time_2 = time.time()
-        print("\tlevel_2 timeA : {}".format(time_2-time_1))
-        
-        
         ####
         if self.flag_search:
             # 标记 第1层 范围
@@ -256,14 +233,6 @@ class Data_Holder_level_2(Data_Holder_level_1):
             self.items_have_child  = parent_have_clone
             self.items_have_parent = clone_have_parent
         
-
-        time_3 = time.time()
-        print("\tlevel_2 timeB : {}".format(time_3-time_2))
-
-        print("\tlevel_2 time  : {}".format(time_3-time_1))
-    
-    
-    
     def func_for_sort_the_list(self,the_sort_key,reverse,flag_search):
         
         if flag_search:
@@ -277,15 +246,15 @@ class Data_Holder_level_2(Data_Holder_level_1):
             items_have_parent  = self.items_have_parent
             self.gamelist_to_show.clear() # 最后 赋值
         #
-        the_index = 0 # 列表的范围从0 开始（空列表，0 都没有）
+        the_index = None # 列表的范围从0 开始（空列表，0 都没有）
         try:
             the_index = self.internal_data["columns"].index(the_sort_key)
         except:
-            the_index = -1
-            print("   the sort key not found")
+            the_index = None
+            #print("   the sort key not found")
         print("   the sort key's index : {}".format(the_index))
         
-        if the_index == -1:
+        if the_index is None:
             # 范围以外，主要是点击 图标列
             # 直接以 id 排序
             print("   sort by id")
@@ -345,10 +314,19 @@ class Data_Holder_level_2(Data_Holder_level_1):
         else:
             self.gamelist_to_show = gamelist_to_show
 
+    def is_item_in_current_list(self,item_id):
+        if self.flag_search:
+            if item_id in self.items_in_level_1_for_search:
+                return True
+            if item_id in self.items_have_parent_for_search:
+                return True
+        else:
+            if item_id in self.items_in_level_1:
+                return True
+            if item_id in self.items_have_parent:
+                return True
+        return False
 
-        
-    def get_item_id_from_item_info(self,item_info):
-        return item_info["name"]
 
 # search
 class Data_Holder_level_2_2(Data_Holder_level_2):
@@ -395,7 +373,13 @@ class Data_Holder_level_2_3(Data_Holder_level_2_2):
         super().__init__(*args,**kwagrs)
 
     # derived
-    # 当前列表，删除选中项
+    # 配合，目录编辑
+    # 当前目录，删除选中项
+    # 
+    #
+    # 仅搜索状态，会用到这个函数，
+    # 正常状态，修改原始数据，直接重新生成新列表，简单点
+    #
     def func_for_delete_items_from_current_list(self,items):
         if len(items) == 0 :return
         
@@ -482,11 +466,37 @@ class GameList_level_2(GameList_level_1):
                     item_id,
                     )
 
+    # 查找
+    # 列表，切换时，定位用的
+    #   比如，点击目录，内容切换了
+    def new_func_table_find_item(self,item_id):
+        # return None or row_number
+
+        if item_id is None:
+            return 
+
+        if not self.new_var_list_to_show:
+            return
+        
+        # 添加 退出 条件
+        if not self.new_var_data_holder.is_item_in_current_list(item_id): # level_1 + level_2 
+            return
+
+        row_number = None
+
+        for row in range(  len(self.new_var_list_to_show)  ):
+            if item_id == self.new_func_table_get_id_from_row_number(row):
+                row_number     = row
+                break
+        print()
+        print("table find item row_number:")
+        print(row_number)
+        return row_number
 
 GameList = GameList_level_2
 
 
 if __name__ == "__main__" :
-    passs
+    pass
 
 

@@ -1,11 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
-
-
 from . import global_variable
 
 # 游戏列表 列标题

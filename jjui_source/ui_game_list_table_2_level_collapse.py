@@ -1,14 +1,14 @@
 ﻿# -*- coding: utf_8_sig-*-
 #import sys
-#import os
+import os
 
-import math
+#import math
 import time
-import re
+#import re
 import locale
 
 import tkinter as tk
-import tkinter.ttk as ttk
+#import tkinter.ttk as ttk
 
 from PIL import Image, ImageTk
 # Pillow
@@ -24,11 +24,6 @@ except:
     bilinear = Image.BILINEAR
 
 from . import global_variable
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_static_filepath as the_files # 图标 图片 路径
 from . import ui_game_list_table_2_level
@@ -50,10 +45,15 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
         self.items_opened = set()
         self.items_opened_for_search = set()
     
-    def clear(self):
+    #def clear(self):
         
-        super().clear()
+        #super().clear()
         
+        # 还是记住吧
+        # 记住展开项
+        #self.items_opened.clear()
+        #self.items_opened_for_search.clear()
+    def items_opened_close_all(self,):
         self.items_opened.clear()
         self.items_opened_for_search.clear()
     
@@ -66,27 +66,27 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
         
         if flag_search:
             items_in_level_1   = self.items_in_level_1_for_search
-            #items_have_child   = self.items_have_child_for_search
-            #items_have_parent  = self.items_have_parent_for_search
-            #items_opened       = self.items_opened_for_search
+            items_have_child   = self.items_have_child_for_search
+            items_have_parent  = self.items_have_parent_for_search
+            items_opened       = self.items_opened_for_search
             self.gamelist_to_show_for_search.clear() # 重置 # 最后 赋值
         else:
             items_in_level_1   = self.items_in_level_1
-            #items_have_child   = self.items_have_child 
-            #items_have_parent  = self.items_have_parent
-            #items_opened       = self.items_opened
+            items_have_child   = self.items_have_child 
+            items_have_parent  = self.items_have_parent
+            items_opened       = self.items_opened
             self.gamelist_to_show.clear() # 重置 # 最后 赋值
             
         #
-        the_index = 0 # 列表的范围从0 开始（空列表，0 都没有）
+        the_index = None # 列表的范围从0 开始（空列表，0 都没有）
         try:
             the_index = self.internal_data["columns"].index(the_sort_key)
         except:
-            the_index = -1
-            print("   the sort key not found")
+            the_index = None
+            #print("   the sort key not found")
         print("   the sort key's index : {}".format(the_index))
         
-        if the_index == -1:
+        if the_index is None:
             # 范围以外，主要是点击 图标列
             # 直接以 id 排序
             print("   sort by id")
@@ -103,17 +103,45 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
                         
                         return locale.strxfrm(temp_dict[item_id][the_index])
         
-        gamelist_to_show = sorted(
+        # 第一层 排序
+        temp_list = sorted(
                 items_in_level_1,
                 key     = func_for_sort,
                 reverse = reverse,)
+        
+        # 如果 没有 第二层
+        if not items_opened:
+            gamelist_to_show = temp_list
+        # 如果 有 第二层
+        else:
+            gamelist_to_show = []
+            the_current_items_opened = items_opened & items_have_child #########
+            
+            # 排序
+            # 范围以内的
+            # 有两个以上子列表的,(子列表 可能 有多余的项目，之后还要处理)
+            for parent_id in the_current_items_opened : #########
+                self.parent_to_clone[parent_id].sort(
+                        key     = func_for_sort,
+                        reverse = reverse,
+                        )
+            
+            # 插入列表
+            for game_id in temp_list :
                 
+                gamelist_to_show.append( game_id )
+                
+                if game_id in the_current_items_opened:
+                    for clone_id in self.parent_to_clone[game_id]:
+                        if clone_id in items_have_parent:
+                            gamelist_to_show.append(clone_id)
+            
         if flag_search:
             self.gamelist_to_show_for_search = gamelist_to_show
-            self.items_opened_for_search = set() # 重置
+            #self.items_opened_for_search = set() # 重置
         else:
             self.gamelist_to_show = gamelist_to_show
-            self.items_opened = set() # 重置
+            #self.items_opened = set() # 重置
     
     
     # derived
@@ -125,7 +153,9 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
     
     # insert children
     def insert_item_s_children(self,row_number,item_id):
-        
+        if row_number is None: return
+        if item_id is None: return
+
         if self.flag_search:
             #items_in_level_1   = self.items_in_level_1_for_search
             items_have_child   = self.items_have_child_for_search
@@ -194,7 +224,25 @@ class Data_Holder_level_2_collapse(Data_Holder_base):
                     #    if child_id in items_have_parent:
                     #        gamelist_to_show.insert(row_number+1, child_id )
                     gamelist_to_show[row_number+1:row_number+1]=child_list
+    
+    def insert_item_s_children_by_parent_item_id(self,item_id):
+        if item_id is None: return
 
+        if self.flag_search:
+            gamelist_to_show   = self.gamelist_to_show_for_search
+        else:
+            gamelist_to_show   = self.gamelist_to_show
+        
+        number = None
+        for n in range( len(gamelist_to_show) ):
+            if item_id == gamelist_to_show[n]:
+                number = n
+                break
+        
+        if number is not None:
+            self.insert_item_s_children(number,item_id)
+            
+    
     # delete children
     def delete_item_s_children(self,row_number,item_id):
         print("")
@@ -356,6 +404,10 @@ class Data_Holder_level_2_collapse_2(Data_Holder_level_2_collapse):
         
         return set(child_list) & items_have_parent # 范围限制
 
+
+
+
+
 Data_Holder = Data_Holder_level_2_collapse_2
 
 # -----------------------------------
@@ -373,7 +425,7 @@ class GameList_level_2_collapse(GameList_base):
     def __init__(self, parent,*args,**kwargs):
         
         super().__init__(parent,*args,**kwargs)
-        self.new_var_table_type = "mame 2 level , collapes" # 这个值别改了，在别的角本里被用了
+        self.new_var_table_type = "mame 2 level , collapes"
         
         self.new_var_data_holder = Data_Holder()
         
@@ -414,7 +466,7 @@ class GameList_level_2_collapse(GameList_base):
         self.new_var_data_holder.insert_item_s_children(row_number,item_id)
         
         # 重载列表
-        self.new_func_table_reload_the_game_list()
+        self.new_func_table_reload_the_game_list(jump_to_select_item=False)
 
     # bindings
     # 点击 - 号
@@ -433,7 +485,7 @@ class GameList_level_2_collapse(GameList_base):
         self.new_var_data_holder.delete_item_s_children(row_number,item_id)
         
         # 重载列表
-        self.new_func_table_reload_the_game_list()
+        self.new_func_table_reload_the_game_list(jump_to_select_item=False)
     
     
     # derived
@@ -547,7 +599,6 @@ class GameList_level_2_collapse(GameList_base):
         row_number,item_id = self.new_func_table_get_row_number_and_item_id(event)
         self.new_func_remember_select_row(item_id,row_number)
     
-    
     # derived
     # 定位 上一个选中项目
     def new_func_bindings_receive_virtual_event_for_find_item(self,event):
@@ -627,7 +678,8 @@ class GameList_level_2_collapse(GameList_base):
             self.new_var_data_holder.insert_item_s_children(parent_row_remember,parent_id)
             
             # 列有插入变化，需要刷新
-            self.new_func_table_reload_the_game_list()
+            # self.new_func_table_reload_the_game_list_not_refresh_table_2_collapse()
+            self.new_func_table_reload_the_game_list(jump_to_select_item=False)
             
             row_remember = find_in_level_1(game_id,parent_row_remember)
             
@@ -649,8 +701,125 @@ class GameList_level_2_collapse(GameList_base):
             self.new_func_table_jump_to_row(row)
             self.new_func_remember_select_row(item_id,row)
             # self.new_func_remember_select_row 中，有刷新
+    
+    # derived
+    def new_func_table_reload_the_game_list(self,jump_to_select_item=True):
+        
+        # 得到原始列表
+        self.new_var_list_to_show = self.new_var_data_holder.get_gamelist_to_show()
+        print("")
+        print("reload")
+        #print(len(self.new_var_list_to_show))
+
+        # # #
+        # # #
+        # 看需不需要更新列表
+        # 如果是第二层，
+            # 如果 不是展开状态
+                # 1，主版本 展开标记
+                # 2，此主版本 插入其 副版本，更新列表完成
+        if jump_to_select_item:
+            the_id = self.new_var_remember_select_row_id
+            if the_id is not None:
+                
+                # 如果在第二层，确保 是展开的状态
+
+                # 搜索状态
+                if self.new_var_data_holder.flag_search:
+                    if the_id in self.new_var_data_holder.items_have_parent_for_search:
+                        parent_id = global_variable.dict_data["clone_to_parent"][the_id]
+                        if parent_id not in self.new_var_data_holder.items_opened_for_search:
+                            self.new_var_data_holder.items_opened_for_search.add(parent_id)
+                            self.new_var_data_holder.insert_item_s_children_by_parent_item_id(parent_id)
+                
+                # 正常状态
+                else:
+                    if the_id in self.new_var_data_holder.items_have_parent:
+                        parent_id = global_variable.dict_data["clone_to_parent"][the_id]
+                        if parent_id not in self.new_var_data_holder.items_opened:
+                            self.new_var_data_holder.items_opened.add(parent_id)
+                            self.new_var_data_holder.insert_item_s_children_by_parent_item_id(parent_id)
+        
+        # 其它一样的
+
+        number = self.new_var_data_holder.get_current_gamelist_number()
+        
+        self.new_var_data_for_CurrentGameListNumber = number
+        self.event_generate( self.new_var_virtual_event_name_CurrentGameListNumber )
+        
+        row_number = None
+        
+        if jump_to_select_item:
+            if global_variable.user_configure_data["keep_track_of_the_select_item"]:
+                item_id = self.new_var_remember_select_row_id
+                row_number = self.new_func_table_find_item(item_id)
+        
+        self.new_func_refresh_all(jump_to_row=row_number)
+    
+
+    def new_func_table_reload_the_game_list_not_refresh_table_2_collapse(self,):
+        # 列表，两层，可收缩
+        # 点击 展开、收起 子元素时，这好像不用
+        # 定位
+        # 跳转
+        # 列表变化，但，又需要等之后，再刷新，
+        # 仅列表变化，标题没有变化
+
+        # 列表的数量也没有变化
+
+        print("")
+        print("reload gamelise only,refresh later")
+        
+        self.new_var_list_to_show = self.new_var_data_holder.get_gamelist_to_show()
+        # number 列表数量，不变
+        self.new_var_row_numbers  = len( self.new_var_list_to_show )
+        self.new_var_total_height = self.new_var_row_numbers * self.new_var_row_height
+
+        self.new_ui_table.configure(scrollregion=(
+                0,
+                0,
+                self.new_var_total_width,
+                self.new_var_total_height,
+                ) )
+        # self.new_func_refresh_table() # 不刷新
 
 
+    # 查找
+    # 列表，切换时，定位用的
+    #   比如，点击目录，内容切换了
+    #def new_func_table_find_item(self,item_id):
+    # 如果是展开状态，正好
+    # 如果不是展开状诚，在 new_func_table_reload_the_game_list 函数中处理
+
+
+    # 右键菜单
+    #   添加  # 关闭所有展开节点
+    def new_func_ui_pop_up_menu_for_table(self,):
+        
+        super().new_func_ui_pop_up_menu_for_table()
+        
+        self.new_ui_pop_up_menu_for_table.add_separator()
+        
+        self.new_ui_pop_up_menu_for_table.add_command(
+                label=_("关闭所有展开的项 (如果当前选中第二层，不含当前项)"),
+                command = self.new_func_table_pop_up_menu_callback_close_all,
+                )
+        
+        self.new_ui_pop_up_menu_for_table.add_separator()
+
+    def new_func_table_pop_up_menu_callback_close_all(self,):
+        
+        self.new_var_data_holder.items_opened_close_all()
+        
+        # 列表 重新 生成
+        self.new_var_data_holder.sort_the_list(
+            self.new_var_data_holder.sort_key ,
+            self.new_var_data_holder.sort_reverse ,
+            )
+        
+        self.new_func_table_reload_the_game_list()
+        
+    
     #####################
     #####################
     # add icons plus 
@@ -682,7 +851,6 @@ class GameList_level_2_collapse(GameList_base):
                 font=font,
                 header_font=header_font,
             )
-
 
     # derived
     # 初始 ,添加
@@ -764,7 +932,7 @@ class GameList_level_2_collapse_2(GameList_level_2_collapse):
                         self.new_var_data_holder.insert_item_s_children(self.new_var_remember_select_row_number,item_id)
                         
                         # 重载列表
-                        self.new_func_table_reload_the_game_list()
+                        self.new_func_table_reload_the_game_list(jump_to_select_item=False)
 
 
     def new_func_table_binding_press_left(self,event):
@@ -799,7 +967,7 @@ class GameList_level_2_collapse_2(GameList_level_2_collapse):
                         self.new_var_data_holder.delete_item_s_children(self.new_var_remember_select_row_number,item_id)
 
                         # 重载列表
-                        self.new_func_table_reload_the_game_list()
+                        self.new_func_table_reload_the_game_list(jump_to_select_item=False)
 
 # 多选 修改
 # table 菜单，导出全部
@@ -932,6 +1100,8 @@ class GameList_level_2_collapse_3(GameList_level_2_collapse_2):
     #       第3 列表需要修改
     def new_func_table_pop_up_menu_callback_export_gamelist(self,only_id=True):
         
+        out_file_path = the_files.file_txt_export
+
         if not self.new_var_list_to_show: 
             try:
                 os.remove(out_file_path)
@@ -939,7 +1109,7 @@ class GameList_level_2_collapse_3(GameList_level_2_collapse_2):
                 pass
             return
         
-        out_file_path = the_files.file_txt_export
+        
         
         
         if only_id:
@@ -967,11 +1137,211 @@ class GameList_level_2_collapse_3(GameList_level_2_collapse_2):
                     
                     f.write("\n")
 
+# 快速跳转
+class GameList_level_2_collapse_4(GameList_level_2_collapse_3):
+    # 仅配匹 字符串 开头
+    def new_func_table_quick_jump_down_by_string_header(self,a_string,reverse=False):
+        
+        s=a_string.strip().lower()
 
-GameList = GameList_level_2_collapse_3
+        if not s : return
+
+        print("search string:",s)
+        print("reverse",reverse)
+
+        if not self.new_var_list_to_show : 
+            return
+
+        if len(self.new_var_list_to_show)==1 :
+            return
+            # 就一个，不用搜
+        
+        # 搜索状态、正常状态
+        if self.new_var_data_holder.flag_search:
+            items_opened      = self.new_var_data_holder.items_opened_for_search
+            items_in_level_1  = self.new_var_data_holder.items_in_level_1_for_search
+            items_have_parent = self.new_var_data_holder.items_have_parent_for_search
+            items_have_child  = self.new_var_data_holder.items_have_child_for_search
+        else:
+            items_opened      = self.new_var_data_holder.items_opened
+            items_in_level_1  = self.new_var_data_holder.items_in_level_1
+            items_have_parent = self.new_var_data_holder.items_have_parent
+            items_have_child  = self.new_var_data_holder.items_have_child
+        
+        #   items_not_opened = items_have_child - items_opened
+        parent_to_clone  = global_variable.dict_data["parent_to_clone"]
+
+
+        # 从上向下搜，如果第一个是上次选中的，要搜它的子元素
+
+        def is_hidden_child_match(item_id):
+            if item_id in items_have_child:
+                if item_id not in items_opened:
+                    for clone_id in parent_to_clone[item_id]:
+                        if clone_id in items_have_parent:
+                            if clone_id.startswith(s):
+                                print(clone_id)
+                                return True
+            return False
+
+        # return None
+        # return ( level_1_row_number,level_1_item_id , is_level_2_hidden_item_match ) ,  默认 False
+        def search():# 向下搜索
+            # 从 当前 看到的 内容页面 往下搜
+            print("search")
+
+            the_first_row,the_last_row = self.new_func_table_get_visible_rows()
+            # the_last_row 可能 大一个
+            
+            if the_first_row <= self.new_var_remember_select_row_number < the_last_row:
+                # 选中行 正好在 当前页面
+                new_row_number = self.new_var_remember_select_row_number # 不加一
+            else:
+                new_row_number = the_first_row
+            
+            if new_row_number < 0: new_row_number=0
+            if new_row_number >= len(self.new_var_list_to_show):return
+
+            print()
+            print("start")
+            print(new_row_number)
+            print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+            # 如果第一个，是上一次选中的
+            if new_row_number == self.new_var_remember_select_row_number:
+                new_row_number += 1
+                item_id = self.new_var_list_to_show[self.new_var_remember_select_row_number]
+                if is_hidden_child_match(item_id): # 检查是否有 隐藏 的子元素 能配匹上
+                    return self.new_var_remember_select_row_number,item_id,True
+
+                
+            # 一开始就，最后了
+            if new_row_number>= len(self.new_var_list_to_show)-1:
+                return None
+            
+            for n in range(new_row_number,len(self.new_var_list_to_show) ):
+                item_id = self.new_var_list_to_show[n]
+                if item_id.startswith(s):
+                    return n,item_id,False
+                else:
+                    if is_hidden_child_match(item_id): # 检查是否有 隐藏 的子元素 能配匹上
+                        return n,item_id,True
+            
+            return None
+        
+        # 从下向上搜，不需要 额外 检查第一个元素
+        # 但，先搜子元素，再搜主版本
+        def search_reverse():# 向上
+            # 从 当前 看到的 内容页面 往上搜
+            print("search reverse")
+            
+            the_first_row,the_last_row = self.new_func_table_get_visible_rows()
+
+            # the_last_row 可能 大一个
+            # range 倒过来。一开头，可能会大一
+            if the_last_row >= len(self.new_var_list_to_show):
+                the_last_row = len(self.new_var_list_to_show) - 1 
+
+            # 选中行 正好在 当前页面
+            if the_first_row < self.new_var_remember_select_row_number < the_last_row:
+                new_row_number = self.new_var_remember_select_row_number - 1
+            else:
+                new_row_number = the_last_row
+
+            print()
+            print("start")
+            print(new_row_number)
+            print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+            # 一开始，就，最前了
+            if new_row_number<=0:return None
+
+            for n in range(new_row_number,-1,-1 ):
+                item_id = self.new_var_list_to_show[n]
+                
+                # 从下往上
+                # 先检隐藏的查子元素
+                if is_hidden_child_match(item_id):
+                    return n,item_id,True
+                else:
+                    if item_id.startswith(s):
+                        return n,item_id,False
+            return None
+
+        if reverse:
+            temp = search_reverse()
+        else:
+            temp = search()
+        
+        # 没有搜到
+        if temp is None:
+            return
+        # 搜到
+        else:
+            level_1_row_number,level_1_item_id , item_hidden_in_level_2_match = temp
+
+        # 结果在第一层
+        # 或者第二层 没有隐藏
+        # 简单点
+        if item_hidden_in_level_2_match == False:
+            new_row_number = level_1_row_number   
+        
+        # 结果在第二层，而且被隐藏
+        # 先插入 隐藏的子元素
+        else:
+            parent_row_number = level_1_row_number
+            parent_id = level_1_item_id
+            
+            # 展开主版本
+            # 列表 插入子元素
+            self.new_var_data_holder.insert_item_s_children(parent_row_number,parent_id)
+            
+            # 列有插入变化，需要刷新
+            self.new_func_table_reload_the_game_list_not_refresh_table_2_collapse()
+            # self.new_func_table_reload_the_game_list(jump_to_select_item=False)
+            
+            # 找到行数
+            if reverse:
+                children_number = len( set(parent_to_clone[parent_id]) & items_have_parent )
+                temp = parent_row_number + children_number
+                for n in range(parent_row_number+children_number,parent_row_number,-1 ):
+                    item_id = self.new_var_list_to_show[n]
+                    if item_id.startswith(s):
+                        temp = n
+                        break
+                new_row_number = temp
+            else:
+                temp = parent_row_number+1
+                print( parent_to_clone[parent_id] )
+                print( set(parent_to_clone[parent_id]) & items_have_parent )
+                print(parent_row_number)
+                print(parent_id)
+                children_number = len( set(parent_to_clone[parent_id]) & items_have_parent )
+                for n in range(parent_row_number+1,parent_row_number+children_number+1 ):
+                    item_id = self.new_var_list_to_show[n]
+                    if item_id.startswith(s):
+                        temp = n
+                        break
+                new_row_number = temp
+
+        print()
+        print("end")
+        print(new_row_number)
+        print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+        self.new_func_table_jump_to_row( new_row_number ,need_refresh=False)
+            
+        item_id = self.new_func_table_get_id_from_row_number(new_row_number)
+        self.new_func_remember_select_row(item_id,new_row_number)
+            # 这个有 refresh
+
+
+
+
+GameList = GameList_level_2_collapse_4
 
 
 if __name__ == "__main__" :
-    passs
+    pass
 
 

@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
-import os
-import re
+# import sys
+# import os
+# import re
 
 
 def save(file_name,data):

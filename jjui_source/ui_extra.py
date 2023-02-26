@@ -1,13 +1,8 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
-import os
+# import sys
+# import os
 import tkinter as tk
 from tkinter import ttk 
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_variable
 from .ui_extra_image_container import Image_container,Image_container_2
@@ -43,7 +38,7 @@ class Extra(ttk.Frame):
         
         # self.new_ui_notebook
         self.new_ui_notebook = ttk.Notebook(parent , takefocus=False,)#width = width
-        self.new_ui_notebook.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
+        self.new_ui_notebook.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
         #self.new_ui_notebook.state(statespec=("readonly",))
         ""
         
@@ -63,7 +58,7 @@ class Extra(ttk.Frame):
         extra_f1.rowconfigure(0,weight=1)
 
         self.new_ui_extra_image_panedwindow = ttk.PanedWindow(extra_f1,orient=tk.VERTICAL)
-        self.new_ui_extra_image_panedwindow.grid(row=0 , column=0 , sticky=(tk.W,tk.N,tk.E,tk.S))
+        self.new_ui_extra_image_panedwindow.grid(row=0 , column=0 , sticky=tk.W+tk.N+tk.E+tk.S,)
         
         
         self.new_ui_image_container_1  = Image_container(self.new_ui_extra_image_panedwindow)
@@ -170,7 +165,7 @@ if __name__ == "__main__" :
     
     #c = Image_container(root)
     c = Extra(root)
-    c.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    c.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     
     root.mainloop()    

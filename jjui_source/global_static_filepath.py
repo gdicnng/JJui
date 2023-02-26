@@ -26,6 +26,10 @@ folder_temporary  = os.path.join(os.curdir,".jjui" )
 # ui 翻译文件所在目录
 folder_language = os.path.join(folder_source_file,"ui_translation" )
 
+# 导入内容，多的话，导出到文件夹
+# 比如，导出内置目录
+folder_export    =   os.path.join(folder_temporary,"out")
+
 # 配置文件
 file_ini_configure              =   os.path.join(folder_temporary ,"jjui.ini")
 if global_variable.gamelist_type == "softwarelist":
@@ -71,7 +75,7 @@ file_xml_mame_softwarelist           =   os.path.join(folder_temporary ,"roms_sl
 
 # 导出文本，用于导出某个列表中的游戏名缩写
 file_txt_export      =   os.path.join(folder_temporary ,"out.txt")
-    
+
 
 # 帮助文档
 file_html_index     = os.path.join(folder_temporary ,"docs","index.html")
@@ -127,25 +131,22 @@ if __name__ == "__main__" :
     # or
     # dir()
     
-    temp =  locals()
-    print()
-    print(temp)
+    temp = locals()
+    #print()
+    #print(temp)
     
     the_keys=sorted(temp.keys())
-    print()
-    print( the_keys )
+    #print()
+    #print( the_keys )
     
     print()
     for x in the_keys:
         if x.startswith("_"):
             pass
-        elif x=="os" :# 导入的库
-           pass
-        elif  x=="temp" or x=="the_keys": # 上面已有的变量
-            pass
-        else:
+        elif type(temp[x])==str:
             print(x.ljust(45),end="")
             print(' ',end='')
             print(temp[x])
     
     print()
+    print("end")

@@ -34,9 +34,9 @@ class Scrollable_Frame_Container(ttk.Frame):
         self.new_ui_canvas.configure(yscrollcommand=self.new_ui_scrollbar_v.set)
         self.new_ui_canvas.configure(xscrollcommand=self.new_ui_scrollbar_h.set)
         
-        self.new_ui_canvas.grid( row=0,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
-        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=(tk.N,tk.S))
-        self.new_ui_scrollbar_h.grid(row=1,column=0,columnspan=2,sticky=(tk.W,tk.E))
+        self.new_ui_canvas.grid( row=0,column=0,sticky=tk.W+tk.N+tk.S+tk.E,)
+        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=tk.N+tk.S)
+        self.new_ui_scrollbar_h.grid(row=1,column=0,columnspan=2,sticky=tk.W+tk.E)
         
         # 滚动窗口
         self.new_ui_scrollable_frame =ttk.Frame(self.new_ui_canvas,)
@@ -98,7 +98,7 @@ class Scrollable_Frame_Container(ttk.Frame):
     # 插入子 ui ，然后 update() 一下，......
     def new_func_return_width(self,):
         width_scrollbar_v = self.new_ui_scrollbar_v.winfo_reqwidth()
-        (x1, y1, x2, y2) = scrollregion=self.new_ui_canvas.bbox("all")
+        (x1, y1, x2, y2) =self.new_ui_canvas.bbox("all")
         return x2 + width_scrollbar_v
     
     # 当 UI 完成后，给所有 子UI ,bind 一下，
@@ -136,7 +136,7 @@ if __name__ == "__main__":
     
     
     a=Scrollable_Frame_Container(root)
-    a.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,),)
+    a.grid(row=0,column=0,sticky=tk.W+tk.N+tk.S+tk.E,)
     b=a.new_ui_scrollable_frame
     
     number = 100

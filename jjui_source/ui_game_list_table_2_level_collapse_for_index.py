@@ -5,24 +5,12 @@
 import time
 
 import tkinter as tk
-import tkinter.ttk as ttk
+# from tkinter import ttk
 
- 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
-
-
-
-from . import global_static_key_word_translation as key_word_translation
-from . import global_static
-from . import global_variable
-#from . import global_static_filepath as the_files # 图标 图片 路径
-
-from . import global_static
-from . import folders_search 
-from . import folders_read 
+# from . import global_static_key_word_translation as key_word_translation
+# from . import global_static
+# from . import global_variable
+# from . import global_static_filepath as the_files # 图标 图片 路径
 
 
 
@@ -35,12 +23,12 @@ GameList_base    = ui_game_list_table_2_level_collapse.GameList
 """
     用游戏列表的结构
     
-            internal_data["mame_version"]   = mame_version
+    internal_data["mame_version"]   = mame_version
     internal_data["columns"]        = columns
     internal_data["machine_dict"]   = machine_dict
     internal_data["set_data"]       = set_data
     internal_data["dict_data"]      = dict_data
-            internal_data["internal_index"] = internal_index
+    internal_data["internal_index"] = internal_index
 """
 class built_index_data():
     def __init__(self,):
@@ -246,7 +234,7 @@ class GameList_for_index(GameList_base):
         self.new_func_refresh_table()
         
         self.new_var_data_for_virtual_event = item_id # 目录用的
-        #global_variable.current_item = item_id  # gamelist 用的
+
         self.event_generate( self.new_var_virtual_event_name_CurrentGame )
 
 

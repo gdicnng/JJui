@@ -9,7 +9,7 @@ root
     接收
         <<StartGame>>
 
-top
+tool bar
     <<GameListChangeColumnsToShow>>
         显示的 列项目 切换：1组，2组，3组
         global_variable.column_group_counter
@@ -28,7 +28,11 @@ top
         self.new_var_data_for_virtual_event_search ,同上
     
     <<GameListSearchClear>>
-
+    
+    快速跳转到
+    <<GameList_Quick_Jump>>
+    <<GameList_Quick_Jump_Reverse>>
+        self.new_var_data_for_virtual_event_quick_jump
 
 index
     <<IndexBeChosen>>
@@ -53,11 +57,16 @@ gamelist
         <<GameListSearchRegular>>
             self.new_var_virtual_event_name_GameListSearchRegular=r'<<GameListSearchRegular>>'
         <<GameListSearchClear>>
-            self.new_var_virtual_event_name_GameListSearchClear=r'<<GameListSearchClear>>'  
+            self.new_var_virtual_event_name_GameListSearchClear=r'<<GameListSearchClear>>' 
+         定位
         <<FindItemById>>
             self.new_var_virtual_event_name_received_from_topbar=r'<<FindItemById>>'
         <<IndexBeChosen>>
             self.new_func_bindings_receive_virtual_event_from_index() 中接收
+        
+        快速跳转到
+        <<GameList_Quick_Jump>>
+        <<GameList_Quick_Jump_Reverse>>            
     生成
         <<CurrentGameListNumber>>
         当前列表数量

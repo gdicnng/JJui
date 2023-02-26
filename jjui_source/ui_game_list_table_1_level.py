@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
+#import sys
 import os
 import re
 import locale
@@ -26,11 +26,6 @@ try:
     bilinear = Image.Resampling.BILINEAR
 except:
     bilinear = Image.BILINEAR
- 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_variable
 from . import global_static_filepath as the_files # 图标 图片 路径
@@ -39,7 +34,7 @@ from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as  Treeview_
 
 from . import misc
 from . import  ui_small_windows
-from .ui_misc import  misc_funcs
+#from .ui_misc import  misc_funcs
 
 
 
@@ -50,7 +45,7 @@ from .ui_misc import  misc_funcs
 #The_Columns_Translation = data_key_word_translation.columns_translation
 
 
-"""
+r"""
     
     表格的特点：
         行比较多
@@ -78,19 +73,19 @@ from .ui_misc import  misc_funcs
         表格本体
         横、竖 滚动条
 
-    ####################################################\
-    #  图标列 \ 第1列标题 \ 第2列标题 \ 第3列标题 \ …… \
-    ####################################################\
-    #         \           \           \          \     \
-    #         \           \           \          \     \
-    #         \           \           \          \     \
+    ####################################################|
+    #  图标列 \ 第1列标题 \ 第2列标题 \ 第3列标题 \ …… |
+    ####################################################|
+    #         \           \           \          \     |
+    #         \           \           \          \     |
+    #         \           \           \          \     |
     #         \           \           \          \    滚
     #         \           \           \          \    动
     #         \           \           \          \    条
-    #         \           \           \          \     \
-    #         \           \           \          \     \
-    #         \           \           \          \     \
-    #----------------滚动条-----------------------------\
+    #         \           \           \          \     |
+    #         \           \           \          \     |
+    #         \           \           \          \     |
+    #----------------滚动条-----------------------------|
     
     
 """
@@ -134,7 +129,7 @@ class Data_Holder_1():
         self.sort_reverse = False
         
         #self.default_sort_key     = "name"
-        self.default_sort_key     = "#0"
+        self.default_sort_key     = "#id"
         
 
         
@@ -211,7 +206,6 @@ class Data_Holder_1():
     # 点击目录 切换列表，用这个
     def generate_new_list_by_id(self,the_id_list,):
         print("generate_new_list")
-        t1=time.time()
         # 生成 列表
         
         # the_id_list 
@@ -220,7 +214,6 @@ class Data_Holder_1():
         
         # 标记重置
         self.flag_search = False
-        
         
         ###
         
@@ -249,22 +242,10 @@ class Data_Holder_1():
             else:
                 the_id_list_new = self.all_set & the_id_list
 
-        t2=time.time()
-        print("generate_new_list,time A:{}".format(t2-t1))
-        
         self.gamelist_to_show = list(the_id_list_new)
         # 转为 list 
         
-        t3=time.time()
-        print("generate_new_list,time B:{}".format(t3-t2))
-        
-        
         self.sort_the_list(self.sort_key , self.sort_reverse)
-        
-        
-        t4=time.time()
-        print("generate_new_list,time C:{}".format(t4-t3))
-        print("generate_new_list,time  :{}".format(t4-t1))
     
     def sort_the_list(self,the_sort_key=None,reverse=False):
         
@@ -290,22 +271,16 @@ class Data_Holder_1():
     def sort_the_list_when_search(self,the_sort_key,reverse):
         print()
         print("   sort 1 level in search")
-        t1 = time.time()
         
         self.func_for_sort_the_list(the_sort_key,reverse,flag_search=True)
         
-        t2 = time.time()
-        print("   sort 1 level in search,time:{}".format(t2-t1))
     #
     def sort_the_list_when_not_search(self,the_sort_key,reverse,):
         print()
         print("   sort 1 level")
-        t1 = time.time()
         
         self.func_for_sort_the_list(the_sort_key,reverse,flag_search=False)
         
-        t2 = time.time()
-        print("   sort 1 level,time:{}".format(t2-t1))
     #
     # for
     # self.sort_the_list_when_not_search()
@@ -317,18 +292,16 @@ class Data_Holder_1():
         else:
             the_id_list = self.gamelist_to_show
         
-        print("   the sort key is : {}".format(the_sort_key))
-        
         #
-        the_index = 0 # 列表的范围从0 开始（空列表，0 都没有）
+        the_index = None
         try:
             the_index = self.internal_data["columns"].index(the_sort_key)
         except:
-            the_index = -1
-            print("   the sort key not found")
+            the_index = None
+            #print("   the sort key not found")
         print("   the sort key's index : {}".format(the_index))
         
-        if the_index == -1:
+        if the_index is None:
             # 范围以外，主要是点击 图标列
             # 直接以 id 排序
             print("   sort by id")
@@ -344,9 +317,6 @@ class Data_Holder_1():
                     def func_for_sort(item_id,temp_dict=self.machine_dict,the_index=the_index):
                         
                         return locale.strxfrm(temp_dict[item_id][the_index])
-
-
-
         
         the_id_list.sort(
                 key=func_for_sort,######
@@ -401,6 +371,15 @@ class Data_Holder_1():
             return len( self.gamelist_to_show_for_search )
         else:
             return len( self.gamelist_to_show )
+
+    # 全部列表
+    def get_current_list_all_id(self,):
+        # 返回 list 或 set
+        if self.flag_search:
+            return self.gamelist_to_show_for_search
+        else:
+            return self.gamelist_to_show
+
 
 # 添加搜索功能
 class Data_Holder_2(Data_Holder_1):
@@ -572,7 +551,14 @@ class Data_Holder_2(Data_Holder_1):
 class Data_Holder_3(Data_Holder_2):
     def __init__(self,internal_data=None,external_index=None):
         super().__init__(internal_data,external_index)
-
+    
+    # 配合，目录编辑
+    # 当前目录，删除选中项
+    # 
+    #
+    # 仅搜索状态，会用到这个函数，
+    # 正常状态，修改原始数据，直接重新生成新列表，简单点
+    #
     def func_for_delete_items_from_current_list(self,items):
         if len(items) == 0 :return
         
@@ -716,10 +702,10 @@ class GameList_0(ttk.Frame):
         self.new_ui_table.configure(xscrollcommand=self.new_ui_scrollbar_h.set)
         self.new_ui_header.configure(xscrollcommand=self.new_ui_scrollbar_h.set)
         
-        self.new_ui_header.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
-        self.new_ui_table.grid( row=1,column=0,sticky=(tk.W,tk.N,tk.S,tk.E,))
-        self.new_ui_scrollbar_v.grid(row=0,column=1,rowspan=3,sticky=(tk.N,tk.S))
-        self.new_ui_scrollbar_h.grid(row=2,column=0,sticky=(tk.W,tk.E))
+        self.new_ui_header.grid(row=0,column=0,sticky=tk.W+tk.N+tk.S+tk.E,)
+        self.new_ui_table.grid( row=1,column=0,sticky=tk.W+tk.N+tk.S+tk.E,)
+        self.new_ui_scrollbar_v.grid(row=0,column=1,rowspan=3,sticky=tk.N+tk.S,)
+        self.new_ui_scrollbar_h.grid(row=2,column=0,sticky=tk.W+tk.E,)
 
     def new_func_bindings(self,):
         pass
@@ -1118,10 +1104,6 @@ class GameList_2(GameList_1):
         
         self.new_var_the_original_gamelist_dict = self.new_var_data_holder.get_the_original_gamelist_dict() # 原始的游戏列表，
     
-
-        
-    
-    
     # 初始化，列项目，
     #   需要显示的列，要包含在其中
     def new_func_set_all_columns(self,columns=None):
@@ -1145,7 +1127,6 @@ class GameList_2(GameList_1):
         # 其它列
         for column in self.new_var_all_columns :# 不含 icon 列
             self.new_var_column_width[column] = default_width
-    
     
     # 初始化，列宽度 设置
     def new_func_set_column_width(self,**kwargs):
@@ -1200,7 +1181,9 @@ class GameList_2(GameList_1):
     #   1 宽度 改变时，需重置此项,head bingdings 里面
     #   2 for
     #     new_func_table_reload_the_game_list()
-    def new_func_refresh_all(self,):
+    def new_func_refresh_all(self,jump_to_row=None):
+        #print("refresh all")
+
         # self.new_var_row_height
         self.new_var_total_width = self.new_func_get_all_columns_width()
         self.new_var_row_numbers = len( self.new_var_list_to_show )
@@ -1224,7 +1207,9 @@ class GameList_2(GameList_1):
                 self.new_var_total_height,
                 ) )
         
-
+        if jump_to_row is not None: # 第0行，也行 
+            print("jump to row:",jump_to_row)
+            self.new_func_table_jump_to_row(jump_to_row,need_refresh=False)
         
         self.new_func_refresh_header()
         
@@ -1235,21 +1220,25 @@ class GameList_2(GameList_1):
     #   当列表切换时，搜索，   切换列表
     #   当列表切换时，搜索 结束， 重置列表
     #   当列表切换时，击点标题 排序 ，列表顺序改变
-    def new_func_table_reload_the_game_list(self,):
+    def new_func_table_reload_the_game_list(self,jump_to_select_item=True):
         self.new_var_list_to_show = self.new_var_data_holder.get_gamelist_to_show()
+        print("")
         print("reload")
-        print(len(self.new_var_list_to_show))
-        
+        #print(len(self.new_var_list_to_show))
         
         number = self.new_var_data_holder.get_current_gamelist_number()
-        
-        print(number)
         
         self.new_var_data_for_CurrentGameListNumber = number
         self.event_generate( self.new_var_virtual_event_name_CurrentGameListNumber )
         
-        self.new_func_refresh_all()
+        row_number = None
         
+        if jump_to_select_item:
+            if global_variable.user_configure_data["keep_track_of_the_select_item"]:
+                item_id = self.new_var_remember_select_row_id
+                row_number = self.new_func_table_find_item(item_id)
+        
+        self.new_func_refresh_all(jump_to_row=row_number)
     
     # 计算总宽度
     # for
@@ -1719,6 +1708,74 @@ class GameList_2(GameList_1):
         item_id   = self.new_var_list_to_show[ row_number ]
         return item_id
 
+    # 查找
+    # 列表，切换时，定位用的
+    #   比如，点击目录，内容切换了
+    def new_func_table_find_item(self,item_id):
+        # return None or row_number
+
+        if item_id is None:
+            return 
+
+        if not self.new_var_list_to_show:
+            return
+
+        row_number = None
+
+        for row in range(  len(self.new_var_list_to_show)  ):
+            if item_id == self.new_func_table_get_id_from_row_number(row):
+                row_number     = row
+                break
+        
+        print()
+        print("table find item row_number:")
+        print(row_number)
+        return row_number
+
+    # 跳转到指定行
+    def new_func_table_jump_to_row(self,row_number,need_refresh=True):
+        if row_number < 0 : return
+        #if not self.new_var_list_to_show : return # 和下一条，有点重复
+        if row_number >= self.new_var_row_numbers : return # 从0开始，要小一个
+        
+        #table   = self.new_ui_table
+        
+        # 表格 显示 高度坐标 范围
+        height  = self.new_ui_table.winfo_height()
+        
+        # 高度上，能显示全部表格内容：
+        if height >= self.new_var_total_height: return
+        
+        #print()
+        #print("jump to row:{}".format(row_number))
+        
+        # 指定的行 高度坐标 范围 
+        h1 = row_number * self.new_var_row_height
+        h2 = h1 + self.new_var_row_height
+        
+        
+        y=(h1+h2-height)/2 # 显示在中间
+            
+            ####  顶点处：(h1+h1)/2  - height/2
+            ####
+            ####  中心处：(h1+h1)/2 
+            ####
+            ####  末尾处：(h1+h1)/2  + height/2
+        
+        
+        
+        # 坐标 转为 比例 0-1
+        y=y/self.new_var_total_height
+        
+        if   y < 0 : y=0
+        elif y > 1 : y=1
+        
+        self.new_ui_table.yview(tk.MOVETO,y)
+        
+        if need_refresh:
+            self.new_func_refresh_table()
+
+
 # header refresh
 class GameList_3(GameList_2):
 
@@ -2114,7 +2171,7 @@ class GameList_4(GameList_3):
         header=self.new_ui_header
         id_in_cavans = header.find_withtag(tk.CURRENT)# 这个反回的是一个列表
         id_in_cavans = id_in_cavans[0] # canvas 内的元素，id 是一个整数
-        print("id_in_cavans: {} ".format(id_in_cavans))
+        #print("id_in_cavans: {} ".format(id_in_cavans))
         tags = header.gettags(id_in_cavans)
         #('header_vertical_line', 'column_id ????', 'current')
         
@@ -2487,48 +2544,7 @@ class GameList_6(GameList_5):
         else:
             self.new_ui_table.yview(tk.MOVETO,a)
 
-    # 跳转到指定行
-    def new_func_table_jump_to_row(self,row_number,need_refresh=True):
-        if row_number < 0 : return
-        #if not self.new_var_list_to_show : return # 和下一条，有点重复
-        if row_number >= self.new_var_row_numbers : return # 从0开始，要小一个
-        
-        #table   = self.new_ui_table
-        
-        # 表格 显示 高度坐标 范围
-        height  = self.new_ui_table.winfo_height()
-        
-        # 高度上，能显示全部表格内容：
-        if height >= self.new_var_total_height: return
-        
-        #print()
-        #print("jump to row:{}".format(row_number))
-        
-        # 指定的行 高度坐标 范围 
-        h1 = row_number * self.new_var_row_height
-        h2 = h1 + self.new_var_row_height
-        
-        
-        y=(h1+h2-height)/2 # 显示在中间
-            
-            ####  顶点处：(h1+h1)/2  - height/2
-            ####
-            ####  中心处：(h1+h1)/2 
-            ####
-            ####  末尾处：(h1+h1)/2  + height/2
-        
-        
-        
-        # 坐标 转为 比例 0-1
-        y=y/self.new_var_total_height
-        
-        if   y < 0 : y=0
-        elif y > 1 : y=1
-        
-        self.new_ui_table.yview(tk.MOVETO,y)
-        
-        if need_refresh:
-            self.new_func_refresh_table()
+
 
 
 # 右键 菜单
@@ -2543,21 +2559,42 @@ class GameList_7(GameList_6):
         # 编辑 外部 目录
             # 当前目录，被编辑过
             #    在搜索状态，清空搜索时，如果有这个标记，重载数据时 需要 重新计算
+            #    在搜索状态，重新搜索时，如果有这个标记，重载列表，再搜索
         self.new_var_flag_current_index_be_edited = False
             # 需要重新定义 reload 函数、接收目录信号函数
+            #   在 每一次 接收目录信号函数 中，重置标记为 False
             #
-            # 在 每一次 接收目录信号函数 中，重置标记为 False
-            # 每一次编辑当前目录时，重置标记为 False
-                # 只是 删減 当前目录 时 才有
-                # 添加，不影响
-                    # 因为能看到的都是当前目录，
-                    # 不需要 添加到 当前 目录 这种 操作，如果添加时选中当前目录，直接 return
-                    # 只能是 添加到 别的目录
-            # 所以，
-            # 需要在 下面 接收 <<GameListSearchClear>> 信号时，修改一下
-            # 每一次编辑当前目录时，重置标记为 False
-            # 每一次修改，重置目录记录为 None （self.new_var_remember_last_index_data）
-        ""
+            # 只是 编辑 当前目录 时 才有 情况
+            # 编辑 其它 目录，不影响
+            #   因为 其它目录，重新点击时，自然会重新读取数据
+            #
+            # 1
+            # 修改目录中的数据
+            #
+            # 2.1
+            # 如果是普通状态
+            #   重置目录记录为 None （self.new_var_remember_last_index_data）
+            #       这样，点击同样的目录，才会重新获取内容
+            #   重新 获取目录内容 生成新列表
+            #   这个标记，就，不用管了
+            #
+            # 2.2
+            # 如果是搜索状态
+            #   每一次编辑当前目录时，标记为 True
+            #   每一次修改，重置目录记录为 None （self.new_var_remember_last_index_data）
+            #       这样，点击同样的目录，才会重新获取内容
+            #   修改 搜索状态列表，重载列表、刷新列表
+            #
+            #   之后，
+            #       在搜索状态，清空搜索时，如果有此标记
+            #           重置目录记录为 None （self.new_var_remember_last_index_data）
+            #               这样，点击同样的目录，才会重新获取内容
+            #           重新 获取目录内容
+            #       在搜索状态，如果有此标记，并继续搜索 （普通搜索 或 正则搜索）
+            #           重置目录记录为 None （self.new_var_remember_last_index_data）
+            #               这样，点击同样的目录，才会重新获取内容
+            #           重新 获取目录内容
+            #           之后，再搜索            
 
     def new_func_ui(self,):
         super().new_func_ui()
@@ -2574,7 +2611,17 @@ class GameList_7(GameList_6):
         #table.tag_bind("background_rectangle",'<Button-3>', self.new_func_table_binding_right_click,)
         
         self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  self.new_func_table_show_pop_up_menu,"+",)
-    
+
+    # derived
+    #   收到 目录 变化 信号 ，游戏列表切换
+    #   添加一个标记
+    def new_func_bindings_receive_virtual_event_from_index(self,event):
+        super().new_func_bindings_receive_virtual_event_from_index(event)
+        
+        ####################
+        # 重置 标记
+        self.new_var_flag_current_index_be_edited = False 
+
     def new_func_ui_pop_up_menu_for_table(self,):
         self.new_ui_pop_up_menu_for_table = tk.Menu(self , tearoff=0)
         
@@ -2680,7 +2727,7 @@ class GameList_7(GameList_6):
         
         
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("删减当前目录，删除选中内容。"),
+                label=_("目录修改，当前目录，删除选中内容。"),
                 command = self.new_func_table_pop_up_menu_callback_delete_items_from_remembered_index,
                     )
         # 记录 index
@@ -2688,10 +2735,39 @@ class GameList_7(GameList_6):
         
         
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_("目录修改，从指定目录删除选中内容"),
+                label=_("目录修改，选择目录，删除选中内容"),
                 command = self.new_func_table_pop_up_menu_callback_delete_items_from_a_index,
                     )
         
+        menu_current_list_other_option = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
+        self.new_ui_pop_up_menu_for_table.add_cascade(
+            label=_("其它"),
+            menu=menu_current_list_other_option,
+        )
+        # 记录 index
+        self.new_var_table_menu_index_for_current_list_cascade = self.new_ui_pop_up_menu_for_table.index(tk.END)
+
+        menu_current_list_other_option.add_separator()
+
+        menu_current_list_other_option.add_command(
+            label=_("当前目录，删除所有主版本"),
+            command=self.new_func_table_pop_up_menu_callback_delete_all_parent_items_incurrent_index,
+        )
+        menu_current_list_other_option.add_command(
+            label=_("当前目录，删除所有克隆版本"),
+            command=self.new_func_table_pop_up_menu_callback_delete_all_clone_items_incurrent_index,
+        )
+        menu_current_list_other_option.add_separator()
+        menu_current_list_other_option.add_command(
+            label=_("当前目录，为所有主版本，添加其副版本"),
+            command=self.new_func_table_pop_up_menu_callback_add_all_items_clone_incurrent_index,
+        )
+        menu_current_list_other_option.add_command(
+            label=_("当前目录，为所有副版本，添加其主版本"),
+            command=self.new_func_table_pop_up_menu_callback_add_all_items_parent_incurrent_index,
+        )
+        menu_current_list_other_option.add_separator()
+
         # 显示信息
         # id
         # translation
@@ -2837,17 +2913,22 @@ class GameList_7(GameList_6):
                 flag_current_list_editable = True
         
         the_menu  = self.new_ui_pop_up_menu_for_table
+        # 当前目录 删除
         the_index = self.new_var_table_menu_index_for_delete_from_current_list
-        
-        the_menu.entryconfig( the_index ,label = _("删减当前目录，删除选中内容。")+the_last_string ,)
-        
+        the_menu.entryconfig( the_index ,label = _("目录修改，当前目录，删除选中内容。")+the_last_string ,)
+        # 当前目录，其它
+        the_index_other = self.new_var_table_menu_index_for_current_list_cascade
+        the_menu.entryconfig( the_index_other ,label = _("其它：")+the_last_string ,)
+
+
         if flag_current_list_editable:
             #print("editable")
             the_menu.entryconfig( the_index, state="normal",)
+            the_menu.entryconfig( the_index_other, state="normal",)
         else:
             #print("not editable")
             the_menu.entryconfig( the_index, state="disabled",)
-        
+            the_menu.entryconfig( the_index_other, state="disabled",)
         # id
         # description
         # translation
@@ -3024,6 +3105,22 @@ class GameList_7(GameList_6):
         # 后面修改
         pass        
 
+    # 目录编辑，当前目录，删除所有主版本
+    def new_func_table_pop_up_menu_callback_delete_all_parent_items_incurrent_index(self,):
+        # 后面添加
+        pass
+    # 目录编辑，当前目录，删除所有clone
+    def new_func_table_pop_up_menu_callback_delete_all_clone_items_incurrent_index(self,):
+        pass
+    # 目录编辑，当前目录，添加所有主版本
+    def new_func_table_pop_up_menu_callback_add_all_items_parent_incurrent_index(self,):
+        # 后面添加
+        pass
+    # 目录编辑，当前目录，添加所有clone
+    def new_func_table_pop_up_menu_callback_add_all_items_clone_incurrent_index(self,):
+        # 后面添加
+        pass    
+
     # 右键菜单，显示的 英文 、中文 等，点击 复制
     def new_func_table_pop_up_menu_callback_click_to_copy_content(self,clounm):
         
@@ -3048,9 +3145,9 @@ class GameList_7(GameList_6):
         else:
             return
         
-
         temp = the_menu.entrycget( the_menu_index, "label",)
         print( temp )
+        # 复制到剪切板
         self.clipboard_clear()
         self.clipboard_append(temp)
 
@@ -3095,17 +3192,23 @@ class GameList_8(GameList_7):
         string_for_search = widget.new_var_data_for_virtual_event_search
         print(string_for_search)
         
+        # 如果之前在搜索状态，列表被编辑过
+        if self.new_var_flag_current_index_be_edited:
+            # 重置 记录
+            self.new_var_remember_last_index_data = None 
+            # 重新请求目录信号
+            self.event_generate('<<RequestForIndexInfo>>')
+
         if self.new_var_data_holder.is_current_list_empty():
             print("empty list ,no need to search")
             return # 空，不用搜
-        
+
         # 搜索标记
         self.new_var_data_holder.set_the_flag_search(True)
         # 重置 标记
         self.new_var_remember_select_row_number = -1
         #self.new_var_remember_select_row_id     = None
-        
-        
+
         self.new_var_data_holder.generate_new_list_by_search( string_for_search )
         
         self.new_func_table_reload_the_game_list()
@@ -3117,17 +3220,22 @@ class GameList_8(GameList_7):
         string_for_search = widget.new_var_data_for_virtual_event_search
         print(string_for_search)
         
-        
+        # 如果之前在搜索状态，列表被编辑过
+        if self.new_var_flag_current_index_be_edited:
+            # 重置 记录
+            self.new_var_remember_last_index_data = None 
+            # 重新请求目录信号
+            self.event_generate('<<RequestForIndexInfo>>')
+
         if self.new_var_data_holder.is_current_list_empty():
             print("empty list ,no need to search")
             return # 空，不用搜
-        
+
         # 搜索标记
         self.new_var_data_holder.set_the_flag_search(True)
         # 重置 标记
         self.new_var_remember_select_row_number = -1
         #self.new_var_remember_select_row_id     = None
-        
         
         self.new_var_data_holder.generate_new_list_by_search_regular(string_for_search)
         
@@ -3143,6 +3251,7 @@ class GameList_8(GameList_7):
         self.new_var_remember_select_row_number = -1
         #self.new_var_remember_select_row_id     = None
         
+        # 如果之前在搜索状态，列表被编辑过
         if self.new_var_flag_current_index_be_edited:
             # 重置 记录
             self.new_var_remember_last_index_data = None 
@@ -3171,7 +3280,8 @@ class GameList_8(GameList_7):
                     print("jump to row number :")
                     print(self.new_var_remember_select_row_number)
                     self.new_func_table_jump_to_row(
-                            self.new_var_remember_select_row_number)
+                            self.new_var_remember_select_row_number,
+                            need_refresh=False)
                     self.new_func_remember_select_row(item_id,self.new_var_remember_select_row_number)
                     return
         
@@ -3191,8 +3301,12 @@ class GameList_8(GameList_7):
             print("found")
             print("jump to row number :")
             print(row_remember)
-            self.new_func_table_jump_to_row(row_remember)
+            self.new_func_table_jump_to_row(row_remember,need_refresh=False)
             self.new_func_remember_select_row(item_id,row_remember)
+    
+
+
+
 
 # 开始游戏，发送信号
 class GameList_9(GameList_8):
@@ -3437,28 +3551,21 @@ class GameList_11(GameList_10):
     def __init__(self, parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
     
-
-    # derived
-    #   收到 目录 变化 信号 ，游戏列表切换
-    #   添加一个标记
-    def new_func_bindings_receive_virtual_event_from_index(self,event):
-        super().new_func_bindings_receive_virtual_event_from_index(event)
-        
-        ####################
-        # 重置 标记
-        self.new_var_flag_current_index_be_edited = False
-
-
     # derived
     #   目录编辑，当前选中目录，删除
+    # *******
     def new_func_table_pop_up_menu_callback_delete_items_from_remembered_index(self,):
         
         # 1
-            # 当前列表中，删除 选中内容
+            # 对应目录数据中，external_index ，删除 选中内容
         # 2
-            # 具体数据中，external_index ，删除 选中内容
-        # 3
-            # 重载列表
+            # 如果是正常状态
+                # 重新读取目录，生成新列表
+
+            # 如果是搜索状态，
+                # 标记
+                # 搜索 结果 删除
+                # 重载列表
         external_index = global_variable.external_index
         
         if self.new_var_remember_last_index_data is None :
@@ -3470,10 +3577,7 @@ class GameList_11(GameList_10):
         event_info = self.new_var_remember_last_index_data 
 
         if event_info[0]=="external_ini_file":# 外置目录
-            if event_info[1] in global_variable.external_index_files_editable:
-                
-                self.new_var_flag_current_index_be_edited = True
-                
+            if event_info[1] in global_variable.external_index_files_editable: # 可编辑
                 
                 # 记录，修改过的文件
                 global_variable.external_index_files_be_edited.add( event_info[1]  )
@@ -3481,15 +3585,9 @@ class GameList_11(GameList_10):
                 print()
                 for x in global_variable.external_index_files_be_edited:
                     print(x)
-            
-                ###################
-                # 当前列表中，删除 选中内容
-                # self.new_var_remember_selected_items
-                self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
-        
-        
+
                 ##############
-                # 具体数据中，external_index ，删除 选中内容        
+                # 对应目录数据中，external_index ，删除 选中内容        
                 if len(event_info)==2:# 第一层
                     temp = external_index[event_info[1]]["ROOT_FOLDER"]
                     new_list = sorted( set(temp)  -  self.new_var_remember_selected_items  )
@@ -3498,10 +3596,31 @@ class GameList_11(GameList_10):
                     temp = external_index[event_info[1]][event_info[2]]
                     new_list = sorted( set(temp)  -  self.new_var_remember_selected_items  )
                     external_index[event_info[1]][event_info[2]] = new_list
-        
-                ################
-                ## 重载列表
-                self.new_func_table_reload_the_game_list()
+
+                # 正常状态
+                if not self.new_var_data_holder.flag_search:
+                    
+                    # 重新 读取 目录 内容
+                    #   目录信号记录，重置
+                    self.new_var_remember_last_index_data = None 
+                    #   重新请求目录信号
+                    self.event_generate('<<RequestForIndexInfo>>')                        
+                
+                # 搜索状态
+                else:
+                    # 标记
+                    #   如果继续搜索，用到
+                    #   如果搜索清空，用到
+                    self.new_var_flag_current_index_be_edited = True
+
+                    ###################
+                    # 当前列表中，删除 选中内容
+                    # self.new_var_remember_selected_items
+                    self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+            
+                    ################
+                    ## 重载列表
+                    self.new_func_table_reload_the_game_list(jump_to_select_item=False)
     
     # derived
     #   目录编辑，添加选中项 到 某个 目录中
@@ -3596,7 +3715,7 @@ class GameList_11(GameList_10):
             
         
         button = ttk.Button(window,text = _("确认") ,command=add_items_to_select_index)
-        button.grid(row=1,column=0,sticky=(tk.E,))
+        button.grid(row=1,column=0,sticky=tk.E,)
         
         tree.configure(columns=["file",])
         tree.heading("#0", text=_("目录" )     )
@@ -3624,9 +3743,8 @@ class GameList_11(GameList_10):
 
         window.wait_window()
 
-    
     # derived
-    # 目录编辑，添加选中项 到 某个 目录中
+    # 目录编辑，删除
     def new_func_table_pop_up_menu_callback_delete_items_from_a_index(self,):
         # 1
             # 建一个 Treeview ，方便 选择 添加到 哪一个 项目
@@ -3643,7 +3761,7 @@ class GameList_11(GameList_10):
         
         window = tk.Toplevel()
         window.resizable(width=True, height=True)
-        window.title(_("添加到 自定义目录"))
+        window.title(_("选择 自定义目录"))
         
         size = "400x300" 
         window.geometry( size )
@@ -3722,7 +3840,7 @@ class GameList_11(GameList_10):
             
         
         button = ttk.Button(window,text = _("确认") ,command=delete_items_to_select_index)
-        button.grid(row=1,column=0,sticky=(tk.E,))
+        button.grid(row=1,column=0,sticky=tk.E,)
         
         tree.configure(columns=["file",])
         tree.heading("#0", text=_("目录" )     )
@@ -3753,6 +3871,319 @@ class GameList_11(GameList_10):
         
         window.wait_window()
 
+    # derived
+    # 目录编辑，当前目录，删除所有 主版本
+    def new_func_table_pop_up_menu_callback_delete_all_parent_items_incurrent_index(self,):
+        print("delete all parent")
+        # 1
+            # 对应目录数据中，external_index ，删除 选中内容
+        # 2
+            # 如果是正常状态
+                # 重新读取目录，生成新列表
+
+            # 如果是搜索状态，
+                # 标记
+                # 搜索 结果 删除
+                # 重载列表
+        external_index = global_variable.external_index
+        
+        if self.new_var_remember_last_index_data is None :
+            return
+        
+        the_id_list = self.new_var_data_holder.get_current_list_all_id()
+        if not the_id_list :
+            return
+
+        the_parent_to_be_delete = set( the_id_list ) & global_variable.set_data["parent_set"]
+        if not the_parent_to_be_delete:
+            return
+        the_items_to_be_delete = the_parent_to_be_delete
+
+        event_info = self.new_var_remember_last_index_data 
+
+        if event_info[0]=="external_ini_file":# 外置目录
+            if event_info[1] in global_variable.external_index_files_editable: # 可编辑
+                
+                # 记录，修改过的文件
+                global_variable.external_index_files_be_edited.add( event_info[1]  )
+                
+                print()
+                for x in global_variable.external_index_files_be_edited:
+                    print(x)
+ 
+                ##############
+                # 对应目录数据中，external_index ，删除 选中内容
+                id_1 = event_info[1]
+                id_2 = None # 默认 
+                if len(event_info)==3:# 第二层
+                    id_2 = event_info[2]
+                temp = misc.get_id_list_from_external_index(id_1,id_2)
+                new_list = sorted( set(temp)  -  the_items_to_be_delete  )
+                misc.set_id_list_for_external_index(new_list,id_1,id_2)
+
+                # 正常状态
+                if not self.new_var_data_holder.flag_search:
+                    
+                    # 重新 读取 目录 内容
+                    #   目录信号记录，重置
+                    self.new_var_remember_last_index_data = None 
+                    #   重新请求目录信号
+                    self.event_generate('<<RequestForIndexInfo>>')                        
+                
+                # 搜索状态
+                else:
+                    # 标记
+                    #   如果继续搜索，用到
+                    #   如果搜索清空，用到
+                    self.new_var_flag_current_index_be_edited = True
+
+                    ###################
+                    # 当前列表中，删除 选中内容
+                    # self.new_var_remember_selected_items
+                    self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+            
+                    ################
+                    ## 重载列表
+                    self.new_func_table_reload_the_game_list(jump_to_select_item=False)
+
+    # derived
+    # 目录编辑，当前目录，删除所 克隆版本
+    def new_func_table_pop_up_menu_callback_delete_all_clone_items_incurrent_index(self,):
+        print("delete all colne")
+        # 1
+            # 对应目录数据中，external_index ，删除 选中内容
+        # 2
+            # 如果是正常状态
+                # 重新读取目录，生成新列表
+
+            # 如果是搜索状态，
+                # 标记
+                # 搜索 结果 删除
+                # 重载列表
+        external_index = global_variable.external_index
+        
+        if self.new_var_remember_last_index_data is None :
+            return
+        
+        the_id_list = self.new_var_data_holder.get_current_list_all_id()
+        if not the_id_list :
+            return
+
+        the_clone_to_be_delete = set( the_id_list ) & global_variable.set_data["clone_set"]
+        if not the_clone_to_be_delete:
+            return
+        the_items_to_be_delete = the_clone_to_be_delete
+
+        event_info = self.new_var_remember_last_index_data 
+
+        if event_info[0]=="external_ini_file":# 外置目录
+            if event_info[1] in global_variable.external_index_files_editable: # 可编辑
+                
+                # 记录，修改过的文件
+                global_variable.external_index_files_be_edited.add( event_info[1]  )
+                
+                print()
+                for x in global_variable.external_index_files_be_edited:
+                    print(x)
+ 
+                ##############
+                # 对应目录数据中，external_index ，删除 选中内容
+                id_1 = event_info[1]
+                id_2 = None # 默认 
+                if len(event_info)==3:# 第二层
+                    id_2 = event_info[2]
+                temp = misc.get_id_list_from_external_index(id_1,id_2)
+                new_list = sorted( set(temp)  -  the_items_to_be_delete  )
+                misc.set_id_list_for_external_index(new_list,id_1,id_2)
+
+                # 正常状态
+                if not self.new_var_data_holder.flag_search:
+                    
+                    # 重新 读取 目录 内容
+                    #   目录信号记录，重置
+                    self.new_var_remember_last_index_data = None 
+                    #   重新请求目录信号
+                    self.event_generate('<<RequestForIndexInfo>>')                        
+                
+                # 搜索状态
+                else:
+                    # 标记
+                    #   如果继续搜索，用到
+                    #   如果搜索清空，用到
+                    self.new_var_flag_current_index_be_edited = True
+
+                    ###################
+                    # 当前列表中，删除 选中内容
+                    # self.new_var_remember_selected_items
+                    self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+            
+                    ################
+                    ## 重载列表
+                    self.new_func_table_reload_the_game_list(jump_to_select_item=False)
+
+    # derived
+    # 目录编辑，当前目录，添加所有主版本
+    def new_func_table_pop_up_menu_callback_add_all_items_parent_incurrent_index(self,):
+        print("add items' parent")
+        # 1
+            # 对应目录数据中，external_index ，添加
+        # 2
+            # 如果是正常状态
+                # 重新读取目录，生成新列表
+
+            # 如果是搜索状态，
+                # 标记
+                # 搜索 结果 删除
+                # 重载列表
+        external_index = global_variable.external_index
+        
+        if self.new_var_remember_last_index_data is None :
+            return
+        
+        the_id_list = self.new_var_data_holder.get_current_list_all_id()
+        if not the_id_list :
+            return
+
+        the_clone_set = set( the_id_list ) & global_variable.set_data["clone_set"]
+        the_parent_list = []
+        for clone_id in the_clone_set:
+            if clone_id in global_variable.dict_data["clone_to_parent"]:
+                parent_id = global_variable.dict_data["clone_to_parent"][clone_id]
+                the_parent_list.append( parent_id )
+        the_parent_set = set( the_parent_list ) & global_variable.set_data["all_set"]
+        the_parent_set_to_be_add = the_parent_set - set( the_id_list ) # 去掉原有的
+        if not the_parent_set_to_be_add:
+            return
+        the_items_to_be_add = the_parent_set_to_be_add
+
+        event_info = self.new_var_remember_last_index_data 
+
+        if event_info[0]=="external_ini_file":# 外置目录
+            if event_info[1] in global_variable.external_index_files_editable: # 可编辑
+                
+                # 记录，修改过的文件
+                global_variable.external_index_files_be_edited.add( event_info[1]  )
+                
+                print()
+                for x in global_variable.external_index_files_be_edited:
+                    print(x)
+ 
+                ##############
+                # 对应目录数据中，external_index ，添加
+                id_1 = event_info[1]
+                id_2 = None # 默认 
+                if len(event_info)==3:# 第二层
+                    id_2 = event_info[2]
+                temp = misc.get_id_list_from_external_index(id_1,id_2)
+                new_list = sorted( set(temp)  |  the_items_to_be_add  )
+                misc.set_id_list_for_external_index(new_list,id_1,id_2)
+
+                # 正常状态
+                if not self.new_var_data_holder.flag_search:
+                    
+                    # 重新 读取 目录 内容
+                    #   目录信号记录，重置
+                    self.new_var_remember_last_index_data = None 
+                    #   重新请求目录信号
+                    self.event_generate('<<RequestForIndexInfo>>')                        
+                
+                # 搜索状态
+                else:
+                    # 标记
+                    #   如果继续搜索，用到
+                    #   如果搜索清空，用到
+                    self.new_var_flag_current_index_be_edited = True
+
+                    ###################
+                    # 当前列表中，删除 选中内容
+                    # self.new_var_remember_selected_items
+                    self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+            
+                    ################
+                    ## 重载列表
+                    self.new_func_table_reload_the_game_list(jump_to_select_item=False)
+
+    # derived
+    # 目录编辑，当前目录，添加所有clone
+    def new_func_table_pop_up_menu_callback_add_all_items_clone_incurrent_index(self,):
+        print("add items' clones")
+        # 1
+            # 对应目录数据中，external_index ，添加
+        # 2
+            # 如果是正常状态
+                # 重新读取目录，生成新列表
+
+            # 如果是搜索状态，
+                # 标记
+                # 搜索 结果 删除
+                # 重载列表
+        external_index = global_variable.external_index
+        
+        if self.new_var_remember_last_index_data is None :
+            return
+        
+        the_id_list = self.new_var_data_holder.get_current_list_all_id()
+        if not the_id_list :
+            return
+
+        parent_set = set( the_id_list ) & global_variable.set_data["parent_set"]
+        the_clone_list = []
+        for parent_id in parent_set:
+            if parent_id in global_variable.dict_data["parent_to_clone"]:
+                child_list = global_variable.dict_data["parent_to_clone"][parent_id]
+                the_clone_list.extend( child_list )
+        the_clone_set = set( the_clone_list ) & global_variable.set_data["all_set"]
+        the_clone_set_to_be_add = the_clone_set - set( the_id_list ) # 去掉原有的
+        if not the_clone_set_to_be_add:
+            return
+        the_items_to_be_add = the_clone_set_to_be_add
+
+        event_info = self.new_var_remember_last_index_data 
+
+        if event_info[0]=="external_ini_file":# 外置目录
+            if event_info[1] in global_variable.external_index_files_editable: # 可编辑
+                
+                # 记录，修改过的文件
+                global_variable.external_index_files_be_edited.add( event_info[1]  )
+                
+                print()
+                for x in global_variable.external_index_files_be_edited:
+                    print(x)
+ 
+                ##############
+                # 对应目录数据中，external_index ，添加
+                id_1 = event_info[1]
+                id_2 = None # 默认 
+                if len(event_info)==3:# 第二层
+                    id_2 = event_info[2]
+                temp = misc.get_id_list_from_external_index(id_1,id_2)
+                new_list = sorted( set(temp)  |  the_items_to_be_add  )
+                misc.set_id_list_for_external_index(new_list,id_1,id_2)
+
+                # 正常状态
+                if not self.new_var_data_holder.flag_search:
+                    
+                    # 重新 读取 目录 内容
+                    #   目录信号记录，重置
+                    self.new_var_remember_last_index_data = None 
+                    #   重新请求目录信号
+                    self.event_generate('<<RequestForIndexInfo>>')                        
+                
+                # 搜索状态
+                else:
+                    # 标记
+                    #   如果继续搜索，用到
+                    #   如果搜索清空，用到
+                    self.new_var_flag_current_index_be_edited = True
+
+                    ###################
+                    # 当前列表中，删除 选中内容
+                    # self.new_var_remember_selected_items
+                    self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+            
+                    ################
+                    ## 重载列表
+                    self.new_func_table_reload_the_game_list(jump_to_select_item=False)
 
 # 按键 1 2 3 4 5 6 7 8 9
 class GameList_12(GameList_11):
@@ -3784,9 +4215,7 @@ class GameList_12(GameList_11):
         self.bind("<Control-KeyPress-8>",self.new_func_table_binding_key_ctrl_1_to_9)
         self.bind("<Control-KeyPress-9>",self.new_func_table_binding_key_ctrl_1_to_9)
         self.bind("<Control-KeyPress-0>",self.new_func_table_binding_key_ctrl_1_to_9)
-        
-
-
+    
     def new_func_table_binding_key_1_to_9(self,event):
         # 添加 0
         print()
@@ -3842,12 +4271,136 @@ class GameList_12(GameList_11):
         self.event_generate(self.new_var_virtual_event_name_StartGame)
 
 
+# 快速跳转，
+#   仅配匹开头的字符
+#   搜索栏处，按 ↑、 ↓ ，查找到第一个符合的，并跳转到过去
+class GameList_13(GameList_12):
+
+    def __init__(self, parent,*args,**kwargs):
+        super().__init__(parent,*args,**kwargs)
+
+    def new_func_bindings_for_receive_virtual_event(self,):
+        super().new_func_bindings_for_receive_virtual_event()
+        
+        # 接收 toolbar 发送的 信号
+        self.bind_all("<<GameList_Quick_Jump>>",self.new_func_bindings_receive_virtual_event_for_quick_jump)
+        self.bind_all("<<GameList_Quick_Jump_Reverse>>",
+            lambda event:self.new_func_bindings_receive_virtual_event_for_quick_jump(event,reverse=True)
+            )
+    
+    def new_func_bindings_receive_virtual_event_for_quick_jump(self,event,reverse=False,):
+        print()
+        print("quik jump")
+        widget  = event.widget
+        string_for_search = widget.new_var_data_for_virtual_event_quick_jump
+        self.new_func_table_quick_jump_down_by_string_header(string_for_search,reverse)
+
+    # 仅配匹 字符串 开头
+    def new_func_table_quick_jump_down_by_string_header(self,a_string,reverse=False):
+        
+        s=a_string.strip().lower()
+
+        if not s : return
+
+        print(s)
+        print("reverse",reverse)
+
+        if not self.new_var_list_to_show : 
+            return
+
+        if len(self.new_var_list_to_show)==1 :
+            return
+            # 就一个，不用搜
+
+        def search():# 向下搜索
+            # 从 当前 看到的 内容页面 往下搜
+            print("search")
+
+            the_first_row,the_last_row = self.new_func_table_get_visible_rows()
+            # the_last_row 可能 大一个
+
+            new_row_number = the_first_row
+
+            # 选中行 正好在 当前页面
+            if the_first_row <= self.new_var_remember_select_row_number < the_last_row:
+                new_row_number = self.new_var_remember_select_row_number + 1 # 加一，跳过原来的项目
+            else:
+                new_row_number = the_first_row
+
+            print()
+            print("start")
+            print(new_row_number)
+            print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+            # 最后了
+            if new_row_number>= len(self.new_var_list_to_show):
+                return None
+            
+            for n in range(new_row_number,len(self.new_var_list_to_show) ):
+                item_id = self.new_var_list_to_show[n]
+                if item_id.startswith(s):
+                    return n
+            
+            return None
+        def search_reverse():# 向上
+            # 从 当前 看到的 内容页面 往上搜
+            print("search reverse")
+            
+            the_first_row,the_last_row = self.new_func_table_get_visible_rows()
+            # the_last_row 可能 大一个
+            if the_last_row >= len(self.new_var_list_to_show):
+                the_last_row = len(self.new_var_list_to_show) - 1 
+
+            new_row_number = the_last_row
+
+            # 选中行 正好在 当前页面
+            if the_first_row < self.new_var_remember_select_row_number < the_last_row:
+                new_row_number = self.new_var_remember_select_row_number-1
+            else:
+                new_row_number = the_last_row
+
+            print()
+            print("start")
+            print(new_row_number)
+            print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+            # 最前了
+            if new_row_number<=0:
+                return None
+            for n in range(new_row_number,-1,-1 ):
+                item_id = self.new_var_list_to_show[n]
+                if item_id.startswith(s):
+                    return n
+            return None
+
+        
+        if reverse:
+            new_row_number = search_reverse()
+        else:
+            new_row_number = search()
+
+        if new_row_number is None: 
+            return
+
+        print()
+        print("end")
+        print(new_row_number)
+        print(self.new_func_table_get_id_from_row_number(new_row_number))
+
+        self.new_func_table_jump_to_row( new_row_number ,need_refresh=False)
+            # 这个 退出的 条件比较多，可能到不了 refresh，干脆不用 refresh
+            # 放前面
+            
+        item_id = self.new_func_table_get_id_from_row_number(new_row_number)
+        self.new_func_remember_select_row(item_id,new_row_number)
+            # 这个必然 refresh
+            # 放后面
 
 
 # 99
 # 将 focus 留在 列表 里
 # 显示 ctrl + i 
-class GameList_99(GameList_12):
+class GameList_99(GameList_13):
 
     def __init__(self, parent,*args,**kwargs):
         
@@ -3870,7 +4423,7 @@ class GameList_99(GameList_12):
         # 查看一些信息
         #self.bind_all('<Alt-KeyPress-i>',self.new_func_binding_show_info,"+")
         
-        #self.bind('<Control-KeyPress-i>',self.new_func_binding_show_info,)
+        self.bind('<Control-KeyPress-i>',self.new_func_binding_show_info,)
         #self.bind('<Control-KeyPress-i>',self.new_func_show_search_flag,"+")
 
         #self.bind('<Control-KeyPress-p>',self.new_func_find_root_window)
@@ -3910,7 +4463,10 @@ class GameList_99(GameList_12):
         #    print(event.char)
         
         #self.new_ui_table.bind("<Any-KeyPress>",test,"+")
-        ""
+
+        # 复制选中行到剪切板
+        self.bind('<Control-KeyPress-c>',self.new_func_binding_copy_a_row_content,)
+        self.bind('<Control-KeyPress-C>',self.new_func_binding_copy_a_row_content,)
     # 多列表切换时，
     #   当列表，重新显示时，需要重新做的一些
     def new_func_show_gamelist_again(self,):
@@ -3940,7 +4496,11 @@ class GameList_99(GameList_12):
         self.bind_all(self.new_var_virtual_event_name_GameListSearchClear,
             self.new_func_bindings_receive_virtual_event_for_search_clear)
         
-        
+        # 接收 toolbar 发送的 信号
+        self.bind_all("<<GameList_Quick_Jump>>",self.new_func_bindings_receive_virtual_event_for_quick_jump)
+        self.bind_all("<<GameList_Quick_Jump_Reverse>>",
+            lambda event:self.new_func_bindings_receive_virtual_event_for_quick_jump(event,reverse=True)
+            )
         
         
         
@@ -4036,6 +4596,42 @@ class GameList_99(GameList_12):
         
         get_root(self.new_ui_table)
 
+    # 复制一行到剪切板
+    def new_func_binding_copy_a_row_content(self,event):
+        # self.new_var_remember_select_row_id
+        # self.new_var_remember_select_row_number
+        if 0<= self.new_var_remember_select_row_number < len(self.new_var_list_to_show):
+
+            item_id = self.new_var_list_to_show[self.new_var_remember_select_row_number]
+
+            if item_id == self.new_var_remember_select_row_id: # 确认一下
+                
+                the_first_row , the_last_row = self.new_func_table_get_visible_rows()
+                # 在可视范围
+                if the_first_row<=self.new_var_remember_select_row_number<the_last_row: 
+                    
+                    item_info = global_variable.machine_dict[item_id]
+
+                    the_text=""
+
+                    for header_id in self.new_var_columns_to_show: # 列范围
+                        if header_id == "#id":
+                            the_text += item_id
+                            the_text += "\t"
+                        else:
+                            the_index = global_variable.columns_index.get(header_id,None)
+                            if the_index is not None:
+                                the_text += item_info[the_index]
+                                the_text += "\t"
+                    # 复制到剪切板
+                    print()
+                    print("copy to clib board")
+                    print(the_text)
+                    self.clipboard_clear()
+                    self.clipboard_append(the_text)
+                    
+
+
 class GameList_T(GameList_99):
 
     def __init__(self, parent,*args,**kwargs):
@@ -4082,9 +4678,9 @@ if global_variable.gamelist_type == "softwarelist":
 
 
 if __name__ == "__main__" :
-    import time
+
     from .read_pickle import read as read_pickle
-    from .initial_data_filepath import file_pickle_gamelist_data as the_data_file
+    from .global_static_filepath import file_pickle_gamelist_data as the_data_file
     
     time1=time.time()
     #temp_data=read_pickle("cache_data_2_gamelist.bin")
@@ -4118,7 +4714,7 @@ if __name__ == "__main__" :
     ###
     #the_games_to_show = ['kof97','kof98','kof97k','kof99']
     t=GameList(root,)
-    t.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    t.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     #a.button=ttk.Button(root,text="show_info",command=a.new_func_show_info)
     #a.button.grid(row=3,column=0,sticky=(tk.N,tk.S))
     

@@ -1,9 +1,7 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
-import os
+#import sys
+#import os
 import re
-
-
 
 
 def extra_history_find_mame(file_name , game_name):# 逐行读取，节约内存

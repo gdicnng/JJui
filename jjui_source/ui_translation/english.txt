@@ -1,4 +1,6 @@
-﻿缩写	name
+﻿MAME 街机游戏列表显示器	MAME game list
+MAME Software List(软件列表)	MAME Software List
+缩写	name
 年代	year
 源代码	source
 制造商	manufacturer
@@ -62,6 +64,7 @@ flyers 游戏海报	flyers
 文档：sysinfo.dat	sysinfo.dat
 出招表 中文版 command.dat	command.dat
 出招表 英文版 command_english.dat	command_english.dat
+分类列表：	index:
 图片	image
 文档	text
 文档2	text2
@@ -91,19 +94,27 @@ zip
 导出列表选中项 id 到：	export the selected items's ID to:
 导出列表选中项到：	export the selected items's to:
 目录修改，添加到指定目录	edit index,add to ...
-删减当前目录，删除选中内容。	edit index,delete selected items from this index
-目录修改，从指定目录删除选中内容	edit index,delete selected items from ...
+目录修改，当前目录，删除选中内容。	edit index,current index,delete selected items
+目录修改，选择目录，删除选中内容	edit index,choose index to delete selected items
+其它	others
+当前目录，删除所有主版本	current index,delete all parent items
+当前目录，删除所有克隆版本	current index,delete all clone items
+当前目录，为所有主版本，添加其副版本	current index,if there are any parent items,add their clone items
+当前目录，为所有副版本，添加其主版本	current index,if there are any clone items,add their parent items
 -	
 选择列表显示项目	set gamelist columns
+其它：	other:
 多选模式	multi select
 添加到 自定义目录	add to index
 确认	OK
 目录	index
 文件路径	file path
-目录列表	index list
+选择 自定义目录	select index
+关闭所有展开的项 (如果当前选中第二层，不含当前项)	hide all items in level 2 (not hide the current item)
 全部收起	collapse all
 计数	count
 保存	save
+搜索	search
 第一层目录数量为：	the number of index in level 1
 第二层目录数量为：	the number of index in level 2
 总计：	all:
@@ -111,10 +122,9 @@ zip
 总数量：	all number:
 UI	
 语言/language	
-路径	file path
+分类列表	index list
 游戏列表	game list
 周边	extra
-其它	others
 切换主题(关闭程序，重新打开后生效)	select theme (close the application,reopen it)
 高分辨率屏幕	high resolution screen
 程序关闭，重新打开后生效。	close then reopen to get effective
@@ -148,10 +158,17 @@ UI
 保存配置文件	save option
 保存配置文件、窗口大小	save option and window size
 保存配置文件、窗口大小/位置	save option and window size/position
-路径设置	set file path
+文件路径设置	file path setting
+如果需要清空数据，可以手动删除 .jjui 文件夹下的 *.bin 文件	if you need to clear the data,delete all .jjui\*.bin file
 修改自定义目录以后，记得手动保存一下	after change the user's index content ,remember to click the save button
-瘦身	delete some items
+如果此文件夹已经有文件了，建议自己先手动清理一下，免得各种新旧文件混在一起	
+导出外置的分类到文件夹：	export user's index file to folder :
+并清理超出范围的项目	and clear the items not in the data
+如果有超出范围的项目，会被保存为同名的 .txt 文件	
+超出范围是指：不在所有列表中	
+不同版本的模拟器，会有一些文件名修改过；非官方的 MAME 可能比官方原版 收录更多的游戏；……	
 谨慎操作！	warning! be careful
+瘦身	delete some items
 刷新列表，split/分离模式 (不具体校验文件，只检查有没有压缩包/文件夹)	refresh gamelist,split (not verify the files,only check if it exists)
 刷新列表，merged/合并模式 (不具体校验文件，只检查有没有压缩包/文件夹)	refresh gamelist,merged (not verify the files,only check if it exists)
 以上两项，只是检查文件是否存在，没有检查文件的正确性	the two above ,not verify the files,only check if it exists
@@ -159,12 +176,13 @@ UI
 全局 过滤	all gamelist filter
 程序关闭后，不会保存这个值	app will not save this option after close
 标记未拥有	mark unavailable
+切换列表时，尝试定位到之前的选择	try to keep track of the select item
 本地排序	sort locally
 关闭程序，重新打开后生效	close the application,reopen it
 搜索 设置	search settings
-列表瘦身，谨慎操作	game list delete items,be careful
-列表瘦身，删除不需要的列	game list delete items,delete unwanted columns
-列表瘦身，删除不需要的行	game list delete items,delete unwanted rows
+删除内容后，程序会关闭。	app will close after delete something
+重新打开程序，查看效果即可。	reopen app , check the difference
+删除不需要的列	delete column
 删除不需要的行，删除当前目录中的条目	delete unwanted rows,delete the items in current list
 删除不需要的行，仅保留当前目录，删除其它条目	delete unwanted rows,delete the items not in current list
 周边延迟显示	extras show time delay
@@ -172,8 +190,11 @@ UI
 周边文档，建目录加速	extra text make index
 界面翻译 / UI translation	
 游戏列表翻译 / gamelist translation	
-起源	start
-赞助	donate
+关于 JJui	about JJui
+赞助 JJui	donate JJui
+JJui 在 PPXCLUB 论坛的发布页面：www.ppxclub.com/705838-1-1	
+PPXCLUB 论坛，国内的街机模拟器玩家可能多一些，但是如果不是开放注册期间，可能不方便注册	
+源代码 github：https://github.com/gdicnng/JJui	
 打开本地 使用说明：	open the help file
 如果使用说明，没有放在一起，另外下载后，再看	if the help file is not here,download it
 如果使用说明没有正确打开，可以找到文件，手动打开	if not opened,find it and open it
@@ -221,6 +242,7 @@ aw 开头的好像也有一两个不需要库文件也能使用。
 选择其它的值，即时生效	if select other value ,get effective now
 列表 标题行 高度 设置	set game list header row height
 列表 图标 大小 设置	set icon size
+路径设置	set file path
 模拟器路径	emulator file path
 mame 模拟器 路径	mame file path
 默认值	default
@@ -233,6 +255,7 @@ mame 工作目录	mame's working directory
 文档路径	docs path
 周边延迟时间(毫秒):	extra delay time (millisecond)
 关于	about
+赞助	donate
 支付宝二维码：	
 查看 python 版本	check python version
 python 版本：	python version:
@@ -299,8 +322,8 @@ tkinter 版本：	tkinter version
 选择要删除的项目。	choose the unwanted items
 有些项目被删掉的话，列表的过滤功能可能会被影响到一些。	the game list filter function may be affect by some items
 如果有项目被删除，程序修改数据、保存数据后，会关闭。	after delete some things,app will close
-重新打开程序，查看效果即可。	reopen app , check the difference
 已经没有项目可以删了	no item left to be deleted
+列表瘦身，删除不需要的列	game list delete items,delete unwanted columns
 选择要删除的列。	choose the unwanted columns
 有些列被删掉的话，搜索功能的整体搜索范围会被影响到。	the search scope will be affected by delete columns
 MAME的模拟状态一列，SL的支持一列，影响到图标颜色。	the MAME driver state column (SL support column)affect the icons colour
@@ -314,14 +337,14 @@ romof：	romof:
 分组/不分组	grouped/flat
 定位到	jump to
 搜索栏:	search bar:
-搜索	search
 正则搜索	search use regular expression
 清空	clear
-初始化	initialize
-初始化，从模拟器读取游戏列表数据	initialize,read info from emulator
-选择 MAME 模拟器	select MAME emulator
-格式	type
-主列表，mame版本 >= 0.84，用 -listxml 命令导出数据	main list,MAME version >= 0.84, -listxml export info
+初始化 / initialization	
+初始化，从模拟器读取游戏列表数据 / initialization,get info from emulator	
+选择 MAME 程序 / choose MAME executable program	
+-listxml	
+MAME 版本>=0.84 / MAME version>=0.84	
+确定 / OK	
 .exe 文件	.exe file
 所有文件	all file
 导出 xml	export xml
@@ -331,4 +354,5 @@ romof：	romof:
 导出结束	export ,finished
 解析 xml	parse xml
 完成	finished
-SoftwareList 软件列表，不是街机列表（mame版本 > 0.162，用 -getsoftlist 命令导出数据）	Software List,not the arcade game list( mame version > 0.162,-getsoftlist)
+-getsoftlist	
+MAME 版本>=0.162 / MAME version>=0.162	

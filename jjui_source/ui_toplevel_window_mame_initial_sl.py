@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
+# import sys
 import os
 
 import subprocess
@@ -14,16 +14,11 @@ from . import global_variable
 
 from .save_pickle import save as save_pickle
 
-from .ui__window import Window_with_scrollbar
+# from .ui__window import Window_with_scrollbar
 from .ui__text_with_scrollbar import Text_with_scrollbar
 from . import xml_parse_mame
 from . import xml_parse_sl
 from . import translation_gamelist
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 
 # new_var_
@@ -63,7 +58,7 @@ class Toplevel_Window(tk.Toplevel):
         self.new_func_bindings()
 
     def new_func_ui(self,):
-        self.title( _("初始化") )
+        self.title( _("初始化 / initialization") )
         
         self.columnconfigure(0, weight=0)
         self.columnconfigure(1, weight=0)
@@ -73,20 +68,20 @@ class Toplevel_Window(tk.Toplevel):
         parent=self
         
         n=0
-        ttk.Label(parent,text=_("初始化，从模拟器读取游戏列表数据") ).grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N);n+=1
+        ttk.Label(parent,text=_("初始化，从模拟器读取游戏列表数据 / initialization,get info from emulator") ).grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N);n+=1
         
         # MAME 路径选择
         #
-        self.new_ui_button_choose = ttk.Button(parent,text=_("选择 MAME 模拟器"),command=self.new_func_for_button_choose)
-        self.new_ui_button_choose.grid(row=n,column=0,sticky=(tk.W,tk.N),)
+        self.new_ui_button_choose = ttk.Button(parent,text=_("选择 MAME 程序 / choose MAME executable program"),command=self.new_func_for_button_choose)
+        self.new_ui_button_choose.grid(row=n,column=0,sticky=tk.W+tk.N,)
         n+=1
         # 路径显示在 Entry 中
         self.new_ui_entry = ttk.Entry(parent,width=40,textvariable=self.new_var_mame_path)
-        self.new_ui_entry.grid(row=n,column=0,columnspan=3,sticky=(tk.W,tk.E),)
+        self.new_ui_entry.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.E,)
         n+=1
         
         # 模拟器种类选择区
-        frame=ttk.LabelFrame(parent,text=_("格式"),)
+        frame=ttk.LabelFrame(parent,text=_("-getsoftlist"),)
         frame.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N+tk.E)
         n+=1
         #
@@ -126,7 +121,7 @@ class Toplevel_Window(tk.Toplevel):
         
         
         # mame -getsoftlist >roms_sl.xml
-        a_radiobutton = make_a_radiobutton(r,c,"SoftwareList",_("SoftwareList 软件列表，不是街机列表（mame版本 > 0.162，用 -getsoftlist 命令导出数据）"),3,);c+=1
+        a_radiobutton = make_a_radiobutton(r,c,"SoftwareList",_("MAME 版本>=0.162 / MAME version>=0.162"),3,);c+=1
         self.new_var_radiobutton_s.append( a_radiobutton )
         r+=1;c=0
         
@@ -139,13 +134,13 @@ class Toplevel_Window(tk.Toplevel):
         
         
         # 确定 按钮
-        self.new_ui_button_ok = ttk.Button(parent,text=_("确定"),command = self.new_func_for_button_ok)
+        self.new_ui_button_ok = ttk.Button(parent,text=_("确定 / OK"),command = self.new_func_for_button_ok)
         self.new_ui_button_ok.grid(row=n,column=0,columnspan=3,sticky=tk.E)
         n+=1
         
         # 进度条
         self.new_ui_progressbar=ttk.Progressbar(parent,orient=tk.HORIZONTAL)
-        self.new_ui_progressbar.grid(row=n,column=0,columnspan=3,sticky=(tk.W,tk.E,))
+        self.new_ui_progressbar.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.E,)
         n+=1
         
         # 文本
@@ -248,6 +243,7 @@ class Toplevel_Window(tk.Toplevel):
 
 
     def new_func_export_xml(self,xml_type="mame0162"):
+        command=""
         if xml_type=="mame0162":
             command = "-listxml"
         elif xml_type== "mame084":
@@ -430,11 +426,9 @@ class Toplevel_Window(tk.Toplevel):
             
             data = xml_parse_sl.main(xml_file_name)
         
-        print(len( data ) )
-        print(len( data ) )
-        print(len( data ) )
-        print(len( data ) )
-        print(len( data ) )
+        #print(len( data ) )
+        print()
+        print( data.keys() )
         
         if len( data ) == 0:
             return None

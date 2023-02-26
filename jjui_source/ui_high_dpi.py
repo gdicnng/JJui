@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf_8_sig-*-
 import sys
 import ctypes
-import re
+# import re
 
 def high_dpi_0(root):
     print("high dpi not set")

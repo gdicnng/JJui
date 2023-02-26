@@ -5,7 +5,7 @@ import re
 import codecs
 
 from . import global_variable
-from .global_static import columns
+# from .global_static import columns
 
 # 在下面 ini_default 中使用
 columns_width = {  
@@ -182,6 +182,9 @@ def get_configure_file_default_value( ):
         ("locale_name",""), # locale.setlocale(locale.LC_COLLATE,locale="???")
         ("use_locale_sort",False), # locale.strxfrm()
         
+        ("keep_track_of_the_select_item",        False),
+        # 分类列表切换时，总是尝试定位选中项
+
         ("gamelist_level",        1),
             # 1，列表 仅一层
             # 2，列表 两层，总是展开，不能收起
@@ -267,6 +270,7 @@ def get_configure_file_default_value( ):
         ("extra_text_use_index_2",1),# 0 , 1 ,ttk.Checkbutton            
      
         ("index_be_chosen",''),  # 暂时，初始化为 空
+        ("game_be_chosen",''),  # 暂时，初始化为 空
         #"index_set_remembered",set(),  # 有上面一项就够了
         
 
@@ -421,6 +425,7 @@ def get_configure_file_value( file_name ):
         "zoomed",
         "unavailable_mark",
         "use_locale_sort",
+        "keep_track_of_the_select_item",
         ):
         if x in ini_data:
             # 字符 转为 bool
@@ -560,31 +565,6 @@ def get_configure_file_value( file_name ):
                         ini_data[x][y] = ini_default[x][y] # 数据 小于0 读取默认值
             else: 
                 ini_data[x] = ini_default[x]
-
-    # 排序标记
-    # ini_data["gamelist_sorted_by"] ,'name' # 不使用数字，使用 列 id
-    #   范围：   ini_data["gamelist_columns"]
-    #       因为用到了 ini_data["gamelist_columns"] ，
-    #       所以要在 ini_data["gamelist_columns"] 校验之后，再校验此项
-    #   并且，默认值设置为空字符
-    #ini_default["gamelist_sorted_by"] = ''
-    x = "gamelist_sorted_by"
-    if x in ini_data:
-        flag = False
-        for y in ini_data["gamelist_columns"]:# 用户设置的，所有的 列
-            if ini_data[x] == y :
-                flag = True
-                break
-                
-        if flag : 
-            pass
-        else : 
-            ini_data[x] = ini_default[x]
-            
-        del flag
-    else:
-        ini_data[x] = ini_default[x]
-    del x
 
     # "filter":类型为  list ,
     for x in ("filter",):

@@ -7,11 +7,6 @@ import tkinter as tk
 from tkinter import ttk 
 import tkinter.filedialog
 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
-
 from PIL import Image, ImageTk
 # Pillow
 # DeprecationWarning: 
@@ -30,7 +25,7 @@ from . import global_static
 from . import global_static_filepath as the_files
 from . import misc
 
-from . import read_user_config
+# from . import read_user_config
 
 
 from . import ui_small_windows
@@ -74,7 +69,7 @@ MAME
         https://www.mamedev.org/release.html
         https://www.mamedev.org/oldrel.html
         https://github.com/mamedev/mame/releases/
-        https://sourceforge.net/projects/mame/files/mame/
+        https://sourceforge.net/projects/mame/files/
 
 MESS 原来的网站：
     http://mess.redump.net/
@@ -100,8 +95,8 @@ MxUI 前端:
 
 MamePlus ：
     第三方的 MAME 。
-    0.168 版本之后，不再更新。
-    中文支持得好，不过后来到 0.168 版本以后，没有大神去更新了。而且后期的版本，维护的大神人少，bug 可能比较多。
+    0.168 版本 （2015年） 之后，不再更新。
+    很久以前中文就支持得好，不过后来到 0.168 版本以后，没有大神去更新了。而且后期的版本，维护的大神人少，bug 可能比较多。
     如果不介意用旧版本的话，也是不错的选择。
     如果国内网站上找到的资源，一般都应该带有完整的中文语言包，当然最好自己检查一下。
     如果国外网站上找到的资源，可能中文语言包会有缺失。
@@ -149,7 +144,7 @@ mame32m、mame32k：
         http://www.mameui.info/
         一款第三方的 MAME ，英文版
         已经停止更新了
-        它这上面提供的 游戏截图包 ，要简洁一点。
+        它这上面提供的 游戏截图包 ，数量上要简洁一点。
 
 roms 管理软件：
     ClrMamePro：
@@ -216,7 +211,7 @@ class MenuBar(ttk.Frame):
         
         
         
-        self.new_func_ui_menu_for_about()
+        self.new_func_ui_menu_for_about() # other
 
     def new_func_ui(self,):
         
@@ -234,33 +229,33 @@ class MenuBar(ttk.Frame):
         # style="Toolbutton"  
             #   Ttk::menubutton widgets support the Toolbutton style in all standard themes, which is useful for creating widgets for toolbars. 
         self.new_menu_botton_ui = ttk.Menubutton(parent,direction="below",width=0,text=_("UI"),style="Toolbutton")
-        self.new_menu_botton_ui.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_ui.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
         self.new_menu_botton_language=ttk.Menubutton(parent,direction="below",width=0,text=_(r"语言/language"),style="Toolbutton",)
-        self.new_menu_botton_language.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_language.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
-        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("路径"),style="Toolbutton",)
-        self.new_menu_botton_configure.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_configure = ttk.Menubutton(parent,direction="below",width=0,text=_("文件路径"),style="Toolbutton",)
+        self.new_menu_botton_configure.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
-        self.new_menu_botton_index=ttk.Menubutton(parent,direction="below",width=0,text=_("目录"),style="Toolbutton",)
-        self.new_menu_botton_index.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_index=ttk.Menubutton(parent,direction="below",width=0,text=_("分类列表"),style="Toolbutton",)
+        self.new_menu_botton_index.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
         self.new_menu_botton_gamelist=ttk.Menubutton(parent,direction="below",width=0,text=_("游戏列表"),style="Toolbutton",)
-        self.new_menu_botton_gamelist.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_gamelist.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
         
         self.new_menu_botton_extra=ttk.Menubutton(parent,direction="below",width=0,text=_("周边"),style="Toolbutton",)
-        self.new_menu_botton_extra.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_extra.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
         
         self.new_menu_botton_about=ttk.Menubutton(parent,direction="below",width=0,text=_("其它"),style="Toolbutton",)
-        self.new_menu_botton_about.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_menu_botton_about.grid(row=0,column=column, sticky=tk.W,)
         column+=1
     
     def new_func_bindings(self,):
@@ -469,11 +464,16 @@ class MenuBar(ttk.Frame):
         
         m.add_separator()
         
-        m.add_command(label=_("路径设置"), 
+        m.add_command(label=_("文件路径设置"), 
                 command=self.new_func_menu_call_back_set_file_path
                 )
         
+        m.add_separator()
 
+        m.add_command(label=_("如果需要清空数据，可以手动删除 .jjui 文件夹下的 *.bin 文件"), 
+                state=tk.DISABLED
+                )
+        
         
         m.add_separator()
     
@@ -487,11 +487,37 @@ class MenuBar(ttk.Frame):
         m.add_command(  label=_("修改自定义目录以后，记得手动保存一下"),state="disabled")
         m.add_separator()
         
-        m.add_command(  label=_("瘦身"), 
-                        command=ui_small_windows.window_for_choose_unwanted_internal_index
+        # 导出内置分类
+        m.add_command(  label=_("导出内置的分类到此文件夹：" + the_files.folder_export), 
+                command=misc.export_all_internal_index,
+        )
+        m.add_command(  label=_("如果此文件夹已经有文件了，建议自己先手动清理一下，免得各种新旧文件混在一起"), 
+                        state="disabled"
                 )
+        m.add_separator()
+        # 导出外置分类，清理超出范围的内容
+        m.add_command(  label=_("导出外置的分类到文件夹：") + the_files.folder_export + " " +_("并清理超出范围的项目") , 
+                command=misc.export_all_external_index_and_clean,
+        )
+        m.add_command(  label=_("如果此文件夹已经有文件了，建议自己先手动清理一下，免得各种新旧文件混在一起"), 
+                        state="disabled"
+                )
+        m.add_command(  label=_("如果有超出范围的项目，会被保存为同名的 .txt 文件"), 
+                        state="disabled"
+                )
+        m.add_command(  label=_("超出范围是指：不在所有列表中"), 
+                        state="disabled"
+                )
+        m.add_command(  label=_("不同版本的模拟器，会有一些文件名修改过；非官方的 MAME 可能比官方原版 收录更多的游戏；……"), 
+                        state="disabled"
+                )                
+
+        m.add_separator()
         m.add_command(  label=_("谨慎操作！"), 
                         state="disabled"
+                )
+        m.add_command(  label=_("瘦身"), 
+                        command=ui_small_windows.window_for_choose_unwanted_internal_index
                 )
         m.add_separator()
     
@@ -551,7 +577,19 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_choose_mark_unavailable,
                 variable =self.new_var_tk_unavailable_mark,
                 )
-        
+        m.add_separator()
+
+        # 定位 
+        self.new_var_tk_keep_track_of_the_select_item = tk.IntVar()
+        if global_variable.user_configure_data["keep_track_of_the_select_item"]:
+            self.new_var_tk_keep_track_of_the_select_item.set(1)
+        else:
+            self.new_var_tk_keep_track_of_the_select_item.set(0)
+        m.add_checkbutton(
+                label=_(r"切换列表时，尝试定位到之前的选择"),
+                command=self.new_func_menu_call_back_for_keep_track_of_the_select_item,
+                variable =self.new_var_tk_keep_track_of_the_select_item,
+                )        
         
         m.add_separator()
         self.new_var_tk_use_local_sort = tk.IntVar() # default value 0
@@ -575,17 +613,19 @@ class MenuBar(ttk.Frame):
                 )
         
         m.add_separator()
-        m.add_command(label=_("列表瘦身，谨慎操作"),
-                state=tk.DISABLED,
-                )
-        
-        m.add_command(label=_("列表瘦身，删除不需要的列"),
-                command=ui_small_windows.window_for_choose_unwanted_game_list_column,
-                )
 
         #子菜单
         m_sub_delete = tk.Menu(m,tearoff=0)
-        m.add_cascade(label=_("列表瘦身，删除不需要的行"),menu=m_sub_delete)
+        m.add_cascade(label=_("瘦身"),menu=m_sub_delete)
+        m_sub_delete.add_command(label=_("谨慎操作！"),
+                state=tk.DISABLED,
+                )
+        m_sub_delete.add_command(label=_("删除内容后，程序会关闭。") + _("重新打开程序，查看效果即可。"),
+                state=tk.DISABLED,
+                )                
+        m_sub_delete.add_command(label=_("删除不需要的列"),
+                command=ui_small_windows.window_for_choose_unwanted_game_list_column,
+                )        
         m_sub_delete.add_command(label=_("删除不需要的行，删除当前目录中的条目"),
                 command=misc.delete_current_rows_in_game_list,
                 )
@@ -647,23 +687,42 @@ class MenuBar(ttk.Frame):
         m.add_separator()
         
     
-    def new_func_ui_menu_for_about(self,):
+    def new_func_ui_menu_for_about(self,): # other
         #self.new_menu_botton_about
         m = tk.Menu(self.new_menu_botton_about, tearoff=0)
         self.new_menu_botton_about.configure(menu=m)
         
         m.add_separator()
         
-        m.add_command(label=_("起源"),
+        m.add_command(label=_("关于 JJui"),
                 command=self.new_func_menu_call_back_window_about
                 )
         m.add_separator()
         
-        m.add_command(label=_("赞助"),
+        m.add_command(label=_("赞助 JJui"),
                 command=self.new_func_menu_call_back_window_donation
                 )
         m.add_separator()
         
+
+        
+        # www.ppxclub.com/705838-1-1
+        m.add_command(
+            label=_("JJui 在 PPXCLUB 论坛的发布页面：www.ppxclub.com/705838-1-1"), 
+            command=lambda url = "https://www.ppxclub.com/705838-1-1":self.new_func_menu_call_back_open_url(url=url)
+            )
+        m.add_command(
+            label=_("PPXCLUB 论坛，国内的街机模拟器玩家可能多一些，但是如果不是开放注册期间，可能不方便注册"), 
+            state=tk.DISABLED)
+        m.add_separator()
+        
+        # https://github.com/gdicnng/JJui
+        m.add_command(
+            label=_("源代码 github：https://github.com/gdicnng/JJui"), 
+            command=lambda url = "https://github.com/gdicnng/JJui":self.new_func_menu_call_back_open_url(url=url)
+            )
+        m.add_separator()
+
         m.add_command(
                 label=_("打开本地 使用说明：")+the_files.file_html_index, 
                 command=self.new_func_menu_call_back_open_html_file
@@ -676,7 +735,7 @@ class MenuBar(ttk.Frame):
             state=tk.DISABLED)
         
         m.add_separator()
-        
+
         m.add_command(
             label=_("打开在线 使用说明：jjui.readthedocs.io"), 
             command=lambda url = "https://jjui.readthedocs.io":self.new_func_menu_call_back_open_url(url=url)
@@ -899,8 +958,8 @@ class MenuBar(ttk.Frame):
         a_text      = tk.Text( window,undo=False )
         scrollbar_1 = ttk.Scrollbar( window, orient=tk.VERTICAL, command = a_text.yview,)
         a_text.configure(yscrollcommand=scrollbar_1.set)
-        a_text.grid(row=5,column=0,sticky=(tk.N,tk.S,tk.E,tk.W))
-        scrollbar_1.grid(row=5,column=1,sticky=(tk.N,tk.S))
+        a_text.grid(row=5,column=0,sticky=tk.N+tk.S+tk.E+tk.W,)
+        scrollbar_1.grid(row=5,column=1,sticky=tk.N+tk.S,)
         window.rowconfigure(5,weight=1)
         
         
@@ -1494,6 +1553,9 @@ class MenuBar(ttk.Frame):
         # text_types_2
         
         temp_types=set(text_types) | set(text_types_2)
+        # SL
+        if global_variable.gamelist_type == "softwarelist":
+            temp_types = set(text_types)
         
         temp_types = sorted(temp_types)
         
@@ -1634,6 +1696,15 @@ class MenuBar(ttk.Frame):
             global_variable.user_configure_data["unavailable_mark"] = False
             global_variable.flag_mark_unavailable_game = False
 
+    def new_func_menu_call_back_for_keep_track_of_the_select_item(self,):
+
+        number = self.new_var_tk_keep_track_of_the_select_item.get()
+
+        if number:
+            global_variable.user_configure_data["keep_track_of_the_select_item"] = True
+        else:
+            global_variable.user_configure_data["keep_track_of_the_select_item"] = False
+
     #游戏列表→使用本地排序
     def new_func_menu_call_back_use_local_sort(self,):
         if self.new_var_tk_use_local_sort.get():
@@ -1702,8 +1773,11 @@ class MenuBar(ttk.Frame):
             
             "JJui 只是一个 前端／UI／GUI／front-end " + "\n"       ,
             "需要配合 MAME 使用 " + "\n"                          ,
-            "需要的游戏文件，也要靠自己找" + "\n"                  ,
+            "（不提拱游戏文件，游戏文件需要自己去找）" + "\n"                  ,
             
+            "JJui 用于 MAME 街机列表的显示" + "\n"                  ,
+            "后来添加了 JJui_sl" + "\n"                  ,
+            "JJui_sl 用于 MAME Software List 软件列表的显示（非街机类）（MAME 版本大于 0.162）" + "\n",
             #"JJui is just a UI／GUI／front-end " + "\n"       ,
             #"you need use it with MAME " + "\n"                          ,
             #"no game files offered with it ," + "\n"             ,
@@ -1718,7 +1792,8 @@ class MenuBar(ttk.Frame):
             "毕竟不是专业的" + "\n"                               ,
             "自己觉得" + "\n"                                     ,
             "用是可以用了" + "\n"                                 ,
-            "简单是简单了一点，也可能还丑了点" + "\n"              ,
+            "简单是简单了一点" + "\n"              ,
+            "也可能界面还丑了点" + "\n"              ,
             
             #"I'm not a professional computer programmer" + "\n"   ,
             #"if any real programmer see it,and feel it sucks" + "\n",
@@ -1743,38 +1818,44 @@ class MenuBar(ttk.Frame):
             
             ####
             
-            "大家，各位街机游戏爱好者，可以免费使用" + "\n"        ,
+
+
             #"bros,it's free for use" + "\n"        ,            
             "\n"                                                  ,
             "本人在琵琶行(www.ppxclub.com)的 ID ：gdicnng" + "\n"                   ,
+            "PPXCLUB 是一个论坛，有许多街机模拟器玩家。" + "\n"                   ,
+            "但如果不是在开放注册期间，可能注册不太方便。" + "\n"                   ,
             #"my ID in ppxclub.com ：gdicnng" + "\n"                   ,
+            r"发布在 PPXCLUB 的页面："+"\n",
             r"www.ppxclub.com/forum.php?mod=viewthread&tid=705838"+"\n",
             r"www.ppxclub.com/705838-1-1"+"\n",
+            "\n",
+            r"如果你没有 PPXCLUB 的帐号，以下是百度盘网的地址："+"\n",
+            r"    链接：https://pan.baidu.com/s/1guTSDIWr66S6ewIdyMQPjA"+"\n",
+            r"    提取码：r9b9 "+"\n",
+            r"    但，百度网盘的地址，通常很容易失效。"+"\n",
             "\n",
             "邮箱：gdicnng@sina.com" + "\n"                       ,
             #"email：gdicnng@sina.com" + "\n"                       ,
             "\n",
-            "源代码：https://gitee.com/gdicnng/JJui" + "\n"       ,
+            "源代码(这地方算球了)：https://gitee.com/gdicnng/JJui" + "\n"       ,
             "源代码：https://github.com/gdicnng/JJui" + "\n"       ,
+            "一开始上传到 gitee ，因为国内的网络连接要好一点，" + "\n"       ,
+            "但是，后来，gitee 似乎 比较麻烦 了。" + "\n"       ,
+            "所以后来 上传 github 了" + "\n"       ,
+            "然而，github 网络连接却也不太好，国内外网络连接一直不好太好" + "\n"       ,
             
-            "\n"       ,
-            "一开始上传到 gitee ，因为国内的网络连接要好一点" + "\n"       ,
-            "gitee  现在似乎 比较麻烦" + "\n"       ,
-            "github 国内外网络连接一直不好太好" + "\n"       ,
-            "现在可能随意上传一个，或者有时候懒得上传了" + "\n"       ,
+            "软件的 LICENSE 我也不是很懂，大致随意选的。" + "\n",
+            "更早的代码，上传 gitee 时选的 啥子 LICENSE 记不太清楚了" + "\n",
+            "上传 github 时选的 GNU GENERAL PUBLIC LICENSE Version 2" + "\n",
             
+            "大家，各位街机游戏爱好者，可以免费使用" + "\n"        ,
             
             #"source file：https://gitee.com/gdicnng/JJui" + "\n"       ,
             #"之前是上传到 gitee 的，公开的" + "\n"       ,
             #"但是听说监管比较严了，连源代码都要管了" + "\n"       ,
             
-
             
-            "\n",
-
-
-            "第一次上传时间： 2021年06月" + "\n"                   ,
-            #"the first version time is  2021 06" + "\n"                   ,
             "\n"                                                 ,
             "如果觉得有必要 支持／打赏／赞助 一下" + "\n"          ,
             
@@ -1797,8 +1878,8 @@ class MenuBar(ttk.Frame):
         t.configure(xscrollcommand=scrollbar_2.set)
         
         t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
-        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=(tk.N,tk.S))
-        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=tk.N+tk.S,)
+        scrollbar_2.grid(row=1,column=0,sticky=tk.W+tk.E,)
         
         t.insert("1.0", text, )
         
@@ -1867,8 +1948,8 @@ class MenuBar(ttk.Frame):
         t.configure(xscrollcommand=scrollbar_2.set)
         
         t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
-        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=(tk.N,tk.S))
-        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=tk.N+tk.S,)
+        scrollbar_2.grid(row=1,column=0,sticky=tk.W+tk.E,)
         
         
         
@@ -1980,8 +2061,8 @@ class MenuBar(ttk.Frame):
         t.configure(xscrollcommand=scrollbar_2.set)
         
         t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
-        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=(tk.N,tk.S))
-        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        scrollbar_1.grid(row=0,column=1,columnspan=2,sticky=tk.N+tk.S,)
+        scrollbar_2.grid(row=1,column=0,sticky=tk.W+tk.E,)
         
         t.insert("1.0", text, )
         

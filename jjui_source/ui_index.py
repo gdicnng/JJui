@@ -4,23 +4,18 @@
 import os
 import time
 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
-
-
 import tkinter as tk
-import tkinter.ttk as ttk
+# import tkinter.ttk as ttk
 import tkinter.messagebox
 
-from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as Treeview_with_scrollbar
+#from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as Treeview_with_scrollbar
+from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_for_index as Treeview_with_scrollbar
 
-from . import global_static_key_word_translation as key_word_translation
-from . import global_static
-from . import global_variable
+# from . import global_static_key_word_translation as key_word_translation
+# from . import global_static
+# from . import global_variable
 
-from . import folders_search 
+# from . import folders_search
 #from . import folders_read 
 #from . import folders_save 
 from .ui_misc import misc_funcs
@@ -90,7 +85,7 @@ class GameIndex(Treeview_with_scrollbar):
         #self.new_ui_tree['columns'] = ("type","others","id")
         self.new_ui_tree['columns'] = ()
 
-        self.new_ui_tree.heading("#0", text=_("目录列表"))
+        #self.new_ui_tree.heading("#0", text=_("目录列表"))
 
         # 右键菜单
         self.new_ui_index_popup_menu = tk.Menu(self.new_ui_tree, tearoff=0)
@@ -101,6 +96,8 @@ class GameIndex(Treeview_with_scrollbar):
                 command = self.new_func_index_popup_menu_function_index_count)
         self.new_ui_index_popup_menu.add_command(label=_("保存"),
                 command = misc_funcs.new_func_index_popup_menu_function_save)
+        self.new_ui_index_popup_menu.add_command(label=_("搜索"),
+                command = self.new_func_bindings_show_search_ui)
         #self.new_ui_index_popup_menu.add_command(label="显示横向滚动条",command = self.new_func_index_popup_menu_function_show_scrollbar_h)
         #self.new_ui_index_popup_menu.add_command(label="收起横向滚动条",command = self.new_func_index_popup_menu_function_hide_scrollbar_h)
 
@@ -121,6 +118,10 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_ui_tree.bind_all(r"<<RequestForIndexInfo>>",self.new_func_index_for_receive_virtual_event_RequestForIndexInfo)
         
         self.new_ui_tree.bind_all(r"<<RequestForAvailableGameList>>",self.new_func_index_for_receive_virtual_event_RequestForAvailableGameList)
+
+        # 搜索 Ctrl + f ，显示搜索栏
+        self.new_ui_tree.bind('<Control-KeyPress-f>', self.new_func_bindings_show_search_ui ) 
+        self.new_ui_tree.bind('<Control-KeyPress-F>', self.new_func_bindings_show_search_ui ) 
 
     # bindings 鼠标点击
     def new_func_index_bindings_click(self,event):
@@ -173,16 +174,16 @@ class GameIndex(Treeview_with_scrollbar):
                 break
 
     # 右键菜单 显示横向滚动条
-    def new_func_index_popup_menu_function_show_scrollbar_h(self,event=None):
-        if not self.new_ui_scrollbar_h.winfo_ismapped():
-            self.new_ui_scrollbar_h.grid()
-        self.new_ui_tree['displaycolumns'] = ('#all')
+    #def new_func_index_popup_menu_function_show_scrollbar_h(self,event=None):
+    #    if not self.new_ui_scrollbar_h.winfo_ismapped():
+    #        self.new_ui_scrollbar_h.grid()
+    #    self.new_ui_tree['displaycolumns'] = ('#all')
 
     # 右键菜单 收起横向滚动条
-    def new_func_index_popup_menu_function_hide_scrollbar_h(self,event=None):
-        if self.new_ui_scrollbar_h.winfo_ismapped():
-            self.new_ui_scrollbar_h.grid_remove()
-            self.new_ui_tree['displaycolumns'] = ()
+    #def new_func_index_popup_menu_function_hide_scrollbar_h(self,event=None):
+    #    if self.new_ui_scrollbar_h.winfo_ismapped():
+    #        self.new_ui_scrollbar_h.grid_remove()
+    #        self.new_ui_tree['displaycolumns'] = ()
     
     # 右键菜单，计数
     def new_func_index_popup_menu_function_index_count(self,event=None):
@@ -324,10 +325,7 @@ class GameIndex(Treeview_with_scrollbar):
         translation=translation_dict
         
         tree = self.new_ui_tree
-        
-        # import key_word_translation
-        # import global_static
-        #translation=key_word_translation.index_translation
+
         
         def add_available_set():
             
@@ -413,17 +411,6 @@ class GameIndex(Treeview_with_scrollbar):
         t1=time.time()
         
         tree = self.new_ui_tree
-
-        ## 计算分类列表 具体信息
-        #for x in ini_files:
-        #    temp = folders_read.read_folder_ini_3(x) ## 
-        #    if temp==None:
-        #        # 格式错误，只检查了个别错误
-        #        pass
-        #    else: 
-        #        external_index_data[x] = {} # 初始化
-        #        external_index_data[x] = temp  
-        #
         
         # 添加到 目录
         # 第一层
@@ -460,21 +447,10 @@ class GameIndex(Treeview_with_scrollbar):
 
         
         print()
-        print("external index feed data")
+        print("external index feed data (SL by xml)")
         t1=time.time()
         
         tree = self.new_ui_tree
-
-        ## 计算分类列表 具体信息
-        #for x in ini_files:
-        #    temp = folders_read.read_folder_ini_3(x) ## 
-        #    if temp==None:
-        #        # 格式错误，只检查了个别错误
-        #        pass
-        #    else: 
-        #        external_index_data[x] = {} # 初始化
-        #        external_index_data[x] = temp  
-        #
         
         # 添加到 目录
         # 第一层
@@ -510,7 +486,7 @@ class GameIndex(Treeview_with_scrollbar):
     def new_func_index_set_content_external_source_ini(self,external_index_data):
         
         print()
-        print("external index feed data")
+        print("external index feed data (mame by source)")
         t1=time.time()
         
         tree = self.new_ui_tree
@@ -580,6 +556,13 @@ class GameIndex(Treeview_with_scrollbar):
         except:
             pass
     
+
+
+    def new_func_bindings_show_search_ui(self,event=None):
+        if self.new_ui_the_label.winfo_ismapped():
+            self.new_ui_the_label.grid_remove()
+        self.new_ui_search_box.focus_set()
+
 if __name__ == "__main__" :
     from .read_pickle import read as read_pickle
 
@@ -590,7 +573,7 @@ if __name__ == "__main__" :
     root.columnconfigure(0,weight=1)
     
     index = GameIndex(root)
-    index.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    index.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     data=read_pickle("cache_data_1.bin")
     index.new_func_index_set_content_internal(data)

@@ -19,7 +19,7 @@ from .ui_toplevel_window_mame_initial_sl import Toplevel_Window as initial_windo
 
 from .read_pickle import read as read_pickle
 
-from . import read_user_config
+# from . import read_user_config
 from . import ui_themes
 from . import ui_high_dpi
 
@@ -124,7 +124,7 @@ def main():
     # ？？？？？                   
     
     # 标题 前一段 ；标题 后一段  ，需 读取 mame 版本信息后，再添加
-    str_title = global_static.version_string + " - " + _(global_static.title_string) + " - "
+    str_title = global_static.version_string + " - " + global_static.title_string + " - "
     root.title( str_title )
     
     # 图标

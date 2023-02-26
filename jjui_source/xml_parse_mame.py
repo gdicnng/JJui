@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf_8_sig-*-
 import xml.etree.ElementTree
-import os
+# import os
 
 # mame_version
 def get_mame_version( xml_file_name ):
@@ -103,7 +103,7 @@ def parse_mame_xml( xml_file_name , mame_type = None):
                 temp_dict = {} # 初始化
                 
                 # 复制 attrib 这一部分
-                temp_dict = elem.attrib
+                temp_dict.update(elem.attrib)
                 
                 
                 number_biosset = 0
@@ -849,7 +849,7 @@ def dict_to_list(game_list_data):
                     #"name", 不要这一项了 ，和 id 重复了
                     "status",
                     
-                    "translation",
+                    
                     "description",
                     
                     "year",
@@ -860,6 +860,7 @@ def dict_to_list(game_list_data):
                     "cloneof",
                     "savestate",
                     "romof",
+                    "translation",
                     
                     #"isbios",
                     #"isdevice",
@@ -922,12 +923,12 @@ def main(xml_file_name,mame_type=None): # mame_type="mame0162"
     
     # version
     mame_version   = get_mame_version(xml_file_name)
+    
     # game list 
     game_list_data = parse_mame_xml(xml_file_name,mame_type)
     
     # 大量重复字符串，处理一下
     game_list_data = about_some_same_strings(game_list_data)
-    
     
     # set data ,
     #   all_set parent_set clone_set
@@ -941,9 +942,9 @@ def main(xml_file_name,mame_type=None): # mame_type="mame0162"
     clean_internal_index(internal_index)
     
     
-  #  # 清理 game_list_data 多余的内容
-  # 不需要了，之后转为 list
-  #  machine_dict = clear_game_list_data(game_list_data)
+    #  # 清理 game_list_data 多余的内容
+    # 不需要了，之后转为 list
+    #  machine_dict = clear_game_list_data(game_list_data)
   
   
     # 翻译准备 ，将原 英文内容复制过去

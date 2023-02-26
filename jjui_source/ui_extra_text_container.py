@@ -18,7 +18,7 @@
         --------------------------
     
 """
-import sys
+#import sys
 import os
 #import time
 
@@ -26,11 +26,6 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 #from PIL import Image, ImageTk
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 #from . import global_static_filepath as the_files
 from . import global_static
@@ -91,8 +86,8 @@ class Text_area(ttk.Frame):
         
         self.new_ui_text.configure(yscrollcommand=self.new_ui_scrollbar_v.set)
         
-        self.new_ui_text.grid(row=0,column=0,sticky=(tk.N,tk.S,tk.E,tk.W))
-        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=(tk.N,tk.S))
+        self.new_ui_text.grid(row=0,column=0,sticky=tk.N+tk.S+tk.E+tk.W,)
+        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=tk.N+tk.S,)
         
         parent.rowconfigure(1, weight=0)
         
@@ -170,7 +165,7 @@ class Text_area(ttk.Frame):
     
     def new_func_show_scrollbar_h(self,):
         if not self.new_ui_scrollbar_h.winfo_ismapped():
-            self.new_ui_scrollbar_h.grid(row=1,column=0,columnspan=2,sticky=(tk.W,tk.E))
+            self.new_ui_scrollbar_h.grid(row=1,column=0,columnspan=2,sticky=tk.W+tk.E,)
     
     def new_func_close_scrollbar_h(self,):
         if self.new_ui_scrollbar_h.winfo_ismapped():
@@ -206,7 +201,7 @@ class Text_container(ttk.Frame):
         # 第一行 选择栏
         self.new_var_string_for_text_chooser = tk.StringVar()
         self.new_ui_text_chooser = ttk.Combobox( parent ,takefocus=False,textvariable=self.new_var_string_for_text_chooser,state="readonly")
-        self.new_ui_text_chooser.grid(row=0 , column=0 , sticky=(tk.W,tk.N,tk.E,),)
+        self.new_ui_text_chooser.grid(row=0 , column=0 , sticky=tk.W+tk.N+tk.E,)
         #self.new_ui_text_chooser.grid(row=0 , column=0 ,columnspan=2, sticky=(tk.W,tk.N,tk.E,),)
         
         # 第一行 标记 ：创建目录 
@@ -216,18 +211,18 @@ class Text_container(ttk.Frame):
                 text=_("用目录"),
                 variable=self.new_var_index_flag,
                 )
-        self.new_ui_index_checkbutton.grid(row=0 , column=1 , sticky= (tk.N,tk.E, ),)
+        self.new_ui_index_checkbutton.grid(row=0 , column=1 , sticky=tk.N+tk.E, )
         
         
         # 第二行 选择栏 2
         self.new_var_string_for_chooser_2 = tk.StringVar()
         self.new_ui_chooser_2 = ttk.Combobox( parent ,takefocus=False,textvariable=self.new_var_string_for_chooser_2,state="readonly")
-        self.new_ui_chooser_2.grid(row=1 , column=0 , columnspan=2,sticky=(tk.W,tk.N,tk.E,),)
+        self.new_ui_chooser_2.grid(row=1 , column=0 , columnspan=2,sticky=tk.W+tk.N+tk.E,)
         
         
         # 第三行 文本显示区
         self.new_ui_text_area = Text_area(parent)
-        self.new_ui_text_area.grid(row=2 , column=0 ,columnspan=2, sticky=(tk.W,tk.N,tk.E,tk.S),)
+        self.new_ui_text_area.grid(row=2 , column=0 ,columnspan=2, sticky=tk.W+tk.N+tk.E+tk.S,)
     
     #### ??
     def new_func_bindings(self,):

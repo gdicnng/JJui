@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 import re
-import glob
+#import glob
 
 import tkinter as tk
 from tkinter import ttk
@@ -13,20 +13,15 @@ from tkinter import filedialog
 from tkinter import messagebox
 from tkinter import font as tkfont
 
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
-
 from . import global_variable
 from . import global_static_filepath as the_files
-from . import global_static_key_word_translation as key_word_translation
+#from . import global_static_key_word_translation as key_word_translation
 
-from . import ui__text_with_scrollbar 
+#from . import ui__text_with_scrollbar 
 
 from . import read_user_config 
 from . import save_pickle 
-from . import read_pickle 
+#from . import read_pickle 
 from . import translation_gamelist 
 from . import folders_save
 
@@ -37,8 +32,8 @@ from . import extra_read_history_xml
 from . import extra_history_dat 
 from . import extra_mameinfo_dat 
 from . import extra_command 
-from . import extra_command_english 
-from . import extra_gameinit_dat 
+#from . import extra_command_english 
+#from . import extra_gameinit_dat
 
 
 class Misc_functions():
@@ -155,8 +150,6 @@ class Misc_functions():
             proc.wait()
             global_variable.root_window.deiconify()
             
-            global_variable.root_window.wait_visibility()
-            
             # 列表要不要刷新一下？
                 # 应该不用了
             #global_variable.root_window.update()
@@ -164,13 +157,15 @@ class Misc_functions():
                 # 太早，不可见时，设置的　刷新无效
                 # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
             
+            global_variable.root_window.lift()
+
             # focus_set
             try:
                 global_variable.the_showing_table.focus_set()
             except:
                 pass
             
-            global_variable.root_window.lift()
+            self.set_ui_to_topmost()
         
         else:
             subprocess.Popen(
@@ -178,6 +173,15 @@ class Misc_functions():
                     shell=shell,
                     cwd=cwd
                     )
+    
+    def set_ui_to_topmost(self,):
+        root = global_variable.root_window
+        root.update()
+        root.call('wm', 'attributes', '.', '-topmost', True)
+        # root.attributes("-topmost", True)
+        #root.update()
+        #root.call('wm', 'attributes', '.', '-topmost', False)
+        root.after_idle(root.call, 'wm', 'attributes', '.', '-topmost', False)
     
     
     def get_mame_path_and_working_directory(self,):
@@ -566,10 +570,10 @@ class Misc_functions():
         t.configure(xscrollcommand=scrollbar_2.set)
         
         t.grid(row=0,column=0,stick=(tk.W,tk.N,tk.E,tk.S))
-        scrollbar_1.grid(row=0,column=1,sticky=(tk.N,tk.S))
-        scrollbar_2.grid(row=1,column=0,sticky=(tk.W,tk.E))
+        scrollbar_1.grid(row=0,column=1,sticky=tk.N+tk.S,)
+        scrollbar_2.grid(row=1,column=0,sticky=tk.W+tk.E,)
         
-        ttk.Sizegrip(window).grid(row=1,column=1,sticky=(tk.N,tk.S))
+        ttk.Sizegrip(window).grid(row=1,column=1,sticky=tk.N+tk.S,)
         
         if content:
             for x in content:
@@ -763,7 +767,7 @@ class Misc_functions():
         label_font.grid( row=1,column=0,sticky=tk.W+tk.E)
         
         font_choose_box = ttk.Combobox(window, textvariable = font_name_tkstring,state="readonly",)
-        font_choose_box.grid( row=1,column=1,sticky=(tk.W,tk.E) )
+        font_choose_box.grid( row=1,column=1,sticky=tk.W+tk.E, )
         
         temp = sorted( tkfont.families() )
         values = []
@@ -782,10 +786,10 @@ class Misc_functions():
         font_size_tkstring = tk.StringVar()
         
         label_font_size = ttk.Label(window,text = _(r"字体大小"),)
-        label_font_size.grid( row=3,column=0,sticky=(tk.W,tk.E) )
+        label_font_size.grid( row=3,column=0,sticky=tk.W+tk.E, )
         
         font_size_box = ttk.Combobox(window, textvariable = font_size_tkstring,state="readonly")
-        font_size_box.grid(row=3,column=1,sticky=(tk.W,tk.E))
+        font_size_box.grid(row=3,column=1,sticky=tk.W+tk.E,)
         
         # 范围 
         the_values = []
@@ -1308,10 +1312,10 @@ class Misc_functions():
         
         
         print("finish")
-        global_variable.root_window.update()
+        
         global_variable.root_window.deiconify()
         global_variable.root_window.lift()
-        
+        self.set_ui_to_topmost()
         #window.wait_window()
         ""
         
@@ -1434,7 +1438,12 @@ class Misc_functions():
                     iid_string=iid_string[0:-1]
             global_variable.user_configure_data["index_be_chosen"] = iid_string
             print(iid_string)
-        
+
+    def user_configure_get_table_option(self,):
+        table = global_variable.the_showing_table
+        global_variable.user_configure_data["game_be_chosen"] = table.new_var_remember_select_row_id    
+        global_variable.user_configure_data["gamelist_sorted_by"] = table.new_var_data_holder.sort_key     
+        global_variable.user_configure_data["gamelist_sorted_reverse"] = table.new_var_data_holder.sort_reverse    
     
     def save_user_configure_just_after_initial(self,):
         # 刚初始化之后，
@@ -1459,6 +1468,8 @@ class Misc_functions():
         
         self.for_save_font()
         
+        self.user_configure_get_table_option()
+
         self.user_configure_get_index_last_record()
         
         try:

@@ -1,9 +1,9 @@
 ﻿# -*- coding: utf_8_sig-*-
 #import sys
-import re
+# import re
 
 import tkinter as tk
-from tkinter import ttk
+# from tkinter import ttk
 from .ui__text_with_scrollbar import Text_with_scrollbar
 
 #default_window_size = "400x300"
@@ -150,7 +150,7 @@ class Window_with_scrollbar(Toplevel_Window):
                 sizegrip=True,
                 wrap=tk.NONE,
                 )
-        text_with_scrollbar.grid(row=0,column=0,sticky=(tk.N,tk.S,tk.E,tk.W))
+        text_with_scrollbar.grid(row=0,column=0,sticky=tk.N+tk.S+tk.E+tk.W,)
         
         self.new_ui_text = text_with_scrollbar.new_ui_text
 

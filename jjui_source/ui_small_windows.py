@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-import os
+#import os
 import sys
 
 import tkinter as tk
@@ -246,7 +246,7 @@ def window_for_gamelist_filter():
 
     n = 0
     button=ttk.Button(window,text=_("确认"),command=for_ok_button)
-    button.grid(row=n,column=0,sticky=(tk.W,tk.N),) 
+    button.grid(row=n,column=0,sticky=tk.W+tk.N,)
     n+=1
 
     ttk.Label(window,text=_("选择不想显示的种类"),).grid(row=n,column=0,sticky=tk.W+tk.N)
@@ -346,11 +346,11 @@ def window_for_gamelist_available_filter():
         
         if misc.get_id_list_from_internal_index(the_key):
             temp  = ttk.Checkbutton(window, text=the_key,variable=tk_int_dict[the_key])
-            temp.grid(row=n,column=0,sticky=(tk.W,tk.N),)
+            temp.grid(row=n,column=0,sticky=tk.W+tk.N,)
             n+=1
     
     button=ttk.Button(window,text=_("确认"),command=for_ok_button)
-    button.grid(row=n,column=0,sticky=(tk.W,tk.N),) 
+    button.grid(row=n,column=0,sticky=tk.W+tk.N,)
     n+=1
     
     window.wait_window()
@@ -494,15 +494,15 @@ def header_pop_up_menu_callback_choose_columns():
     the_text +="\n"
     the_text +=_("不需要的话，可以不用去管 第2组、第3组")
 
-    ttk.Label(window,text=the_text).grid(row=2,column=0,columnspan=4,sticky=(tk.W,tk.N),)
+    ttk.Label(window,text=the_text).grid(row=2,column=0,columnspan=4,sticky=tk.W+tk.N,)
     
     button_ok = ttk.Button(window,text=_("确认，确认后跳转到第1组"),command=button_ok)
     button_ok.grid(row=8,column=0,columnspan=4,sticky=(tk.E),)
     
-    frame0.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
-    frame1.grid(row=0,column=1,sticky=(tk.W,tk.N,tk.E,tk.S),)
-    frame2.grid(row=0,column=2,sticky=(tk.W,tk.N,tk.E,tk.S),)
-    frame3.grid(row=0,column=3,sticky=(tk.W,tk.N,tk.E,tk.S),)
+    frame0.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
+    frame1.grid(row=0,column=1,sticky=tk.W+tk.N+tk.E+tk.S,)
+    frame2.grid(row=0,column=2,sticky=tk.W+tk.N+tk.E+tk.S,)
+    frame3.grid(row=0,column=3,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     for x in (frame0,frame1,frame2,frame3,):
         #x.rowconfigure(0,weight=1)
@@ -512,10 +512,10 @@ def header_pop_up_menu_callback_choose_columns():
     if h < 5 : h = 5
     
     # frame0
-    ttk.Label(frame0,text=_("内容")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
+    ttk.Label(frame0,text=_("内容")).grid(row=0,column=0,sticky=tk.W+tk.N,)
     
     no_0 = ttk.Treeview(frame0,height=h,show="tree",selectmode='browse' )
-    no_0.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
+    no_0.grid(row=1,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     for x in ( ["#id",] + global_variable.columns ):
         if x in key_word_translation.columns_translation:
@@ -532,9 +532,9 @@ def header_pop_up_menu_callback_choose_columns():
     button_add_to_3.grid()
     
     # frame1
-    ttk.Label(frame1,text=_("第1组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
+    ttk.Label(frame1,text=_("第1组")).grid(row=0,column=0,sticky=tk.W+tk.N,)
     no_1 = ttk.Treeview(frame1,height=h, show="tree" ,selectmode='browse')
-    no_1.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
+    no_1.grid(row=1,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
 
     for x in global_variable.user_configure_data["gamelist_columns_to_show_1"]:
         if x in key_word_translation.columns_translation:
@@ -552,9 +552,9 @@ def header_pop_up_menu_callback_choose_columns():
     button_move_down_1.grid()
 
     # frame2
-    ttk.Label(frame2,text=_("第2组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
+    ttk.Label(frame2,text=_("第2组")).grid(row=0,column=0,sticky=tk.W+tk.N,)
     no_2 = ttk.Treeview(frame2,height=h, show="tree" ,selectmode='browse')
-    no_2.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
+    no_2.grid(row=1,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
 
     for x in global_variable.user_configure_data["gamelist_columns_to_show_2"]:
         if x in key_word_translation.columns_translation:
@@ -572,9 +572,9 @@ def header_pop_up_menu_callback_choose_columns():
     button_move_down_2.grid()
 
     # frame3
-    ttk.Label(frame3,text=_("第3组")).grid(row=0,column=0,sticky=(tk.W,tk.N,),)
+    ttk.Label(frame3,text=_("第3组")).grid(row=0,column=0,sticky=tk.W+tk.N,)
     no_3 = ttk.Treeview(frame3,height=h,show="tree" ,selectmode='browse' )
-    no_3.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S),)
+    no_3.grid(row=1,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
 
     for x in global_variable.user_configure_data["gamelist_columns_to_show_3"]:
         if x in key_word_translation.columns_translation:
@@ -672,7 +672,7 @@ def window_for_choose_unwanted_internal_index():
     ttk.Separator(window,orient=tk.HORIZONTAL).grid(row=n,sticky=tk.W+tk.E)
     n+=1
     
-    not_delete = set( ["all_set","clone_set","parent_set"] )
+    not_delete = {"all_set", "clone_set", "parent_set", }
     for the_id in sorted( global_variable.internal_index.keys() ):
         if the_id not in not_delete:
             

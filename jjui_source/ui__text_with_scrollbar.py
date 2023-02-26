@@ -50,8 +50,8 @@ class Text_with_scrollbar(ttk.Frame):
         
         self.new_ui_text.configure(yscrollcommand=self.new_ui_scrollbar_v.set)
         
-        self.new_ui_text.grid(row=0,column=0,sticky=(tk.N,tk.S,tk.E,tk.W))
-        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=(tk.N,tk.S))
+        self.new_ui_text.grid(row=0,column=0,sticky=tk.N+tk.S+tk.E+tk.W,)
+        self.new_ui_scrollbar_v.grid(row=0,column=1,sticky=tk.N+tk.S,)
         
         if self.new_var_flag_horizontal:
             
@@ -61,11 +61,11 @@ class Text_with_scrollbar(ttk.Frame):
             
             self.new_ui_text.configure(xscrollcommand=self.new_ui_scrollbar_h.set)
             
-            self.new_ui_scrollbar_h.grid(row=1,column=0,sticky=(tk.W,tk.E))
+            self.new_ui_scrollbar_h.grid(row=1,column=0,sticky=tk.W+tk.E,)
             
             if self.new_var_flag_sizegrip :
                 self.new_ui_sizegrip = ttk.Sizegrip(parent)
-                self.new_ui_sizegrip.grid(row=1,column=1,sticky=(tk.E,))
+                self.new_ui_sizegrip.grid(row=1,column=1,sticky=tk.E,)
     
     def new_func_insert_string(self,a_string=''):
         self.new_ui_text.configure(state="normal")
@@ -92,7 +92,7 @@ if __name__ == "__main__" :
     
     #a=Text_with_scrollbar(root)
     a=Text_with_scrollbar(root,horizontal=True,sizegrip=False)
-    a.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    a.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     text = a.new_ui_text
     for x in range(1000):

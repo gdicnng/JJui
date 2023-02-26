@@ -55,7 +55,7 @@ the_showing_table = None # tk table widget
 all_tables=[]
     # 记录全部，方便设置
 tk_text_1 = None
-tk_text_1 = None
+tk_text_2 = None
     #文本一
     #文本二
 the_index = None 

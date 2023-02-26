@@ -1,18 +1,14 @@
 ﻿# -*- coding: utf_8_sig-*-
-import os
-import sys
-import re
-
-if __name__ =="__main__":
-    def _(x):
-        return x
+#import os
+#import sys
+#import re
 
 from . import global_variable
 
-version_string=r"JJui (v.2.1 test)"
-title_string = r"MAME 街机游戏列表显示器"
+version_string=r"JJui (v.2.1.01 test)"
+title_string = _(r"MAME 街机游戏列表显示器")
 if global_variable.gamelist_type == "softwarelist":
-    title_string= r"MAME Software List(软件列表)"
+    title_string= _(r"MAME Software List(软件列表)")
 
 # 游戏列表
 # 读取哪些
@@ -141,7 +137,6 @@ extra_text_types_2 =  (
         "command.dat",
         "command_english.dat",
         )
-
 
 if __name__ =="__main__":
     

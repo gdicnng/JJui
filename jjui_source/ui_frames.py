@@ -1,10 +1,10 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
-import os
+# import sys
+# import os
 import tkinter as tk
 from tkinter import ttk 
 
-from . import global_variable
+# from . import global_variable
 
 #user_configure = global_variable.user_configure_data
 
@@ -33,8 +33,8 @@ class MainFrame(ttk.Frame):
         self.frame_menu    =ttk.Frame( parent , )
         frame_content =ttk.Frame( parent , )
         
-        self.frame_menu.grid(row=0,column=0,sticky=(tk.W,tk.E,))
-        frame_content.grid(row=1,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+        self.frame_menu.grid(row=0,column=0,sticky=tk.W+tk.E,)
+        frame_content.grid(row=1,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
         
         
         
@@ -54,9 +54,9 @@ class MainFrame(ttk.Frame):
         self.middle_2 = ttk.Frame( self.frame_middle, )
         self.middle_3 = ttk.Frame( self.frame_middle, )
         
-        self.frame_top.grid(row=0,column=0,sticky=(tk.W,tk.E,))
-        self.frame_middle.grid(row=1,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
-        self.frame_bottom.grid(row=2,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+        self.frame_top.grid(row=0,column=0,sticky=tk.W+tk.E,)
+        self.frame_middle.grid(row=1,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
+        self.frame_bottom.grid(row=2,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
         
         #self.middle_1.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
         #self.middle_2.grid(row=0,column=1,sticky=(tk.W,tk.N,tk.E,tk.S))

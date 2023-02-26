@@ -1,13 +1,9 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
+# import sys
 import os
+import time
 import tkinter as tk
-from tkinter import ttk 
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
+# from tkinter import ttk
 
 from . import global_variable
 from . import global_static_key_word_translation as key_word_translation
@@ -17,8 +13,6 @@ from .ui_frames          import MainFrame
 from .ui_menubar         import MenuBar
 from .ui_toolbar         import ToolBar
 from .ui_index           import GameIndex 
-from .ui_statesbar       import StatesBar 
-
 
 #from .ui_game_list_table_1_level import GameList
 from .ui_game_list_table_1_level import GameList
@@ -34,7 +28,7 @@ from . import folders_read
 from .ui_misc import  misc_funcs
 
 
-from .read_pickle import read as read_pickle
+# from .read_pickle import read as read_pickle
 
 # 读取外部目录数据
     # sl  and  mame
@@ -62,8 +56,8 @@ def get_external_index_data(folders_path):
     
     # 计算分类列表 具体信息
     for x in ini_files:
-        temp = folders_read.read_folder_ini_3(x) ## 
-        if temp==None:
+        temp = folders_read.read_folder_ini(x) ## 
+        if temp is None:
             # 格式错误，只检查了个别错误
             pass
         else: 
@@ -103,7 +97,7 @@ def get_external_read_only_index_data(folders_path,file_extension):
     
     # 计算分类列表 具体信息
     for x in ini_files:
-        temp = folders_read.read_folder_ini_3(x) ## 
+        temp = folders_read.read_folder_ini(x) ## 
         if temp==None:
             # 格式错误，只检查了个别错误
             pass
@@ -127,23 +121,23 @@ def add_game_list(
             
             ):
             # global_variable.user_configure_data,
-        gamelist_window = gamelist_table_type( parent_window, )
-        gamelist_window.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
-        
-        # 添加数据
-        gamelist_window.new_func_feed_data(game_list_data,external_index)
-        # 添加数据，所有列范围
-        gamelist_window.new_func_set_all_columns( columns = global_variable.columns + ["#id",] ) # 增加 id 一列
-        # 添加数据，列宽度
-        gamelist_window.new_func_set_column_width( **global_variable.user_configure_data["gamelist_columns_width"] )
-        # 添加数据，要显示的 列
-        gamelist_window.new_func_set_columns_to_show( columns = global_variable.user_configure_data["gamelist_columns_to_show_1"] )
-        # 添加数据，列标题 翻译
-        gamelist_window.new_func_header_set_column_translation( key_word_translation.columns_translation )
-        # 图标列
-        gamelist_window.new_func_set_icon_column_index_in_header( global_variable.icon_column_index )
-        
-        return gamelist_window
+    gamelist_window = gamelist_table_type( parent_window, )
+    gamelist_window.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    
+    # 添加数据
+    gamelist_window.new_func_feed_data(game_list_data,external_index)
+    # 添加数据，所有列范围
+    gamelist_window.new_func_set_all_columns( columns = global_variable.columns + ["#id",] ) # 增加 id 一列
+    # 添加数据，列宽度
+    gamelist_window.new_func_set_column_width( **global_variable.user_configure_data["gamelist_columns_width"] )
+    # 添加数据，要显示的 列
+    gamelist_window.new_func_set_columns_to_show( columns = global_variable.user_configure_data["gamelist_columns_to_show_1"] )
+    # 添加数据，列标题 翻译
+    gamelist_window.new_func_header_set_column_translation( key_word_translation.columns_translation )
+    # 图标列
+    gamelist_window.new_func_set_icon_column_index_in_header( global_variable.icon_column_index )
+    
+    return gamelist_window
 
 def hide_other_table():
     
@@ -161,7 +155,15 @@ def main(game_list_data,root,style):
     # 读取外部目录
     print()
     print("reading data from external index")
+    time_external_0=time.time()
     external_index=get_external_index_data(global_variable.user_configure_data["folders_path"])
+    print("time:",time.time()-time_external_0)
+    del time_external_0
+ 
+    
+
+    # 记录
+    global_variable.external_index = external_index
     
     # 读取外部目录 ,只读目录，
     # sl 部分，按 xml 分类
@@ -180,9 +182,6 @@ def main(game_list_data,root,style):
         global_variable.external_index_by_source = external_index_by_source
     
     # 记录
-    global_variable.external_index = external_index
-    
-    # 记录
     # 外部目录中，可编辑的文件
     for x in external_index:
         if os.access(x,os.W_OK):
@@ -190,7 +189,6 @@ def main(game_list_data,root,style):
     #print()
     #print()
     #print(global_variable.external_index_files_editable)
-    
     
     
     root.rowconfigure(0, weight=1)#
@@ -202,26 +200,29 @@ def main(game_list_data,root,style):
     root.title(title_string)
     
     main_frame = MainFrame(root)
-    main_frame.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    main_frame.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
     # 记录 PanedWindow ，方便获得分隔线 位置
     global_variable.PanedWindow = main_frame.frame_middle
 
 
     # ui menu bar
     ui_menubar = MenuBar(main_frame.frame_menu)
-    ui_menubar.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    ui_menubar.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
     
     # ui tool bar
     ui_toolbar = ToolBar(main_frame.frame_top)
-    ui_toolbar.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    ui_toolbar.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
+    
     
     # ui game index
     ui_index = GameIndex(main_frame.middle_1)
-    ui_index.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    ui_index.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
     # 记录
     global_variable.the_index = ui_index
     # 添加 内部目录数据
     #
+    print("")
+    print("index_order")
     print(global_static.index_order)
     ui_index.new_func_index_set_content_internal(
         game_list_data["internal_index"] ,
@@ -281,7 +282,7 @@ def main(game_list_data,root,style):
 
     # ui extra area
     ui_extra = Extra(main_frame.middle_3)
-    ui_extra.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    ui_extra.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
     # 记录，方便之后　获得　分隔线　位置
     global_variable.Notebook_for_extra       = ui_extra.new_ui_notebook
     #global_variable.Combobox_chooser_image_1 = 
@@ -290,7 +291,7 @@ def main(game_list_data,root,style):
     
     # ui states bar
     ui_statesbar = StatesBar(main_frame.frame_bottom)
-    ui_statesbar.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+    ui_statesbar.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
     
     total_number = len(game_list_data["machine_dict"])
     ui_statesbar.new_ui_label_total_number.configure(text=_("总数量：")+str(total_number)+" . ")
@@ -320,9 +321,19 @@ def main(game_list_data,root,style):
         top_table = global_variable.the_showing_table
         print(top_table)
         
+        item_id = None
         if top_table is not None:
-            columns_width = top_table.new_func_get_column_width()
+            columns_width   = top_table.new_func_get_column_width()
             columns_to_show = top_table.new_func_get_columns_to_show()
+
+            item_id         = top_table.new_var_remember_select_row_id
+            selected_items  = top_table.new_var_remember_selected_items
+
+            # 多选模式
+            multi_select_mode = top_table.new_var_tk_gamelist_multi_select_mode.get() # tk.IntVar
+            sort_key     = top_table.new_var_data_holder.sort_key
+            sort_reverse = top_table.new_var_data_holder.sort_reverse
+            
             print(columns_width)
             print(columns_to_show)
             
@@ -363,6 +374,20 @@ def main(game_list_data,root,style):
             # 隐藏 其它
             hide_other_table()
             
+            the_table.new_var_remember_select_row_id   = item_id # 当前项
+            the_table.new_var_remember_selected_items  = selected_items # 所有选中项
+            the_table.new_var_data_holder.sort_key     = sort_key
+            the_table.new_var_data_holder.sort_reverse = sort_reverse
+            # if item_id is not None:
+            #     the_table.new_var_remember_selected_items.add(item_id)
+            #           
+            # 多选模式记录
+            if multi_select_mode != the_table.new_var_tk_gamelist_multi_select_mode.get():
+                the_table.new_var_tk_gamelist_multi_select_mode.set(multi_select_mode) # 多选模式，记录
+                the_table.new_func_multi_select_mode_bind() # 多选模式，切换
+
+            print()
+            print(item_id)
             
             root.event_generate('<<RequestForIndexInfo>>')
             # 目录重新发个信号
@@ -558,8 +583,18 @@ def main(game_list_data,root,style):
     
 
     
+    table = global_variable.the_showing_table
+    # 上次记录的游戏
+    game_name = global_variable.user_configure_data["game_be_chosen"]
+    if game_name:
+        if game_name in global_variable.set_data["all_set"]:
+            table.new_var_remember_select_row_id = game_name
+            table.new_var_remember_selected_items.add(game_name)
+    # 排序 使用 记录值
+    table.new_var_data_holder.sort_key  = global_variable.user_configure_data["gamelist_sorted_by"]
+    table.new_var_data_holder.sort_reverse =global_variable.user_configure_data["gamelist_sorted_reverse"]
     # 目录 选择 上一次的记录
-    root.update() # 不然,index 的 Treeview 部件，定位不准
+    root.update() # 不然,index 的 Treeview 部件，定位不准            
     global_variable.the_index.new_func_index_initial_select( global_variable.user_configure_data["index_be_chosen"] )
 
     # 初始化 拥有列表 过滤选项 

@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
+# import sys
 import os
 
 import subprocess
@@ -14,17 +14,12 @@ from . import global_variable
 
 from .save_pickle import save as save_pickle
 
-from .ui__window import Window_with_scrollbar
+# from .ui__window import Window_with_scrollbar
 from .ui__text_with_scrollbar import Text_with_scrollbar
 
 from . import xml_parse_mame
 from . import translation_gamelist
 from . import misc
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 
 # new_var_
@@ -65,7 +60,7 @@ class Toplevel_Window(tk.Toplevel):
         self.new_func_bindings()
 
     def new_func_ui(self,):
-        self.title( _("初始化") )
+        self.title( _("初始化 / initialization") )
         
         self.columnconfigure(0, weight=0)
         self.columnconfigure(1, weight=0)
@@ -75,20 +70,20 @@ class Toplevel_Window(tk.Toplevel):
         parent=self
         
         n=0
-        ttk.Label(parent,text=_("初始化，从模拟器读取游戏列表数据") ).grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N);n+=1
+        ttk.Label(parent,text=_("初始化，从模拟器读取游戏列表数据 / initialization,get info from emulator") ).grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N);n+=1
         
         # MAME 路径选择
         #
-        self.new_ui_button_choose = ttk.Button(parent,text=_("选择 MAME 模拟器"),command=self.new_func_for_button_choose)
-        self.new_ui_button_choose.grid(row=n,column=0,sticky=(tk.W,tk.N),)
+        self.new_ui_button_choose = ttk.Button(parent,text=_("选择 MAME 程序 / choose MAME executable program"),command=self.new_func_for_button_choose)
+        self.new_ui_button_choose.grid(row=n,column=0,sticky=tk.W+tk.N,)
         n+=1
         # 路径显示在 Entry 中
         self.new_ui_entry = ttk.Entry(parent,width=40,textvariable=self.new_var_mame_path)
-        self.new_ui_entry.grid(row=n,column=0,columnspan=3,sticky=(tk.W,tk.E),)
+        self.new_ui_entry.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.E,)
         n+=1
         
         # 模拟器种类选择区
-        frame=ttk.LabelFrame(parent,text=_("格式"),)
+        frame=ttk.LabelFrame(parent,text=_("-listxml"),)
         frame.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.N+tk.E)
         n+=1
         #
@@ -114,7 +109,7 @@ class Toplevel_Window(tk.Toplevel):
         #
         # "mame0162" 不能改了,解析 xml 处用了
         #a_radiobutton = make_a_radiobutton(r,c,"mame0162",      _("主列表，mame版本 >= 0.162，用 -listxml 命令导出数据"));c+=1
-        a_radiobutton = make_a_radiobutton(r,c,"none",      _("主列表，mame版本 >= 0.84，用 -listxml 命令导出数据"));c+=1
+        a_radiobutton = make_a_radiobutton(r,c,"none",      _("MAME 版本>=0.84 / MAME version>=0.84"));c+=1
         self.new_var_radiobutton_s.append( a_radiobutton )
         r+=1;c=0
         #make_a_radiobutton(r,c,"mame_sl",   _("mame > 0.162,Software List 软件列表"));c+=1
@@ -140,13 +135,13 @@ class Toplevel_Window(tk.Toplevel):
         
         
         # 确定 按钮
-        self.new_ui_button_ok = ttk.Button(parent,text=_("确定"),command = self.new_func_for_button_ok)
+        self.new_ui_button_ok = ttk.Button(parent,text=_("确定 / OK"),command = self.new_func_for_button_ok)
         self.new_ui_button_ok.grid(row=n,column=0,columnspan=3,sticky=tk.E)
         n+=1
         
         # 进度条
         self.new_ui_progressbar=ttk.Progressbar(parent,orient=tk.HORIZONTAL)
-        self.new_ui_progressbar.grid(row=n,column=0,columnspan=3,sticky=(tk.W,tk.E,))
+        self.new_ui_progressbar.grid(row=n,column=0,columnspan=3,sticky=tk.W+tk.E,)
         n+=1
         
         # 文本
@@ -181,26 +176,33 @@ class Toplevel_Window(tk.Toplevel):
     # button call back function
     def new_func_for_button_ok(self,):
         
-        # 让一些 ui 部件 失效 ，在 任务中 不需要 操作，仅等待
+        # 让一些 ui 部件 状态设置 disable ，在 任务中 不需要 操作，仅等待
         self.new_func_disable_some_ui()
         
         # 清理，删除一些文件
-        
+        ###
         
         xml_type =  self.new_var_type.get()
         xml_type =  None
         # 自行 判断版本 ,xml 用 game 还是 machine
         
         # 命令行 -help ，版本信息
-        self.new_var_versio=""
+        self.new_var_version=""
         self.new_func_export_version_info()
         
         # 导出 xml
         self.new_func_export_xml(xml_type)
         
+
+        
         # 解析 xml 并 翻译
         self.new_func_parse_xml(xml_type)
         
+        
+        #测试
+        #print("for test destroy")
+        #self.destroy()
+        #return
         
         global_variable.user_configure_data["mame_path"] = self.new_var_mame_path.get()
         
@@ -359,13 +361,18 @@ class Toplevel_Window(tk.Toplevel):
         #    pass
             
         # 解析 xml
-        # from . import xml_parse_mame
+        #from . import xml_parse_mame
+        #print("test A")
         data = {}
         try:
             data = xml_parse_mame.main(xml_file_name,xml_type)
         except:
             pass
-
+        
+        print()
+        print(data.keys())
+        #print("test B")
+        
         if len( data ) == 0:
             return None
         

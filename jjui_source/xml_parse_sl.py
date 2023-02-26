@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf_8_sig-*-
 import xml.etree.ElementTree
-import os
+# import os
 
 # 元素改为 list
 
@@ -36,7 +36,7 @@ def read_xml( file_name ):
         # .....
     
     print( )
-    print( "读取 xml")
+    print( "parsing xml")
     count = 0
     for (event, elem) in xml.etree.ElementTree.iterparse(file_name,events=("end",) ) :#"start"
     
@@ -103,8 +103,10 @@ def read_xml( file_name ):
                         # alt_title
                         # <info name="alt_title" value="神宮館'89電脳九星占い"/>
                         elif grand_child.tag == "info":
-                            if grand_child.attrib["name"]=="alt_title":
-                                temp_dict["alt_title"] = grand_child.attrib["value"]
+                            if "name" in grand_child.attrib:
+                                if grand_child.attrib["name"]=="alt_title":
+                                    if "value" in grand_child.attrib:
+                                        temp_dict["alt_title"] = grand_child.attrib["value"]
                             
                     
                     # 清理
@@ -418,14 +420,15 @@ def dict_to_list(game_list_data):
                     
                     "xml",
                     "name",
-                    "translation",
+                    "description",
                     
                     "year",
                     "publisher",
-                    "description",
+                    
                     
                     "alt_title",
                     "cloneof",
+                    "translation",
 
                     
                     ]
@@ -478,7 +481,7 @@ def get_xml_dict(xml_info):
 def main( file_name ,mame_version=""):
     
     #
-    mame_version 
+    #mame_version 
 
     all_info,xml_info = read_xml(file_name)
     #

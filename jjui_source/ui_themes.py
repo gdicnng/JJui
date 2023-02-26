@@ -3,13 +3,8 @@
 import os
 import sys
 
-import tkinter as tk
-from tkinter import ttk
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
+# import tkinter as tk
+# from tkinter import ttk
 
 from . import global_variable
 from . import global_static_filepath as the_files
@@ -147,7 +142,7 @@ def main(root,style):
                     # Treeview fieldbackground 没有效果
                     
                 else:
-                    pass
+                    file_path=""
                     
                     
                 if os.path.isfile( file_path ):
@@ -207,7 +202,7 @@ def main(root,style):
                     #file_path=r'.\.jjui\themes\ttkthemes\aquativo\aquativo.tcl'
                     file_path=os.path.join(themes_dir,"ttkthemes",'aquativo','aquativo.tcl')
                 else:
-                    pass
+                    file_path=""
                 
                 if os.path.isfile( file_path ):
                     root.tk.call('source',file_path)

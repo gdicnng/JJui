@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf_8_sig-*-
-import sys
-import os
+#import sys
+#import os
 import tkinter as tk
 from tkinter import ttk 
 
@@ -26,17 +26,17 @@ class StatesBar(ttk.Frame):
         column=0
         
         self.new_ui_label_total_number = ttk.Label(parent,anchor=tk.W,text="",)
-        self.new_ui_label_total_number.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_ui_label_total_number.grid(row=0,column=column, sticky=tk.W,)
         column+=1
         
         self.new_ui_label_current_list_number = ttk.Label(parent,anchor=tk.W,text="",)
-        self.new_ui_label_current_list_number.grid(row=0,column=column, sticky=(tk.W,))
+        self.new_ui_label_current_list_number.grid(row=0,column=column, sticky=tk.W,)
         column+=1
 
         
         #
         self.new_ui_label_current_item = ttk.Label(parent,anchor=tk.W,text="")
-        self.new_ui_label_current_item.grid(row=0,column=column,sticky=(tk.W,tk.N,tk.E,tk.S))
+        self.new_ui_label_current_item.grid(row=0,column=column,sticky=tk.W+tk.N+tk.E+tk.S,)
         parent.columnconfigure(column, weight=1)#### 可拉伸
         column+=1
         

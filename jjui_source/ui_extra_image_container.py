@@ -18,7 +18,7 @@
         --------------------------
     
 """
-import sys
+# import sys
 import os
 import glob
 import zipfile
@@ -39,11 +39,6 @@ try:
     bilinear = Image.Resampling.BILINEAR
 except:
     bilinear = Image.BILINEAR
-
-if __name__ == "__main__" :
-    import builtins
-    from .translation_ui  import translation_holder
-    builtins.__dict__['_'] = translation_holder.translation
 
 from . import global_static_filepath as the_files
 from . import global_static
@@ -72,6 +67,7 @@ class Image_area(ttk.Frame):
         
         # 备用图片,Pillow 格式，使用时需转换
         self.new_var_backup_image      = Image.open( the_files.image_path_image_no )
+        self.new_var_backup_image.load()
         
         # 当前图片 ,Pillow 格式，使用时需转换
         self.new_var_current_image       = self.new_var_backup_image
@@ -92,7 +88,7 @@ class Image_area(ttk.Frame):
                     borderwidth=0,
                     highlightthickness = 0, 
                     )
-        self.new_ui_canvas.grid(row=0,column=0, sticky=(tk.W,tk.N,tk.E,tk.S))
+        self.new_ui_canvas.grid(row=0,column=0, sticky=tk.W+tk.N+tk.E+tk.S,)
         
         #self.new_ui_canvas.create_image(0, 0, image = self.new_var_tk_image , anchor="nw")
         ""
@@ -196,6 +192,7 @@ class Image_area(ttk.Frame):
     def new_func_set_new_image_from_file(self,file_name):
         try:
             self.new_var_current_image = Image.open( file_name )
+            self.new_var_current_image.load()
         except:
             self.new_var_current_image = self.new_var_backup_image
         
@@ -242,7 +239,7 @@ class Image_container(ttk.Frame):
         self.new_var_string_for_image_chooser = tk.StringVar()
         
         self.new_ui_image_chooser = ttk.Combobox( parent ,takefocus=False,textvariable=self.new_var_string_for_image_chooser,state="readonly")
-        self.new_ui_image_chooser.grid(row=0 , column=0 , sticky=(tk.W,tk.N,tk.E,),)
+        self.new_ui_image_chooser.grid(row=0 , column=0 , sticky=tk.W+tk.N+tk.E,)
         
         # 第一行 zip 标记
         self.new_var_zip_flag = tk.IntVar()
@@ -252,11 +249,11 @@ class Image_container(ttk.Frame):
                 text=_("zip"),
                 variable=self.new_var_zip_flag,
                 )
-        self.new_ui_zip_checkbutton.grid(row=0 , column=1 , sticky= (tk.N,tk.E, ),)
+        self.new_ui_zip_checkbutton.grid(row=0 , column=1 , sticky=tk.N+tk.E,)
         
         # 第二行 图片显示区
         self.new_ui_image_area = Image_area(parent)
-        self.new_ui_image_area.grid(row=1 , column=0 ,columnspan=2, sticky=(tk.W,tk.N,tk.E,tk.S),)
+        self.new_ui_image_area.grid(row=1 , column=0 ,columnspan=2, sticky=tk.W+tk.N+tk.E+tk.S,)
         
     def new_func_bindings(self,):
         self.new_ui_image_chooser.bind(r"<<ComboboxSelected>>",self.new_func_for_virtual_event_of_combobox)
@@ -515,8 +512,9 @@ class Image_container(ttk.Frame):
             if game_name != global_variable.current_item : return 
             
             try:
-                image_data = self.new_var_remember_image_zip_object.open(file_name, mode='r', )
-                image = Image.open(image_data, mode='r',)
+                with self.new_var_remember_image_zip_object.open(file_name, mode='r', ) as image_data:
+                    image = Image.open(image_data, mode='r',)
+                    image.load()
             except:
                 image = None
             
@@ -536,8 +534,10 @@ class Image_container(ttk.Frame):
                     parent_file_name = self.new_func_get_image_name_for_zip(parent_name)
                     
                     try:
-                        image_data = self.new_var_remember_image_zip_object.open(parent_file_name, mode='r', )
-                        image = Image.open(image_data, mode='r',)
+                        with self.new_var_remember_image_zip_object.open(parent_file_name, mode='r', ) as image_data:
+                            image = Image.open(image_data, mode='r',)
+                            image.load()
+
                     except:
                         image = None
                 else: # 本身是主版本，pass
@@ -615,21 +615,21 @@ if __name__ == "__main__" :
     
     #c = Image_container(root)
     c = Image_container(root)
-    c.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    c.grid(row=0,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     def change():
         
         c.new_func_set_new_image_from_file("knights.png")
     
     b=tk.Button(root,text="测试，插入图片",command=change)
-    b.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
+    b.grid(row=1,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     def show_info():
         number = len( c.new_ui_image.new_ui_canvas.find_all() )
         print("items number is  : {}  ".format(number))
     
     b2=tk.Button(root,text="测试，显示数量",command=show_info)
-    b2.grid(row=2,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))    
+    b2.grid(row=2,column=0,sticky=tk.W+tk.N+tk.E+tk.S,)
     
     root.mainloop()    
 
