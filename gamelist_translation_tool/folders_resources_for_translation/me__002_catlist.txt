@@ -1,0 +1,95 @@
+Arcade: Driving / 1st Person	街机: 驾驶 / 第一人称
+Arcade: Driving / Boat	街机: 驾驶 / 船
+Arcade: Driving / Plane	街机: 驾驶 / 飞机
+Arcade: Driving / Race	街机: 驾驶 / 竞速
+Arcade: Driving / Race (chase view)	街机: 驾驶 / 竞速 (追逐视角)
+Arcade: Driving / Race (chase view) Bike	街机: 驾驶 / 摩托竞速 (追逐视角)
+Arcade: Driving / Race 1st Person	街机: 驾驶 / 竞速 (第一人称)
+Arcade: Driving / Race Bike	街机: 驾驶 / 摩托竞速
+Arcade: Driving / Race Track	街机: 驾驶 / 赛道竞速
+Arcade: Fighter / 2.5D	街机: 格斗 / 2.5D
+Arcade: Fighter / 2D	街机: 格斗 / 2D
+Arcade: Fighter / 3D	街机: 格斗 / 3D
+Arcade: Fighter / Field	街机: 格斗 / 竞技场
+Arcade: Fighter / Misc.	街机: 格斗 / 其他
+Arcade: Fighter / Multiplay	街机: 格斗 / 多人
+Arcade: Fighter / Versus	街机: 格斗 / 对战
+Arcade: Fighter / Versus Co-op	街机: 格斗 / 合作对战
+Arcade: Fighter / Vertical	街机: 格斗 / 纵版
+Arcade: Maze / Blocks	街机: 迷宫 / 方块
+Arcade: Maze / Digging	街机: 迷宫 / 挖掘
+Arcade: Maze / Driving	街机: 迷宫 / 驾驶
+Arcade: Maze / Fighter	街机: 迷宫 / 格斗
+Arcade: Maze / Outline	街机: 迷宫 / 描框
+Arcade: Maze / Shooter Large	街机: 迷宫 / 大画面射击
+Arcade: Maze / Shooter Small	街机: 迷宫 / 小画面射击
+Arcade: Maze / Surround	街机: 迷宫 / 环绕
+Arcade: Platform / Fighter	街机: 平台 / 格斗
+Arcade: Platform / Fighter Scrolling	街机: 平台 / 格斗 卷轴
+Arcade: Platform / Run Jump	街机: 平台 / 跑跳
+Arcade: Platform / Shooter	街机: 平台 / 射击
+Arcade: Platform / Shooter Scrolling	街机: 平台 / 射击 卷轴
+Arcade: Puzzle / Cards	街机: 益智 / 纸牌
+Arcade: Puzzle / Drop	街机: 益智 / 落下
+Arcade: Puzzle / Match	街机: 益智 / 匹配
+Arcade: Puzzle / Maze	街机: 益智 / 迷宫
+Arcade: Puzzle / Outline	街机: 益智 / 描框
+Arcade: Puzzle / Sliding	街机: 益智 / 滑动
+Arcade: Puzzle / Toss	街机: 益智 / 投掷
+Arcade: Shooter / 1st Person	街机: 射击 / 第一人称
+Arcade: Shooter / 3rd Person	街机: 射击 / 第三人称
+Arcade: Shooter / Command	街机: 射击 / 指令
+Arcade: Shooter / Driving	街机: 射击 / 驾驶
+Arcade: Shooter / Driving (chase view)	街机: 射击 / 驾驶 (追逐视角)
+Arcade: Shooter / Driving 1st Person	街机: 射击 / 驾驶 (第一人称)
+Arcade: Shooter / Driving Diagonal	街机: 射击 / 驾驶 斜向
+Arcade: Shooter / Driving Horizontal	街机: 射击 / 驾驶 横向
+Arcade: Shooter / Driving Vertical	街机: 射击 / 驾驶 纵向
+Arcade: Shooter / Field	街机: 射击 / 竞技场
+Arcade: Shooter / Flying	街机: 射击 / 飞行
+Arcade: Shooter / Flying (chase view)	街机: 射击 / 飞行 (追逐视角)
+Arcade: Shooter / Flying 1st Person	街机: 射击 / 飞行 (第一人称)
+Arcade: Shooter / Flying Diagonal	街机: 射击 / 飞行 斜向
+Arcade: Shooter / Flying Horizontal	街机: 射击 / 飞行 横向
+Arcade: Shooter / Flying Vertical	街机: 射击 / 飞行 纵向
+Arcade: Shooter / Gallery	街机: 射击 / 长廊
+Arcade: Shooter / Gun	街机: 射击 / 枪
+Arcade: Shooter / Misc.	街机: 射击 / 其它
+Arcade: Shooter / Misc. Horizontal	街机: 射击 / 其它 横向
+Arcade: Shooter / Misc. Vertical	街机: 射击 / 其它 纵向
+Arcade: Shooter / Versus	街机: 射击 / 对战
+Arcade: Shooter / Walking	街机: 射击 / 步行
+Arcade: Sports / Baseball	街机: 体育 / 棒球
+Arcade: Sports / Basketball	街机: 体育 / 篮球
+Arcade: Sports / Bowling	街机: 体育 / 保龄球
+Arcade: Sports / Boxing	街机: 体育 / 拳击
+Arcade: Sports / Bull Fighting	街机: 体育 / 斗牛
+Arcade: Sports / Darts	街机: 体育 / 箭
+Arcade: Sports / Dodgeball	街机: 体育 / 躲避球
+Arcade: Sports / Fishing	街机: 体育 / 钓鱼
+Arcade: Sports / Football	街机: 体育 / 橄榄球足球
+Arcade: Sports / Golf	街机: 体育 / 高尔夫
+Arcade: Sports / Handball	街机: 体育 / 手球
+Arcade: Sports / Hang Gliding	街机: 体育 / 悬挂滑翔
+Arcade: Sports / Hockey	街机: 体育 / 曲棍球
+Arcade: Sports / Horse Racing	街机: 体育 / 赛马
+Arcade: Sports / Horseshoes	街机: 体育 / 马蹄铁
+Arcade: Sports / Multiplay	街机: 体育 / 多人
+Arcade: Sports / Ping Pong	街机: 体育 / 乒乓
+Arcade: Sports / Pool	街机: 体育 / 桌球
+Arcade: Sports / Roller	街机: 体育 / 轮滑
+Arcade: Sports / Shuffleboard	街机: 体育 / 推圆盘
+Arcade: Sports / Skateboarding	街机: 体育 / 滑板
+Arcade: Sports / Skiing	街机: 体育 / 滑雪
+Arcade: Sports / SkyDiving	街机: 体育 / 跳伞
+Arcade: Sports / Soccer	街机: 体育 / 足球
+Arcade: Sports / Sumo	街机: 体育 / 相扑
+Arcade: Sports / Swimming	街机: 体育 / 游泳
+Arcade: Sports / Tennis	街机: 体育 / 网球
+Arcade: Sports / Track & Field	街机: 体育 / 田径
+Arcade: Sports / Volleyball	街机: 体育 / 排球
+Arcade: Sports / Wrestling	街机: 体育 / 摔角
+Arcade: Tabletop / Hanafuda	街机: 桌面 / 花札
+Arcade: Tabletop / Mahjong	街机: 桌面 / 麻将
+Arcade: Tabletop / Renju	街机: 桌面 / 五子棋
+Arcade: Tabletop / Shougi	街机: 桌面 / 将棋

@@ -240,6 +240,45 @@ def read_english_chinese_file(file_name):
     
     return temp_dict
 
+# 读取文本
+# 英文 \t 中文
+#   分类目录的翻译
+#       不用分成两部分
+def read_english_chinese_file_for_folders_translation(file_name):
+    
+    temp_dict ={}
+    # 英文：中文
+
+    search_str = r'^([^\t]+)\t([^\t]+)'
+    p=re.compile( search_str, )
+    
+    with open(file_name,mode="rt",encoding="utf_8_sig",errors='backslashreplace') as f:
+        for line in f:
+            #print(line)
+            line=line.strip()
+            
+            m=p.search( line ) 
+            if m:
+                english = m.group(1).strip()
+                chinese = m.group(2).strip()
+                
+                if english == chinese:
+                    continue
+                if is_ascii(chinese): # ?? 要不要这样呢
+                    continue
+                
+                # 处理
+                english = the_first_part.main( english )
+                
+                english = english.lower()
+                
+                chinese = the_first_part.main_cn(chinese)
+                
+                if english and chinese:# 非空
+                    temp_dict[ english ] = chinese
+    
+    return temp_dict
+
 # id_translated_dict
 def translate(id_english_dict,english_chinese_dict,english_chinese_dict_second_part=None):
     

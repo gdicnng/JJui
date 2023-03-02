@@ -1,0 +1,434 @@
+Arcade: Arcade / Pinball	街机: 街机 / 弹球
+Arcade: Arcade / Pinball * Mature *	街机: 街机 / 弹球 * 成人 *
+Arcade: Arcade / Strength Tester	街机: 街机 / 力量 测试
+Arcade: Ball & Paddle / Breakout	街机: 球 & 拍 / 打砖块
+Arcade: Ball & Paddle / Breakout * Mature *	街机: 球 & 拍 / 打砖块 * 成人 *
+Arcade: Ball & Paddle / Jump and Touch	街机: 球 & 拍 / 触摸跳跃
+Arcade: Ball & Paddle / Misc.	街机: 球 & 拍 / 杂.
+Arcade: Ball & Paddle / Pong	街机: 球 & 拍 / Pong
+Arcade: Casino / Bingo	街机: 赌场 / 宾戈游戏
+Arcade: Casino / BlackJack	街机: 赌场 / BlackJack 21点
+Arcade: Casino / Cards	街机: 赌场 / 纸牌
+Arcade: Casino / Cards * Mature *	街机: 赌场 / 纸牌 * 成人 *
+Arcade: Casino / Dice	街机: 赌场 / 骰子
+Arcade: Casino / Horse Racing	街机: 赌场 / 赛马
+Arcade: Casino / Lottery	街机: 赌场 / 彩票
+Arcade: Casino / Misc.	街机: 赌场 / 杂.
+Arcade: Casino / Misc. * Mature *	街机: 赌场 / 杂. * 成人 *
+Arcade: Casino / Multi-Games	街机: 赌场 / 多游戏
+Arcade: Casino / Multiplay	街机: 赌场 / 多人游戏
+Arcade: Casino / Racing	街机: 赌场 / 速度竞赛
+Arcade: Casino / Roulette	街机: 赌场 / 轮盘赌
+Arcade: Casino / Skill Game	街机: 赌场 / 技巧 游戏
+Arcade: Casino / Unknown	街机: 赌场 / 未知
+Arcade: Climbing / Building	街机: 攀爬 / 建筑
+Arcade: Climbing / Mountain - Wall	街机: 攀爬 / 山 - 墙
+Arcade: Climbing / Tree - Plant	街机: 攀爬 / 树 - 植物
+Arcade: Driving / Ambulance Guide	街机: 驾驶 / 救护车
+Arcade: Driving / Catch	街机: 驾驶 / 捕捉
+Arcade: Driving / Demolition Derby	街机: 驾驶 / 德比碰撞
+Arcade: Driving / FireTruck Guide	街机: 驾驶 / 消防车
+Arcade: Driving / Guide and Collect	街机: 驾驶 / 驾驶 收集
+Arcade: Driving / Guide and Shoot	街机: 驾驶 / 驾驶 射击
+Arcade: Driving / Landing	街机: 驾驶 / 登陆
+Arcade: Driving / Misc.	街机: 驾驶 / 杂.
+Arcade: Driving / Motorbike	街机: 驾驶 / 摩托车
+Arcade: Driving / Motorbike (Motocross)	街机: 驾驶 / 摩托车 (摩托车越野赛)
+Arcade: Driving / Truck Guide	街机: 驾驶 / 卡车
+Arcade: Electromechanical / Basketball	街机: 电子机械 / 篮球
+Arcade: Electromechanical / Beat Up	街机: 电子机械 / 殴打
+Arcade: Electromechanical / Bingo	街机: 电子机械 / 宾戈游戏
+Arcade: Electromechanical / Bowling	街机: 电子机械 / 保龄球
+Arcade: Electromechanical / Car Riding	街机: 电子机械 / 驾驶轿车
+Arcade: Electromechanical / Change Money	街机: 电子机械 / Change Money
+Arcade: Electromechanical / Coin-Operated Rocking Games	街机: 电子机械 / Coin-Operated Rocking Games
+Arcade: Electromechanical / Crane Machine	街机: 电子机械 / Crane Machine 娃娃机?
+Arcade: Electromechanical / Darts	街机: 电子机械 / 飞镖
+Arcade: Electromechanical / Hockey Table	街机: 电子机械 / 曲棍球 Table
+Arcade: Electromechanical / Misc.	街机: 电子机械 / 杂.
+Arcade: Electromechanical / Pinball	街机: 电子机械 / 弹球
+Arcade: Electromechanical / Reels	街机: 电子机械 / Reels
+Arcade: Electromechanical / Shooter	街机: 电子机械 / 射击者
+Arcade: Electromechanical / Shooting	街机: 电子机械 / 射击
+Arcade: Electromechanical / Skill	街机: 电子机械 / 技巧
+Arcade: Electromechanical / Utilities	街机: 电子机械 / Utilities
+Arcade: Fighter / Compilation	街机: 战士 / 选辑
+Arcade: Fighter / Driving Vertical	街机: 战士 / 驾驶 竖
+Arcade: Fighter / Versus * Mature *	街机: 战士 / 对打 * 成人 *
+Arcade: Game / Gambling	街机: 游戏 / 赌博
+Arcade: Game Console / Gambling	街机: 游戏 Console / 赌博
+Arcade: Maze / Ball Guide	街机: 迷宫 / 球 Guide
+Arcade: Maze / Change Surface	街机: 迷宫 / 变化 表面
+Arcade: Maze / Collect	街机: 迷宫 / 收集
+Arcade: Maze / Collect & Put	街机: 迷宫 / 收集 & 放置
+Arcade: Maze / Collect * Mature *	街机: 迷宫 / 收集 * 成人 *
+Arcade: Maze / Cross	街机: 迷宫 / 穿越
+Arcade: Maze / Defeat Enemies	街机: 迷宫 / 打败敌人
+Arcade: Maze / Digging * Mature *	街机: 迷宫 / 挖 * 成人 *
+Arcade: Maze / Driving * Mature *	街机: 迷宫 / 驾驶 * 成人 *
+Arcade: Maze / Escape	街机: 迷宫 / 逃
+Arcade: Maze / Escape * Mature *	街机: 迷宫 / 逃 * 成人 *
+Arcade: Maze / Integrate	街机: 迷宫 / 合并
+Arcade: Maze / Ladders	街机: 迷宫 / 梯子
+Arcade: Maze / Misc.	街机: 迷宫 / 杂.
+Arcade: Maze / Move and Sort	街机: 迷宫 / 移动 与 排列
+Arcade: Maze / Paint	街机: 迷宫 / 喷涂
+Arcade: Maze / Run Jump	街机: 迷宫 / 跑 跳
+Arcade: Medal Game / Action	街机: 奖牌游戏 / 动作
+Arcade: Medal Game / Adventure	街机: 奖牌游戏 / 冒险
+Arcade: Medal Game / Aquarium	街机: 奖牌游戏 / 水族馆
+Arcade: Medal Game / Baseball	街机: 奖牌游戏 / 棒球
+Arcade: Medal Game / Bingo	街机: 奖牌游戏 / 宾戈游戏
+Arcade: Medal Game / Cards	街机: 奖牌游戏 / 纸牌
+Arcade: Medal Game / Casino	街机: 奖牌游戏 / 赌场
+Arcade: Medal Game / Coin Pusher	街机: 奖牌游戏 / 推币机
+Arcade: Medal Game / Compilation	街机: 奖牌游戏 / Compilation
+Arcade: Medal Game / Dance	街机: 奖牌游戏 / 跳舞
+Arcade: Medal Game / Driving	街机: 奖牌游戏 / 驾驶
+Arcade: Medal Game / Horse Racing	街机: 奖牌游戏 / 赛马
+Arcade: Medal Game / Misc.	街机: 奖牌游戏 / 杂.
+Arcade: Medal Game / Pinball	街机: 奖牌游戏 / 弹球
+Arcade: Medal Game / Powerboat Racing	街机: 奖牌游戏 / 快艇 竞速
+Arcade: Medal Game / Sport	街机: 奖牌游戏 / 体育
+Arcade: Medal Game / Stone-Scissor-Paper	街机: 奖牌游戏 / 石头-剪刀-布
+Arcade: Medal Game / Timing	街机: 奖牌游戏 / 时间
+Arcade: Medal Game / Versus	街机: 奖牌游戏 / 对抗
+Arcade: Misc. / Catch	街机: 杂. / 抓
+Arcade: Misc. / Coin Pusher	街机: 杂. / 推币机
+Arcade: Misc. / Dartboard	街机: 杂. / 飞镖靶盘
+Arcade: Misc. / Dog Sitter	街机: 杂. / 遛狗
+Arcade: Misc. / Educational Game	街机: 杂. / 教育 游戏
+Arcade: Misc. / Gambling Board	街机: 杂. / 赌博 Board
+Arcade: Misc. / Hot-air Balloon	街机: 杂. / 热气球
+Arcade: Misc. / Jump and Bounce	街机: 杂. / 弹跳
+Arcade: Misc. / Laserdisc Simulator	街机: 杂. / Laserdisc Simulator
+Arcade: Misc. / Mini-Games	街机: 杂. / 迷你-游戏
+Arcade: Misc. / Multiplay	街机: 杂. / 多人玩
+Arcade: Misc. / Order	街机: 杂. / Order
+Arcade: Misc. / Pachinko	街机: 杂. / 柏青哥
+Arcade: Misc. / Prediction	街机: 杂. / 预测
+Arcade: Misc. / Print Club	街机: 杂. / 大头贴俱乐部
+Arcade: Misc. / Response Time	街机: 杂. / 反映时间
+Arcade: Misc. / Shoot Photos	街机: 杂. / 射击 照片
+Arcade: Misc. / Similar Bowling Game	街机: 杂. / 类似 保龄球 游戏
+Arcade: Misc. / Spank * Mature *	街机: 杂. / 拍打 * 成人 *
+Arcade: Misc. / Unknown	街机: 杂. / 未知
+Arcade: Misc. / Versus	街机: 杂. / 对抗
+Arcade: MultiGame / Compilation	街机: 多游戏 / 选辑
+Arcade: MultiGame / Compilation * Mature *	街机: 多游戏 / 选辑 * 成人 *
+Arcade: MultiGame / Gambling	街机: 多游戏 / 赌博
+Arcade: MultiGame / Gambling Board	街机: 多游戏 / 赌博 Board
+Arcade: MultiGame / Mini-Games	街机: 多游戏 / 迷你-游戏
+Arcade: Multiplay / Compilation	街机: 多人玩 / 选辑
+Arcade: Multiplay / Mini-Games	街机: 多人玩 / 迷你-游戏
+Arcade: Multiplay / Mini-Games * Mature *	街机: 多人玩 / 迷你-游戏 * 成人 *
+Arcade: Multiplay / Misc.	街机: 多人玩 / 杂.
+Arcade: Multiplay / Misc. * Mature *	街机: 多人玩 / 杂. * 成人 *
+Arcade: Music / JukeBox	街机: 音乐 / JukeBox
+Arcade: Music Game / Dance	街机: 音乐游戏 / 跳舞
+Arcade: Music Game / Instruments	街机: 音乐游戏 / 乐器
+Arcade: Music Game / Misc.	街机: 音乐游戏 / 杂.
+Arcade: Platform / Maze	街机: 平台 / 迷宫
+Arcade: Platform / Run Jump * Mature *	街机: 平台 / 跑跳 * 成人 *
+Arcade: Platform / Run, Jump & Scrolling	街机: 平台 / 跑, 跳 & 卷轴
+Arcade: Puzzle / Drop * Mature *	街机: 益智 / 落下 * 成人 *
+Arcade: Puzzle / Match * Mature *	街机: 益智 / 匹配 * 成人 *
+Arcade: Puzzle / Misc.	街机: 益智 / 杂.
+Arcade: Puzzle / Misc. * Mature *	街机: 益智 / 杂. * 成人 *
+Arcade: Puzzle / Outline * Mature *	街机: 益智 / 描框 * 成人 *
+Arcade: Puzzle / Paint * Mature *	街机: 益智 / 喷涂 * 成人 *
+Arcade: Puzzle / Reconstruction * Mature *	街机: 益智 / 复原 * 成人 *
+Arcade: Puzzle / Sliding * Mature *	街机: 益智 / 滑动 * 成人 *
+Arcade: Puzzle / Toss * Mature *	街机: 益智 / 投掷 * 成人 *
+Arcade: Quiz / Hangman game	街机: 问答 / Hangman game 吊死 猜单词?
+Arcade: Quiz / Questions in Chinese	街机: 问答 / 中文问题
+Arcade: Quiz / Questions in English	街机: 问答 / 英文问题
+Arcade: Quiz / Questions in English * Mature *	街机: 问答 / 英文问题 * 成人 *
+Arcade: Quiz / Questions in French	街机: 问答 / 法语问题
+Arcade: Quiz / Questions in German	街机: 问答 / 德语问题
+Arcade: Quiz / Questions in Greek	街机: 问答 / 希腊问题
+Arcade: Quiz / Questions in Italian	街机: 问答 / 意大语问题
+Arcade: Quiz / Questions in Japanese	街机: 问答 / 日语问题
+Arcade: Quiz / Questions in Japanese * Mature *	街机: 问答 / 日语问题 * 成人 *
+Arcade: Quiz / Questions in Korean	街机: 问答 / 韩语问题
+Arcade: Quiz / Questions in Norwegian	街机: 问答 / 挪威语问题
+Arcade: Quiz / Questions in Spanish	街机: 问答 / 西班牙语问题
+Arcade: Redemption Game / Action	街机: 拯救游戏 / 动作
+Arcade: Redemption Game / Crane Machine	街机: 拯救游戏 / Crane Machine
+Arcade: Redemption Game / Driving	街机: 拯救游戏 / 驾驶
+Arcade: Redemption Game / Flying	街机: 拯救游戏 / 飞
+Arcade: Redemption Game / Pinball	街机: 拯救游戏 / 弹球
+Arcade: Redemption Game / Reaction	街机: 拯救游戏 / 反应
+Arcade: Redemption Game / Shooter	街机: 拯救游戏 / 射击者
+Arcade: Redemption Game / Soccer	街机: 拯救游戏 / 足球
+Arcade: Shooter / 2.5D	街机: 射击 / 2.5D
+Arcade: Shooter / Flying * Mature *	街机: 射击 / 飞 * 成人 *
+Arcade: Shooter / Flying Horizontal * Mature *	街机: 射击 / 飞 横版 * 成人 *
+Arcade: Shooter / Flying Vertical * Mature *	街机: 射击 / 飞 竖版 * 成人 *
+Arcade: Shooter / Gallery * Mature *	街机: 射击 / 画廊 * 成人 *
+Arcade: Shooter / Motorbike	街机: 射击 / 摩托车
+Arcade: Shooter / Outline * Mature *	街机: 射击 / 描框 * 成人 *
+Arcade: Shooter / Submarine	街机: 射击 / 潜艇
+Arcade: Shooter / Underwater	街机: 射击 / 水下
+Arcade: Simulation / Pet Management Simulation	街机: 模拟 / Pet Management Simulation
+Arcade: Slot Machine / Reels	街机: 老虎机 / Reels
+Arcade: Slot Machine / Video Slot	街机: 老虎机 / 视频 Slot
+Arcade: Slot Machine / Video Slot * Mature *	街机: 老虎机 / 视频 Slot * 成人 *
+Arcade: Sports / Arm Wrestling	街机: 体育 / 扳手腕
+Arcade: Sports / Cards	街机: 体育 / 卡片
+Arcade: Sports / Gun	街机: 体育 / 枪
+Arcade: Sports / Misc.	街机: 体育 / 杂.
+Arcade: Sports / Pool * Mature *	街机: 体育 / Pool * 成人 *
+Arcade: Sports / Rugby Football	街机: 体育 / Rugby 橄榄球
+Arcade: Sports / Volley - Soccer	街机: 体育 / Volley - 足球
+Arcade: System / BIOS	街机: 系统 / BIOS
+Arcade: System / Device	街机: 系统 / Device
+Arcade: Tabletop / Cards	街机: 桌面 / 纸牌
+Arcade: Tabletop / Go	街机: 桌面 / Go
+Arcade: Tabletop / Hanafuda * Mature *	街机: 桌面 / 花札 * 成人 *
+Arcade: Tabletop / Mahjong * Mature *	街机: 桌面 / 麻将 * 成人 *
+Arcade: Tabletop / Match * Mature *	街机: 桌面 / Match * 成人 *
+Arcade: Tabletop / Misc.	街机: 桌面 / 杂.
+Arcade: Tabletop / Multiplay	街机: 桌面 / 多人玩
+Arcade: Tabletop / Othello - Reversi	街机: 桌面 / 黑白棋
+Arcade: Tabletop / Othello - Reversi * Mature *	街机: 桌面 / 黑白棋 * 成人 *
+Arcade: Touchscreen / Multi-Games	街机: 触屏 / 多游戏
+Arcade: TTL * Ball & Paddle / Breakout	街机: TTL * 球 & 拍 / 打砖块
+Arcade: TTL * Ball & Paddle / Pong	街机: TTL * 球 & 拍 / Pong
+Arcade: TTL * Driving / Demolition Derby	街机: TTL * 驾驶 / 德比碰撞
+Arcade: TTL * Driving / Motorbike	街机: TTL * 驾驶 / 摩托车
+Arcade: TTL * Driving / Race	街机: TTL * 驾驶 / 速度竞赛
+Arcade: TTL * Driving / Race Track	街机: TTL * 驾驶 / Race Track
+Arcade: TTL * Maze / Shooter Small	街机: TTL * 迷宫 / 射击 小
+Arcade: TTL * Quiz / Questions in English	街机: TTL * 问答 / 英语问题
+Arcade: TTL * Shooter / Field	街机: TTL * 射击 / Field
+Arcade: TTL * Shooter / Flying 1st Person	街机: TTL * 射击 / 飞 1st Person
+Arcade: TTL * Shooter / Flying Vertical	街机: TTL * 射击 / 飞 竖
+Arcade: TTL * Shooter / Gallery	街机: TTL * 射击 / 画廊
+Arcade: TTL * Shooter / Gun	街机: TTL * 射击 / 枪
+Arcade: TTL * Shooter / Misc. Vertical	街机: TTL * 射击 / 杂. 竖
+Arcade: TTL * Shooter / Underwater	街机: TTL * 射击 / 水下
+Arcade: TTL * Shooter / Versus	街机: TTL * 射击 / 对抗
+Arcade: TTL * Sports / Baseball	街机: TTL * 体育 / 棒球
+Arcade: TTL * Sports / Horse Racing	街机: TTL * 体育 / 赛马
+Arcade: Utilities / Arcade Switcher	街机: Utilities / 街机 Switcher
+Arcade: Utilities / Arcade System	街机: Utilities / 街机 System
+Arcade: Utilities / Redemption Board	街机: Utilities / Redemption Board
+Arcade: Utilities / Test	街机: Utilities / 测试
+Arcade: Utilities / Test ROM	街机: Utilities / 测试 ROM
+Arcade: Utilities / Update	街机: Utilities / 升级
+Arcade: Utilities / Wave Synthesizer	街机: Utilities / Wave Synthesizer
+Arcade: Whac-A-Mole / Fighter	街机: 打地鼠 / 战士
+Arcade: Whac-A-Mole / Footsteps	街机: 打地鼠 / 足迹
+Arcade: Whac-A-Mole / Gun	街机: 打地鼠 / 枪
+Arcade: Whac-A-Mole / Hammer	街机: 打地鼠 / 锤子
+Arcade: Whac-A-Mole / Shooter	街机: 打地鼠 / 射击
+Board Game / Backgammon	桌上游戏 / 十五子棋戏
+Board Game / Bridge Machine	桌上游戏 / Bridge Machine
+Board Game / Cards	桌上游戏 / 牌
+Board Game / Checker Machine	桌上游戏 / Checker Machine
+Board Game / Chess Machine	桌上游戏 / 象棋 Machine
+Board Game / Dame Machine	桌上游戏 / Dame Machine
+Calculator / Astrological Computer	计算器 / Astrological Computer
+Calculator / Chemical Calculations	计算器 / Chemical Calculations
+Calculator / Desktop Electronic Calculator	计算器 / 桌面 电子 计算器
+Calculator / Electronic Organizer	计算器 / Electronic Organizer
+Calculator / Math Game Learning	计算器 / Math Game Learning
+Calculator / Pocket Calculator	计算器 / 口袋 计算器
+Calculator / Pocket Computer	计算器 / 口袋 电脑
+Calculator / Talking Calculator	计算器 / Talking 计算器
+Computer / Business - Terminal	电脑 / 商务 - 终端机
+Computer / Cablenet Controller	电脑 / Cablenet Controller
+Computer / Child Computer	电脑 / 儿童 电脑
+Computer / Construction Kit	电脑 / Construction Kit
+Computer / Development System	电脑 / 开发 系统
+Computer / Educational Game	电脑 / 教育 游戏
+Computer / Graphic Terminal	电脑 / 图形 终端
+Computer / Graphics Workstation	电脑 / 图形 工作站
+Computer / Home System	电脑 / 家用 系统
+Computer / Laptop - Notebook - Portable	电脑 / 笔记本-便携
+Computer / Microcomputer	电脑 / 微电脑
+Computer / Milling	电脑 / Milling
+Computer / Misc.	电脑 / 杂.
+Computer / Pocket Computer	电脑 / 口袋 电脑
+Computer / Pocket PC	电脑 / 口袋 PC
+Computer / Portable Digital Teletype	电脑 / Portable Digital Teletype
+Computer / Programming Machine	电脑 / 编程机
+Computer / Protocol Analyzer	电脑 / Protocol Analyzer
+Computer / Punched Car	电脑 / Punched Car
+Computer / Single Board	电脑 / Single Board
+Computer / TeleText Terminal	电脑 / TeleText Terminal
+Computer / Training Board	电脑 / Training Board
+Computer / TTL	电脑 / TTL
+Computer / Video Production	电脑 / 视频 生产
+Computer / Word-processing Machine	电脑 / 文字处理 机
+Computer / Workstation	电脑 / 工作站
+Computer / Workstation - Server	电脑 / 工作站 - 服务器
+Computer Graphic Workstation / Broadcast Television	电脑图形工作站 / 广播电视
+Digital Simulator / Aquarium	数字 模拟 / 水族馆
+Game Console / Fitness Game	游戏终端 / 健身 游戏
+Game Console / Home Mahjong	游戏终端 / 家用 麻将
+Game Console / Home Videogame	游戏终端 / 家用 视频游戏
+Game Console / Multi-Games	游戏终端 / 多种-游戏
+Handheld / Barcode Scanner	掌机 / 条码 扫描
+Handheld / Child Computer	掌机 / 儿童 电脑
+Handheld / Console Cartridge	掌机 / Console Cartridge
+Handheld / E-Book Reading	掌机 / 电子书 阅读
+Handheld / Educational Game	掌机 / 教育 游戏
+Handheld / Electronic Game	掌机 / 电子 游戏
+Handheld / Handpuppet Toy	掌机 / 手套式木偶 玩具
+Handheld / Home Videogame Console	掌机 / 家用 视频游戏 终端
+Handheld / Horoscope	掌机 / Horoscope
+Handheld / Plug n' Play TV Game	掌机 / 即插即用电视游戏
+Handheld / Plug n' Play TV Game / Action	掌机 / 即插即用电视游戏 / 动作
+Handheld / Plug n' Play TV Game / Baseball	掌机 / 即插即用电视游戏 / 棒球
+Handheld / Plug n' Play TV Game / Basketball	掌机 / 即插即用电视游戏 / 篮球
+Handheld / Plug n' Play TV Game / Board Game	掌机 / 即插即用电视游戏 / 棋盘游戏
+Handheld / Plug n' Play TV Game / Bowling	掌机 / 即插即用电视游戏 / 保龄球
+Handheld / Plug n' Play TV Game / Boxe	掌机 / 即插即用电视游戏 / Boxe
+Handheld / Plug n' Play TV Game / Casino	掌机 / 即插即用电视游戏 / 赌场
+Handheld / Plug n' Play TV Game / Compilation	掌机 / 即插即用电视游戏 / 选辑
+Handheld / Plug n' Play TV Game / Criket	掌机 / 即插即用电视游戏 / Criket
+Handheld / Plug n' Play TV Game / Dance	掌机 / 即插即用电视游戏 / 舞蹈
+Handheld / Plug n' Play TV Game / Driving	掌机 / 即插即用电视游戏 / 驾驶
+Handheld / Plug n' Play TV Game / Fashion	掌机 / 即插即用电视游戏 / 时尚
+Handheld / Plug n' Play TV Game / Fighting	掌机 / 即插即用电视游戏 / 打架
+Handheld / Plug n' Play TV Game / Fishing	掌机 / 即插即用电视游戏 / 钓鱼
+Handheld / Plug n' Play TV Game / Fitness	掌机 / 即插即用电视游戏 / 健康
+Handheld / Plug n' Play TV Game / Football	掌机 / 即插即用电视游戏 / 足球
+Handheld / Plug n' Play TV Game / Golf	掌机 / 即插即用电视游戏 / 高尔夫
+Handheld / Plug n' Play TV Game / Hunting	掌机 / 即插即用电视游戏 / 打猎
+Handheld / Plug n' Play TV Game / Maze	掌机 / 即插即用电视游戏 / 迷宫
+Handheld / Plug n' Play TV Game / Mini-Golf	掌机 / 即插即用电视游戏 / 迷你-高尔夫
+Handheld / Plug n' Play TV Game / Multi-Games	掌机 / 即插即用电视游戏 / 多-游戏
+Handheld / Plug n' Play TV Game / Multi-Sport	掌机 / 即插即用电视游戏 / 多-体育
+Handheld / Plug n' Play TV Game / Music	掌机 / 即插即用电视游戏 / 音乐
+Handheld / Plug n' Play TV Game / Painting	掌机 / 即插即用电视游戏 / 绘画
+Handheld / Plug n' Play TV Game / Pinball	掌机 / 即插即用电视游戏 / 弹球
+Handheld / Plug n' Play TV Game / Ping Pong	掌机 / 即插即用电视游戏 / 乒乓
+Handheld / Plug n' Play TV Game / Puzzle	掌机 / 即插即用电视游戏 / 益智
+Handheld / Plug n' Play TV Game / Quiz	掌机 / 即插即用电视游戏 / 问答
+Handheld / Plug n' Play TV Game / Reader	掌机 / 即插即用电视游戏 / 阅读器
+Handheld / Plug n' Play TV Game / Role Playing	掌机 / 即插即用电视游戏 / 角色扮演
+Handheld / Plug n' Play TV Game / Shoot 'em Up	掌机 / 即插即用电视游戏 / 射他们
+Handheld / Plug n' Play TV Game / Shooter	掌机 / 即插即用电视游戏 / 射击
+Handheld / Plug n' Play TV Game / Skateboard	掌机 / 即插即用电视游戏 / 滑板
+Handheld / Plug n' Play TV Game / Snowboard	掌机 / 即插即用电视游戏 / 滑雪板
+Handheld / Plug n' Play TV Game / Soccer	掌机 / 即插即用电视游戏 / 足球
+Handheld / Plug n' Play TV Game / Sudoku	掌机 / 即插即用电视游戏 / 数独
+Handheld / Plug n' Play TV Game / Tennis	掌机 / 即插即用电视游戏 / 网球
+Handheld / Plug n' Play TV Game / Trail	掌机 / 即插即用电视游戏 / Trail
+Handheld / Plug n' Play TV Game / TV Show	掌机 / 即插即用电视游戏 / 电视节目
+Handheld / Plug n' Play TV Game / Wrestling	掌机 / 即插即用电视游戏 / 摔跤
+Handheld / Pocket Device - Pad - PDA	掌机 / 口袋 设备 - Pad - PDA
+Handheld / Pocket Electronic Game	掌机 / 口袋 电子 游戏
+Medical Equipment / ECG Unit	医疗设置 / ECG Unit
+Medical Equipment / Visual Field Screener	医疗设置 / Visual Field Screener
+Misc. / Bank-teller Terminal	杂. / 银行柜员终端
+Misc. / Car Voice Alert	杂. / 汽车语音警报 
+Misc. / Cash Counter	杂. / 点钞机
+Misc. / Clock	杂. / 钟
+Misc. / Credit Card Terminal	杂. / 信用卡终端
+Misc. / Device Programmer	杂. / 设备编程器
+Misc. / Digital MultiMeter (DMM)	杂. / 数字万用表 (DMM)
+Misc. / Document Processors	杂. / 文档处理器 
+Misc. / Dot-Matrix Display	杂. / 点阵显示器
+Misc. / Drum Machine	杂. / 电子鼓
+Misc. / Educational Game	杂. / 教育游戏
+Misc. / Electronic Board Game	杂. / 电子 棋盘游戏
+Misc. / Electronic Game	杂. / 电子 游戏
+Misc. / Electronic Typewriter	杂. / 电子 打字机
+Misc. / Engine Control Unit	杂. / 发动机控制单元
+Misc. / EPROM Programmer	杂. / EPROM 编程器
+Misc. / Fingerprint Reader	杂. / 指纹识别器
+Misc. / Graphic Tablet	杂. / 绘图板
+Misc. / Graphics Display Controller	杂. / 图形显示控制器
+Misc. / In Circuit Emulator	杂. / In Circuit Emulator
+Misc. / Laserdisc Player	杂. / Laserdisc Player
+Misc. / Portable Media Player	杂. / 便携式媒体播放器
+Misc. / Robot Control	杂. / 机器人控制
+Misc. / Satellite Receiver	杂. / 卫星接收机
+Misc. / Speech Synthesizer	杂. / 语音合成器
+Misc. / Teletype	杂. / 电传打字机
+Misc. / Temperature Controller	杂. / 温度控制器
+Misc. / Time-Access Control Terminal	杂. / 时间访问控制终端
+Misc. / Toy Cars	杂. / 玩具 车
+Misc. / Toy Robot	杂. / 玩具 机器人
+Misc. / Unknown	杂. / 未知
+Misc. / Virtual Environment	杂. / 虚拟环境
+Misc. / VTR Control	杂. / VTR 控制
+Misc. / Wavetables Generator	杂. / 波形发生器
+MultiGame / Compilation	多游戏 / 选辑
+Music / Audio Chip Emulator	音乐 / 音频芯片仿真器
+Music / Audio Sequencer	音乐 / 音频序列器
+Music / Digital Piano	音乐 / 数字钢琴
+Music / Drum Machine	音乐 / 电子鼓
+Music / Drum Machine Module	音乐 / 电子鼓模块
+Music / Electronic Piano	音乐 / 电子钢琴
+Music / Guitar Effects	音乐 / 吉他效果器
+Music / Guitar Synthesizer	音乐 / 吉他合成器
+Music / Guitar Synthesizer Module	音乐 / 吉他合成器模块
+Music / Instruments	音乐 / 乐器
+Music / JukeBox	音乐 / 自动点唱机 
+Music / Karaoke Machine	音乐 / 卡拉OK机
+Music / Keyboard	音乐 / 琴键
+Music / MIDI Player	音乐 / MIDI 播放器
+Music / MIDI Sound Generator	音乐 / MIDI 声音发生器
+Music / Misc.	音乐 / 杂.
+Music / Multi Effect Rack Unit	音乐 / Multi Effect Rack Unit
+Music / Player	音乐 / 播放器
+Music / Sampler Editor	音乐 / 采样器编辑器
+Music / Sequencer	音乐 / 序列器
+Music / Sound Module	音乐 / 声音模块
+Music / Storage Media	音乐 / 存储介质
+Music / Synthesizer	音乐 / 合成器
+Music / Synthesizer Module	音乐 / 合成器模块
+Music / Tone Generator	音乐 / 音调发生器
+Music / Vocoder - Harmonizer	音乐 / 声码器-协调器
+Music / Workstation	音乐 / 工作站
+Music Game / Dance	音乐 游戏 / 跳舞
+Player / DVD	播放器 / DVD
+Player / DVD Reader-Writer	播放器 / DVD 读-写
+Printer / 3D Printer	打印机 / 3D 打印机
+Printer / Barcode Printer	打印机 / 条码 打印机
+Printer / Handbook	打印机 / 手册
+Printer / Laser Printer	打印机 / 激光 打印机
+Printer / Matrix Printer	打印机 / 点阵式打印机
+Printer / Thermal Printer	打印机 / 热敏打印机
+Radio / Superheterodyne Radio Receiver	收音机 / 超外差无线电接收机
+Slot Machine / Video Slot	老虎机 / 视频 Slot
+System / Device	系统 / 设备
+Tablet / Multi-Functional for Children	板 / 儿童多功能
+Tabletop / Misc.	桌面 / 杂.
+Tabletop / Multi-Games	桌面 / 多-游戏
+Telephone / Car Phone	电话 / 车载电话
+Telephone / ComputerPhone	电话 / 计算机电话
+Telephone / Landline Phone	电话 / 固定电话
+Telephone / Mobile Phone - Smartphone	电话 / 手机-智能手机
+Utilities / Analog Filter Module	Utilities / 模拟滤波器模块
+Utilities / Clock	Utilities / 钟
+Utilities / Devices Communication	Utilities / 设备通信
+Utilities / Digital Speech Generators	Utilities / 数字语音发生器
+Utilities / Disk Unit	Utilities / 磁盘单元
+Utilities / Electronic Digital Thermostat	Utilities / 电子数字恒温器
+Utilities / EPROM Programmer	Utilities / EPROM 编程器
+Utilities / Light Gun	Utilities / 光枪
+Utilities / Modem	Utilities / 调制解调器
+Utilities / Monitor	Utilities / 显示器
+Utilities / Network Controller	Utilities / 网络控制器
+Utilities / Network Processor	Utilities / 网络处理器
+Utilities / On-board BUS Ticketing	Utilities / On-board BUS Ticketing
+Utilities / PAL Demo	Utilities / PAL Demo
+Utilities / Robot Control	Utilities / 机器人控制
+Utilities / Speech Synthesizer	Utilities / 语音合成器
+Utilities / Test ROM	Utilities / 测试 ROM
+Utilities / Thermometer	Utilities / 温度计
+Utilities / Tobacco Vending Machine	Utilities / 烟草自动售货机
+Utilities / TV Test Pattern Generator	Utilities / 电视测试模式发生器
+Utilities / Video Switcher	Utilities / 视频切换器
+Utilities / Videocassette Player/Recorder	Utilities / 录像带播放机/录像机
+Utilities / Videosynthesizer	Utilities / 视频合成器
+Utilities / Weather Forecast Machine	Utilities / 天气预报机
+Utilities / Weather Station	Utilities / 气象站
+Utilities / Weight Scale	Utilities / 体重秤
+Watch / LCD Game	手表 / LCD 游戏

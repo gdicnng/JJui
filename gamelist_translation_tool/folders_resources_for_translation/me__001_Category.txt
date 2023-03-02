@@ -1,0 +1,211 @@
+Action	动作
+Action / 2	动作 / 2
+Action / Shooting	动作 / 射击
+Action / Shooting 2	动作 / 射击 2
+Action / Shooting 3D	动作 / 射击 3D
+Adult	成人
+Adventure	冒险
+Adventure / Africa	冒险 / 非洲
+Adventure / Apocalyptic	冒险 / 末世
+Adventure / Arabian	冒险 / 阿拉伯
+Adventure / B.C.	冒险 / 公元前
+Adventure / Cops	冒险 / 警察
+Adventure / Dinosaurs	冒险 / 恐龙
+Adventure / Dragons	冒险 / 龙
+Adventure / Fantasy	冒险 / 幻想
+Adventure / Horror	冒险 / 恐怖
+Adventure / Knights	冒险 / 骑士
+Adventure / Mafia	冒险 / 黑帮
+Adventure / Pirates	冒险 / 海盗
+Adventure / Western	冒险 / 西部
+Army	军队
+Army / Airforce	军队 / 空军
+Army / Airforce 2	军队 / 空军 2
+Army / Airforce 3	军队 / 空军 3
+Army / Airforce 3D	军队 / 空军 3D
+Army / Antiaircraft	军队 / 防空
+Army / Dog-Fight	军队 / Dog-Fight 近距离空战?
+Army / Fighter	军队 / 战士
+Army / Fighter 2	军队 / 战士 2
+Army / Fighter 3D	军队 / 战士 3D
+Army / Helicopter	军队 / 直升机
+Army / Helicopter 3D	军队 / 直升机 3D
+Army / Submarine	军队 / 潜艇
+Army / Tank	军队 / 坦克
+Army / Tank 3D	军队 / 坦克 3D
+DC Universe	DC 宇宙
+Fighter	格斗
+Fighter / Asian	格斗 / 亚洲的
+Fighter / Asian 2	格斗 / 亚洲的 2
+Fighter / Asian 3D	格斗 / 亚洲的 3D
+Fighter / Asian vs.	格斗 / 亚洲的 vs.
+Fighter / Hero	格斗 / 英雄
+Fighter / King of Fighters	格斗 / 拳皇
+Fighter / Mobile Suit Gundam	格斗 / 机动战士高达
+Fighter / Street Fighter	格斗 / 街头斗士
+Fighter / Street Fighter 2	格斗 / 街头斗士 2
+Fighter / Warriors	格斗 / 武士
+Fighter / Warriors 2	格斗 / 武士 2
+Games / Bingo	游戏 / 宾戈游戏
+Games / Crane Machines	游戏 / Crane Machines 抓娃娃机?
+Games / Cards	游戏 / 纸牌
+Games / Cards Black Jack	游戏 / 纸牌 Black Jack 21点
+Games / Cards Pit Boss	游戏 / 纸牌 Pit Boss
+Games / Cards Solitaire	游戏 / 纸牌 Solitaire
+Games / Dice	游戏 / 骰子
+Games / Gambling	游戏 / 赌博
+Games / Gambling - AGEMAME	游戏 / 赌博 - AGEMAME
+Games / Hangman	游戏 / Hangman 吊死 猜单词?
+Games / Janken	游戏 / Janken 猜拳?
+Games / Laser	游戏 / 激光
+Games / Lotto	游戏 / 大乐透
+Games / Medal	游戏 / 奖牌
+Games / Multiplay	游戏 / 多人玩
+Games / Netlist	游戏 / Netlist
+Games / Pachinko	游戏 / 柏青哥
+Games / Pinball	游戏 / 弹球
+Games / Pinball - PinMAME	游戏 / 弹球 - PinMAME
+Games / Punch 'em	游戏 / Punch 'em 打他们?
+Games / Print Club	游戏 / 大头贴俱乐部
+Games / Quiz	游戏 / 问答
+Games / Quiz (Asian)	游戏 / 问答 (亚洲的)
+Games / Redemption	游戏 / 补救
+Games / Reaction	游戏 / 反应
+Games / Roulette	游戏 / 轮盘赌
+Games / Skill	游戏 / 技巧
+Games / TTL	游戏 / TTL
+Logic	逻辑
+Logic / Chess	逻辑 / 象棋
+Logic / Connect Four	逻辑 / 连接四个
+Logic / Flower Matching	逻辑 / 花札
+Logic / Hidden Catch	逻辑 / 找茬
+Logic / Logic Pro	逻辑 / 逻辑 Pro
+Logic / Mahjong	逻辑 / 麻将
+Logic / Mahjong Toride	逻辑 / 麻将 Toride
+Logic / Memory	逻辑 / 记忆
+Logic / Othello	逻辑 / 黑白棋
+Logic / Shanghai	逻辑 / 上海
+Logic / Shanghai 2	逻辑 / 上海 2
+Logic / Shogi	逻辑 / 将棋
+Marvel Universe	漫威宇宙
+Maze / 2	迷宫 / 2
+Maze / 3	迷宫 / 3
+Maze / 4	迷宫 / 4
+Maze / 5	迷宫 / 5
+Maze / Animals	迷宫 / 动物
+Maze / Balloons	迷宫 / 气球
+Maze / Bomber Man	迷宫 / 炸弹人
+Maze / Blocks	迷宫 / 方块
+Maze / Bugs	迷宫 / 虫子
+Maze / Cat & Mouse	迷宫 / 猫 & 鼠
+Maze / Centipede	迷宫 / 蜈蚣
+Maze / Chicken	迷宫 / 鸡
+Maze / Dogs	迷宫 / 狗
+Maze / Extra	迷宫 / 额外的
+Maze / Food	迷宫 / 食物
+Maze / Frogger	迷宫 / 青蛙
+Maze / Frogs	迷宫 / 青蛙
+Maze / Monkeys	迷宫 / 猴
+Maze / Pac-Man	迷宫 / 吃豆人
+Maze / Penguin	迷宫 / 企鹅
+Maze / Pigs	迷宫 / 猪
+Maze / Qix	迷宫 / 画线
+Maze / Qix 2	迷宫 / 画线 2
+Maze / Qix 3	迷宫 / 画线 3
+Maze / Rabbit	迷宫 / 兔
+Maze / Snake	迷宫 / 蛇
+Maze / Spiders	迷宫 / 蜘蛛
+Maze / Tron	迷宫 / Tron
+Maze / Whac-A-Mole	迷宫 / 打地鼠
+Movie / TV / Comic	迷宫 / 电视 / 漫画
+Music	音乐
+Music / Rhythm	音乐 / 节奏
+Music / Dancing	音乐 / 跳舞
+Platform	平台
+Platform / 2	平台 / 2
+Platform / 3	平台 / 3
+Platform / Breakout	平台 / 打砖块
+Platform / Carnival	平台 / 狂欢节
+Platform / Circus	平台 / 马戏团
+Platform / Climbing	平台 / 攀爬
+Platform / Extra	平台 / 额外的
+Platform / Firefighter	平台 / 消防队员
+Platform / Mario Bros.	平台 / 马里奥兄弟
+Platform / Men at Work	平台 / 工作中的人
+Platform / Mr. Do!	平台 / 嘟先生
+Platform / Pang	平台 / 魔鬼气泡
+Platform / Pipes	平台 / 管道
+Platform / Rescue	平台 / 援救
+Platform / Sonic	平台 / 索尼克
+Platform / Water	平台 / 水
+Platform / Water Diving	平台 / 潜水
+Puzzle / Puzzle Bobble	益智 / 泡泡龙
+Puzzle / Puzzle Bobble 2	益智 / 泡泡龙 2
+Puzzle / Puzz Loop	益智 / 谜球回路
+Puzzle / Tetris	益智 / 俄罗斯方块
+Puzzle / Tetris 2	益智 / 俄罗斯方块 2
+Puzzle / Tetris Columns	益智 / 俄罗斯方块 柱
+Racing / 2D	速度竞赛 / 2D
+Racing / 3D	速度竞赛 / 3D
+Racing / Bicycle	速度竞赛 / 自行车
+Racing / Cars	速度竞赛 / 轿车
+Racing / Cars 2	速度竞赛 / 轿车 2
+Racing / Cars 3	速度竞赛 / 轿车 3
+Racing / Cars 4	速度竞赛 / 轿车 4
+Racing / Cars 5	速度竞赛 / 轿车 5
+Racing / RC Cars	速度竞赛 / RC 轿车
+Racing / Demolition	速度竞赛 / 破坏
+Racing / F1	速度竞赛 / F1
+Racing / F1-3D	速度竞赛 / F1-3D
+Racing / Horse	速度竞赛 / 赛马
+Racing / Kart	速度竞赛 / 卡丁车
+Racing / Kiddie Ride	速度竞赛 / 小孩 驾驶
+Racing / Motorbike	速度竞赛 / 摩托车
+Racing / Motorbike 2	速度竞赛 / 摩托车 2
+Racing / Train	速度竞赛 / 火车
+Racing / Truck	速度竞赛 / 卡车
+Space / Adventure	空间 / 冒险
+Space / Aliens	空间 / 外星人
+Space / Asteroids	空间 / 小行星
+Space / Base Defense	空间 / 基地 防守
+Space / Cyber Tank	空间 / Cyber 坦克
+Space / Defender	空间 / 守卫者
+Space / Defender 3D	空间 / 守卫者 3D
+Space / Fighter	空间 / 战斗机
+Space / Fighter 2	空间 / 战斗机 2
+Space / Fighter 3D	空间 / 战斗机 3D
+Space / Force	空间 / 军队
+Space / Force 2	空间 / 军队 2
+Space / Force 3D	空间 / 军队 3D
+Space / Galaxian	空间 / 小蜜蜂
+Space / Invaders	空间 / 武装入侵
+Space / Invaders 2	空间 / 武装入侵 2
+Space / Jetman	空间 / 喷气式飞人
+Space / Kids	空间 / 小孩
+Space / Kids 2	空间 / 小孩 2
+Space / Metal Soldier	空间 / 金属战士
+Space / Moon	空间 / 月亮
+Space / Planet	空间 / 行星
+Space / R-Type	空间 / R-Type
+Space / Robots	空间 / 机器人
+Space / Shooter	空间 / 射击
+Space / Shooter 2	空间 / 射击 2
+Space / Star Wars	空间 / 星战
+Space / Station	空间 / 基地
+Sports / 1	体育 / 1
+Sports / Billiard	体育 / 桌球
+Sports / Dodge Ball	体育 / 躲避球
+Sports / Flying	体育 / 飞
+Sports / Football	体育 / 橄榄球足球
+Sports / Fun	体育 / 娱乐
+Sports / Hockey 2	体育 / 曲棍球 2
+Sports / Power Sled	体育 / 动力 雪橇
+Sports / Roller	体育 / 轮滑
+Sports / Shooting	体育 / 射击
+Sports / Shooting 2	体育 / 射击 2
+Sports / Ski	体育 / 滑雪
+Sports / Speed Ball	体育 / 速度 球
+Sports / Squash	体育 / 壁球
+Sports / Table Tennis	体育 / 乒乓球
+Sports / Water	体育 / 水
+

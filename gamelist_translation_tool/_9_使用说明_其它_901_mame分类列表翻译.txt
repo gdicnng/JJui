@@ -1,0 +1,33 @@
+﻿使用方法：
+    
+    第〇步：准备翻译文件，放入 folders_resources_for_translation 文件夹
+        已有一些翻译资源了
+        自己可以添加
+        格式什么的，和 正式的 翻译项目，是一样的，可以去看看 正式翻译项目的说明
+    
+    第一步：把需要翻译的文件放入 folders_old 文件夹
+        分类列表文件 *.ini
+        比如：
+            Category.ini
+            catlist.ini
+            genre.ini
+            series.ini
+    
+    第二步：运行 901_other_tool__folders_translate.py ，翻译分类列表
+    （ 打开 folders 文件夹，查看翻译结果 ）
+    （ 翻译之前，应清空一下这个文件夹，免得新老文件混在一起，分不清 ）
+    
+    （ 结束 ）
+
+
+
+未翻译项目列表：
+    运行后，未翻译的项目，会保存在 out_folders_not_translate.txt 文件中
+
+
+工具 清理 series.ini：
+    series.ini 分类有太多 * Slot 、* Pinball 结尾的分类，看起来太烦人。
+    如果要删除的话，提供一个脚本：
+        folders_old\series_delete.py
+        此脚本 和 series.ini 文件，放在同一个文件夹中，运行脚本
+        生成新文件：series_delete.ini

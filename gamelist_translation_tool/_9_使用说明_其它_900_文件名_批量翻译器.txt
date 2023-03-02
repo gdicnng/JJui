@@ -6,7 +6,7 @@
     
     第一步：把需要翻译的文件放入 files_to_rename 文件夹
     
-    第二步：运行 900_file_renamer_windows.py ，批量翻译
+    第二步：运行 900_other_tool__file_renamer_windows.py ，批量翻译
     
     （ 打开 files_to_rename 文件夹，查看翻译结果 ）
     

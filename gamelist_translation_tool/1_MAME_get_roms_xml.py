@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf_8_sig-*- 
 
-mame_exe_path = r"c:\MAME\mame0251b_64bit\mame.exe"
+mame_exe_path = r"c:\MAME\mame0252b_64bit\mame.exe"
 
 import os
 import sys

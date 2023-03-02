@@ -1,0 +1,35 @@
+Arcade	街机
+Board Game	棋盘游戏
+Calculator	计算器
+Computer	电脑
+Computer Graphic Workstation	电脑图形工作站
+Digital Simulator	数字模拟器
+Electromechanical	电机
+Game	游戏
+Game Console	游戏机
+Handheld	掌机
+Medal Game	奖牌游戏
+Medical Equipment	医疗器械
+MultiGame	多游戏
+Music Game	音乐游戏
+Player	播放器
+Printer	打印机
+Quiz	问答
+Radio	收音机
+Redemption Game	救赎游戏
+Shooter	射击
+Simulation	模拟仿真
+Slot Machine	老虎机
+System	系统
+Tablet	
+Telephone	电话
+Touchscreen	触屏
+TTL * Ball & Paddle	TTL * 球 & 拍
+TTL * Driving	TTL * 驾驶
+TTL * Maze	TTL * 迷宫
+TTL * Quiz	TTL * 问答
+TTL * Shooter	TTL * 射击
+TTL * Sports	TTL * 体育
+Utilities	
+Watch	手表
+Whac-A-Mole	打地鼠
