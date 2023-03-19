@@ -24,6 +24,38 @@ JJui_sl 用来显示 MAME Software List 。
 >tkinter : 内置的库  
 >>在 Windows 操作系统上，不用管。
 >>>因为 Python 的 Windows 安装包中，已经有了 tkinter ，除非在安装的时候，有意的选择不安装 它。  
->>>另外 embed 版本，不包含 tkinter ，使用完版的安装版 Python 即可。  
+>>>另外 embed 版本，不包含 tkinter ，使用完版的安装版 Python 即可。 
 
+----
+PPXCLUB 发布页面:
+>https://www.ppxclub.com/forum.php?mod=viewthread&tid=705838
 
+----
+
+在线说明：
+>https://jjui.readthedocs.io/
+
+>https://jjui.rtfd.io/
+
+----
+
+releases
+
+>https://github.com/gdicnng/JJui/releases
+
+>自动将 python 源代码 转为 exe 文件
+
+>这里有自动编译的生成的 exe 
+
+>操作系统比较新，生成的 exe 在老版本的操作系统上，可能兼容性不好
+
+>下面百度网盘中，有手动编译的 exe 文件，在老版本操作系统（虚拟机）上 生成 的 exe ，对老系统兼容性更好。
+
+----
+
+百度网盘：
+>不知道百度网盘的链接能活多久
+
+>链接：https://pan.baidu.com/s/1guTSDIWr66S6ewIdyMQPjA
+
+>提取码：r9b9 
