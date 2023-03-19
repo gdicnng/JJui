@@ -11,7 +11,8 @@ log_file_for_not_translate = "out_folders_not_translate.txt"
 
 if os.path.isfile(folder_path_new):
     os.remove(folder_path_new)
-os.makedirs(folder_path_new)
+if not os.path.isdir(folder_path_new):
+    os.makedirs(folder_path_new)
 
 
 def get_files_old(folder_path):

@@ -18,7 +18,7 @@
         --------------------------
     
 """
-#import sys
+import sys
 import os
 #import time
 
@@ -130,13 +130,15 @@ class Text_area(ttk.Frame):
     def new_func_bindings(self,):
         ""
         # 右键菜单
-        self.new_ui_text.bind('<ButtonPress-3>',self.new_func_bindings_right_click_to_show_menu)
+        if sys.platform.startswith('linux'):
+            self.new_ui_text.bind('<ButtonRelease-3>',self.new_func_bindings_right_click_to_show_menu)
+        else:
+            self.new_ui_text.bind('<ButtonPress-3>',self.new_func_bindings_right_click_to_show_menu)
+
     
     def new_func_bindings_right_click_to_show_menu(self,event):
-        try:
-            self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
-        finally:
-            self.new_ui_index_popup_menu.grab_release()
+        self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
+
 
     def new_func_insert_string(self,a_string='',tags=None):
         self.new_ui_text.configure(state="normal")

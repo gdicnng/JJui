@@ -1,6 +1,9 @@
 import os
 import sys
 
+file_out = "out_查重_结果.txt"
+f_out = open(file_out,mode="wt",encoding="utf_8_sig")
+
 # 切换工作目录
 def change_working_directory():
 
@@ -32,6 +35,7 @@ for file_name in filenames:
     if file_name.lower().endswith(".ini"):
         file_list.append(  file_name  )
 
+
 for file_name in file_list:
     file_path = os.path.join(search_folder,file_name)
     with open(file_path,mode="rt",encoding="utf_8_sig") as f:
@@ -41,6 +45,7 @@ for file_name in file_list:
             if line.startswith(r"["):
                 if line.endswith(r"]"):
                     header = line[1:-1]
+                    header = header.strip()
                     if header not in header_dict:
                         header_dict[header] = 1
                     else:
@@ -48,7 +53,13 @@ for file_name in file_list:
 
         if header_dict:
             print()
+            print("",file=f_out)
             print(file_path)
+            print(file_path,file=f_out)
             for header,count in header_dict.items():
                 if count > 1:
                     print(count,"\t",header)
+                    print(count,"\t",header,file=f_out)
+
+
+f_out.close()

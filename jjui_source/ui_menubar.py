@@ -488,7 +488,7 @@ class MenuBar(ttk.Frame):
         m.add_separator()
         
         # 导出内置分类
-        m.add_command(  label=_("导出内置的分类到此文件夹：" + the_files.folder_export), 
+        m.add_command(  label=_("导出内置的分类到此文件夹：") + the_files.folder_export, 
                 command=misc.export_all_internal_index,
         )
         m.add_command(  label=_("如果此文件夹已经有文件了，建议自己先手动清理一下，免得各种新旧文件混在一起"), 
@@ -664,6 +664,12 @@ class MenuBar(ttk.Frame):
                 )
         
         m.add_separator()
+
+        m.add_command(label=_("周边文档，出招表，文字替换内容检查"), 
+                command=ui_small_windows.window_for_extra_command_character
+                )
+        
+        m.add_separator()        
 
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)

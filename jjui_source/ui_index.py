@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf_8_sig-*-
 
-#import sys
+import sys
 import os
 import time
 
@@ -55,14 +55,11 @@ from .ui_misc import misc_funcs
 #         外置目录 第一层 : ("external_ini_file",文件名)
 #         外置目录 第二层 : ("external_ini_file",文件名,文类名)
 
-# 变量前缀
-# self.new_ui_
-# self.new_var_
-# self.new_func_
 class GameIndex(Treeview_with_scrollbar):
-    """
-    ttk.Treeview
-    """
+    # 两个 treeview
+    # 一个显示 目录列表
+    # 一个显示 目录列表 的 搜索结果
+
     def __init__(self, parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
         #width = self.ini_data["width_index"]
@@ -101,6 +98,12 @@ class GameIndex(Treeview_with_scrollbar):
         #self.new_ui_index_popup_menu.add_command(label="显示横向滚动条",command = self.new_func_index_popup_menu_function_show_scrollbar_h)
         #self.new_ui_index_popup_menu.add_command(label="收起横向滚动条",command = self.new_func_index_popup_menu_function_hide_scrollbar_h)
 
+        # 搜索结果处，右键菜单
+        self.new_ui_index_popup_menu_for_search = tk.Menu(self.new_ui_tree_for_search, tearoff=0)
+        self.new_ui_index_popup_menu_for_search.add_command(label=_("全部收起"),
+                command = self.new_func_index_popup_menu_for_search_function_hide_level2)
+        self.new_ui_index_popup_menu_for_search.add_command(label=_("隐藏搜索结果，显示原列表"),
+                command = self.new_func_search_box_double_esc)        
     def new_func_bindings(self,):
         super().new_func_bindings()
         
@@ -113,7 +116,16 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_ui_tree.bind('<Return>', self.new_func_index_bindings_press_enter)
         
         # 右键菜单
-        self.new_ui_tree.bind('<ButtonPress-3>',self.new_func_index_bindings_right_click)
+        if sys.platform.startswith('linux'):
+            self.new_ui_tree.bind('<ButtonRelease-3>',self.new_func_index_bindings_right_click)
+            # 搜索结果处
+            self.new_ui_tree_for_search.bind('<ButtonPress-3>',self.new_func_index_for_search_bindings_right_click)
+
+        else:
+            self.new_ui_tree.bind('<ButtonPress-3>',self.new_func_index_bindings_right_click)
+            # 搜索结果处
+            self.new_ui_tree_for_search.bind('<ButtonPress-3>',self.new_func_index_for_search_bindings_right_click)
+        
 
         self.new_ui_tree.bind_all(r"<<RequestForIndexInfo>>",self.new_func_index_for_receive_virtual_event_RequestForIndexInfo)
         
@@ -159,10 +171,11 @@ class GameIndex(Treeview_with_scrollbar):
     
     # bindings 鼠标 右键 ,弹出菜单
     def new_func_index_bindings_right_click(self,event):
-        try:
-            self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
-        finally:
-            self.new_ui_index_popup_menu.grab_release()
+        self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
+    # bindings 鼠标 右键 ,弹出菜单
+    # 搜索结果处
+    def new_func_index_for_search_bindings_right_click(self,event):
+        self.new_ui_index_popup_menu_for_search.tk_popup(event.x_root, event.y_root)
     
     # 右键菜单 列表第二层内容 收起
     def new_func_index_popup_menu_function_hide_level2(self,event=None):
@@ -172,6 +185,16 @@ class GameIndex(Treeview_with_scrollbar):
             for y in tree.get_children(x):
                 tree.item(x,open=False) 
                 break
+    # 右键菜单 列表第二层内容 收起
+    # 搜索结果处
+    def new_func_index_popup_menu_for_search_function_hide_level2(self,event=None):
+        # 两层
+        tree = self.new_ui_tree_for_search
+        for x in tree.get_children():
+            for y in tree.get_children(x):
+                tree.item(x,open=False) 
+                break            
+
 
     # 右键菜单 显示横向滚动条
     #def new_func_index_popup_menu_function_show_scrollbar_h(self,event=None):
@@ -562,6 +585,8 @@ class GameIndex(Treeview_with_scrollbar):
         if self.new_ui_the_label.winfo_ismapped():
             self.new_ui_the_label.grid_remove()
         self.new_ui_search_box.focus_set()
+
+
 
 if __name__ == "__main__" :
     from .read_pickle import read as read_pickle

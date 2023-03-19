@@ -1,0 +1,131 @@
+name: Release test x86 and x64
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  jobs_1: # build exe 
+    runs-on: windows-2019 # windows-latest or windows-2022
+    
+    strategy:
+      matrix:
+        architecture: [ x86 , x64 ]
+    
+    defaults:
+      run:
+        shell: cmd
+    
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+        architecture: ${{ matrix.architecture }}
+    
+    - name: show python version
+      run: |
+        python -V -V
+    
+    - name: Variables
+      run: |
+        echo ......
+        echo ......
+        echo runner.name
+        echo ${{ runner.name }}
+        
+        echo RUNNER OS
+        echo %RUNNER_OS%
+        echo ${{ runner.os }}
+        
+        echo RUNNER ARCH
+        echo %RUNNER_ARCH%
+        echo ${{ runner.arch }}
+        
+        echo ......
+        echo ......
+        echo github event_name
+        echo ${{ github.event_name }}
+        
+        echo push ref
+        echo github event ref
+        echo ${{ github.event.ref }}
+        
+        echo GITHUB_REF_NAME
+        echo %GITHUB_REF_NAME%
+        echo ${{ github.ref_name }}
+        
+    - name: path
+      run: |
+        echo ......
+        echo cd
+        cd
+        echo ......
+        echo dir
+        dir
+        echo ......
+        echo where 7z
+        where 7z
+        echo ......
+        echo path
+        path
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools
+        python -m pip install --upgrade wheel
+        python -m pip install pillow
+        python -m pip install pyinstaller
+    
+    - name: pyinstaller to exe
+      run: |
+        call .windows_build_exe_use_pyinstaller.bat
+    - name: 7z
+      run: |
+        7z a -t7z "JJui_${{ github.ref_name }}_${{ runner.os }}_${{ matrix.architecture }}.7z" .\dist\*
+        dir
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        name: artifacts_${{ matrix.architecture }}
+        path: "JJui_${{ github.ref_name }}_${{ runner.os }}_${{ matrix.architecture }}.7z"
+      
+        
+
+  jobs_2: # release
+    needs: jobs_1
+    
+    runs-on: windows-latest
+    
+    permissions:
+      contents: write
+    
+    defaults:
+      run:
+        shell: cmd
+    
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - name: download
+      uses: actions/download-artifact@v3
+      with:
+        path: artifacts 
+        # name 未指定名称，每一个文件，会包含在一个文件夹里
+    - name: list file
+      run: |
+        dir
+        echo ......
+        dir artifacts
+        echo ......
+        tree artifacts /F
+    - name: release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "artifacts/**/*.7z"
+        token: ${{ secrets.GITHUB_TOKEN }}

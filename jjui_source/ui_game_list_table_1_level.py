@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 import os
 import re
 import locale
@@ -2605,13 +2605,26 @@ class GameList_7(GameList_6):
         super().new_func_bindings()
         #header = self.new_ui_header
         #table  = self.new_ui_table
-        self.new_ui_header.bind('<Button-3>', self.new_func_header_show_pop_up_menu,"+",)
+        
         
         # 之前的：
         #table.tag_bind("background_rectangle",'<Button-3>', self.new_func_table_binding_right_click,)
-        
-        self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  self.new_func_table_show_pop_up_menu,"+",)
-
+        if sys.platform.startswith('linux'):
+            # table
+            self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  lambda event: "break",)
+            # 不知道哪里的，一些 binding 会影响到 下面的一条
+            # break 一下
+            #   估计是 列表刷新 过早，
+            #   把 所有元素 都删光了，
+            #   tag_bind 的 主体 没有了，ButtonRelease 估计因此 失效了
+            self.new_ui_table.tag_bind("background_rectangle",'<ButtonRelease-3>',  self.new_func_table_show_pop_up_menu_linux,)
+            
+            # header
+            self.new_ui_header.bind('<ButtonRelease-3>', self.new_func_header_show_pop_up_menu,"+",)
+        else:
+            self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  self.new_func_table_show_pop_up_menu,"+",)
+            
+            self.new_ui_header.bind('<Button-3>', self.new_func_header_show_pop_up_menu,"+",)
     # derived
     #   收到 目录 变化 信号 ，游戏列表切换
     #   添加一个标记
@@ -2835,12 +2848,10 @@ class GameList_7(GameList_6):
     
     
     def new_func_header_show_pop_up_menu(self,event):
-        try:
-            self.new_ui_pop_up_menu_for_header.tk_popup(event.x_root, event.y_root)
-        finally:
-            self.new_ui_pop_up_menu_for_header.grab_release()
 
+        self.new_ui_pop_up_menu_for_header.tk_popup(event.x_root, event.y_root)
 
+    
     def new_func_table_show_pop_up_menu(self,event):
         # 确定点击的 列 ，
         # 以显示 此单元格的内容
@@ -2979,10 +2990,32 @@ class GameList_7(GameList_6):
             temp = "-"
             the_menu.entryconfigure( self.new_var_table_menu_index_for_item_current_column,state="disabled",label=temp)
         
-        try:
-            the_menu.tk_popup(event.x_root, event.y_root)
-        finally:
-            the_menu.grab_release()
+
+        the_menu.tk_popup(event.x_root, event.y_root)
+
+    def new_func_table_show_pop_up_menu_linux(self,event):
+        # 鼠击右击 释放时，坐标
+        x0 ,y0 = event.x, event.y
+        x ,y = self.new_ui_table.canvasx(x0) , self.new_ui_table.canvasy(y0)
+        
+        # 坐标范围
+        x1, y1, x2, y2 = self.new_ui_table.bbox(tk.CURRENT)
+        #print(x0 ,y0)
+        #print(x ,y)
+        #print(x1, y1, x2, y2)
+        
+        # 如果在范围中
+        #   有时候 鼠击右击 长按，并移动，移出了目标范围
+        if x1 <= x <= x2 :
+            if y1<= y <= y2 :
+                
+                row_number,item_id = self.new_func_table_get_row_number_and_item_id(event)
+                print("item id : {}".format(item_id) )
+                print("row number : {}".format(row_number) )
+                
+                self.new_func_remember_select_row(item_id,row_number)
+                
+                self.new_func_table_show_pop_up_menu(event)
 
     def new_func_table_pop_up_menu_callback_start_game(self,other_option=None,hide=True,emu_number=-1):
         if other_option is None:

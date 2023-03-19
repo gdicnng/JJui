@@ -63,13 +63,17 @@ def command_format_2(content):
     #   从二进制读的，解码后为 \r\n ，
     #   把 $ 换为了 \r\n
     
-    str_heading = r"^\- .+ \-[\r\n]" # 小标题
-    str_separator = r"─{8,}" # 分隔线 # 暂时设定，超过 8个 重复字符吧
+    str_heading = r"\- .+ \-" # 小标题
+        # 以此开头， 但结尾可能有其它的
+        # - KYO KUSANAGI -                                                         HERO TEAM
+
+    str_separator = r"─{8,}" 
+        # 分隔线 # 暂时设定，超过 8个 重复字符吧
         # 小标题 下一行，就是分隔线行
    
     p_heading   = re.compile(str_heading)
     p_separator = re.compile(str_separator)
-       
+    
     remember_1 = set() # 标题数量 记录
     remember_2 = set() # 分隔线数量，记录
     # 标题数量 + 1，如果也在 分隔线里，那么就符合了
@@ -77,26 +81,21 @@ def command_format_2(content):
     #
     count = 0
     for line in content:
-    
-        m1 = p_heading.search(line)
-
+        
+        #line_content = line.strip()
+        
+        m1 = p_heading.match(line)
         if m1 : 
             remember_1.add( count )
-
-        count += 1
-    del count
-    
-    #
-    count = 0
-    for line in content:
-    
-        m2 = p_separator.search(line)
-
+            
+            count += 1  ##
+            continue
+        
+        m2 = p_separator.match(line)
         if m2 : 
             remember_2.add( count )
 
-        count += 1
-    del count
+        count += 1  ##
     
     #print()
     #print("a:")
@@ -124,6 +123,7 @@ def command_format_2(content):
         if count_line in remember:
             if count_line > 0: 
                 # 如果第0行，开始，就是小标题 ，不增加计数
+                # 因为有的 从一开始就有内容，不如把所有第一行，作为标题
                 count_dict += 1
     
         if count_dict in new_content:
@@ -131,6 +131,7 @@ def command_format_2(content):
         else: # 初始化为 list
             new_content[count_dict] = []
             new_content[count_dict].append(line)
+            # key ，count_dict 从 0 计数
 
         count_line += 1
         # 行计数

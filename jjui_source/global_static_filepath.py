@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf_8_sig-*-
 import os
 #import sys
+#import string
 
 from . import global_variable
 
@@ -126,6 +127,43 @@ file_pickle_extra_index_command_english_dat = os.path.join(folder_temporary ,"ca
 # "gameinit.dat",
 file_pickle_extra_index_gameinit_dat = os.path.join(folder_temporary ,"cache_index_gameinit_dat.bin") 
 
+
+# # command.dat 图片
+# if global_variable.gamelist_type == "mame":
+#     
+#     folder_command_image=os.path.join(folder_images,"command")
+# 
+#     command_image_file_path_dict = {}
+#     # key 用原始字符
+#     # value 为 图片路径
+#     #
+#     # A = os.path.join(folder_command_image,"A")
+#     # ......
+#     # Z = os.path.join(folder_command_image,"Z")
+# 
+#     # string.ascii_uppercase
+#     # 大写字母 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+#     for a_char in string.ascii_uppercase:
+#         # @A-button 文件名 A.png
+#         # @Z-button 文件名 Z.png
+#         k = r"@" + a_char + r"-button"
+#         v = os.path.join( folder_command_image , a_char + ".png" )
+#         command_image_file_path_dict[k]=v
+# 
+#     # 方向
+#     # command_image_file_path_dict[k]=v
+#     command_image_file_path_dict[r"_1"] = os.path.join( folder_command_image , r"_1" + ".png" ),
+#     command_image_file_path_dict[r"_2"] = os.path.join( folder_command_image , r"_2" + ".png" ),
+#     command_image_file_path_dict[r"_3"] = os.path.join( folder_command_image , r"_3" + ".png" ),
+#     command_image_file_path_dict[r"_4"] = os.path.join( folder_command_image , r"_4" + ".png" ),
+#     command_image_file_path_dict[r"_5"] = os.path.join( folder_command_image , r"_5" + ".png" ), # gbk  ??? ############### ☉☉⊕⊕
+#     command_image_file_path_dict[r"_6"] = os.path.join( folder_command_image , r"_6" + ".png" ),
+#     command_image_file_path_dict[r"_7"] = os.path.join( folder_command_image , r"_7" + ".png" ),
+#     command_image_file_path_dict[r"_8"] = os.path.join( folder_command_image , r"_8" + ".png" ),
+#     command_image_file_path_dict[r"_9"] = os.path.join( folder_command_image , r"_9" + ".png" ),
+# 
+#     # 其它
+
 if __name__ == "__main__" :
     # locals()
     # or
@@ -147,6 +185,11 @@ if __name__ == "__main__" :
             print(x.ljust(45),end="")
             print(' ',end='')
             print(temp[x])
+    
+    print()
+    if "command_image_file_path_dict" in temp:
+        for k,v in sorted( temp["command_image_file_path_dict"].items() ):
+                    print(k,"\t",v)
     
     print()
     print("end")

@@ -40,8 +40,8 @@ Arcade: Electromechanical / Beat Up	街机: 电子机械 / 殴打
 Arcade: Electromechanical / Bingo	街机: 电子机械 / 宾戈游戏
 Arcade: Electromechanical / Bowling	街机: 电子机械 / 保龄球
 Arcade: Electromechanical / Car Riding	街机: 电子机械 / 驾驶轿车
-Arcade: Electromechanical / Change Money	街机: 电子机械 / Change Money
-Arcade: Electromechanical / Coin-Operated Rocking Games	街机: 电子机械 / Coin-Operated Rocking Games
+Arcade: Electromechanical / Change Money	街机: 电子机械 / 换钱
+Arcade: Electromechanical / Coin-Operated Rocking Games	街机: 电子机械 / 投币摇摆机
 Arcade: Electromechanical / Crane Machine	街机: 电子机械 / Crane Machine 娃娃机?
 Arcade: Electromechanical / Darts	街机: 电子机械 / 飞镖
 Arcade: Electromechanical / Hockey Table	街机: 电子机械 / 曲棍球 Table
@@ -82,7 +82,7 @@ Arcade: Medal Game / Bingo	街机: 奖牌游戏 / 宾戈游戏
 Arcade: Medal Game / Cards	街机: 奖牌游戏 / 纸牌
 Arcade: Medal Game / Casino	街机: 奖牌游戏 / 赌场
 Arcade: Medal Game / Coin Pusher	街机: 奖牌游戏 / 推币机
-Arcade: Medal Game / Compilation	街机: 奖牌游戏 / Compilation
+Arcade: Medal Game / Compilation	街机: 奖牌游戏 / 选辑
 Arcade: Medal Game / Dance	街机: 奖牌游戏 / 跳舞
 Arcade: Medal Game / Driving	街机: 奖牌游戏 / 驾驶
 Arcade: Medal Game / Horse Racing	街机: 奖牌游戏 / 赛马
@@ -170,7 +170,7 @@ Arcade: Shooter / Motorbike	街机: 射击 / 摩托车
 Arcade: Shooter / Outline * Mature *	街机: 射击 / 描框 * 成人 *
 Arcade: Shooter / Submarine	街机: 射击 / 潜艇
 Arcade: Shooter / Underwater	街机: 射击 / 水下
-Arcade: Simulation / Pet Management Simulation	街机: 模拟 / Pet Management Simulation
+Arcade: Simulation / Pet Management Simulation	街机: 模拟 / 宠物 管理 模拟
 Arcade: Slot Machine / Reels	街机: 老虎机 / Reels
 Arcade: Slot Machine / Video Slot	街机: 老虎机 / 视频 Slot
 Arcade: Slot Machine / Video Slot * Mature *	街机: 老虎机 / 视频 Slot * 成人 *
@@ -198,7 +198,7 @@ Arcade: TTL * Ball & Paddle / Pong	街机: TTL * 球 & 拍 / Pong
 Arcade: TTL * Driving / Demolition Derby	街机: TTL * 驾驶 / 德比碰撞
 Arcade: TTL * Driving / Motorbike	街机: TTL * 驾驶 / 摩托车
 Arcade: TTL * Driving / Race	街机: TTL * 驾驶 / 速度竞赛
-Arcade: TTL * Driving / Race Track	街机: TTL * 驾驶 / Race Track
+Arcade: TTL * Driving / Race Track	街机: TTL * 驾驶 / 赛道
 Arcade: TTL * Maze / Shooter Small	街机: TTL * 迷宫 / 射击 小
 Arcade: TTL * Quiz / Questions in English	街机: TTL * 问答 / 英语问题
 Arcade: TTL * Shooter / Field	街机: TTL * 射击 / Field

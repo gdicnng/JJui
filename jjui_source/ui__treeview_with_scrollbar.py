@@ -151,6 +151,11 @@ class Treeview_for_index(ttk.Treeview):
         # 按键，输入字符，一定时间后，自动向下搜索内容
         self.bind('<KeyPress>',self.new_func_tree_binding_key_press)
 
+        # 复制 某行 显示的 文本内容
+        # Ctrl + C
+        self.bind('<Control-KeyPress-c>', self.new_func_copy_text ) 
+        self.bind('<Control-KeyPress-C>', self.new_func_copy_text ) 
+
     # treeview bindings
     
     #   原始的 bind ，展开、收起。
@@ -322,7 +327,14 @@ class Treeview_for_index(ttk.Treeview):
             tree.selection_set( (the_id,) )
 
 
-
+    def new_func_copy_text(self,event):
+        tree = self
+        item_id  = tree.focus()
+        if item_id:
+            the_text = tree.item(item_id,"text")
+            print(the_text)
+        tree.clipboard_clear()
+        tree.clipboard_append(the_text)
 
 class Treeview_with_scrollbar_for_index(ttk.Frame):
 

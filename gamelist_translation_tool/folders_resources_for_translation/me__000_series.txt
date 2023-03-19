@@ -112,7 +112,7 @@ Dragon World	中国龙
 Dragon's Lair	龙穴历险记
 Drift Out	越野赛车
 DrumMania	青春鼓王
-Dungeons & Dragons	地狱神龙 弹珠台
+Dungeons & Dragons	龙与地下城
 Dunk Shot	大扣篮
 Dynablaster	炸弹人
 Dynamite Baseball	爆裂棒球
@@ -197,7 +197,7 @@ Hold & Spin	水果盘拉霸
 House Mannequin	对家麻濡感
 House of the Dead	死亡之屋
 Hunting	打猎
-Hyper Pacman	疯狂小精灵
+Hyper Pacman	究极吃豆人
 Ibara	铸蔷薇
 Idol Janshi Suchi-Pai	偶像雀士
 Ikari	怒
@@ -532,7 +532,7 @@ Viva Rock Vegas Slot
 V-Liner	赌博机
 Wangan Midnight	湾岸午夜
 Wave Runner	御风者
-WEC Le Mans	婚礼钟声
+WEC Le Mans	WEC、勒芒
 Wild West Slot	狂野西部 Slot
 Wing War	机翼之战
 Winning Run	胜利之路

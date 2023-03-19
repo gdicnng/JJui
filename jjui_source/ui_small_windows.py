@@ -12,7 +12,8 @@ from . import global_static_key_word_translation
 from . import global_static_filepath as the_files
 from .ui_misc import  misc_funcs
 from . import save_pickle 
-
+from . import ui__text_with_scrollbar
+from . import extra_command
 
 # 搜索范围，选择 列
 def window_for_gamelist_set_search_columns():
@@ -834,6 +835,56 @@ def window_for_choose_unwanted_game_list_column():
     window.wait_window()
     
 
+
+# 显示 出招表 文字 替换 内容
+def window_for_extra_command_character():
+    the_title = _("出招表文字替换对照表")
+    command_dict = extra_command.replace_dict
+
+    root = global_variable.root_window
+    
+    window = tk.Toplevel()
+    #window.geometry( "400x300" )
+    window.resizable(width=True, height=True)
+    window.title(the_title)
+    window.lift(root)
+    window.transient(root)
+    window.rowconfigure(0,weight=1)
+    window.columnconfigure(0,weight=1)
+
+    text_container = ui__text_with_scrollbar.Text_with_scrollbar(window,horizontal=True,sizegrip=True)
+    text_container.grid(row=0,column=0,sticky=tk.NSEW)
+
+    temp_string  = "出招表 command.dat 原始文件中的一些符号替换，替换为文字"+ "\n"
+    temp_string += "替换之后，将出招表显示为完全的文字内容"+ "\n"
+    temp_string += "\n"
+    temp_string += "主要用的是 GB2312 、GBK 范围中的字符"+ "\n"
+    temp_string += "GB2312 是 1980 年的老标准，因为老，兼容性好"+ "\n"
+    temp_string += "GB2312 没有合适的符号，再从 GBK 里选"+ "\n"
+    temp_string += "（当然，文字的话，Unicode 大字符里有更多的文字符号，）"+ "\n"
+    temp_string += "（但是，一个字体文件 通常只有少量的字符，）"+ "\n"
+    temp_string += "（使用多个字体文件的话，设置麻烦，而且显示效果不统一，）"+ "\n"
+    temp_string += "（所有，没在 Unicode 这种大范围里选。）"+ "\n"
+    temp_string += "简体中文的电脑用户，这样查看出招表，效果应该还可以"+ "\n"
+    temp_string += "其它地区的电脑用户，可能不太方便"+ "\n"
+    temp_string += "\n"
+    temp_string += "因为是文字内容，显示效果和选择的字体，关系很大"+ "\n"
+    temp_string += "jjsnake 的中文出招表，https://www.ppxclub.com/130735-1-1"+ "\n"
+    temp_string += "字体可以调整为 楷体、宋体、仿宋 等，"+ "\n"
+    temp_string += "显效的效果比较整齐"+ "\n"
+    temp_string += "\n"
+    temp_string += "\n"
+    temp_string +="以下为 替换内容："+ "\n"
+    temp_string +="（如果发现有问题，可以跟我说一下）"+ "\n"
+    temp_string +="\n"
+    
+    text_container.new_func_insert_string(temp_string)
+
+    for key,value in command_dict.items():
+        temp = key.ljust(15,) + " " + value + "\n"
+        text_container.new_func_insert_string(temp)
+
+    window.wait_window()
 
 if __name__ =="__main__":
         

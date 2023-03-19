@@ -1,0 +1,202 @@
+Arcade / Pinball	街机 / 弹珠
+Arcade / Strength Tester	街机 / 力量 测试
+Ball & Paddle / Breakout	球 & 拍 / 砖块
+Ball & Paddle / Jump and Touch	球 & 拍 / 触摸跳跃
+Ball & Paddle / Misc.	球 & 拍 / 杂.
+Ball & Paddle / Pong	球 & 拍 / Pong
+Casino / Bingo	赌场 / 宾戈游戏
+Casino / BlackJack	赌场 / BlackJack 21点
+Casino / Cards	赌场 / 纸牌
+Casino / Dice	赌场 / 骰子
+Casino / Horse Racing	赌场 / 赛马
+Casino / Lottery	赌场 / 彩票
+Casino / Misc.	赌场 / 杂.
+Casino / Multi-Games	赌场 / 多游戏
+Casino / Multiplay	赌场 / 多人玩
+Casino / Racing	赌场 / 速度竞赛
+Casino / Roulette	赌场 / 轮盘赌
+Casino / Skill Game	赌场 / 技巧 游戏
+Casino / Unknown	赌场 / 未知
+Climbing / Building	攀爬 / 建筑物
+Climbing / Mountain - Wall	攀爬 / 山 - 墙
+Climbing / Tree - Plant	攀爬 / 树 - 植物
+Driving / Ambulance Guide	驾驶 / 救护车
+Driving / Catch	驾驶 / 捕捉
+Driving / Demolition Derby	驾驶 / 德比碰撞
+Driving / FireTruck Guide	驾驶 / 消防车
+Driving / Guide and Collect	驾驶 / 驾驶 收集
+Driving / Guide and Shoot	驾驶 / 驾驶 射击
+Driving / Landing	驾驶 / 登陆
+Driving / Misc.	驾驶 / 杂.
+Driving / Motorbike	驾驶 / 摩托车
+Driving / Motorbike (Motocross)	驾驶 / 摩托车 (摩托车越野赛)
+Driving / Truck Guide	驾驶 / 卡车
+Electromechanical / Basketball	电子机械 / 篮球
+Electromechanical / Beat Up	电子机械 / 殴打
+Electromechanical / Bingo	电子机械 / 宾戈游戏
+Electromechanical / Bowling	电子机械 / 保龄球
+Electromechanical / Car Riding	电子机械 / 驾驶轿车
+Electromechanical / Change Money	电子机械 / 换钱
+Electromechanical / Coin-Operated Rocking Games	电子机械 / 投币摇摆机
+Electromechanical / Crane Machine	电子机械 / Crane Machine 娃娃机?
+Electromechanical / Darts	电子机械 / 飞镖
+Electromechanical / Hockey Table	电子机械 / 曲棍球 Table
+Electromechanical / Misc.	电子机械 / 杂.
+Electromechanical / Pinball	电子机械 / 弹球
+Electromechanical / Reels	电子机械 / Reels
+Electromechanical / Shooter	电子机械 / 射击者
+Electromechanical / Shooting	电子机械 / 射击
+Electromechanical / Skill	电子机械 / 技巧
+Electromechanical / Utilities	电子机械 / Utilities
+Fighter / Compilation	战士 / 选辑
+Fighter / Driving Vertical	战士 / 驾驶 竖
+Game / Gambling	游戏 / 赌博
+Game Console / Gambling	游戏 Console / 赌博
+Handheld / Chess Console	掌机 / 象棋 Console
+Handheld / Music Programmer	掌机 / 音乐编程
+Maze / Ball Guide	迷宫 / 球 Guide
+Maze / Change Surface	迷宫 / 变化 表面
+Maze / Collect	迷宫 / 收集
+Maze / Collect & Put	迷宫 / 收集 & 放置
+Maze / Cross	迷宫 / 穿越
+Maze / Defeat Enemies	迷宫 / 打败敌人
+Maze / Escape	迷宫 / 逃
+Maze / Integrate	迷宫 / 合并
+Maze / Ladders	迷宫 / 梯子
+Maze / Misc.	迷宫 / 杂.
+Maze / Move and Sort	迷宫 / 移动 与 排列
+Maze / Paint	迷宫 / 喷涂
+Maze / Run Jump	迷宫 / 跑 跳
+Medal Game / Action	奖牌游戏 / 动作
+Medal Game / Adventure	奖牌游戏 / 冒险
+Medal Game / Aquarium	奖牌游戏 / 水族馆
+Medal Game / Baseball	奖牌游戏 / 棒球
+Medal Game / Bingo	奖牌游戏 / 宾戈游戏
+Medal Game / Cards	奖牌游戏 / 纸牌
+Medal Game / Casino	奖牌游戏 / 赌场
+Medal Game / Coin Pusher	奖牌游戏 / 推币机
+Medal Game / Compilation	奖牌游戏 / 选辑
+Medal Game / Dance	奖牌游戏 / 跳舞
+Medal Game / Driving	奖牌游戏 / 驾驶
+Medal Game / Horse Racing	奖牌游戏 / 赛马
+Medal Game / Misc.	奖牌游戏 / 杂.
+Medal Game / Pinball	奖牌游戏 / 弹球
+Medal Game / Powerboat Racing	奖牌游戏 / 快艇 竞速
+Medal Game / Shoot	奖牌游戏 / 射击
+Medal Game / Sport	奖牌游戏 / 体育
+Medal Game / Stone-Scissor-Paper	奖牌游戏 / 石头-剪刀-布
+Medal Game / Timing	奖牌游戏 / 时间
+Medal Game / Versus	奖牌游戏 / 对抗
+Misc. / Catch	杂. / 抓
+Misc. / Coin Pusher	杂. / 推币机
+Misc. / Dartboard	杂. / 飞镖靶盘
+Misc. / Dog Sitter	杂. / 遛狗
+Misc. / Gambling Board	杂. / 赌博 Board
+Misc. / Hot-air Balloon	杂. / 热气球
+Misc. / Jump and Bounce	杂. / 弹跳
+Misc. / Laserdisc Simulator	杂. / Laserdisc Simulator
+Misc. / Mini-Games	杂. / 迷你-游戏
+Misc. / Multiplay	杂. / 多人玩
+Misc. / Order	杂. / Order
+Misc. / Pachinko	杂. / 柏青哥
+Misc. / Prediction	杂. / 预测
+Misc. / Print Club	杂. / 大头贴俱乐部
+Misc. / Response Time	杂. / 反映时间
+Misc. / Shoot Photos	杂. / 射击 照片
+Misc. / Similar Bowling Game	杂. / 类似 保龄球 游戏
+Misc. / Spank	杂. / 拍打
+Misc. / Versus	杂. / 对抗
+MultiGame / Gambling	多游戏 / 赌博
+MultiGame / Gambling Board	多游戏 / 赌博 Board
+MultiGame / Mini-Games	多游戏 / 迷你-游戏
+Multiplay / Compilation	多人玩 / 选辑
+Multiplay / Mini-Games	多人玩 / 迷你-游戏
+Multiplay / Misc.	多人玩 / 杂.
+Music Game / Instruments	音乐 游戏 / 乐器
+Music Game / Misc.	音乐 游戏/ 杂.
+Platform / Maze	平台 / 迷宫
+Platform / Run, Jump & Scrolling	平台 / 跑, 跳 & 卷轴
+Printer / Plotter	Printer / Plotter
+Puzzle / Misc.	益智 / 杂.
+Puzzle / Paint	益智 / 喷涂
+Puzzle / Reconstruction	益智 / 复原
+Quiz / Hangman game	问答 / Hangman game 吊死 猜单词?
+Quiz / Questions in Chinese	问答 / 中文问题
+Quiz / Questions in English	问答 / 英文问题
+Quiz / Questions in French	问答 / 法语问题
+Quiz / Questions in German	问答 / 德语问题
+Quiz / Questions in Greek	问答 / 希腊问题
+Quiz / Questions in Italian	问答 / 意大语问题
+Quiz / Questions in Japanese	问答 / 日语问题
+Quiz / Questions in Korean	问答 / 韩语问题
+Quiz / Questions in Norwegian	问答 / 挪威语问题
+Quiz / Questions in Spanish	问答 / 西班牙语问题
+Redemption Game / Action	拯救游戏 游戏 / 动作
+Redemption Game / Crane Machine	拯救游戏 游戏 / Crane Machine
+Redemption Game / Driving	拯救游戏 游戏 / 驾驶
+Redemption Game / Flying	拯救游戏 游戏 / 飞
+Redemption Game / Pinball	拯救游戏 游戏 / 弹球
+Redemption Game / Reaction	拯救游戏 游戏 / 反应
+Redemption Game / Shooter	拯救游戏 游戏 / 射击者
+Redemption Game / Soccer	拯救游戏 游戏 / 足球
+Shooter / 2.5D	射击 / 2.5D
+Shooter / Motorbike	射击 / 摩托车
+Shooter / Outline	射击 / 描框
+Shooter / Submarine	射击 / 潜艇
+Shooter / Underwater	射击 / 水下
+Simulation / Pet Management Simulation	模拟 / 宠物 管理 模拟
+Slot Machine / Reels	老虎机 / 卷轴
+Sports / Arm Wrestling	体育 / 扳手腕
+Sports / Cards	体育 / 卡片
+Sports / Gun	体育 / 枪
+Sports / Misc.	体育 / 杂.
+Sports / Rugby Football	体育 / Rugby 橄榄球
+Sports / Volley - Soccer	体育 / Volley - 足球
+System / BIOS	系统 / BIOS
+Tabletop / Cards	桌面 / 纸牌
+Tabletop / Go	桌面 / Go
+Tabletop / Match	桌面 / Match
+Tabletop / Multiplay	桌面 / 多人玩
+Tabletop / Othello - Reversi	桌面 / 黑白棋 - Reversi
+Touchscreen / Multi-Games	触屏 / 多游戏
+TTL * Ball & Paddle / Breakout	TTL * 球 & 拍 / 打砖块
+TTL * Ball & Paddle / Pong	TTL * 球 & 拍 / Pong
+TTL * Driving / Demolition Derby	TTL * 驾驶 / 德比碰撞
+TTL * Driving / Motorbike	TTL * 驾驶 / 摩托车
+TTL * Driving / Race	TTL * 驾驶 / 速度竞赛
+TTL * Driving / Race Track	TTL * 驾驶 / 赛道
+TTL * Maze / Shooter Small	TTL * 迷宫 / 射击 小
+TTL * Quiz / Questions in English	TTL * 问答 / 英语问题
+TTL * Shooter / Field	TTL * 射击 / Field
+TTL * Shooter / Flying 1st Person	TTL * 射击 / 飞 1st Person
+TTL * Shooter / Flying Vertical	TTL * 射击 / 飞 竖
+TTL * Shooter / Gallery	TTL * 射击 / 画廊
+TTL * Shooter / Gun	TTL * 射击 / 枪
+TTL * Shooter / Misc. Vertical	TTL * 射击 / 杂. 竖
+TTL * Shooter / Underwater	TTL * 射击 / 水下
+TTL * Shooter / Versus	TTL * 射击 / 对抗
+TTL * Sports / Baseball	TTL * 体育 / 棒球
+TTL * Sports / Horse Racing	TTL * 体育 / 赛马
+Utilities / Arcade Switcher	Utilities / 街机 Switcher
+Utilities / Arcade System	Utilities / 街机 系统
+Utilities / On-board BUS Ticketing	
+Utilities / PAL Demo	
+Utilities / Redemption Board	
+Utilities / Test	Utilities / 测试
+Utilities / Update	Utilities / 升级
+Utilities / Wave Synthesizer	Utilities / 波形合成器
+Whac-A-Mole / Fighter	打地鼠 / 战士
+Whac-A-Mole / Footsteps	打地鼠 / 足迹
+Whac-A-Mole / Gun	打地鼠 / 枪
+Whac-A-Mole / Hammer	打地鼠 / 锤子
+Whac-A-Mole / Shooter	打地鼠 / 射击
+Arcade: Medal Game / Shoot	街机: 奖牌游戏 / 射击
+Tablet	
+Utilities	
+194X	
+Interstellar	
+Moero!!	
+Neo Print	
+P-47	
+Toy's March	
+Viva Rock Vegas Slot	
