@@ -1,5 +1,9 @@
 @echo off
-rem python in the path
+
+rem py.exe in the path
+	rem py -3.8-64 
+	rem py -3.8-32
+	
 	rem pillow installed
 	rem pyinstaller installed
 
@@ -35,9 +39,12 @@ set the_command_string_jjui_sl=%the_command_string% --icon jjui_source\images\fo
 echo on
 
 rem pyinstaller
-python -m PyInstaller %the_command_string_jjui% JJui.pyw
-python -m PyInstaller %the_command_string_jjui_sl% JJui_sl.pyw
-
+rem 64
+py -3.8-64 -m PyInstaller %the_command_string_jjui%    --distpath dist\python38_64bit JJui.pyw
+py -3.8-64 -m PyInstaller %the_command_string_jjui_sl% --distpath dist\python38_64bit JJui_sl.pyw
+rem 32
+py -3.8-32 -m PyInstaller %the_command_string_jjui%    --distpath dist\python38_32bit JJui.pyw
+py -3.8-32 -m PyInstaller %the_command_string_jjui_sl% --distpath dist\python38_32bit JJui_sl.pyw
 
 rem jjui_source\_log.txt
 IF EXIST jjui_source\_log.txt (
@@ -45,5 +52,3 @@ IF EXIST jjui_source\_log.txt (
 		copy /Y jjui_source\_log.txt dist\log.txt
 		)
 	)
-
-

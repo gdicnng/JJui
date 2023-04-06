@@ -10,6 +10,7 @@ import tkinter.messagebox
 
 #from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as Treeview_with_scrollbar
 from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_for_index as Treeview_with_scrollbar
+from . import ui_small_windows
 
 # from . import global_static_key_word_translation as key_word_translation
 # from . import global_static
@@ -19,7 +20,7 @@ from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_for_index as Tr
 #from . import folders_read 
 #from . import folders_save 
 from .ui_misc import misc_funcs
-
+from . import misc
 
 
 # 添加外部目录
@@ -95,6 +96,10 @@ class GameIndex(Treeview_with_scrollbar):
                 command = misc_funcs.new_func_index_popup_menu_function_save)
         self.new_ui_index_popup_menu.add_command(label=_("搜索"),
                 command = self.new_func_bindings_show_search_ui)
+        self.new_ui_index_popup_menu.add_command(label=_("显示超出范围的项目"),
+                command = self.new_func_index_popup_menu_function_show_illegal_items)
+        # 记录 index
+        self.new_var_menu_index_for_show_illegal_items = self.new_ui_index_popup_menu.index(tk.END)
         #self.new_ui_index_popup_menu.add_command(label="显示横向滚动条",command = self.new_func_index_popup_menu_function_show_scrollbar_h)
         #self.new_ui_index_popup_menu.add_command(label="收起横向滚动条",command = self.new_func_index_popup_menu_function_hide_scrollbar_h)
 
@@ -103,7 +108,7 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_ui_index_popup_menu_for_search.add_command(label=_("全部收起"),
                 command = self.new_func_index_popup_menu_for_search_function_hide_level2)
         self.new_ui_index_popup_menu_for_search.add_command(label=_("隐藏搜索结果，显示原列表"),
-                command = self.new_func_search_box_double_esc)        
+                command = self.new_func_search_box_double_esc)
     def new_func_bindings(self,):
         super().new_func_bindings()
         
@@ -119,7 +124,7 @@ class GameIndex(Treeview_with_scrollbar):
         if sys.platform.startswith('linux'):
             self.new_ui_tree.bind('<ButtonRelease-3>',self.new_func_index_bindings_right_click)
             # 搜索结果处
-            self.new_ui_tree_for_search.bind('<ButtonPress-3>',self.new_func_index_for_search_bindings_right_click)
+            self.new_ui_tree_for_search.bind('<ButtonRelease-3>',self.new_func_index_for_search_bindings_right_click)
 
         else:
             self.new_ui_tree.bind('<ButtonPress-3>',self.new_func_index_bindings_right_click)
@@ -171,10 +176,62 @@ class GameIndex(Treeview_with_scrollbar):
     
     # bindings 鼠标 右键 ,弹出菜单
     def new_func_index_bindings_right_click(self,event):
-        self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
+        
+        if sys.platform.startswith('linux'):
+            # 鼠标 右击 释放时
+            # 如果不在 范围内
+            if event.widget is not event.widget.winfo_containing(event.x_root, event.y_root,):
+                return
+        
+        tree = event.widget
+        
+        row_focused = tree.focus()
+        
+        row = tree.identify_row(event.y)
+        
+        # 菜单 多余游戏
+        the_state = tk.DISABLED 
+        the_string = "-"
+        if row and row_focused==row:
+            print()
+            print(row)
+            if row.startswith("external_ini_file"):
+                id_2 = None
+                parent = tree.parent(row)
+                if parent:
+                    # 第二层
+                    # index_name_level_2 = iid.removeprefix(parent_iid)
+                    # 3.9 才有这 个 str.removeprefix()
+                    id_1 = parent.split(r"|",1)[1]
+                    
+                    len_1 = len(parent) + 1 # 还有一个 | 字符
+                    id_2 = row[len_1:]
+                    print(id_2)
+                else:
+                    # 第一层
+                    id_1 = row.split(r"|",1)[1]
+                    print(id_1)
+                
+                the_state = tk.NORMAL
+                if id_2 is None: # 一层
+                    the_string = _("查看超出范围的项目：")+id_1+ "|" + r"[ROOT_FOLDER]"
+                else: # 二层
+                    the_string = _("查看超出范围的项目：")+id_1 + "|" + "[" + id_2 + "]"
+                print(the_string)
+        
+        menu = self.new_ui_index_popup_menu
+        index = self.new_var_menu_index_for_show_illegal_items
+        menu.entryconfigure(index,state=the_state,label=the_string)
+        
+        menu.tk_popup(event.x_root, event.y_root)
     # bindings 鼠标 右键 ,弹出菜单
     # 搜索结果处
     def new_func_index_for_search_bindings_right_click(self,event):
+        if sys.platform.startswith('linux'):
+            # 鼠标 右击 释放时
+            # 如果不在 范围内
+            if event.widget is not event.widget.winfo_containing(event.x_root, event.y_root,):
+                return
         self.new_ui_index_popup_menu_for_search.tk_popup(event.x_root, event.y_root)
     
     # 右键菜单 列表第二层内容 收起
@@ -228,6 +285,42 @@ class GameIndex(Treeview_with_scrollbar):
         
         #tkinter.messagebox.showinfo(title=None, message=None, **options)
         tkinter.messagebox.showinfo(title=_("目录数量"),message=the_text)
+    
+    # 右键菜单，外部目录，超出范围的游戏
+    def new_func_index_popup_menu_function_show_illegal_items(self,event=None):
+        tree = self.new_ui_tree
+        row = tree.focus()
+        
+        parent = tree.parent(row)
+        if parent: # 第二层
+            id_1 = parent.split(r"|",1)[1]
+            
+            len_1 = len(parent) + 1 # 还有一个 | 字符
+            id_2 = row[len_1:]
+        else: # 第一层
+            id_1 = row.split(r"|",1)[1]
+            id_2 = None
+        
+        illegal_item_list = misc.get_id_list_of_illegal_items(id_1,id_2)
+        #print(illegal_item_list)
+        
+        
+        line_list = []
+        line_list.append( _("文件：") + id_1 + "\n")
+        
+        if id_2 is None:
+            line_list.append( _("分类：") + r"[ROOT_FOLDER]" + "\n" )
+        else:
+            line_list.append( _("分类：") + id_2 + "\n" )
+        
+        line_list.append(_("数量：")+ str(len(illegal_item_list)) + "\n")
+        line_list.append("-------------\n")
+        
+        for item in illegal_item_list:
+            line_list.append(item+ "\n")
+        
+        ui_small_windows.show_a_text_widget(line_list,title="超出范围的项目")
+    
     
     # 生成 virtual event
     def new_func_index_generate_virtual_event(self,iid):

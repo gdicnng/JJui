@@ -3,6 +3,7 @@
 import os
 import sys
 import subprocess
+import threading
 import re
 #import glob
 
@@ -1128,197 +1129,204 @@ class Misc_functions():
     ##########
     ##########
     ##########
-    # 建目录
+    # 周边
+    #   建目录
     #  for menu bar 周边文档，建目录
     def extra_docs_make_index(self,):
         print("")
         print("extra_docs_make_index")
-        #window = tk.Toplevel()
-        #window.resizable(width=True, height=True)
-        #window.title(_("周边文档，建目录，加速"))
-        #
-        #size = "400x300"
-        #window.geometry( size )
-        #window.lift()
-        #
-        #window.rowconfigure(1,weight=1)
-        #window.columnconfigure(0,weight=1)
-        #
-        #progress_bar=ttk.Progressbar(window,)
-        #progress_bar.grid(row=0,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
-        #progress_bar.start()
-        #
-        #text_holder = ui__text_with_scrollbar.Text_with_scrollbar(window)
-        #text_holder.grid(row=1,column=0,sticky=(tk.W,tk.N,tk.E,tk.S))
-        #
-        #text_holder.new_func_insert_string("\n")
-        #text_holder.new_func_insert_string( _("请耐心等待)" + "......"))
+        print("waiting......")
         
-        global_variable.root_window.iconify()
+        root = global_variable.root_window
         
-        # history.xml
-        def make_index_of_history_xml():
+        progressbar = ttk.Progressbar(root)
+        progressbar.grid(row=0,column=0,rowspan=2,sticky=tk.W+tk.E+tk.S)
+        progressbar.grab_set()
+        progressbar.start()
+        
+        
+        def make_index():
             
-            # 文件路径
-            path = global_variable.user_configure_data["history.xml_path"]
-            path = path.replace(r'"',"") # 去掉双引号
-            
-            if os.path.isfile(path) : 
-            
-                index_dict = {}
-                if global_variable.gamelist_type == "softwarelist":
-                    index_dict = extra_read_history_xml.get_index(path,the_type="softwarelist")
-                else:# mame
-                    index_dict = extra_read_history_xml.get_index(path,)
+            # history.xml
+            def make_index_of_history_xml():
                 
-                if index_dict:
-                    global_variable.extra_index_for_histroty_xml = index_dict
-                    save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_xml)
-            
-        # ("history.dat","sysinfo.dat",)
-        # history.dat
-        def make_index_of_history_dat():
-            #if global_variable.gamelist_type == "mame":
+                # 文件路径
+                path = global_variable.user_configure_data["history.xml_path"]
+                path = path.replace(r'"',"") # 去掉双引号
+                
+                if os.path.isfile(path) : 
+                
+                    index_dict = {}
+                    if global_variable.gamelist_type == "softwarelist":
+                        index_dict = extra_read_history_xml.get_index(path,the_type="softwarelist")
+                    else:# mame
+                        index_dict = extra_read_history_xml.get_index(path,)
+                    
+                    if index_dict:
+                        global_variable.extra_index_for_histroty_xml = index_dict
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_xml)
+                
+            # ("history.dat","sysinfo.dat",)
             # history.dat
-            path = global_variable.user_configure_data["history.dat_path"]
-            path = path.replace(r'"',"") # 去掉双引号
-            if os.path.isfile(path) : 
-                index_dict = {}
-                # file_pickle_extra_index_history_dat
-                # global_variable.extra_index_for_histroty_dat
-                
-                index_dict = extra_history_dat.get_index( path ,global_variable.gamelist_type)
-                
-                if index_dict:
-                    global_variable.extra_index_for_histroty_dat = index_dict
-                    save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_dat)
-        # sysinfo.dat
-        def make_index_of_sysinfo_dat():
-            if global_variable.gamelist_type == "mame":
+            def make_index_of_history_dat():
+                #if global_variable.gamelist_type == "mame":
                 # history.dat
-                path = global_variable.user_configure_data["sysinfo.dat_path"]
+                path = global_variable.user_configure_data["history.dat_path"]
                 path = path.replace(r'"',"") # 去掉双引号
                 if os.path.isfile(path) : 
                     index_dict = {}
                     # file_pickle_extra_index_history_dat
                     # global_variable.extra_index_for_histroty_dat
                     
-                    index_dict = extra_history_dat.get_index( path )
+                    index_dict = extra_history_dat.get_index( path ,global_variable.gamelist_type)
                     
                     if index_dict:
-                        global_variable.extra_index_for_sysinfo_dat = index_dict
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_sysinfo_dat)
-        
-        
-        #("mameinfo.dat","messinfo.dat",)
-        # mameinfo.dat
-        def make_index_of_mameinfo_dat():
-            if global_variable.gamelist_type == "mame":
-                # history.dat
-                path = global_variable.user_configure_data["mameinfo.dat_path"]
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    # file_pickle_extra_index_history_dat
-                    # global_variable.extra_index_for_histroty_dat
-                    
-                    index_dict = extra_mameinfo_dat.get_index( path )
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_mameinfo_dat = index_dict
+                        global_variable.extra_index_for_histroty_dat = index_dict
+                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_history_dat)
+            # sysinfo.dat
+            def make_index_of_sysinfo_dat():
+                if global_variable.gamelist_type == "mame":
+                    # history.dat
+                    path = global_variable.user_configure_data["sysinfo.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
+                        # file_pickle_extra_index_history_dat
+                        # global_variable.extra_index_for_histroty_dat
                         
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_mameinfo_dat)
-        # messinfo.dat
-        def make_index_of_messinfo_dat():
-            if global_variable.gamelist_type == "mame":
-                # history.dat
-                path = global_variable.user_configure_data["messinfo.dat_path"]
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    # file_pickle_extra_index_history_dat
-                    # global_variable.extra_index_for_histroty_dat
-                    
-                    index_dict = extra_mameinfo_dat.get_index( path )
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_messinfo_dat = index_dict
+                        index_dict = extra_history_dat.get_index( path )
                         
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_messinfo_dat)
-        
-        #"command.dat","command_english.dat",
-        # command.dat
-        def make_index_of_command_dat():
-            if global_variable.gamelist_type == "mame":
-                # history.dat
-                path = global_variable.user_configure_data["command.dat_path"]
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    
-                    index_dict = extra_command.get_index( path )
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_command_dat = index_dict
+                        if index_dict:
+                            global_variable.extra_index_for_sysinfo_dat = index_dict
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_sysinfo_dat)
+            
+            
+            #("mameinfo.dat","messinfo.dat",)
+            # mameinfo.dat
+            def make_index_of_mameinfo_dat():
+                if global_variable.gamelist_type == "mame":
+                    # history.dat
+                    path = global_variable.user_configure_data["mameinfo.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
+                        # file_pickle_extra_index_history_dat
+                        # global_variable.extra_index_for_histroty_dat
                         
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_dat)
-        def make_index_of_command_english_dat():
-            if global_variable.gamelist_type == "mame":
-                # history.dat
-                path = global_variable.user_configure_data["command_english.dat_path"]
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    
-                    index_dict = extra_command.get_index( path )# 和 command.dat 一样
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_command_english_dat = index_dict
+                        index_dict = extra_mameinfo_dat.get_index( path )
                         
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_english_dat)
-        
-        # "gameinit.dat",
-            # 建目录用 history.dat 的
-        def make_index_of_gameinit_dat():
+                        if index_dict:
+                            global_variable.extra_index_for_mameinfo_dat = index_dict
+                            
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_mameinfo_dat)
+            # messinfo.dat
+            def make_index_of_messinfo_dat():
+                if global_variable.gamelist_type == "mame":
+                    # history.dat
+                    path = global_variable.user_configure_data["messinfo.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
+                        # file_pickle_extra_index_history_dat
+                        # global_variable.extra_index_for_histroty_dat
+                        
+                        index_dict = extra_mameinfo_dat.get_index( path )
+                        
+                        if index_dict:
+                            global_variable.extra_index_for_messinfo_dat = index_dict
+                            
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_messinfo_dat)
+            
+            #"command.dat","command_english.dat",
+            # command.dat
+            def make_index_of_command_dat():
+                if global_variable.gamelist_type == "mame":
+                    # history.dat
+                    path = global_variable.user_configure_data["command.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
+                        
+                        index_dict = extra_command.get_index( path )
+                        
+                        if index_dict:
+                            global_variable.extra_index_for_command_dat = index_dict
+                            
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_dat)
+            def make_index_of_command_english_dat():
+                if global_variable.gamelist_type == "mame":
+                    # history.dat
+                    path = global_variable.user_configure_data["command_english.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
+                        
+                        index_dict = extra_command.get_index( path )# 和 command.dat 一样
+                        
+                        if index_dict:
+                            global_variable.extra_index_for_command_english_dat = index_dict
+                            
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_command_english_dat)
+            
+            # "gameinit.dat",
+                # 建目录用 history.dat 的
+            def make_index_of_gameinit_dat():
 
-            if global_variable.gamelist_type == "mame":
-                # gameinit.dat
-                path = global_variable.user_configure_data["gameinit.dat_path"]
-                path = path.replace(r'"',"") # 去掉双引号
-                if os.path.isfile(path) : 
-                    index_dict = {}
-                    
-                    index_dict = extra_history_dat.get_index( path ) 
-                        # 使用 history 中的 建目录函数
-                    
-                    if index_dict:
-                        global_variable.extra_index_for_gameinit_dat = index_dict
+                if global_variable.gamelist_type == "mame":
+                    # gameinit.dat
+                    path = global_variable.user_configure_data["gameinit.dat_path"]
+                    path = path.replace(r'"',"") # 去掉双引号
+                    if os.path.isfile(path) : 
+                        index_dict = {}
                         
-                        save_pickle.save(index_dict,the_files.file_pickle_extra_index_gameinit_dat)
+                        index_dict = extra_history_dat.get_index( path ) 
+                            # 使用 history 中的 建目录函数
+                        
+                        if index_dict:
+                            global_variable.extra_index_for_gameinit_dat = index_dict
+                            
+                            save_pickle.save(index_dict,the_files.file_pickle_extra_index_gameinit_dat)
 
+            
+            make_index_of_history_xml()
+            
+            make_index_of_history_dat()
+            make_index_of_sysinfo_dat()
+            
+            make_index_of_mameinfo_dat()
+            make_index_of_messinfo_dat()
+            
+            make_index_of_command_dat()
+            make_index_of_command_english_dat()
+            
+            make_index_of_gameinit_dat()
         
-        make_index_of_history_xml()
         
-        make_index_of_history_dat()
-        make_index_of_sysinfo_dat()
+        thread = threading.Thread(target=make_index,)
+        thread.start()
         
-        make_index_of_mameinfo_dat()
-        make_index_of_messinfo_dat()
+        #
+        tkvar = tk.StringVar()
+        tkvar.set("waiting")
+        #
+        def wait_threading(thread):
+            nonlocal tkvar
+            
+            if thread.is_alive(): #运行
+                root.after(300,wait_threading,thread)
+            else: # 停止
+                print("threading finish")
+                root.after(10,tkvar.set ,("threading finish",))
         
-        make_index_of_command_dat()
-        make_index_of_command_english_dat()
+        wait_threading(thread)
         
-        make_index_of_gameinit_dat()
-        
+        if tkvar.get() == "waiting":
+            root.wait_variable(tkvar)
         
         print("finish")
-        
-        global_variable.root_window.deiconify()
-        global_variable.root_window.lift()
-        self.set_ui_to_topmost()
-        #window.wait_window()
-        ""
-        
+        progressbar.stop()
+        progressbar.grab_release()
+        progressbar.destroy()
     
     
     
@@ -1559,7 +1567,7 @@ class Misc_functions():
     
     
     # 刷新 拥有列表 split
-    def gamelist_available_refresh(self,):
+    def gamelist_available_refresh_bak(self,merged = False):
         ""
         print()
         print("gamelist available refresh")
@@ -1568,31 +1576,80 @@ class Misc_functions():
         # *.zip 、*.7x 、文件夹
         
         if global_variable.gamelist_type == "softwarelist":
-            temp_set = self.get_files_names_in_rompath_sl()
+            temp_set = self.get_files_names_in_rompath_sl(merged = merged)
         else:
-            temp_set = self.get_files_names_in_rompath()
+            temp_set = self.get_files_names_in_rompath(merged = merged)
         
         self.set_available_gamelist(temp_set,need_save=True)
         
         global_variable.root_window.event_generate('<<RequestForAvailableGameList>>')
+    
+    # 不卡 UI
+    def gamelist_available_refresh(self,merged = False):
+        ""
+        print()
+        print("gamelist available refresh")
+        # 仅检查文件 存在 与否
+        # 不深度检查文件的 正确性、完整性
+        # *.zip 、*.7x 、文件夹
         
+        # subprocess 
+        # 从命令行读取 roms 路径信息
+        # subprocess，读取 roms 路径，
+        # 如果第一次读取 mame 的话，mame 几百 M ，可能卡一下
+        roms_folder_list = self.get_roms_folder_list()
+        
+        # 进度条
+        root = global_variable.root_window
+        progressbar = ttk.Progressbar(root)
+        progressbar.grid(row=0,column=0,rowspan=2,sticky=tk.W+tk.E+tk.S)
+        progressbar.grab_set()
+        progressbar.start()
+        
+        # threading
+        
+        def func_1():
+            
+            if global_variable.gamelist_type == "softwarelist":
+                temp_set = self.get_files_names_in_rompath_sl(merged = merged,roms_folder_list=roms_folder_list)
+            else:
+                temp_set = self.get_files_names_in_rompath(merged = merged,roms_folder_list=roms_folder_list)
+            
+            self.set_available_gamelist(temp_set,need_save=True)
+
+        thread = threading.Thread(target=func_1,)
+        thread.start()
+        
+        #
+        tkvar = tk.StringVar()
+        tkvar.set("waiting")
+        #
+        def wait_threading(thread):
+            
+            if thread.is_alive(): #运行
+                root.after(300,wait_threading,thread)
+            else: # 停止
+                print("threading finish")
+                root.after(10,tkvar.set ,("threading finish",))
+        
+        wait_threading(thread)
+        # wait
+        if tkvar.get() == "waiting":
+            root.wait_variable(tkvar)
+        
+        print("threading finish")
+
+
+        # 进度条 取消
+        progressbar.stop()
+        progressbar.grab_release()
+        progressbar.destroy()
+        
+        global_variable.root_window.event_generate('<<RequestForAvailableGameList>>')
+
     # 刷新 拥有列表 merged
     def gamelist_available_refresh_2(self,):
-        ""
-        print()
-        print("gamelist available refresh")
-        # 仅检查文件 存在 与否
-        # 不深度检查文件的 正确性、完整性
-        # *.zip 、*.7x 、文件夹
-        if global_variable.gamelist_type == "softwarelist":
-            temp_set = self.get_files_names_in_rompath_sl(merged = True)
-        else:
-            temp_set = self.get_files_names_in_rompath(merged = True)
-        
-        
-        self.set_available_gamelist(temp_set,need_save=True)
-        
-        global_variable.root_window.event_generate('<<RequestForAvailableGameList>>')
+        self.gamelist_available_refresh(merged=True)
     
     # 初始化 ui_main.py
     def initial_available_filter_set(self,):
@@ -1606,11 +1663,11 @@ class Misc_functions():
             global_variable.available_filter_set.update( temp )
 
 
-    def get_roms_folder_list(self,):
+    def get_roms_folder_list(self):
+        
         roms_folder_list = []
         
         # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下
-
         rom_path = self.get_rompath_from_command_line()
         
         (mame_exe , mame_dir) = self.get_mame_path_and_working_directory()
@@ -1660,13 +1717,14 @@ class Misc_functions():
 
     # 刷新列表
     # 找到拥有的 *.zip 、*.7z 、文件夹
-    def get_files_names_in_rompath(self,merged = False):
+    def get_files_names_in_rompath(self,merged = False,roms_folder_list=None):
         # 仅检查文件 存在 与否
         # 不深度检查文件的 正确性、完整性
         # *.zip 、*.7x 、文件夹
         temp=[]
         
-        roms_folder_list = self.get_roms_folder_list()
+        if roms_folder_list is None:
+            roms_folder_list = self.get_roms_folder_list()
         print()
         print(roms_folder_list)
         print()
@@ -1721,14 +1779,15 @@ class Misc_functions():
     # 刷新列表 sl
     # 找到拥有的 *.zip 、*.7z 、文件夹
     # copy 上面的
-    def get_files_names_in_rompath_sl(self,merged = False):
+    def get_files_names_in_rompath_sl(self,merged = False,roms_folder_list=None):
         # 仅检查文件 存在 与否
         # 不深度检查文件的 正确性、完整性
         # *.zip 、*.7x 、文件夹
         
         # rompath 里记录的文件，相对位置是相对于模拟器的，这个还得改一下            
         
-        roms_folder_list = self.get_roms_folder_list()
+        if roms_folder_list is None:
+            roms_folder_list = self.get_roms_folder_list()
         
         temp_set = set()
         

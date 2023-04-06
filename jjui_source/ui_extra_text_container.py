@@ -137,6 +137,12 @@ class Text_area(ttk.Frame):
 
     
     def new_func_bindings_right_click_to_show_menu(self,event):
+        if sys.platform.startswith('linux'):
+            # 鼠标 右击 释放时
+            # 如果不在 范围内
+            if event.widget is not event.widget.winfo_containing(event.x_root, event.y_root,):
+                return
+        
         self.new_ui_index_popup_menu.tk_popup(event.x_root, event.y_root)
 
 
@@ -1120,7 +1126,7 @@ class Text_container_2(Text_container):
             for x in self.new_var_command_content:
                 # 提取 每一段 第一行，做为小标题
                 try:
-                    index.append( self.new_var_command_content[x][0] )
+                    index.append( self.new_var_command_content[x][0].rstrip('\r\n') )
                 except:
                     index.append("")
             self.new_ui_chooser_2["values"]=index
@@ -1241,7 +1247,7 @@ class Text_container_2(Text_container):
             for x in self.new_var_command_content:
                 # 提取 每一段 第一行，做为小标题
                 try:
-                    index.append( self.new_var_command_content[x][0] )
+                    index.append( self.new_var_command_content[x][0].rstrip("\r\n") )
                 except:
                     index.append("")
             self.new_ui_chooser_2["values"]=index

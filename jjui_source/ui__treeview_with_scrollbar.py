@@ -403,6 +403,8 @@ class Treeview_with_scrollbar_for_index(ttk.Frame):
         self.new_ui_search_box.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
         self.new_ui_tree.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
         self.new_ui_tree_for_search.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
+        # double Button-2
+        self.new_ui_search_box.bind('<Double-Button-3>',self.new_func_search_box_double_esc)
         # Return
         self.new_ui_search_box.bind('<KeyPress-Return>',self.new_func_search_box_return)
 

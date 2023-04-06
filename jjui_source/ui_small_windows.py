@@ -854,17 +854,14 @@ def window_for_extra_command_character():
 
     text_container = ui__text_with_scrollbar.Text_with_scrollbar(window,horizontal=True,sizegrip=True)
     text_container.grid(row=0,column=0,sticky=tk.NSEW)
-
+    
+    # font 与出招表字体相同
+    text_container.new_ui_text.configure(font=global_variable.font_text_2)
+    
     temp_string  = "出招表 command.dat 原始文件中的一些符号替换，替换为文字"+ "\n"
     temp_string += "替换之后，将出招表显示为完全的文字内容"+ "\n"
     temp_string += "\n"
     temp_string += "主要用的是 GB2312 、GBK 范围中的字符"+ "\n"
-    temp_string += "GB2312 是 1980 年的老标准，因为老，兼容性好"+ "\n"
-    temp_string += "GB2312 没有合适的符号，再从 GBK 里选"+ "\n"
-    temp_string += "（当然，文字的话，Unicode 大字符里有更多的文字符号，）"+ "\n"
-    temp_string += "（但是，一个字体文件 通常只有少量的字符，）"+ "\n"
-    temp_string += "（使用多个字体文件的话，设置麻烦，而且显示效果不统一，）"+ "\n"
-    temp_string += "（所有，没在 Unicode 这种大范围里选。）"+ "\n"
     temp_string += "简体中文的电脑用户，这样查看出招表，效果应该还可以"+ "\n"
     temp_string += "其它地区的电脑用户，可能不太方便"+ "\n"
     temp_string += "\n"
@@ -876,6 +873,8 @@ def window_for_extra_command_character():
     temp_string += "\n"
     temp_string +="以下为 替换内容："+ "\n"
     temp_string +="（如果发现有问题，可以跟我说一下）"+ "\n"
+    temp_string +="（在低版本 python 上，以下内容可能是乱序显示的）"+ "\n"
+    temp_string +="（顺序我就不改了，如果是乱序的，可以复制到文本编辑器上排序一下再查看）"+ "\n"
     temp_string +="\n"
     
     text_container.new_func_insert_string(temp_string)
@@ -885,6 +884,31 @@ def window_for_extra_command_character():
         text_container.new_func_insert_string(temp)
 
     window.wait_window()
+
+
+def show_a_text_widget(line_list,title=None):
+    if title is None:
+        title = "-"
+
+    root = global_variable.root_window
+    
+    window = tk.Toplevel()
+    window.geometry( "400x300" )
+    window.resizable(width=True, height=True)
+    window.title(title)
+    window.lift(root)
+    window.transient(root)
+    window.rowconfigure(0,weight=1)
+    window.columnconfigure(0,weight=1)
+
+    text_container = ui__text_with_scrollbar.Text_with_scrollbar(window,horizontal=True,sizegrip=True)
+    text_container.grid(row=0,column=0,sticky=tk.NSEW)
+    
+    for line in line_list:
+        text_container.new_func_insert_string(line)
+
+    window.wait_window()
+
 
 if __name__ =="__main__":
         

@@ -1,7 +1,18 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 #import os
 import re
+
+
+# linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+def replace_newline_character(content):
+    if content is None:
+        return None
+    
+    for n,line in enumerate(content):
+        if line.endswith("\r\n"):
+            content[n]=line.rstrip("\r\n") + "\n"
+    return content
 
 
 def extra_history_find_mame(file_name , game_name):# 逐行读取，节约内存
@@ -440,12 +451,15 @@ def extra_history_find_by_index_sl(file_name , sl_id,the_index):# 逐行读取�
 def get_content_by_file_name_by_index(file_name,game_name,the_index=0,the_type="mame"):
     if the_type=="mame":
         content=extra_history_find_by_index_mame(file_name,game_name,the_index)
-        content=history_format(content) # 没变
-        return content
     elif the_type=="softwarelist":
         content=extra_history_find_by_index_sl(file_name,game_name,the_index)
-        content=history_format(content) # 没变
-        return content
+    
+    # linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+    if sys.platform.startswith('linux'):
+        content=replace_newline_character(content)
+    
+    content=history_format(content) # 没变
+    return content
 
 if __name__ =="__main__":
     print()

@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 #import os
 import re
 replace_dict={
@@ -45,19 +45,24 @@ replace_dict={
         r"_Z"        : r"Ｚ",
 
         r"_+"  : r"＋",#gb2312
-        r"_."  : r"…",
+        r"_."  : r"…",# 啥意思，不过 jjsnake 出扫表里没有
         r"_1"  : r"↙",
         r"_2"  : r"↓",
         r"_3"  : r"↘",
         r"_4"  : r"←",
-        r"_5"  : r"⊕", # gbk  ??? ############### ☉☉⊕⊕
+        r"_5"  : r"⊙", # ??? ⊙⊕
+        # 摇杆回中 ???
+        # 摇杆回中，用哪个符号？⊙⊕
+        # 两个
+        # ⊙ U+2299 CIRCLED DOT OPERATOR : direct product, vector pointing out of page
+        # ☉ ，U+2609 SUN : alchemical symbol for gold
         r"_6"  : r"→",
         r"_7"  : r"↖",
         r"_8"  : r"↑",
         r"_9"  : r"↗",
         r"_N"  : r"Ｎ", # # # # 
         
-        r"@BALL"  : r"⊕",# gbk  ??? ☉☉⊕⊕
+        r"@BALL"  : r"⊙",# ??? ☉☉⊕⊕
         
         r"_a" : r"①",# ① gb2312
         r"_b" : r"②",
@@ -128,15 +133,24 @@ replace_dict={
         r"@7player" : r"P7", #
         r"@8player" : r"P8", #
         
-        r"_`" : r"・",#gb2312
+        # ※
+        
+        # ・  在 gb2312  ，但不在 gbk 中 ????? ，U+30FB KATAKANA MIDDLE DOT 片假名？
+        # · gbk ,U+00B7 MIDDLE DOT : midpoint (in typography), Georgian comma, Greek middle dot (ano teleia)
+        r"_`" : r"·",
         r"_@" : r"◎",#gb2312
-        r"_)" : r"○",#gb2312
+        r"_)" : r"○",#gb2312 ：# ○，U+25CB WHITE CIRCLE# 还有个 零〇 长得一样
         r"_(" : r"●",#gb2312
         r"_*" : r"☆",#gb2312
         r"_&" : r"★",#gb2312
         r"_%" : r"△",#gb2312
         r"_$" : r"▲",#gb2312
-        r"_#" : r"",       #gbk 里有 ，没有 ▣ ,▣ 25a3 ,回字 ？
+        r"_#" : r"∷",
+        # 回字形状
+        # 双重 正方形，楷体里没有，换一个算了
+        # gbk 里有这个： ，没有 ▣ ,▣ 25a3 
+        #### jjsnake 出招表中，好像没有用这个，正好
+        # 〓＃▓∷
         r"_]" : r"□",#gb2312
         r"_[" : r"■",#gb2312
         r"_{" : r"▽",       #gbk
@@ -150,7 +164,7 @@ replace_dict={
         r"_=" : r"下蹲",
         r"^-" : r"靠近",
         r"^=" : r"离开",
-        r"_~" : r"按住", #?
+        r"_~" : r"蓄", #?
         r"^*" : r"连按", # Serious Tap ? # ボタン連打 ????  | ^* | @tap      |
         r"^?" : r"任意键",
         
@@ -160,7 +174,7 @@ replace_dict={
         r"@sit"   : r"下蹲",
         r"@close" : r"靠近",
         r"@away"  : r"离开",
-        r"@charge": r"按住", # # ??
+        r"@charge": r"蓄", # # ??
         r"@tap"   : r"连按",
         r"@button": r"任意键",
         
@@ -209,14 +223,14 @@ replace_dict={
 
         r"_!" : r"→",
         r"^!" : r"└→",
-        r"^1" : r"↙.",
-        r"^2" : r"↓.",
-        r"^3" : r"↘.",
-        r"^4" : r"←.",
-        r"^6" : r"→.",
-        r"^7" : r"↖.",
-        r"^8" : r"↑.",
-        r"^9" : r"↗.",
+        r"^1" : r"↙蓄",
+        r"^2" : r"↓蓄",
+        r"^3" : r"↘蓄",
+        r"^4" : r"←蓄",
+        r"^6" : r"→蓄",
+        r"^7" : r"↖蓄",
+        r"^8" : r"↑蓄",
+        r"^9" : r"↗蓄",
         
         r"@-->" : r"→",
         r"@==>" : r"└→",
@@ -240,6 +254,16 @@ replace_dict={
 #for x in replace_dict:
 #    print(x)
 #    print(replace_dict[x])
+
+# linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+def replace_newline_character(content):
+    if content is None:
+        return None
+    
+    for n,line in enumerate(content):
+        if line.endswith("\r\n"):
+            content[n]=line.rstrip("\r\n") + "\n"
+    return content
 
 def extra_command_find(content , game_name):# content 为， 所有文本，readlines 读取的
     #$info=xxx,xxx,xxx
@@ -555,8 +579,14 @@ def extra_command_find_2_use_index(file_name , game_name,the_index):# 逐行读�
 
 def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
     content=extra_command_find_2_use_index(file_name,game_name,the_index)
+    
+    # linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+    if sys.platform.startswith('linux'):
+        content=replace_newline_character(content)
+    
     content=command_replace(content)
     content=command_format(content)
+
     return content
     #print(content)
 

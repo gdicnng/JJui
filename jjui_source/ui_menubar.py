@@ -665,11 +665,11 @@ class MenuBar(ttk.Frame):
         
         m.add_separator()
 
-        m.add_command(label=_("周边文档，出招表，文字替换内容检查"), 
-                command=ui_small_windows.window_for_extra_command_character
-                )
-        
-        m.add_separator()        
+        if global_variable.gamelist_type=="mame":
+            m.add_command(label=_("周边文档，出招表，文字替换内容检查"), 
+                    command=ui_small_windows.window_for_extra_command_character
+                    )
+            m.add_separator()
 
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)

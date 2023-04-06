@@ -1,8 +1,8 @@
 @echo off
+
 rem python in the path
 	rem pillow installed
 	rem pyinstaller installed
-
 
 rem jjui_source\images
 set the_command_string=--add-data jjui_source\images;jjui_source\images
@@ -27,10 +27,17 @@ set the_command_string=--windowed %the_command_string%
 rem others
 set the_command_string=--clean %the_command_string%
 
-
 rem icon 
-set the_command_string_jjui=%the_command_string% --icon jjui_source\images\for-icon.png
-set the_command_string_jjui_sl=%the_command_string% --icon jjui_source\images\for-icon-2.png
+IF EXIST jjui.ico (
+	set the_command_string_jjui=%the_command_string% --icon jjui.ico
+	) else (
+	set the_command_string_jjui=%the_command_string%
+	)
+IF EXIST jjui_sl.ico (
+	set the_command_string_jjui_sl=%the_command_string% --icon jjui_sl.ico
+	) else (
+	set the_command_string_jjui_sl=%the_command_string%
+	)
 
 echo on
 
@@ -38,6 +45,9 @@ rem pyinstaller
 python -m PyInstaller %the_command_string_jjui% JJui.pyw
 python -m PyInstaller %the_command_string_jjui_sl% JJui_sl.pyw
 
+rem delete
+IF EXIST jjui.ico del jjui.ico
+IF EXIST jjui_sl.ico del jjui_sl.ico
 
 rem jjui_source\_log.txt
 IF EXIST jjui_source\_log.txt (
@@ -45,5 +55,3 @@ IF EXIST jjui_source\_log.txt (
 		copy /Y jjui_source\_log.txt dist\log.txt
 		)
 	)
-
-

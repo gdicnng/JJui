@@ -1,10 +1,20 @@
 @echo off
 
-rem python in the path
-rem make ico
-python .windows_pillow_make_icon__py34py36.py
+rem py.exe in the path
+	rem py -3.6    ,py -3.6-64 "-64"not work before 3.7 
+	rem py -3.6-32 ,
+	
+	rem pillow installed
+	rem pyinstaller installed
 
-rem pyinstaller in the path
+
+rem make ico
+rem 	delete old  .ico
+IF EXIST jjui.ico del jjui.ico
+IF EXIST jjui_sl.ico del jjui_sl.ico
+rem make ico
+py -3.6 .windows_pillow_make_icon__py36.py
+
 
 
 rem jjui_source\images
@@ -30,7 +40,6 @@ set the_command_string=--windowed %the_command_string%
 rem others
 set the_command_string=--clean %the_command_string%
 
-
 rem icon 
 IF EXIST jjui.ico (
 	set the_command_string_jjui=%the_command_string% --icon jjui.ico
@@ -46,7 +55,20 @@ IF EXIST jjui_sl.ico (
 echo on
 
 rem pyinstaller
-pyinstaller %the_command_string_jjui% JJui.pyw
-pyinstaller %the_command_string_jjui_sl% JJui_sl.pyw
+rem 64
+py -3.6    -m PyInstaller %the_command_string_jjui%    --distpath dist\python36_64bit JJui.pyw
+py -3.6    -m PyInstaller %the_command_string_jjui_sl% --distpath dist\python36_64bit JJui_sl.pyw
+rem 32
+py -3.6-32 -m PyInstaller %the_command_string_jjui%    --distpath dist\python36_32bit JJui.pyw
+py -3.6-32 -m PyInstaller %the_command_string_jjui_sl% --distpath dist\python36_32bit JJui_sl.pyw
 
+rem delete
+IF EXIST jjui.ico del jjui.ico
+IF EXIST jjui_sl.ico del jjui_sl.ico
 
+rem jjui_source\_log.txt
+IF EXIST jjui_source\_log.txt (
+	IF EXIST dist (
+		copy /Y jjui_source\_log.txt dist\log.txt
+		)
+	)

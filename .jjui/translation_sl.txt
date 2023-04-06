@@ -2665,8 +2665,8 @@ archimedes wolf3d	3D德军总部
 archimedes zool	忍者猫眼
 astrocde artiduel	火炮决斗
 astrocde artiduelp1	火炮决斗 (原型版 19820523)
-astrocde artiduelp2	火炮决斗 (原型 替换版)
-astrocde artiduelp3	火炮决斗 (原型 替换版 2)
+astrocde artiduelp2	火炮决斗 (原型版, 替换版)
+astrocde artiduelp3	火炮决斗 (原型版, 替换版 2)
 astrocde astrobat	宇宙战争
 astrocde bowling	保龄球 (原型版)
 astrocde cclimber	疯狂爬楼者
@@ -2677,7 +2677,7 @@ astrocde galaxian	小蜜蜂
 astrocde grandprx	国际长途大赛车
 astrocde matk	导弹指令
 astrocde pacman	吃豆小精灵 (原型版)
-astrocde pacmana	吃豆小精灵 (原型 替换版)
+astrocde pacmana	吃豆小精灵 (原型版, 替换版)
 astrocde soccer	足球
 astrocde soccera	足球 (原型版, 替换版)
 astrocde soccera2	足球 (原型版, 替换版 2)
@@ -2688,7 +2688,7 @@ astrocde spacefrt	空间要塞
 astrocde spacefrtp	空间要塞 (原型版)
 astrocde spaceinv	太空侵略者
 astrocde spaceinvp	太空侵略者 (原型版)
-astrocde war	战争 (Second Printing)
+astrocde war	战争 (second printing)
 atom_cass backgamm	西洋双陆棋
 atom_cass breakout	爆发 (4K)
 atom_cass centiped	蜈蚣
@@ -3165,7 +3165,6 @@ c64_cass airwolf	空狼
 c64_cass altbeast	兽王记
 c64_cass amaurote	阿莫罗特
 c64_cass anarchy	无法无天
-c64_cass anarchya	无法无天 (替换版)
 c64_cass andycapp	安迪卡普
 c64_cass arcadecl	街机游戏合集
 c64_cass arkanoid	打砖块
@@ -3611,7 +3610,7 @@ c64_flop_orig toutrun	户外大飙车极速版
 camplynx_cass backgmmn	西洋双陆棋
 camplynx_cass centiped	蜈蚣
 camplynx_cass diggerman	挖掘人
-camplynx_cass gridtrap	网格陷阱 (Fra)
+camplynx_cass gridtrap	网格陷阱 (法国)
 camplynx_cass hangman	刽子手
 camplynx_cass ohmummy	木乃伊
 camplynx_cass pengo	碰碰冰
@@ -3806,6 +3805,7 @@ channelf tctactoe	井字游戏
 channelf vblckjck	电视二十一点
 channelf werbetxt	工作文本框
 channelf whizball	电视精明球
+chessking_cart dctionry	英漢字典 Dictionary
 chip8_quik animal	动物大赛跑
 chip8_quik astro	太空逃生
 chip8_quik astrof	太空逃生 (fix)
@@ -11898,6 +11898,7 @@ fmtowns_cd beast2	暗影野兽 II - 兽神的咒缚
 fmtowns_cd beasto	兽之影 (1991-08-29)
 fmtowns_cd blandia	快打布兰达
 fmtowns_cd bublbobl	泡泡龙
+fmtowns_cd burai	ＢＵＲＡＩ上巻
 fmtowns_cd cancanbp	首映日
 fmtowns_cd cancanbx	首映日EX
 fmtowns_cd carmnwld	神偷卡门在何地?
@@ -18985,11 +18986,14 @@ ibm5150 actionfg	战斗任务 (Kixx)
 ibm5150 airbrang	空降游骑兵
 ibm5150 aliensyn	异型特攻队
 ibm5150 amnesia	失忆症
+ibm5150 arkanoid	打砖块
 ibm5150 baddudes	龙之忍者 (5.25")
 ibm5150 baddudes35	龙之忍者 (3.5")
+ibm5150 ballistx	技术弹球
 ibm5150 bargames	水果狸
-ibm5150 bartvssm	辛普森一家 - 巴特决战太空怪
-ibm5150 bartvssma	辛普森一家 - 巴特决战太空怪 (Hit Squad 发行版)
+ibm5150 bartvssm	辛普森一家 - 巴特决战太空怪 (5.25")
+ibm5150 bartvssm35	辛普森一家 - 巴特决战太空怪 (3.5")
+ibm5150 bartvssm35a	辛普森一家 - 巴特决战太空怪 (3.5", The Hit Squad 发行版)
 ibm5150 bcquest	原始人车轮探险记
 ibm5150 bcquest_cr	原始人车轮探险记 (破解版)
 ibm5150 bdash	岩层冲刺
@@ -19029,6 +19033,7 @@ ibm5150 cloderun	淘金者锦标赛
 ibm5150 commando	战场之狼
 ibm5150 conflict	冲突
 ibm5150 congo	刚果阿古
+ibm5150 crazycr2	疯狂赛车 II
 ibm5150 cvania	恶魔城-月之轮回
 ibm5150 ddragon	双截龙 (5.25")
 ibm5150 ddragon2	双截龙 2 - 复仇 (5.25")
@@ -19039,7 +19044,9 @@ ibm5150 ddragon3_35	双截龙3 (3.5")
 ibm5150 ddragona	双截龙 (5.25", 较老的)
 ibm5150 ddribble	二次运球
 ibm5150 defcrown	王冠的守护者 [ega] (PC Booter)
+ibm5150 defcrwn	王冠的守护者
 ibm5150 defender	防御者
+ibm5150 dicktrac	至尊神探
 ibm5150 diehard	虎胆龙威 (5.25")
 ibm5150 diehard35	虎胆龙威 (3.5")
 ibm5150 digdug	挖金子
@@ -19052,6 +19059,7 @@ ibm5150 drgnstrka	龙与地下城-龙之击 (v1.0)
 ibm5150 drgnstrkb	龙与地下城-龙之击 (v1.1)
 ibm5150 dspirit	龙魂
 ibm5150 f15se	F-15打击之鹰 (CGA/Tandy/EGA/Amstrad, 3.5")
+ibm5150 f15se2	F-15猎鹰2
 ibm5150 f15sec	F-15打击之鹰 (CGA, 5.25")
 ibm5150 facemakr	脸型制作
 ibm5150 feud	纷争之地
@@ -19061,6 +19069,8 @@ ibm5150 galaxant	小蜜蜂 (Tengen 版本)
 ibm5150 galaxian	小蜜蜂
 ibm5150 gameovr2	游戏结束 II
 ibm5150 gameovr2a	游戏结束 II (替换版)
+ibm5150 gauntlet	铁手套
+ibm5150 gauntlt2	铁手套2
 ibm5150 ghostbs2	捉鬼敢死队2
 ibm5150 ghostbst	捉鬼特工队
 ibm5150 goldnaxe	战斧 (5.25")
@@ -19109,6 +19119,7 @@ ibm5150 menace	防御威胁 (5.25")
 ibm5150 menace35	防御威胁 (3.5")
 ibm5150 metrop	大都会
 ibm5150 mgear	合金装备
+ibm5150 miniputt	迷你高尔夫
 ibm5150 mmansion	疯狂洋馆
 ibm5150 monkey	猴岛小英雄 (5.25", EGA 版本)
 ibm5150 monkey35	猴岛小英雄 (3.5", EGA 版本)
@@ -19129,8 +19140,9 @@ ibm5150 oilswell	油井
 ibm5150 omega	甲虫护蛋
 ibm5150 opwolf	野狼行动 (5.25")
 ibm5150 opwolf35	野狼行动 (3.5")
-ibm5150 outrun	户外飚车
-ibm5150 outruna	户外飚车 (Kixx 发行版)
+ibm5150 outrun	户外飚车 (5.25", Kixx 发行版)
+ibm5150 outrun35	户外飚车 (3.5")
+ibm5150 outrun35a	户外飚车 (3.5", Kixx 发行版)
 ibm5150 pacman	吃豆小精灵
 ibm5150 pacmantm	吃豆小精灵 (Thunder Mountain 发行版)
 ibm5150 panzakic	潘萨拳击 (Kixx budget 发行版)
@@ -19160,12 +19172,15 @@ ibm5150 punisher	惩罚者
 ibm5150 pwrdrift	力量漂移
 ibm5150 rambo3	兰博 3
 ibm5150 rampage	怪兽大毁灭
-ibm5150 rampart	堡垒防御 (Hit Squad 发行版)
+ibm5150 rampart	堡垒防御 (The Hit Squad 发行版)
 ibm5150 renegade	热血硬派
+ibm5150 renegade_cr	热血硬派 (破解版)
 ibm5150 rick	危险的里克
 ibm5150 rick2	危险的里克 2
+ibm5150 rick2a	危险的里克 2 (Futura release)
 ibm5150 riskywd	屠魔法师
 ibm5150 robocop	铁甲威龙
+ibm5150 robocop_cr	铁甲威龙 (破解版)
 ibm5150 rocketrg	火箭游侠 (英国)
 ibm5150 satanc	魔王撒旦 (CGA)
 ibm5150 satane	魔王撒旦 (EGA)
@@ -19191,8 +19206,9 @@ ibm5150 skatedie	生死滑板 (5.25")
 ibm5150 skatedie35	生死滑板 (3.5")
 ibm5150 skiordie	生死滑雪
 ibm5150 skweek	毛球历险记
-ibm5150 spdball2	速度橄榄球2 (美国, 5.25")
-ibm5150 spdball2_35	速度橄榄球2 (欧, 3.5")
+ibm5150 spdball2	速度橄榄球2 (5.25", 美国)
+ibm5150 spdball2_35	速度橄榄球2 (3.5", 欧洲)
+ibm5150 spdball2_35a	速度橄榄球2 (3.5", Futura Games release)
 ibm5150 speedbal	手球大战 (再发行版)
 ibm5150 spidermn	蜘蛛侠 - 惊奇再起
 ibm5150 spot	斑点棋
@@ -19214,6 +19230,9 @@ ibm5150 tagteam	组合摔角
 ibm5150 tagteama	组合摔角 (替换版)
 ibm5150 tapper	酒保 (RGB)
 ibm5150 tapperc	酒保 (Comp)
+ibm5150 td	测试赛车 (5.25", v1.1)
+ibm5150 td35	测试赛车 (3.5", v1.0)
+ibm5150 tda	测试赛车 (5.25", v1.0)
 ibm5150 term2	魔鬼终结者2 - 审判日
 ibm5150 tetris	俄罗斯方块 (5.25")
 ibm5150 tetris35	俄罗斯方块 (3.5")
@@ -19385,7 +19404,7 @@ ibm5170_cdrom aitdb	鬼屋魔影 (欧洲, Pay as You Play version, PC Power)
 ibm5170_cdrom aitdc	鬼屋魔影 (欧洲, Pay as You Play version, CD-ROM User)
 ibm5170_cdrom arktime	时间方舟
 ibm5170_cdrom aworld80	环游世界80天
-ibm5170_cdrom bad_dudescd	龙之忍者 (1995 CD 发行版)
+ibm5170_cdrom bad_dudescd	龙之忍者 (Arcade Favorites CD-ROM 5 Pak release)
 ibm5170_cdrom batlbugs	昆虫大战
 ibm5170_cdrom blackhawk	黑色荆棘 (欧洲)
 ibm5170_cdrom bloodbwl	血腥橄榄球
@@ -19405,15 +19424,15 @@ ibm5170_cdrom f1gp	一级方程式大奖赛 (欧洲)
 ibm5170_cdrom f1gp_nl	一级方程式大奖赛 (荷兰)
 ibm5170_cdrom gods	上帝战士 (欧洲)
 ibm5170_cdrom heartdrkj	黑暗之心 (Japan v1.1.05)
-ibm5170_cdrom heavybarrelcd	重装机枪 (1995 CD 发行版)
+ibm5170_cdrom heavybarrelcd	重装机枪 (Arcade Favorites CD-ROM 5 Pak release)
 ibm5170_cdrom humans	原始新人类 (欧洲)
 ibm5170_cdrom humans_us	原始新人类 (美国)
 ibm5170_cdrom indy3	圣战奇兵 (欧洲)
-ibm5170_cdrom karnovcd	卡诺夫 (1995 CD 发行版)
+ibm5170_cdrom karnovcd	卡诺夫 (Arcade Favorites CD-ROM 5 Pak release)
 ibm5170_cdrom lomax	罗玛克斯大冒险 (欧洲)
 ibm5170_cdrom moon	月球 (日本)
 ibm5170_cdrom myst	神秘岛 (v1.0.3)
-ibm5170_cdrom pipemaniacd	疯狂水管 (1995 CD 发行版)
+ibm5170_cdrom pipemaniacd	疯狂水管 (Arcade Favorites CD-ROM 5 Pak release)
 ibm5170_cdrom ppersia2	波斯王子2-暗影与火焰 (美国)
 ibm5170_cdrom ppersia2fr	波斯王子2-暗影与火焰 (法国)
 ibm5170_cdrom prinmak2	美少女梦工厂2 (日本)
@@ -19425,7 +19444,7 @@ ibm5170_cdrom redalertnl	命令与征服 - 红色警报 (荷兰)
 ibm5170_cdrom roadrashi	暴力摩托 (意大利)
 ibm5170_cdrom simcit2k	模拟城市2000
 ibm5170_cdrom soccerkd	足球小子 (欧洲)
-ibm5170_cdrom tagteamcd	组合摔角 (1995 CD 发行版)
+ibm5170_cdrom tagteamcd	组合摔角 (Arcade Favorites CD-ROM 5 Pak release)
 ibm5170_cdrom whoshoti	谁杀了约翰尼·洛克 (意大利)
 ibmpcjr_cart demonatk	恶魔进攻
 ibmpcjr_cart fracfevr	狂热分数
@@ -19680,8 +19699,8 @@ lynx turbosub	涡轮潜艇 (欧洲, 美国)
 lynx vindictr	维护者 (原型版)
 lynx xenophob	惧外者 (欧洲, 美国)
 lynx xybots	迷宫任务 (欧洲, 美国)
-m20 startrek	星舰迷航记-企业号
-m20 startrekg	星舰迷航记-企业号 (Ger)
+m20 startrek	星舰迷航记-企业号 (英语)
+m20 startrekg	星舰迷航记-企业号 (德语)
 m5_cart baseball	棒球
 m5_cart bosco	星际驱逐舰博斯克尼
 m5_cart digdug	挖金子
@@ -22758,13 +22777,11 @@ msx1_cart aliensb	异形2 (日本, 替换版 2)
 msx1_cart amc	宇宙陆战队 (西班牙)
 msx1_cart amtruck	美式卡车 (日本)
 msx1_cart amtrucka	美式卡车 (日本, 替换版)
-msx1_cart amtruckb	美式卡车 (日本, 替换版 2)
 msx1_cart amtruckk	美式卡车 (韩国)
 msx1_cart anaza	阿娜扎 - 万花筒特别版 (日本)
 msx1_cart angelo	安其罗 (日本)
 msx1_cart angeloa	安其罗 (日本, 替换版)
-msx1_cart antarct	南极大冒险 (欧洲)
-msx1_cart antarcta	南极大冒险 (欧洲, 替换版)
+msx1_cart antarct	南极大冒险 (欧洲, 替换版)
 msx1_cart antarctj	南极大冒险 (日本)
 msx1_cart antarctk	南极大冒险 (韩国)
 msx1_cart anty	安蒂 (日本)
@@ -22838,9 +22855,9 @@ msx1_cart breakout	打砖块 (日本)
 msx1_cart brosadv	马里奥兄弟 (韩国)
 msx1_cart brosadva	马里奥兄弟 (韩国, 替换版)
 msx1_cart brucelee	李小龙 (日本)
-msx1_cart btanuki	巴滕浣熊大冒险 (日本, v1.03)
-msx1_cart btanukia	巴滕浣熊大冒险 (日本)
-msx1_cart btanukib	巴滕浣熊大冒险 (日本, 替换版)
+msx1_cart btanuki	巴滕浣熊大冒险 (日本, v1.04)
+msx1_cart btanukia	巴滕浣熊大冒险 (日本, v1.03)
+msx1_cart btanukib	巴滕浣熊大冒险 (日本, v1.0)
 msx1_cart btime	汉堡时代 (日本)
 msx1_cart bullmigt	威牛之千钧一发 (日本)
 msx1_cart butampan	传裤子的猪 (日本)
@@ -22860,7 +22877,6 @@ msx1_cart carjamb	越野小汽车 (日本)
 msx1_cart carjamba	越野小汽车 (日本, 替换版)
 msx1_cart carrace	汽车比赛 (日本)
 msx1_cart carracea	汽车比赛 (日本, 替换版)
-msx1_cart carraceb	汽车比赛 (日本, 替换版 2)
 msx1_cart castle	城堡探险 (日本)
 msx1_cart castlek	城堡探险 (韩国)
 msx1_cart castlex	城堡探险 (日本)
@@ -22889,15 +22905,13 @@ msx1_cart chuheib1	中学必修英文法 1 (日本)
 msx1_cart circusc	马戏团-小丑查理 (日本)
 msx1_cart citycon	城市连接 (日本)
 msx1_cart citycona	城市连接 (日本, 替换版)
-msx1_cart clapton2	战舰克莱普顿 II (日本)
-msx1_cart clapton2a	战舰克莱普顿 II (日本, 替换版)
+msx1_cart clapton2	战舰克莱普顿 II (日本, 1984)
+msx1_cart clapton2a	战舰克莱普顿 II (日本, 1983)
 msx1_cart cloderun	淘金者锦标赛 (日本)
 msx1_cart cloderunk1	淘金者锦标赛 (韩国, 坏的?)
 msx1_cart cloderunk2	淘金者锦标赛 (韩国, bad 2?)
 msx1_cart cnyumon	电脑入门 (日本)
 msx1_cart coastrac	环滑赛车 (日本)
-msx1_cart coastraca	环滑赛车 (日本, 替换版)
-msx1_cart coastracb	环滑赛车 (日本, 替换版 2)
 msx1_cart colball	彩色球 (日本)
 msx1_cart colballa	彩色球 (日本, 替换版)
 msx1_cart colballb	彩色球 (日本, 替换版 2)
@@ -22987,7 +23001,6 @@ msx1_cart exerion	火凤凰 (日本)
 msx1_cart exerion2	火凤凰 II - 佐尼 (日本)
 msx1_cart exerion2a	火凤凰 II - 佐尼 (日本, 替换版)
 msx1_cart exeriona	火凤凰 (日本, 替换版)
-msx1_cart exerionb	火凤凰 (日本, 替换版 2)
 msx1_cart exerionk	火凤凰 (韩国)
 msx1_cart exoidez	艾克德 Z (日本)
 msx1_cart exoidez5	艾克德 Z 战区 5 (日本)
@@ -23006,7 +23019,6 @@ msx1_cart fatetrisa	FA 俄罗斯方块 (韩国, 替换版)
 msx1_cart fatetrisb	FA 俄罗斯方块 (韩国, 替换版 2)
 msx1_cart fathom	深海探寻 (日本)
 msx1_cart fireresc	消防救援 (日本)
-msx1_cart fireresca	消防救援 (日本, 替换版)
 msx1_cart fjustice	最终裁决 (日本)
 msx1_cart fjusticea	最终裁决 (日本, 替换版)
 msx1_cart fjusticeb	最终裁决 (日本, 替换版 2)
@@ -23043,8 +23055,6 @@ msx1_cart galaxian	小蜜蜂 (日本)
 msx1_cart galaxiana	小蜜蜂 (日本, 替换版)
 msx1_cart galaxianb	小蜜蜂 (日本, 替换版 2)
 msx1_cart galforce	银河女战士 - 混乱的防御 (日本)
-msx1_cart galforcea	银河女战士 - 混乱的防御 (日本, 替换版)
-msx1_cart galforceb	银河女战士 - 混乱的防御 (日本, 替换版 2)
 msx1_cart gambler	自己中心派 (日本)
 msx1_cart gberet	绿色兵团 (欧洲)
 msx1_cart gbereta	绿色兵团 (欧洲, 替换版)
@@ -23062,8 +23072,6 @@ msx1_cart golvell	高尔维流斯 (日本)
 msx1_cart gomokuna	五子棋 (日本)
 msx1_cart gomokunaa	五子棋 (日本, 替换版)
 msx1_cart goonies	七宝奇谋 (日本)
-msx1_cart gooniesa	七宝奇谋 (日本, 替换版)
-msx1_cart gooniesb	七宝奇谋 (日本, 替换版 2)
 msx1_cart gpworld	世界赛车大奖赛 (日本)
 msx1_cart gradius	宇宙巡航机-复仇女神 (欧洲) ~ Gradius (日本)
 msx1_cart gradius2	黑暗女神 2 (欧洲) ~ Gradius 2 (日本)
@@ -23072,7 +23080,6 @@ msx1_cart gradius2d	黑暗女神 2 (欧洲) ~ Gradius 2 (日本) (演示版)
 msx1_cart gradius2p	黑暗女神 2 (欧洲) ~ Gradius 2 (日本) (原型版)
 msx1_cart gradiusa	宇宙巡航机-复仇女神 (欧洲) ~ Gradius (日本) (替换版)
 msx1_cart guardic	嘉蒂战机 (日本)
-msx1_cart guardica	嘉蒂战机 (日本, 替换版)
 msx1_cart gulkave	高尔卡威战机 (日本)
 msx1_cart gulkavea	高尔卡威战机 (日本, 替换版)
 msx1_cart gulkavek	高尔卡威战机 (韩国)
@@ -23125,14 +23132,9 @@ msx1_cart hyperol2	金牌奥林匹克 2 (日本)
 msx1_cart hypersp2	超级运动会 2 (日本)
 msx1_cart hypersp2k	超级运动会 2 (韩国)
 msx1_cart hypersp3	金牌运动会 3 (日本)
-msx1_cart hypersp3a	金牌运动会 3 (日本, 替换版)
-msx1_cart hypersp3b	金牌运动会 3 (日本, 替换版 2)
 msx1_cart hyperspt	金牌运动会 1 (日本)
 msx1_cart hyperspta	金牌运动会 1 (日本, 替换版)
 msx1_cart hyprally	超级汽车拉力赛 (日本)
-msx1_cart hyprallya	超级汽车拉力赛 (日本, 替换版)
-msx1_cart hyprallyb	超级汽车拉力赛 (日本, 替换版 2)
-msx1_cart hyprallyc	超级汽车拉力赛 (日本, 替换版 3)
 msx1_cart iceworld	冰之世界 (日本)
 msx1_cart iganinp2	伊贺忍法帖 - 满月成的战斗 (日本)
 msx1_cart iganinpo	伊贺忍法帖 (日本)
@@ -23167,9 +23169,6 @@ msx1_cart kingkngtb	国王骑士 (日本, 替换版 2)
 msx1_cart kingval	国王之谷 (欧洲, 日本)
 msx1_cart kingval2	国王之谷 II (欧洲) ~ Ouke no Tani - El Giza no Fuuin (日本)
 msx1_cart kingvala	国王之谷 (欧洲, 日本, 替换版)
-msx1_cart kingvalb	国王之谷 (欧洲, 日本, 替换版 2)
-msx1_cart kingvalc	国王之谷 (欧洲, 日本, 替换版 3)
-msx1_cart kingvald	国王之谷 (欧洲, 日本, 替换版 4)
 msx1_cart kinnikum	金肉人 - 罗马竞技场死亡赛 (日本)
 msx1_cart kinnikuma	金肉人 - 罗马竞技场死亡赛 (日本, 替换版)
 msx1_cart kinnikumk	金肉人 - 罗马竞技场死亡赛 (韩国)
@@ -23178,29 +23177,19 @@ msx1_cart knightm2	魔域传奇 II - 加流斯的迷宫 (日本)
 msx1_cart knightm2k	魔域传奇 II - 加流斯的迷宫 (韩国)
 msx1_cart knightm3	魔域传奇 III - 沙洛姆 (日本)
 msx1_cart knightmr	魔域传奇 (日本)
-msx1_cart knightmra	魔域传奇 (日本, 替换版)
-msx1_cart knightmrb	魔域传奇 (日本, 替换版 2)
 msx1_cart knightmrk	魔域传奇 (韩国)
 msx1_cart knithers	凯瑟冒险特别版 (日本)
 msx1_cart knucklej	惩奸除恶 (韩国)
 msx1_cart koedoli	机灵鬼 (韩国)
 msx1_cart konbball	科乐美棒球 (日本)
-msx1_cart konbballa	科乐美棒球 (日本, 替换版)
 msx1_cart konbill	科乐美桌球 (欧洲)
 msx1_cart konboxin	科乐美拳击 (日本)
-msx1_cart konboxina	科乐美拳击 (日本, 替换版)
-msx1_cart konboxinb	科乐美拳击 (日本, 替换版 2)
 msx1_cart koneko	小猫大冒险 - 赤比酱出游 (日本)
 msx1_cart konfootb	科乐美足球 (欧洲)
-msx1_cart konfootba	科乐美足球 (欧洲, 替换版)
-msx1_cart konfootbb	科乐美足球 (欧洲, 替换版 2)
 msx1_cart kongolf	科乐美高尔夫 (日本)
 msx1_cart kongolfa	科乐美高尔夫 (日本, 替换版)
-msx1_cart kongolfb	科乐美高尔夫 (日本, 替换版 2)
 msx1_cart konsoccr	科乐美足球 (日本)
 msx1_cart konsoccra	科乐美足球 (日本, 替换版)
-msx1_cart konsoccrb	科乐美足球 (日本, 替换版 2)
-msx1_cart konsoccrc	科乐美足球 (日本, 替换版 3)
 msx1_cart konsynth	新世ＳＩＺＥＲ (日本)
 msx1_cart kontenn	科乐美网球 (日本)
 msx1_cart kontenna	科乐美网球 (日本, 替换版)
@@ -23246,7 +23235,6 @@ msx1_cart meikyush	迷宫神话 (日本)
 msx1_cart meikyusha	迷宫神话 (日本, 替换版)
 msx1_cart mgunjoe	机枪乔对黑手党 (日本)
 msx1_cart midbros	午夜兄弟 (日本)
-msx1_cart midbrosa	午夜兄弟 (日本, 替换版)
 msx1_cart midbuild	午夜重建 (日本)
 msx1_cart midway	中途岛之战 (日本)
 msx1_cart minigolf	迷你高尔夫 (日本)
@@ -23255,7 +23243,6 @@ msx1_cart mirai	未来 (日本)
 msx1_cart mitsumgt	三目童子 (日本)
 msx1_cart mjdojo	麻将道场 (日本)
 msx1_cart mkidwiz	魔法师维兹 (日本)
-msx1_cart mkidwiza	魔法师维兹 (日本, 替换版)
 msx1_cart mkidwizb	魔法师维兹 (日本, 替换版 2)
 msx1_cart mnstfair	怪物博览会 (日本)
 msx1_cart moaihiho	摩艾的秘宝 (日本)
@@ -23272,8 +23259,6 @@ msx1_cart moonswep	月球清道夫 (日本)
 msx1_cart mopirang	莫皮护林员 (日本)
 msx1_cart mopiranga	莫皮护林员 (日本, 替换版)
 msx1_cart mopirangb	莫皮护林员 (日本, 替换版 2)
-msx1_cart mopirangc	莫皮护林员 (日本, 替换版 3)
-msx1_cart mopirangd	莫皮护林员 (日本, 替换版 4)
 msx1_cart mopirangk	莫皮护林员 (韩国)
 msx1_cart moritaot	森田一夫的黑白棋 (日本)
 msx1_cart mouser	老鼠不得了 (日本)
@@ -23285,7 +23270,6 @@ msx1_cart mrdo	小丑先生 (日本)
 msx1_cart mrdok	小丑先生 (韩国)
 msx1_cart mrdovsun	小丑先生对独角兽 (日本)
 msx1_cart mrdowild	嘟先生的暴走 (日本)
-msx1_cart mrdowildh	嘟先生的暴走 (日本, 修改版?)
 msx1_cart msxbbal2	MSX 棒球 II 国家版 (日本)
 msx1_cart msxbball	MSX 棒球 (日本)
 msx1_cart msxbballa	MSX 棒球 (日本, 替换版)
@@ -23343,26 +23327,19 @@ msx1_cart picot	皮可特向前冲 (日本)
 msx1_cart pictpuzl	图片方块 (日本)
 msx1_cart pictpuzla	图片方块 (日本, 替换版)
 msx1_cart pillbox	碉堡 (日本)
-msx1_cart pillboxa	碉堡 (日本, 替换版)
 msx1_cart pinblast	弹珠台爆破者 (欧洲)
 msx1_cart pineappl	松木阿布林 (日本)
 msx1_cart pineappla	松木阿布林 (日本, 替换版)
 msx1_cart pingpong	科乐美乒乓球 (日本)
 msx1_cart pingponga	科乐美乒乓球 (日本, 替换版)
-msx1_cart pingpongb	科乐美乒乓球 (日本, 替换版 2)
-msx1_cart pingpongc	科乐美乒乓球 (日本, 替换版 3)
 msx1_cart pingpongk	科乐美乒乓球 (韩国)
 msx1_cart pinkychs	粉色追逐 (日本)
 msx1_cart pipi	皮皮鸟 (日本)
 msx1_cart pippols	皮颇尔斯 (日本)
-msx1_cart pippolsa	皮颇尔斯 (日本, 替换版)
-msx1_cart pippolsb	皮颇尔斯 (日本, 替换版 2)
-msx1_cart pippolsc	皮颇尔斯 (日本, 替换版 3)
 msx1_cart pitfall	陷阱! (日本)
 msx1_cart pitfall2	陷阱 II - 迷失洞穴 (日本)
 msx1_cart pitfall2a	陷阱 II - 迷失洞穴 (日本, 替换版)
 msx1_cart pitfalla	陷阱! (日本, 替换版)
-msx1_cart pitfallb	陷阱! (日本, 替换版 2)
 msx1_cart playball	打棒球 (日本)
 msx1_cart policest	警察故事 (日本)
 msx1_cart policesta	警察故事 (日本, 替换版)
@@ -23371,13 +23348,11 @@ msx1_cart poppaqk	波帕克鱼 (韩国)
 msx1_cart pricemag	魔法的价值 (欧洲)
 msx1_cart profbb	职业棒球 (日本)
 msx1_cart protectr	威龙猛探 (日本)
-msx1_cart psyched	迷幻乐 (欧洲, cas2crt hack)
 msx1_cart puznic	迷魂方块
 msx1_cart puzpanic	解密惊魂 (日本)
 msx1_cart puzzle	谜题 (阿拉伯, v1.11)
 msx1_cart pyramidw	扭曲金字塔 (日本)
 msx1_cart qbert	吸盘小子 (日本)
-msx1_cart qberta	吸盘小子 (日本, 替换版)
 msx1_cart queenglf	女王高尔夫 (日本)
 msx1_cart queenglfa	女王高尔夫 (日本, 替换版)
 msx1_cart queenglfb	女王高尔夫 (日本, 修改版?)
@@ -23388,11 +23363,8 @@ msx1_cart rallyxb	迷魂车 X (日本, 替换版 2)
 msx1_cart rallyxk	迷魂车 X (韩国)
 msx1_cart rambo	兰博 (日本)
 msx1_cart ramboa	兰博 (日本, 替换版)
-msx1_cart rambob	兰博 (日本, 替换版 2)
-msx1_cart ramboc	兰博 (日本, 替换版 3)
 msx1_cart realtenn	真实网球 (日本)
 msx1_cart redzone	红色区域 (日本)
-msx1_cart redzonea	红色区域 (日本, 替换版)
 msx1_cart relics	暗黑要塞 (日本)
 msx1_cart renjuod	連珠 ~ Renju (日本)
 msx1_cart risedung	逃出地下城 (日本)
@@ -23405,7 +23377,6 @@ msx1_cart robofrog	机械青蛙 (日本)
 msx1_cart robofroga	机械青蛙 (日本, 替换版)
 msx1_cart rocnrope	凤凰猎人
 msx1_cart rogerrub	拾荒者罗杰 (欧洲)
-msx1_cart rogerruba	拾荒者罗杰 (欧洲, 替换版)
 msx1_cart rollerbl	滚球 (日本)
 msx1_cart rollerbla	滚球 (日本, 替换版)
 msx1_cart romancia	屠龙者3-罗曼西亚 (日本)
@@ -23424,7 +23395,6 @@ msx1_cart sbillard	超级桌球 (日本)
 msx1_cart sbioman4	超级生化人 4 (韩国)
 msx1_cart sboy1	超级男孩 I (韩国)
 msx1_cart sboy2	超级男孩 II. (韩国)
-msx1_cart sboy2a	超级男孩 II. (韩国, 替换版)
 msx1_cart sboy3	超级男孩 3 (韩国)
 msx1_cart sboy3a	超级男孩 3 (韩国, 替换版)
 msx1_cart scarlet7	猩红地带 7 - 强大女战士 (日本)
@@ -23480,10 +23450,8 @@ msx1_cart spider	蜘蛛 (日本)
 msx1_cart spierrot	小丑贝洛 (日本)
 msx1_cart squardan	史克威尔舞蹈弹珠台 (日本)
 msx1_cart squishem	爬楼工 (日本)
-msx1_cart squishema	爬楼工 (日本, 替换版)
 msx1_cart starblaz	星际开拓者 (日本)
 msx1_cart starblaza	星际开拓者 (日本, 替换版)
-msx1_cart starblazb	星际开拓者 (日本, 替换版 2)
 msx1_cart starship	星际飞船模拟器 (日本)
 msx1_cart starshipa	星际飞船模拟器 (日本, 替换版)
 msx1_cart starwars	星球大战 (阿拉伯)
@@ -23531,15 +23499,12 @@ msx1_cart tetrahor	泰特拉的恐怖 (日本)
 msx1_cart tetrahora	泰特拉的恐怖 (日本, 替换版)
 msx1_cart tetris	俄罗斯方块 (韩国)
 msx1_cart tetris2	俄罗斯方块 II (韩国)
-msx1_cart tetrisa	俄罗斯方块 (韩国, 替换版)
 msx1_cart tetsuman	麻将彻万 (日本)
 msx1_cart tetsumana	麻将彻万 (日本, 替换版)
 msx1_cart theseus	提修斯 - 艾格斯 I (日本)
 msx1_cart theseusa	提修斯 - 艾格斯 I (日本, 替换版)
 msx1_cart theseusk	提修斯 - 艾格斯 I (韩国)
 msx1_cart thexder	变形战机 (日本)
-msx1_cart thexdera	变形战机 (日本, 替换版)
-msx1_cart thexderb	变形战机 (日本, 替换版 2)
 msx1_cart thndbolt	霹雳 (日本)
 msx1_cart thndbolta	霹雳 (日本, 替换版)
 msx1_cart thndboltb	霹雳 (日本, 替换版 2)
@@ -23563,9 +23528,6 @@ msx1_cart turboat	逃难船 (日本)
 msx1_cart turmoil	风暴战机 (日本)
 msx1_cart turmoilk	风暴战机 (韩国)
 msx1_cart twinbee	兵蜂 (日本)
-msx1_cart twinbeea	兵蜂 (日本, 替换版)
-msx1_cart twinbeeb	兵蜂 (日本, 替换版 2)
-msx1_cart twinbeec	兵蜂 (日本, 替换版 3)
 msx1_cart twinhamm	双锤打地鼠 (欧洲)
 msx1_cart tzr	TZR - 摩托车锦标赛 (日本)
 msx1_cart ultraman	奥特曼 (日本)
@@ -23578,7 +23540,6 @@ msx1_cart warpwarp	太空青蛙 (日本)
 msx1_cart warpwarpk	太空青蛙 (韩国)
 msx1_cart warrior	剑击 (日本)
 msx1_cart warroid	瓦里奥德 (日本)
-msx1_cart warroida	瓦里奥德 (日本, 替换版)
 msx1_cart waterdrv	瓦里奥德 (西班牙)
 msx1_cart wbells	婚礼钟声 (西班牙)
 msx1_cart wbellsa	婚礼钟声 (西班牙, 替换版)
@@ -23598,7 +23559,6 @@ msx1_cart yellowsb	黄色潜水艇 (日本)
 msx1_cart yiear	功夫小子 (日本)
 msx1_cart yiear2	功夫小子 II - 印加皇帝的逆袭 (日本)
 msx1_cart yiear2a	功夫小子 II - 印加皇帝的逆袭 (日本, 替换版)
-msx1_cart yiear2b	功夫小子 II - 印加皇帝的逆袭 (日本, 替换版 2)
 msx1_cart yieara	功夫小子 (日本, 替换版)
 msx1_cart yieark	功夫小子 (韩国)
 msx1_cart youkaiya	妖怪屋敖 (日本)
@@ -24470,7 +24430,7 @@ msx2_cart lupin2a	亚森罗平三世-巴比伦的黄金传说 (日本, 替换版
 msx2_cart lupina	亚森罗平三世-卡里欧斯托罗之城 (日本, 替换版)
 msx2_cart madrider	疯狂车手 (日本)
 msx2_cart madridera	疯狂车手 (日本, 替换版)
-msx2_cart mgear	合金装备 (欧洲?)
+msx2_cart mgear	合金装备 (欧洲, translated)
 msx2_cart mgear2ss	合金装备2-固体蛇 (日本)
 msx2_cart mgear2ssd	合金装备2-固体蛇 (演示版) (日本)
 msx2_cart mgear2ssvc	合金装备2-固体蛇 (日本, Virtual Console)
@@ -24478,7 +24438,11 @@ msx2_cart mgearj	合金装备 (日本)
 msx2_cart mgearjvc	合金装备 (日本, Virtual Console)
 msx2_cart mikkoku	相聚一刻 (日本)
 msx2_cart mirai	未来 (日本)
-msx2_cart mississp	密西西比河杀人事件 (日本)
+msx2_cart msxdos2j	日本語 MSX-DOS 2 (日本, 256KB)
+msx2_cart msxdos2j_0	日本語 MSX-DOS 2 (日本)
+msx2_cart msxdos2j_128	日本語 MSX-DOS 2 (日本, 128KB)
+msx2_cart msxdos2ja	日本語 MSX-DOS 2 (日本, 256KB, 替换版)
+msx2_cart msxdos2jb	日本語 MSX-DOS 2 (日本, 256KB, 替换版 2)
 msx2_cart msxwrit2	日语写字板2 (日本)
 msx2_cart murdclub	杀人俱乐部 (日本)
 msx2_cart nekkejud	热血柔道 (日本)
@@ -24556,6 +24520,9 @@ msx2_cart zukkokea	胡闹野次来了-隐密道中 (日本, 替换版)
 msx2_cass leonardo	李奥纳多 (日本)
 msx2_flop abadcrim	修道院犯罪 (西班牙, remake)
 msx2_flop abadcrima	修道院犯罪 (西班牙, remake, 替换版)
+msx2_flop afterdrk	原宿After Dark (日本)
+msx2_flop afterdrka	原宿After Dark (日本, 替换版)
+msx2_flop agotsu	ＡＧＯ通ＤＩＳＫ (日本)
 msx2_flop ankokush	黑暗神话 (日本)
 msx2_flop ankokusha	黑暗神话 (日本, 替换版)
 msx2_flop armwrest	超越巅峰 (西班牙)
@@ -24570,6 +24537,10 @@ msx2_flop bombjack	炸弹杰克 (西班牙)
 msx2_flop bombjackd	炸弹杰克 (西班牙, 演示版)
 msx2_flop bombman	炸弹人 (荷兰)
 msx2_flop bombman2	炸弹人 2 (荷兰)
+msx2_flop burai	ＢＵＲＡＩ上巻 (日本)
+msx2_flop burai2	ＢＵＲＡＩ下巻完結編 (日本)
+msx2_flop burai2a	ＢＵＲＡＩ下巻完結編 (日本, 替换版)
+msx2_flop buraia	ＢＵＲＡＩ上巻 (日本, 替换版)
 msx2_flop chukatai	中华大仙 (日本)
 msx2_flop chukataia	中华大仙 (日本, 替换版)
 msx2_flop chukataib	中华大仙 (日本, 替换版 2)
@@ -24585,6 +24556,7 @@ msx2_flop daisenr	大战略 (日本)
 msx2_flop daisenra	大战略 (日本, 替换版)
 msx2_flop daisenrb	大战略 (日本, 替换版 2)
 msx2_flop daisenrc	大战略 (日本, 替换版 3)
+msx2_flop dancnmai	舞☆MAI (日本)
 msx2_flop dbuster	屠龙战记 (日本)
 msx2_flop dbustera	屠龙战记 (日本, 替换版)
 msx2_flop dbz	龙珠Z (韩国)
@@ -24608,7 +24580,7 @@ msx2_flop drwn4078	达尔文4078 (日本)
 msx2_flop drwn4078a	达尔文4078 (日本, 替换版)
 msx2_flop drwn4078b	达尔文4078 (日本, 替换版 2)
 msx2_flop dslayed	龙之猎手 - 英雄传说 (日本)
-msx2_flop dslayeda	龙之猎手 - 英雄传说 (日本, 替换版)
+msx2_flop dslayeda	龙之猎手 - 英雄传说 (日本, translated)
 msx2_flop dspirit	龙魂 (演示版)
 msx2_flop ducktale	麦克老鸭传说 (荷兰)
 msx2_flop dunbine	圣战士坦拜因：圣战士传说 (日本)
@@ -24618,6 +24590,7 @@ msx2_flop emperor	拿破仑 (日本)
 msx2_flop emperora	拿破仑 (日本, 替换版)
 msx2_flop eurosens	欧陆战线 (日本)
 msx2_flop eurosensa	欧陆战线 (日本, 替换版 disk 2)
+msx2_flop f1douch	Ｆ１道中記 (日本)
 msx2_flop ffant	最终幻想1 (日本)
 msx2_flop ffanta	最终幻想1 (日本, 替换版)
 msx2_flop ffantb	最终幻想1 (日本, 替换版 2)
@@ -24626,6 +24599,7 @@ msx2_flop frantic	狂热分数 (荷兰)
 msx2_flop frantica	狂热分数 (荷兰, 替换版)
 msx2_flop gaiamons	魔兽大地 (日本)
 msx2_flop gakumono	高校物语 (日本)
+msx2_flop gakusenk	学園戦記 (日本)
 msx2_flop galforce	加伦战机 (日本)
 msx2_flop galforcea	加伦战机 (日本, 替换版)
 msx2_flop genchohi	苍狼与白鹿-元朝秘史 (日本)
@@ -24636,9 +24610,11 @@ msx2_flop gingaed	银河英雄传说 (日本)
 msx2_flop gingaed2	銀河英雄伝説II (日本)
 msx2_flop gingaed2a	銀河英雄伝説II (日本, 替换版)
 msx2_flop gingaeda	银河英雄传说 (日本, 替换版 disk 1)
+msx2_flop gingaei6	銀河英雄伝説IIＤＸｋｉｔ (日本)
 msx2_flop goody	小偷古迪 (西班牙)
 msx2_flop goodya	小偷古迪 (西班牙, 替换版)
 msx2_flop gorbypip	管道大作战 (日本)
+msx2_flop gunjnsho	軍人将棋 (日本)
 msx2_flop gunship	武装直升机 (日本)
 msx2_flop gunshipa	武装直升机 (日本, 替换版)
 msx2_flop gunshipb	武装直升机 (日本, 替换版 2)
@@ -24654,6 +24630,7 @@ msx2_flop infinity	无限轮回 (荷兰)
 msx2_flop infinitya	无限轮回 (荷兰, 替换版)
 msx2_flop inindo	伊忍道-打倒信长 (日本)
 msx2_flop inindoa	伊忍道-打倒信长 (日本, 替换版)
+msx2_flop intruder	桜屋敷の探索 (日本)
 msx2_flop ishido	石道 (日本)
 msx2_flop ishinara	维新之岚 (日本)
 msx2_flop jesus	JESUS-恐怖夜 (日本)
@@ -24661,7 +24638,10 @@ msx2_flop jikunoha	時空の花嫁 (日本)
 msx2_flop jikunohaa	時空の花嫁 (日本, 替换版)
 msx2_flop kagerome	陽炎迷宮 (日本)
 msx2_flop kaminoma	神の聖都 (日本)
+msx2_flop keijidd	刑事大打撃社長令嬢誘拐事件 (日本)
+msx2_flop keijidda	刑事大打撃社長令嬢誘拐事件 (日本, 替换版)
 msx2_flop kineticc	动态拼图 (日本)
+msx2_flop kissmurd	殺意の接吻 (日本)
 msx2_flop kugyokud	九玉伝 (日本)
 msx2_flop kugyokuda	九玉伝 (日本, 替换版)
 msx2_flop kujaku	孔雀王 (日本)
@@ -24670,9 +24650,16 @@ msx2_flop laplacea	拉普拉斯恶魔 (日本, 替换版)
 msx2_flop lastarmg	末日战记 (日本)
 msx2_flop lastarmga	末日战记 (日本, 替换版)
 msx2_flop lastarmgb	末日战记 (日本, 替换版 2)
+msx2_flop lavaleur	魔晶伝紀 La Valeur (日本)
+msx2_flop lavaleura	魔晶伝紀 La Valeur (日本, 破解版)
 msx2_flop leprechn	小妖精 (荷兰)
 msx2_flop livingst	利文斯通探险记 (西班牙)
+msx2_flop madou123	魔導物語１－２－３ (日本)
+msx2_flop madou123a	魔導物語１－２－３ (日本, 替换版)
+msx2_flop majinkyu	魔神宮 (日本)
+msx2_flop majinkyua	魔神宮 (日本, 替换版)
 msx2_flop makaifuk	魔界復活 (日本)
+msx2_flop makyuden	魔宮殿 (日本)
 msx2_flop mastmons	怪物主人 (日本)
 msx2_flop mastmonsa	怪物主人 (日本, 替换版)
 msx2_flop mastmonsb	怪物主人 (日本, 替换版 2)
@@ -24682,6 +24669,9 @@ msx2_flop mikkoku	相聚一刻 (日本)
 msx2_flop mikkokua	相聚一刻 (日本, 替换版)
 msx2_flop mjshikak	麻将刺客 (日本)
 msx2_flop mjshikaka	麻将刺客 (日本, 替换版 disk 1)
+msx2_flop msxdw1	MSX同人WORLD TAKERU VERSION (日本)
+msx2_flop msxdw2	ＭＳＸ同人ＷＯＲＬＤ＃２ (日本)
+msx2_flop msxdw3	ＭＳＸ同人ＷＯＲＬＤ＃3 (日本)
 msx2_flop mule	多用途建设机械 (日本)
 msx2_flop murdclub	杀人俱乐部 (日本)
 msx2_flop nicklaus	杰克尼可拉斯-高尔夫 (日本)
@@ -24720,11 +24710,14 @@ msx2_flop puyopuyob	魔法气泡 (日本, 替换版 2)
 msx2_flop quinpl	钉木小子 (日本)
 msx2_flop quinpla	钉木小子 (日本, 替换版)
 msx2_flop quinplb	钉木小子 (日本, 替换版 2)
+msx2_flop rance2	RANCE II - 反逆の少女達 (日本)
 msx2_flop rapidfir	速射 (英国?)
 msx2_flop retjelda	杰尔达回归 (日本)
 msx2_flop retjeldaa	杰尔达回归 (日本, 替换版)
 msx2_flop rickdang	危险的里克 (荷兰)
 msx2_flop riot	机器人手球联盟专业版 (日本)
+msx2_flop rona	ＲＯＮＡ地母神の審判 (日本)
+msx2_flop ronaa	ＲＯＮＡ地母神の審判 (日本, 替换版)
 msx2_flop royalbld	皇室血裔 (日本)
 msx2_flop royalblda	皇室血裔 (日本, 替换版)
 msx2_flop rthunder	滚雷 (西班牙)
@@ -24735,10 +24728,13 @@ msx2_flop sangoku2	三国志2 (日本)
 msx2_flop sangoku2a	三国志2 (日本, 替换版)
 msx2_flop sangokua	三国志 (日本, 替换版)
 msx2_flop sangokub	三国志 (日本, 替换版 2)
+msx2_flop saziri	紫醜罹 (日本)
+msx2_flop saziria	紫醜罹 (日本, 替换版)
 msx2_flop sdgndgs2	SD高达 扭蛋战士 2 - 胶囊战记 (日本)
 msx2_flop sdgndgs2a	SD高达 扭蛋战士 2 - 胶囊战记 (日本, 替换版)
 msx2_flop seiha	制霸 (日本)
 msx2_flop seihaa	制霸 (日本, 替换版)
+msx2_flop seikifly	世紀末FLY BATTLER弥七 (日本)
 msx2_flop shangh2	上海2 (日本)
 msx2_flop shangh2a	上海2 (日本, 替换版)
 msx2_flop shangh2b	上海2 (日本, 替换版 2)
@@ -24751,7 +24747,7 @@ msx2_flop shiryo2	死霊戦線2 (日本)
 msx2_flop shiryo2a	死霊戦線2 (日本, 替换版)
 msx2_flop shiryo2b	死霊戦線2 (日本, 替换版 2)
 msx2_flop shiryoa	死灵战线 (日本, 替换版)
-msx2_flop silviana	希尔维娜 (日本)
+msx2_flop silviana	希尔维娜 (日本, 破解版)
 msx2_flop silvianaa	希尔维娜 (日本, 替换版)
 msx2_flop silvianab	希尔维娜 (日本, 替换版 2)
 msx2_flop skugyokd	新九玉伝 (日本)
@@ -24791,6 +24787,11 @@ msx2_flop xaka	沙克-舞台视觉艺术 (日本, 替换版)
 msx2_flop xakb	沙克-舞台视觉艺术 (日本, 替换版 2)
 msx2_flop yaksa	夜叉 (日本)
 msx2_flop yaksaa	夜叉 (日本, 替换版)
+msx2_flop yakyudo	野球道 (日本)
+msx2_flop yakyudo2	野球道II (日本)
+msx2_flop yomakor	妖魔降臨 (日本)
+msx2_flop yomakora	妖魔降臨 (日本, 替换版)
+msx2_flop yomakorb	妖魔降臨 (日本, 替换版 2)
 msx2_flop ys3	伊苏国 3 - 来自伊苏的冒险者 (日本)
 msx2_flop ys3a	伊苏国 3 - 来自伊苏的冒险者 (日本, 替换版)
 msx2_flop zoo	动物园 (荷兰)
@@ -26597,6 +26598,7 @@ nes btimeh	汉堡时代 (FMG 盗版)
 nes btimej	汉堡时代 (日本)
 nes btlchess	战斗国际象棋 (美国)
 nes btoads	战斗蛙 (欧洲)
+nes btoadsbrc	战斗蛙 (巴西, Conector pirate)
 nes btoadsdd	忍者蛙与双截龙-终极团队 (欧洲)
 nes btoadsddh	忍者蛙与双截龙-终极团队 (盗版)
 nes btoadsddu	忍者蛙与双截龙-终极团队 (美国)
@@ -30757,6 +30759,56 @@ orao rocky	洛奇拳击
 orao sokoban	仓库番
 orao spaceinv	太空侵略者
 orao spaceinv2	太空侵略者 (替换版)
+oric1_cass atlantis	亚特兰蒂斯
+oric1_cass atlantis1	亚特兰蒂斯 (替换版)
+oric1_cass bandit	土匪
+oric1_cass blockbuster	方块破坏者
+oric1_cass bossthe	老板
+oric1_cass breakout	爆发
+oric1_cass centipede	蜈蚣
+oric1_cass centipede1	蜈蚣 (替换版)
+oric1_cass chopper	航空骑兵物语
+oric1_cass domino	多米诺骨牌
+oric1_cass driver	驾驶员
+oric1_cass football	足球经理
+oric1_cass football1	足球经理 (替换版)
+oric1_cass hangman	刽子手
+oric1_cass hangman1	刽子手 (替换版)
+oric1_cass hobbit	荷比特历险记
+oric1_cass hopper	料斗
+oric1_cass hunchback	驼背骑士
+oric1_cass hunchback1	驼背骑士 (替换版 1)
+oric1_cass hunchback2	驼背骑士 (替换版 2)
+oric1_cass invaders	入侵者
+oric1_cass invasion	入侵
+oric1_cass jump	跳跳机器人
+oric1_cass karate	空手道
+oric1_cass macadam	麦克亚当
+oric1_cass manicminer	疯狂矿工
+oric1_cass missimp	不可能的任务
+oric1_cass missimp1	不可能的任务 (替换版)
+oric1_cass nibbler	贪食蛇
+oric1_cass nightrider	霹雳游侠
+oric1_cass othello	奥赛罗棋
+oric1_cass othello1	奥赛罗棋 (替换版)
+oric1_cass painter	油漆匠
+oric1_cass parachute	跳伞
+oric1_cass patience	忍耐
+oric1_cass pontoon	益智扑克
+oric1_cass rabbit	罗媚斗
+oric1_cass reversi	迷你黑白棋 (Tansoft)
+oric1_cass reversi1	迷你黑白棋 (???)
+oric1_cass reversic	迷你黑白棋 (CDS Micro Systems)
+oric1_cass rushhour	尖峰时刻
+oric1_cass scubadive	潜水
+oric1_cass serpent	大蛇
+oric1_cass slalom	障碍滑雪
+oric1_cass starfighter	星际战士
+oric1_cass startrek	星舰迷航记-企业号
+oric1_cass thirdworld	第三次世界大战
+oric1_cass trickshot	花式撞球
+oric1_cass zaxxon	立体空战
+oric1_cass zigzag	挖金子
 orion_flop rebus	谜-魔神警备团
 partner_cass bdash	岩层冲刺
 partner_cass digger	挖掘者
@@ -30842,6 +30894,7 @@ pc8801_flop acrojet	特技飞行
 pc8801_flop ae	防御炮台
 pc8801_flop aea	防御炮台 (替换版)
 pc8801_flop aeb	防御炮台 (替换版 2)
+pc8801_flop afterdrk	原宿After Dark
 pc8801_flop akumachi	悪霊の街
 pc8801_flop albatros	双鹰球
 pc8801_flop albatrosa	双鹰球 (替换版)
@@ -30874,6 +30927,8 @@ pc8801_flop bshashms1	美少女写真馆-移动校园 (替换版?)
 pc8801_flop bshashsc	美少女写真馆
 pc8801_flop bshashsc1	美少女写真馆 (替换版?)
 pc8801_flop btanuki	巴滕浣熊大冒险
+pc8801_flop burai	ＢＵＲＡＩ上巻
+pc8801_flop buraia	ＢＵＲＡＩ上巻 (替换版)
 pc8801_flop buuma	舞臓魔
 pc8801_flop buumaa	舞臓魔 (替换版)
 pc8801_flop cannonbl	加农球气泡
@@ -31010,6 +31065,8 @@ pc8801_flop igohyak2	囲碁百科2 坂田血風録
 pc8801_flop inindo	伊忍道
 pc8801_flop inindoa	伊忍道 (替换版?)
 pc8801_flop inthedrm	旅人の楽譜
+pc8801_flop intruder	桜屋敷の探索
+pc8801_flop intrudera	桜屋敷の探索 (替换版)
 pc8801_flop ishido	石道
 pc8801_flop ishinara	维新之岚
 pc8801_flop ishinaraa	维新之岚 (替换版?)
@@ -31029,6 +31086,8 @@ pc8801_flop karuizaw	軽井沢誘拐案内
 pc8801_flop karuizawa	軽井沢誘拐案内 (替换版)
 pc8801_flop keyhmurd	鍵穴殺人事件
 pc8801_flop kisei	棋圣
+pc8801_flop kissmurd	殺意の接吻
+pc8801_flop kissmurda	殺意の接吻 (替换版)
 pc8801_flop kitahei	棋太平
 pc8801_flop klax	克力斯方块
 pc8801_flop koberenm	神戸恋愛物語
@@ -31050,6 +31109,7 @@ pc8801_flop laplacea	拉普拉斯恶魔 (替换版)
 pc8801_flop lastarmg	末日战记
 pc8801_flop lastarmga	末日战记 (替换版?)
 pc8801_flop lasvegas	拉斯维加斯
+pc8801_flop lavaleur	魔晶伝紀 La Valeur
 pc8801_flop lawwest	西部法律
 pc8801_flop ldrun	淘金者
 pc8801_flop ldruna	淘金者 (替换版 1)
@@ -31332,6 +31392,7 @@ pc98 688atsub	688攻击潜艇
 pc98 88kantai	八八艦隊物語
 pc98 98eiwa	98英和辞典
 pc98 acrojet	特技飞行
+pc98 afterdrk	原宿After Dark
 pc98 aigo3	ＡＩ囲碁３
 pc98 airduel	空战
 pc98 airmanag	航空霸业 - 天空之赌
@@ -31373,6 +31434,7 @@ pc98 bshashsc	美少女写真馆
 pc98 bshashsca	美少女写真馆 (替换版)
 pc98 btlchess	战斗国际象棋
 pc98 bunkasai	文化祭
+pc98 burai	ＢＵＲＡＩ上巻
 pc98 centurio	百夫长-保卫罗马
 pc98 centurioa	百夫长-保卫罗马 (替换版)
 pc98 chiemi	稚恵美
@@ -31532,6 +31594,8 @@ pc98 illcity	幻影都市 -ILLUSION CITY-
 pc98 inindo	伊忍道-打倒信长
 pc98 injugen	淫獣幻夢
 pc98 injugen2	淫獣幻夢２ ＢＲＡＩＮ ＢＵＲＳＴ！！
+pc98 intruder	桜屋敷の探索
+pc98 intrudera	桜屋敷の探索 (替换版 format)
 pc98 isaku	遺作
 pc98 ishido	石道
 pc98 ishinara	维新之岚
@@ -31567,6 +31631,7 @@ pc98 kindanke	禁断の血族
 pc98 kingqst5	国王密使5
 pc98 kirishim	霧島診療室の午後
 pc98 kiss	接吻乐团 弹珠台
+pc98 kissmurd	殺意の接吻
 pc98 kitahei	棋太平
 pc98 kitojima	鬼頭島女子刑務所
 pc98 kiwame	極
@@ -31715,6 +31780,7 @@ pc98 quarth	射击方块
 pc98 raika	蕾花 ～花仙宮～
 pc98 rakuen	楽園の招待状
 pc98 rakumats	楽市の政
+pc98 rance2	RANCE II - 反逆の少女達
 pc98 ranze	戦国強者絵巻 ＲＡＮＺＥ
 pc98 rekiai	轢愛
 pc98 relics	暗黑要塞
@@ -32393,7 +32459,7 @@ pcecd 1552tenk	1552 天下大乱 (日本)
 pcecd addfam	亚当斯一家 (美国)
 pcecd aichoan	爱·超兄贵 (日本)
 pcecd alkiba	阿纳姆之牙：兽族12神徒传说 (日本)
-pcecd alshark	星际怒涛 [Imperfect] (日本)
+pcecd alshark	星际怒涛 (日本)
 pcecd anesan	姐 (日本)
 pcecd atlas	地图集-文艺复兴航海家 (ACD, SCD)(日本)
 pcecd auleria	幻苍大陆 (日本)
@@ -32444,7 +32510,6 @@ pcecd emeraldd	翡翠龙 (日本)
 pcecd exile	放逐-时之狭间 (美国)
 pcecd exile2j	流放2 (日本)
 pcecd f1circus	F1竞技场特别版 (日本)
-pcecd faussete	月光少女战士 (日本)
 pcecd fiendhun	邪鬼猎人 (日本)
 pcecd flashhid	闪电斗士 (日本)
 pcecd forgottn	失落的世界 (美国)
@@ -32454,7 +32519,7 @@ pcecd fstreetj	快打旋风 (日本)
 pcecd fzone2	最终战区2 (美国)
 pcecd fzone2j	最终战区2 (日本)
 pcecd galaxyde	银河刑警 (日本)
-pcecd garou2	餓狼伝説2 [Imperfect] (日本)
+pcecd garou2	餓狼伝説2 (日本)
 pcecd garou2s	餓狼伝説2 体験版 (日本)
 pcecd garousp	饿狼传说 Special (日本)
 pcecd gatethun	雷霆之门 (日本)
@@ -32499,7 +32564,7 @@ pcecd legion	电光火石 (日本)
 pcecd lemmings	旅鼠总动员 (日本)
 pcecd lordthun	雷霆之王 (美国)
 pcecd madden	约翰·马登足球 (美国)
-pcecd madoum	魔導物語I 炎の卒園児 [Imperfect] (日本)
+pcecd madoum	魔導物語I 炎の卒園児 (日本)
 pcecd madstlkr	狂热高达对战 - 全金属力量 (日本)
 pcecd magicoal	魔法之旅 (日本)
 pcecd mastmons	怪物主人 (日本)
@@ -32518,7 +32583,7 @@ pcecd mlair	魔窟 (美国)
 pcecd mlairj	神奇小子 3 - 怪物巢穴 (日本)
 pcecd monstmkr	怪兽制造厂-闇之龙骑士 (日本)
 pcecd moonligh	月光淑女 (日本)
-pcecd motteke	蛋蛋乐 [Imperfect] (日本)
+pcecd motteke	蛋蛋乐 (日本)
 pcecd mtlchamp	武术冠军 (日本)
 pcecd mysticf	神秘配方 (日本)
 pcecd nadia	不可思议的海之娜蒂亚 (日本)
@@ -32531,7 +32596,7 @@ pcecd nobuzenk	信长的野望：全国版 (日本)
 pcecd noriko	小川範子 No・Ri・Ko (日本)
 pcecd pachikn2	柏青哥君笑着的宇宙 (日本)
 pcecd pachikun	柏青哥君幻的传说 (日本)
-pcecd panicbom	炸弹人：燃烧炸弹 (日本)
+pcecd panicbom	炸弹人-燃烧炸弹 (日本)
 pcecd pompingw	魔鬼气球 (日本)
 pcecd popnmagi	流行魔法 (日本)
 pcecd ppersia	波斯王子 (美国)
@@ -32565,7 +32630,7 @@ pcecd sdarius	超级太空战斗机 (日本)
 pcecd sdarius2	超级太空战斗机2 (日本)
 pcecd seisensh	圣战士传承雀卓的骑士 (日本)
 pcecd seiyamon	圣夜物语 (日本)
-pcecd seiyamonp	圣夜物语 [debug 版本 原型] (日本)
+pcecd seiyamonp	圣夜物语 (日本, debug prototype)
 pcecd seiyamont	聖夜物語 体験版 (日本)
 pcecd sengokuk	战国关东三国志 (日本)
 pcecd sexyidof	性感偶像麻将时尚物语 (ACD, SCD)(日本)
@@ -32730,6 +32795,9 @@ pro128_cass vampirea	吸血鬼 (替换版)
 pro128s_flop goal	超级得点王
 pro128s_flop golf	高尔夫
 pro128s_flop tetris	俄罗斯方块
+psion_ssd monopoly	大富翁
+psion_ssd pipemania	水管5
+psion_ssd scrabble	拼字游戏
 psx 007rcng	007赛车 (美国)
 psx 007tnd	007：明日帝国 (美国)
 psx 007tndj	007：明日帝国 (日本)
@@ -42696,6 +42764,8 @@ spectrum_cass circus_c	马戏团 (Channel 8)
 spectrum_cass circusga	马戏团游戏
 spectrum_cass ciscohea	警车热击
 spectrum_cass citybomb	炸弹赛车
+spectrum_cass cityconn	城市连接 (128K, 破解版)
+spectrum_cass cityconnd	城市连接 (128K, 演示版)
 spectrum_cass cityslic	城市乡巴佬 弹珠台
 spectrum_cass cjantics	捣蛋的小象
 spectrum_cass cjetski	吉斯基水上摩托艇冠军杯 - 简单
@@ -43472,9 +43542,9 @@ spectrum_cass howrduck	天降神兵
 spectrum_cass howrducka	天降神兵 (替换版)
 spectrum_cass howrduckh	天降神兵 (Hello! Games)
 spectrum_cass howrduckp	天降神兵 (Proein)
-spectrum_cass hrtsteal	盗心者 (第1套)
-spectrum_cass hrtsteal1	盗心者 (第2套, one key 版本)
-spectrum_cass hrtsteald	盗心者 (第3套, 演示版)
+spectrum_cass hrtsteal	盗心者
+spectrum_cass hrtsteal1	盗心者 (one key 版本)
+spectrum_cass hrtsteald	盗心者 (演示版)
 spectrum_cass hrtstl2	盗心者 2
 spectrum_cass htbcbast	成为混蛋 (第1套)
 spectrum_cass htbcbasta	成为混蛋 (第2套, Ricochet)
@@ -43502,10 +43572,11 @@ spectrum_cass hypersptb	超级运动会 (第6套)
 spectrum_cass hyperspte	超级运动会 (第4套, Erbe)
 spectrum_cass hypersptea	超级运动会 (第5套, Erbe)
 spectrum_cass hyperspths	超级运动会 (第2套, The Hit Squad)
-spectrum_cass hysteria	歇斯底里 (替换版)
+spectrum_cass hysteria	歇斯底里
 spectrum_cass hysteria_a	歇斯底里 (EDOS)
 spectrum_cass hysteria_b	歇斯底里 (Erbe)
-spectrum_cass hysteria_c	歇斯底里
+spectrum_cass hysteria_c	歇斯底里 (替换版)
+spectrum_cass hysteria_d	歇斯底里 (IBSA)
 spectrum_cass iball	我, 球
 spectrum_cass iballm	我, 球 (MCM)
 spectrum_cass icebreak	破冰船
@@ -43613,8 +43684,8 @@ spectrum_cass joust	鸟骑士
 spectrum_cass judgedre	特警判官
 spectrum_cass juggerna	剑圣
 spectrum_cass jumpzig	跳跳机器人 (Zigurat)
-spectrum_cass jwarfare	丛林勇士 (Mastertronic, Joystick)
-spectrum_cass jwarfarel	丛林勇士 (Mastertronic, 光枪)
+spectrum_cass jwarfare	丛林勇士 (joystick)
+spectrum_cass jwarfarel	丛林勇士 (光枪)
 spectrum_cass kamikaze	神风马里奥
 spectrum_cass kamikzaf	神风马里奥 (A & F Software)
 spectrum_cass kamikzey	神风马里奥 (Eyrolles)
@@ -43625,17 +43696,17 @@ spectrum_cass karnovp	卡诺夫 (Proein)
 spectrum_cass karthur	亚瑟王
 spectrum_cass kendowar	剑道战士 (第1套)
 spectrum_cass kendowarm	剑道战士 (第2套, MCM)
-spectrum_cass kennydal	肯尼·达格利什足球经理 (第1套)
-spectrum_cass kennydalmast	肯尼·达格利什足球经理 (第3套, Mastering Tape)
-spectrum_cass kennydalz	肯尼·达格利什足球经理 (第2套, Zeppelin)
+spectrum_cass kennydal	肯尼·达格利什足球经理
+spectrum_cass kennydalmast	肯尼·达格利什足球经理 (master tape)
+spectrum_cass kennydalz	肯尼·达格利什足球经理 (Zeppelin)
 spectrum_cass kennysmt	肯尼达格利什足球比赛 (第1套)
 spectrum_cass kennysmte	肯尼达格利什足球比赛 (第2套, EDOS)
 spectrum_cass kgbsspy	克格勃超级间谍
 spectrum_cass kgbsspye	克格勃超级间谍 (Erbe)
 spectrum_cass khazzadd	盖塞德
-spectrum_cass kickbox	拳击 (Firebird, 第1套)
-spectrum_cass kickboxa	拳击 (Firebird, 第2套)
-spectrum_cass kickboxb	拳击 (Firebird, 第3套)
+spectrum_cass kickbox	拳击 (第1套)
+spectrum_cass kickboxa	拳击 (第2套)
+spectrum_cass kickboxb	拳击 (第3套)
 spectrum_cass kickoff	中线开球
 spectrum_cass kickoff2	开球 2
 spectrum_cass kickoffa	中线开球 (IBSA)
@@ -44584,7 +44655,7 @@ spectrum_cass spcjunk48a	太空垃圾 (第4套, 48k)
 spectrum_cass spcjunka	太空垃圾 (第2套, 128k)
 spectrum_cass spcshtl	太空梭 (Accord Data Ltd)
 spectrum_cass speakeas_a	地下酒吧 (Investronica)
-spectrum_cass speccies	太空防卫 - 救援 2
+spectrum_cass speccies2	太空防卫 - 救援 2
 spectrum_cass spectron	斯佩克特隆
 spectrum_cass speedbal	弹珠台 - 埃及金字塔
 spectrum_cass spellcas	魔法使
@@ -44837,11 +44908,12 @@ spectrum_cass theplot	阴谋
 spectrum_cass theprice	魔法的价值 (第2套)
 spectrum_cass theprice_b	魔法的价值
 spectrum_cass therace1	比赛
-spectrum_cass thewayof	拳头之道 (Dro Soft)
-spectrum_cass thewayof_a	拳头之道 (Erbe)
+spectrum_cass thewayof	拳头之道
+spectrum_cass thewayof_a	拳头之道 (Erbe, small case)
 spectrum_cass thewayof_b	拳头之道 (Ricochet)
 spectrum_cass thewayof_c	拳头之道 (第2套)
-spectrum_cass thewayof_d	拳头之道
+spectrum_cass thewayof_d	拳头之道 (Dro Soft)
+spectrum_cass thewayof_e	拳头之道 (Erbe, medium case)
 spectrum_cass thewizar	绿野仙踪
 spectrum_cass thief	赛车精灵 - 窃贼
 spectrum_cass thiefexp	赛车精灵 - 窃贼 (Experimental Phase Software)
@@ -45459,26 +45531,27 @@ svi318_cass wargames	战争游戏 (ColecoVision Conversion)
 svi318_cass yiear1	功夫小子 (MSX Conversion)
 svi318_cass yiear2	功夫小子 II - 印加皇帝的逆袭 (MSX Conversion)
 svi318_cass zaxxon	立体空战 (ColecoVision Conversion)
-svision alien	异形 (欧, 美国)
-svision balonfgt	气球大战 (欧, 美国)
-svision blockbus	打砖块 (欧, 美国)
-svision carrier	战栗空母/航舰喋血 (欧, 美国)
+svision alien	异形 (欧洲, 美国)
+svision balonfgt	气球大战 (欧洲, 美国)
+svision blockbus	打砖块 (欧洲, 美国)
+svision carrier	战栗空母/航舰喋血 (欧洲, 美国)
 svision chinesch	中国跳棋
 svision danceblk	跳舞方块
 svision dreamwld	梦幻世界
-svision fcombat	最后一战 (欧, 美国)
+svision fcombat	最后一战 (欧洲, 美国)
 svision fcombata	最后一战 (替换版)
-svision galcrus	蝶变／妖蝶、蝴蝶战机、银河十字军 (欧, 美国)
-svision gp	国际长途大赛车 (欧, 美国)
-svision happyp	欢乐配对 (欧, 美国)
-svision johnadv	约翰冒险 (欧, 美国)
+svision galcrus	蝶变／妖蝶、蝴蝶战机、银河十字军 (欧洲, 美国)
+svision gp	国际长途大赛车 (欧洲, 美国)
+svision happyp	欢乐配对 (欧洲, 美国)
+svision johnadv	约翰冒险 (欧洲, 美国)
 svision jrnywest	西天取经
 svision mjleitai	麻将擂台
 svision popoteam	波波队
-svision pyramid	金字塔 (欧, 美国)
+svision pyramid	金字塔 (欧洲, 美国)
 svision spang	超级泡泡
 svision spcfghtr	太空战斗机
-svision thunter	财宝猎人 (欧, 美国)
+svision thunter	财宝猎人 (欧洲, 美国, 1993)
+svision thuntera	财宝猎人 (欧洲, 美国, 1992)
 svision untchble	贫民 5 PK
 svmu bask	篮球
 svmu bounce	弹跳球
@@ -45747,11 +45820,11 @@ to8_cass sservice	寂静潜艇
 to8_cass trivialp	棋盘问答
 to8_qd vampire	吸血鬼
 to_flop airatt	空袭
-to_flop airatta	空袭 (SAP Format)
+to_flop airatta	空袭 (SAP format)
 to_flop arkanoid	打砖块
 to_flop avenger	复仇者
-to_flop avengera	复仇者 (SAP Format)
-to_flop avengerb	复仇者 (SAP Format, 替换版)
+to_flop avengera	复仇者 (SAP format)
+to_flop avengerb	复仇者 (SAP format, 替换版)
 to_flop cobra	眼镜蛇
 to_flop cobraa	眼镜蛇 (破解版)
 to_flop coliseum	竞技场
@@ -45760,12 +45833,12 @@ to_flop crazycar	疯狂赛车
 to_flop crazycara	疯狂赛车 (替换版)
 to_flop eliminat	巡航
 to_flop enduro	越野机车赛
-to_flop enduroa	越野机车赛 (SAP Format)
+to_flop enduroa	越野机车赛 (SAP format)
 to_flop enigma	密码 (v2.0)
 to_flop enigmaa	密码 (v2.0, 替换版)
 to_flop f15eagle	F-15打击之鹰
 to_flop f15eaglea	F-15打击之鹰 (替换版)
-to_flop f15eagleb	F-15打击之鹰 (Modified Loading Screen)
+to_flop f15eagleb	F-15打击之鹰 (modified loading screen)
 to_flop flashpnt	闪点方块
 to_flop gameover	游戏结束
 to_flop greenber	绿色兵团
@@ -45773,57 +45846,57 @@ to_flop iznogoud	巴格达怪杰
 to_flop karate	空手道
 to_flop lasvegas	拉斯维加斯
 to_flop lasvegasa	拉斯维加斯 (替换版)
-to_flop lasvegasb	拉斯维加斯 (SAP Format)
+to_flop lasvegasb	拉斯维加斯 (SAP format)
 to_flop lemmings	旅鼠总动员
-to_flop lemmingsa	旅鼠总动员 (SAP Format)
-to_flop lemmingsb	旅鼠总动员 (640K Disk)
+to_flop lemmingsa	旅鼠总动员 (SAP format)
+to_flop lemmingsb	旅鼠总动员 (640K disk)
 to_flop lotus	莲花经典挑战赛
-to_flop lotusa	莲花经典挑战赛 (640K Disk)
+to_flop lotusa	莲花经典挑战赛 (640K disk)
 to_flop luckyluk	幸运路克
 to_flop macadam	麦克亚当
-to_flop macadama	麦克亚当 (SAP Format)
+to_flop macadama	麦克亚当 (SAP format)
 to_flop magcube	魔法立方 (破解版)
 to_flop magic	巫术
 to_flop mission	眼镜蛇任务
 to_flop missiona	眼镜蛇任务 (破解版)
 to_flop monopoly	大富翁
-to_flop monopolya	大富翁 (SAP Format)
+to_flop monopolya	大富翁 (SAP format)
 to_flop polepos	顶尖赛手
 to_flop renegade	热血硬派 (破解版)
 to_flop renegadea	热血硬派 (破解版, 替换版)
 to_flop risk	危机
 to_flop slapfigh	巴掌战斗
-to_flop slapfigha	巴掌战斗 (SAP Format)
-to_flop slapfighb	巴掌战斗 (SAP Format, 替换版)
-to_flop slapfighc	巴掌战斗 (SAP Format, 替换版 2)
+to_flop slapfigha	巴掌战斗 (SAP format)
+to_flop slapfighb	巴掌战斗 (SAP format, 替换版)
+to_flop slapfighc	巴掌战斗 (SAP format, 替换版 2)
 to_flop sokoban	仓库番
 to_flop sorcery	巫术
-to_flop sorcerya	巫术 (SAP Format)
+to_flop sorcerya	巫术 (SAP format)
 to_flop sos	沉船危机
-to_flop sosa	沉船危机 (SAP Format)
+to_flop sosa	沉船危机 (SAP format)
 to_flop speedway	高速公路 吃角子老虎
 to_flop spindizz	晕眩
-to_flop spindizza	晕眩 (SAP Format)
+to_flop spindizza	晕眩 (SAP format)
 to_flop sservice	寂静潜艇
 to_flop sservicea	寂静潜艇 (替换版)
 to_flop stennis	超级网球
 to_flop tetrisjb	俄罗斯方块 (John Breaker)
 to_flop tetrisyr	俄罗斯方块 (YRprod)
 to_flop tetrisyra	俄罗斯方块 (YRprod) (替换版)
-to_flop tetrisyrb	俄罗斯方块 (YRprod) (SAP Format)
-to_flop tetrisyrc	俄罗斯方块 (YRprod) (SAP Format, 替换版)
+to_flop tetrisyrb	俄罗斯方块 (YRprod) (SAP format)
+to_flop tetrisyrc	俄罗斯方块 (YRprod) (SAP format, 替换版)
 to_flop threshld	致命临界点
 to_flop topgun	壮志凌云
 to_flop trivialp	棋盘问答
-to_flop trivialpa	棋盘问答 (SAP Format)
+to_flop trivialpa	棋盘问答 (SAP format)
 to_flop trivialpb	棋盘问答 (Compilation Top Adventure)
 to_flop vampire	吸血鬼
-to_flop vampirea	吸血鬼 (SAP Format)
+to_flop vampirea	吸血鬼 (SAP format)
 to_flop waytiger	虎之道
-to_flop waytigera	虎之道 (SAP Format)
+to_flop waytigera	虎之道 (SAP format)
 to_flop wizball	魔球
-to_flop wizballa	魔球 (SAP Format)
-to_flop wizballb	魔球 (SAP Format, 替换版)
+to_flop wizballa	魔球 (SAP format)
+to_flop wizballb	魔球 (SAP format, 替换版)
 trs80_cass adv03	不可能的任务
 trs80_cass backgamm	西洋双陆棋
 trs80_cass blakjack	黑捷克
@@ -46881,6 +46954,8 @@ vgmplay eyebehol_98	偷窥之眼 (NEC PC-9801)
 vgmplay eyebehol_pc	偷窥之眼 (IBM PC AT)
 vgmplay f15se2_md	F-15猎鹰2 (GEN/MD)
 vgmplay f1circus_md	一级方程式表演 (GEN/MD)
+vgmplay f1douch_msx2	Ｆ１道中記 (MSX2, PSG)
+vgmplay f1douch_msx2o	Ｆ１道中記 (MSX2, OPLL)
 vgmplay f1dream	一级方程式之梦 (街机)
 vgmplay f1dream_tg16	一级方程式之梦 (TG-16)
 vgmplay f1en	一级方程式 - 排器纪录 (Sega System 32)
@@ -47500,6 +47575,7 @@ vgmplay madden95_md	马顿的美式足球联赛 '95 (GEN/MD)
 vgmplay madden_md	约翰麦登-橄榄球 (GEN/MD)
 vgmplay madgear	疯狂机车 (街机)
 vgmplay madoola_nes	玛多拉之翼 (NES)
+vgmplay madoum123_98	魔導物語１－２－３ (NEC PC-9801)
 vgmplay madoumon_md	魔导物语 (GEN/MD)
 vgmplay madshark	狂鲨任务 (Seta 1)
 vgmplay madstalk_md	疯狂潜入者 - 金属力量 (Sega Mega Drive)
@@ -49496,6 +49572,7 @@ x1_cass yakyukyoa	野球狂 (替换版)
 x1_cass yellwcab	神奇汽车
 x1_cass yellwcaba	神奇汽车 (替换版)
 x1_flop 1942	1942
+x1_flop afterdrk	原宿After Dark
 x1_flop albatros	双鹰球
 x1_flop amtruck	美式卡车
 x1_flop arctic	北极圈
@@ -49546,6 +49623,7 @@ x1_flop ishinara	维新之岚
 x1_flop jesus	JESUS-恐怖夜
 x1_flop jesusd	JESUS-恐怖夜 (演示版)
 x1_flop karuizaw	軽井沢誘拐案内
+x1_flop kissmurd	殺意の接吻
 x1_flop kohakuir	琥珀色の遺言 西洋骨牌連続殺人事件
 x1_flop kugyokud	九玉伝
 x1_flop kugyokuda	九玉伝 (替换版)
@@ -49931,6 +50009,7 @@ x68k_flop kawaichi	河原崎家の一族
 x68k_flop keeper	保姆
 x68k_flop kikoshid	機甲師団
 x68k_flop kikoshidd	機甲師団 (演示版)
+x68k_flop kissmurd	殺意の接吻
 x68k_flop kitahei	棋太平68K
 x68k_flop kiwame	極
 x68k_flop klax	克力斯方块

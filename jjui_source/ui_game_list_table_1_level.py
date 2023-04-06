@@ -2848,11 +2848,22 @@ class GameList_7(GameList_6):
     
     
     def new_func_header_show_pop_up_menu(self,event):
+        if sys.platform.startswith('linux'):
+            # 鼠标 右击 释放时
+            # 如果不在 范围内
+            if event.widget is not event.widget.winfo_containing(event.x_root, event.y_root,):
+                return
 
         self.new_ui_pop_up_menu_for_header.tk_popup(event.x_root, event.y_root)
 
     
     def new_func_table_show_pop_up_menu(self,event):
+        if sys.platform.startswith('linux'):
+            # 鼠标 右击 释放时
+            # 如果不在 范围内
+            if event.widget is not event.widget.winfo_containing(event.x_root, event.y_root,):
+                return    
+    
         # 确定点击的 列 ，
         # 以显示 此单元格的内容
         def get_the_colunm_be_clicked():

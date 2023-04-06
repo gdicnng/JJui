@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 #import os
 import re
 
@@ -83,6 +83,11 @@ extra_mameinfo_find_by_index = extra_history_dat.extra_history_find_by_index_mam
 
 def get_content_by_file_name_by_index(file_name,game_name,the_index=0):
     content=extra_mameinfo_find_by_index(file_name,game_name,the_index)
+    
+    # linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+    if sys.platform.startswith('linux'):
+        content=extra_history_dat.replace_newline_character(content)
+    
     content=mameinfo_format(content)
     return content
 

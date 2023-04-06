@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 #import os
 import re
 
@@ -165,6 +165,11 @@ def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
     content = extra_command.extra_command_find_2_use_index( file_name,game_name,the_index )
         # 调用 中文版 command 函数
         # 找到内容
+    
+    # linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+    if sys.platform.startswith('linux'):
+        content=extra_command.replace_newline_character(content)
+    
     content = extra_command.command_replace(content)
         # 调用 中文版 command 函数
         # 替换 标记

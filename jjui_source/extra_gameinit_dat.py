@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 #import os
 import re
 
@@ -56,6 +56,11 @@ def get_content_by_file_name(file_name,game_name):
 
 def get_content_by_file_name_use_index(file_name,game_name,the_index=0):
     content=extra_history_dat.extra_history_find_by_index_mame(file_name,game_name,the_index)
+    
+    # linux 换行符，\r\n ，连 \r 也显示一个空方框之类的
+    if sys.platform.startswith('linux'):
+        content=extra_history_dat.replace_newline_character(content)
+    
     content=gameinit_format(content)
     return content
 

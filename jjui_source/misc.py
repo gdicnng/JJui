@@ -212,7 +212,11 @@ def set_id_list_for_external_index(the_id_list,id_1,id_2=None):
         for_level_1(the_id_list , id_1)
     else:
         for_level_2(the_id_list , id_1 , id_2)
-
+# 外部目录，列出，范围以外的 项目
+def get_id_list_of_illegal_items(id_1,id_2=None):
+    id_list = get_id_list_from_external_index(id_1,id_2)
+    id_list_illegal = set(id_list) - global_variable.set_data["all_set"]
+    return list( id_list_illegal )
 
 # 导出内置目录到 .jjui\out 文件夹
 def export_all_internal_index():
