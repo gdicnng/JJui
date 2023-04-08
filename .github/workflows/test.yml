@@ -82,7 +82,7 @@ jobs:
     - name: 7z
       run: |
         7z a -t7z "JJui_test.7z" ./dist/*
-        dir
+        ls - l
     - name: upload
       uses: actions/upload-artifact@v3
       with:
