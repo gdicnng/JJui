@@ -1,0 +1,70 @@
+name: Release test x86 and x64
+
+on: workflow_dispatch
+
+jobs:
+  jobs_1: # build exe 
+    runs-on: windows-2019 # windows-latest or windows-2022
+    
+    defaults:
+      run:
+        shell: cmd
+    
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    
+    - name: show python version
+      run: |
+        python -V -V
+    
+    - name: Variables
+      run: |
+        echo ......
+        echo ......
+        echo runner.name
+        echo ${{ runner.name }}
+        
+        echo RUNNER OS
+        echo %RUNNER_OS%
+        echo ${{ runner.os }}
+        
+        echo RUNNER ARCH
+        echo %RUNNER_ARCH%
+        echo ${{ runner.arch }}
+        
+        echo ......
+        echo ......
+        echo github event_name
+        echo ${{ github.event_name }}
+        
+        echo push ref
+        echo github event ref
+        echo ${{ github.event.ref }}
+        
+        echo GITHUB_REF_NAME
+        echo %GITHUB_REF_NAME%
+        echo ${{ github.ref_name }}
+        
+    - name: path
+      run: |
+        echo ......
+        echo cd
+        cd
+        echo ......
+        echo dir
+        dir
+        echo ......
+        echo where 7z
+        where 7z
+        echo ......
+        echo path
+        path
+
+
+
