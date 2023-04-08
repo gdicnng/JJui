@@ -65,7 +65,7 @@ jobs:
         whereis 7z
         echo ......
         echo PATH
-        $PATH
+        echo $PATH
 
     - name: Install dependencies
       run: |
