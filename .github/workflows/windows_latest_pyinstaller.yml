@@ -1,0 +1,75 @@
+name: windows-latest python3.11 pyinstaller
+
+on: workflow_dispatch
+
+jobs:
+  jobs_1: # build exe 
+    runs-on: windows-latest
+    
+    defaults:
+      run:
+        shell: cmd
+    
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+    
+    - name: show python version
+      run: |
+        python -V -V
+    
+    - name: Variables
+      run: |
+        echo ......
+        echo ......
+        echo runner.name
+        echo ${{ runner.name }}
+        
+        echo RUNNER OS
+        echo %RUNNER_OS%
+        echo ${{ runner.os }}
+        
+        echo RUNNER ARCH
+        echo %RUNNER_ARCH%
+        echo ${{ runner.arch }}
+        
+        
+    - name: path
+      run: |
+        echo ......
+        echo cd
+        cd
+        echo ......
+        echo dir
+        dir
+        echo ......
+        echo where 7z
+        where 7z
+        echo ......
+        echo path
+        path
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools
+        python -m pip install --upgrade wheel
+        python -m pip install pillow
+        python -m pip install pyinstaller
+    
+    - name: pyinstaller to exe
+      run: |
+        call .windows_build_exe_use_pyinstaller.bat
+    - name: 7z
+      run: |
+        7z a -t7z "JJui_windows_latest_pyinstaller.7z" .\dist\*
+        dir
+    - name: upload
+      uses: actions/upload-artifact@v3
+      with:
+        path: "JJui_windows_latest_pyinstaller.7z"
