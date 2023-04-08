@@ -1,4 +1,4 @@
-name: Release test x86 and x64
+name: test2
 
 on: workflow_dispatch
 
