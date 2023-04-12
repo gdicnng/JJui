@@ -1,11 +1,11 @@
-name: test
+name: macos-10.15 pyinstaller test
 
 on: workflow_dispatch
 
 
 jobs:
   jobs_1: 
-    runs-on: macos-latest 
+    runs-on: macos-10.15
     
     defaults:
       run:
@@ -76,9 +76,7 @@ jobs:
         python -m pip install pyinstaller
     
     - name: pyinstaller to exe
-      run: |
-        python -m PyInstaller --add-data .jjui:.jjui --add-data jjui_source/images:jjui_source/images --add-data jjui_source/ui_translation:jjui_source/ui_translation --icon jjui_source/images/for-icon.png JJui.pyw
-        python -m PyInstaller --add-data .jjui:.jjui --add-data jjui_source/images:jjui_source/images --add-data jjui_source/ui_translation:jjui_source/ui_translation --icon jjui_source/images/for-icon.png JJui_sl.pyw
+      run: source .mac_pyinstaller.sh
     - name: 7z
       run: |
         7z a -t7z "JJui_test.7z" ./dist/*
