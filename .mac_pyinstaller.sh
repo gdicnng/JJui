@@ -34,10 +34,9 @@ the_command_string=( ${the_command_string[@]} --windowed  )
 the_command_string=( ${the_command_string[@]} --clean  )
 
 
-echo python ${the_command_string[@]} --icon jjui_source/images/for-icon.png   JJui.pyw
-python ${the_command_string[@]} --icon jjui_source/images/for-icon.png   JJui.pyw
+
+python -m PyInstaller ${the_command_string[@]} --icon jjui_source/images/for-icon.png   JJui.pyw
 
 echo ......
 
-echo python ${the_command_string[@]} --icon jjui_source/images/for-icon-2.png JJui_sl.pyw
-python ${the_command_string[@]} --icon jjui_source/images/for-icon-2.png JJui_sl.pyw
+python -m PyInstaller ${the_command_string[@]} --icon jjui_source/images/for-icon-2.png JJui_sl.pyw
