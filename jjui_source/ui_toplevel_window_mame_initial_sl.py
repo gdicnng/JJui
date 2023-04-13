@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-# import sys
+import sys
 import os
 
 import subprocess
@@ -160,12 +160,15 @@ class Toplevel_Window(tk.Toplevel):
     
     # button call back function
     def new_func_for_button_choose(self,):
-        file_path = tkinter.filedialog.askopenfilename( initialdir="." ,filetypes=[( _(".exe 文件"),"*.exe"),(_("所有文件"),"*")],)
+        if sys.platform.startswith('win'):
+            file_path = tkinter.filedialog.askopenfilename( initialdir="." ,filetypes=[( _(".exe 文件"),"*.exe"),(_("所有文件"),"*")],)
+        else:
+            file_path = tkinter.filedialog.askopenfilename( initialdir="." ,filetypes=[(_("所有文件"),"*")],)
         
-        if file_path=="":
+        if not file_path:
             self.lift()
-            return 0
-            
+            return
+        
         file_path = os.path.abspath( file_path ) # 统一格式，不然  / \ 混乱
         print(file_path)
         

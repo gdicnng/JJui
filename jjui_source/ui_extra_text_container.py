@@ -55,6 +55,14 @@ key_word_translation_2 = global_static_key_word_translation.extra_text_types_2_t
 # self.new_var_
 # self.new_func_
 
+# 鼠标右击 ，mac 似乎不一样
+if sys.platform.startswith('darwin'): # macos
+    event_mouse_right_click   = r'<Button-2>'
+    event_mouse_right_release = r'<ButtonRelease-2>'
+else:
+    event_mouse_right_click   = r'<Button-3>'
+    event_mouse_right_release = r'<ButtonRelease-3>'
+
 
 class Text_area(ttk.Frame):
     def __init__(self,parent,*args,**kwargs):
@@ -131,9 +139,9 @@ class Text_area(ttk.Frame):
         ""
         # 右键菜单
         if sys.platform.startswith('linux'):
-            self.new_ui_text.bind('<ButtonRelease-3>',self.new_func_bindings_right_click_to_show_menu)
+            self.new_ui_text.bind(event_mouse_right_release,self.new_func_bindings_right_click_to_show_menu)
         else:
-            self.new_ui_text.bind('<ButtonPress-3>',self.new_func_bindings_right_click_to_show_menu)
+            self.new_ui_text.bind(event_mouse_right_click,self.new_func_bindings_right_click_to_show_menu)
 
     
     def new_func_bindings_right_click_to_show_menu(self,event):

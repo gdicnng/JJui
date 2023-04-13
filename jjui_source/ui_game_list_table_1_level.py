@@ -44,6 +44,14 @@ from . import  ui_small_windows
 #The_Columns             = initial_data.columns
 #The_Columns_Translation = data_key_word_translation.columns_translation
 
+# 鼠标右击 ，mac 似乎不一样
+if sys.platform.startswith('darwin'): # macos
+    event_mouse_right_click   = r'<Button-2>'
+    event_mouse_right_release = r'<ButtonRelease-2>'
+else:
+    event_mouse_right_click   = r'<Button-3>'
+    event_mouse_right_release = r'<ButtonRelease-3>'
+
 
 r"""
     
@@ -2229,7 +2237,7 @@ class GameList_5(GameList_4):
         #   鼠标双击
         table.tag_bind("background_rectangle",'<Double-Button-1>', self.new_func_table_binding_double_click,)
         #   鼠标右击
-        table.tag_bind("background_rectangle",'<Button-3>', self.new_func_table_binding_right_click,)
+        table.tag_bind("background_rectangle",event_mouse_right_click, self.new_func_table_binding_right_click,)
 
     # table bindings ，变化大小时，刷新列表
     def new_func_table_binding_resize(self,event):
@@ -2611,20 +2619,20 @@ class GameList_7(GameList_6):
         #table.tag_bind("background_rectangle",'<Button-3>', self.new_func_table_binding_right_click,)
         if sys.platform.startswith('linux'):
             # table
-            self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  lambda event: "break",)
+            self.new_ui_table.tag_bind("background_rectangle",event_mouse_right_click,  lambda event: "break",)
             # 不知道哪里的，一些 binding 会影响到 下面的一条
             # break 一下
             #   估计是 列表刷新 过早，
             #   把 所有元素 都删光了，
             #   tag_bind 的 主体 没有了，ButtonRelease 估计因此 失效了
-            self.new_ui_table.tag_bind("background_rectangle",'<ButtonRelease-3>',  self.new_func_table_show_pop_up_menu_linux,)
+            self.new_ui_table.tag_bind("background_rectangle",event_mouse_right_release,  self.new_func_table_show_pop_up_menu_linux,)
             
             # header
-            self.new_ui_header.bind('<ButtonRelease-3>', self.new_func_header_show_pop_up_menu,"+",)
+            self.new_ui_header.bind(event_mouse_right_release, self.new_func_header_show_pop_up_menu,"+",)
         else:
-            self.new_ui_table.tag_bind("background_rectangle",'<Button-3>',  self.new_func_table_show_pop_up_menu,"+",)
+            self.new_ui_table.tag_bind("background_rectangle",event_mouse_right_click,  self.new_func_table_show_pop_up_menu,"+",)
             
-            self.new_ui_header.bind('<Button-3>', self.new_func_header_show_pop_up_menu,"+",)
+            self.new_ui_header.bind(event_mouse_right_click, self.new_func_header_show_pop_up_menu,"+",)
     # derived
     #   收到 目录 变化 信号 ，游戏列表切换
     #   添加一个标记

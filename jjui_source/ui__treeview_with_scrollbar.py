@@ -1,8 +1,18 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import sys
+import sys
 
 import tkinter as tk
 from tkinter import ttk
+
+# 鼠标右击 ，mac 似乎不一样
+if sys.platform.startswith('darwin'): # macos
+    #event_mouse_right_click   = r'<Button-2>'
+    #event_mouse_right_release = r'<ButtonRelease-2>'
+    event_mouse_right_click_double = r'<Double-Button-2>'
+else:
+    #event_mouse_right_click   = r'<Button-3>'
+    #event_mouse_right_release = r'<ButtonRelease-3>'
+    event_mouse_right_click_double ='<Double-Button-3>'
 
 # self.new_ui_
 # self.new_var_
@@ -403,8 +413,8 @@ class Treeview_with_scrollbar_for_index(ttk.Frame):
         self.new_ui_search_box.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
         self.new_ui_tree.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
         self.new_ui_tree_for_search.bind('<Double-KeyPress-Escape>',self.new_func_search_box_double_esc)
-        # double Button-2
-        self.new_ui_search_box.bind('<Double-Button-3>',self.new_func_search_box_double_esc)
+        # 鼠标右键双击，可能方便点
+        self.new_ui_search_box.bind(event_mouse_right_click_double,self.new_func_search_box_double_esc)
         # Return
         self.new_ui_search_box.bind('<KeyPress-Return>',self.new_func_search_box_return)
 

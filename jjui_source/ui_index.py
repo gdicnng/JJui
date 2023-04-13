@@ -22,6 +22,14 @@ from . import ui_small_windows
 from .ui_misc import misc_funcs
 from . import misc
 
+# 鼠标右击 ，mac 似乎不一样
+if sys.platform.startswith('darwin'): # macos
+    event_mouse_right_click   = r'<Button-2>'
+    event_mouse_right_release = r'<ButtonRelease-2>'
+else:
+    event_mouse_right_click   = r'<Button-3>'
+    event_mouse_right_release = r'<ButtonRelease-3>'
+
 
 # 添加外部目录
 # 外部目录 就保留 图标列，用 iid 标记类型，其它的不要了
@@ -122,14 +130,14 @@ class GameIndex(Treeview_with_scrollbar):
         
         # 右键菜单
         if sys.platform.startswith('linux'):
-            self.new_ui_tree.bind('<ButtonRelease-3>',self.new_func_index_bindings_right_click)
+            self.new_ui_tree.bind(event_mouse_right_release,self.new_func_index_bindings_right_click)
             # 搜索结果处
-            self.new_ui_tree_for_search.bind('<ButtonRelease-3>',self.new_func_index_for_search_bindings_right_click)
+            self.new_ui_tree_for_search.bind(event_mouse_right_release,self.new_func_index_for_search_bindings_right_click)
 
         else:
-            self.new_ui_tree.bind('<ButtonPress-3>',self.new_func_index_bindings_right_click)
+            self.new_ui_tree.bind(event_mouse_right_click,self.new_func_index_bindings_right_click)
             # 搜索结果处
-            self.new_ui_tree_for_search.bind('<ButtonPress-3>',self.new_func_index_for_search_bindings_right_click)
+            self.new_ui_tree_for_search.bind(event_mouse_right_click,self.new_func_index_for_search_bindings_right_click)
         
 
         self.new_ui_tree.bind_all(r"<<RequestForIndexInfo>>",self.new_func_index_for_receive_virtual_event_RequestForIndexInfo)
