@@ -20,53 +20,6 @@ jobs:
       with:
         python-version: "3.10"
     
-    - name: show python version
-      run: |
-        python -V -V
-    
-    - name: Variables
-      run: |
-        echo ......
-        echo ......
-        echo runner.name
-        echo ${{ runner.name }}
-        
-        echo RUNNER OS
-        echo $RUNNER_OS
-        echo ${{ runner.os }}
-        
-        echo RUNNER ARCH
-        echo $RUNNER_ARCH
-        echo ${{ runner.arch }}
-        
-        echo ......
-        echo ......
-        echo github event_name
-        echo ${{ github.event_name }}
-        
-        echo push ref
-        echo github event ref
-        echo ${{ github.event.ref }}
-        
-        echo GITHUB_REF_NAME
-        echo $GITHUB_REF_NAME%
-        echo ${{ github.ref_name }}
-        
-    - name: path
-      run: |
-        echo ......
-        echo pwd
-        pwd
-        echo ......
-        echo ls -l
-        ls -l
-        echo ......
-        echo whereis 7z
-        whereis 7z
-        echo ......
-        echo PATH
-        echo $PATH
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -75,15 +28,17 @@ jobs:
         python -m pip install pillow
         python -m pip install pyinstaller
     
-    - name: pyinstaller to exe
+    - name: pyinstaller to executable
       run: source .mac_pyinstaller.sh
-    - name: 7z
+      
+    - name: tar 7z
       run: |
-        7z a -t7z "JJui_test.7z" ./dist/*
+        tar -cf JJui.tar dist
+        7z a -t7z "JJui.7z" JJui.tar
         ls -l
+        
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        name: JJui_test
-        path: JJui_test.7z
-      
+        name: JJui
+        path: JJui.7z

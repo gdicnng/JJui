@@ -23,7 +23,8 @@ the_command_string=( ${the_command_string[@]} --add-data ./folders:folders )
 fi
 
 # --windowed 
-the_command_string=( ${the_command_string[@]} --windowed  )
+# This option is ignored on *NIX systems.
+# the_command_string=( ${the_command_string[@]} --windowed  )
 
 # --clean
 the_command_string=( ${the_command_string[@]} --clean  )
