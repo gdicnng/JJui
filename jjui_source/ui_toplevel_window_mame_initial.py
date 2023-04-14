@@ -164,7 +164,7 @@ class Toplevel_Window(tk.Toplevel):
         if sys.platform.startswith('win'):
             file_path = tkinter.filedialog.askopenfilename( initialdir="." ,filetypes=[( _(".exe 文件"),"*.exe"),(_("所有文件"),"*")],)
         else:
-            file_path = tkinter.filedialog.askopenfilename( initialdir="." ,filetypes=[(_("所有文件"),"*")],)
+            file_path = tkinter.filedialog.askopenfilename( initialdir="." ,)
         
         if not file_path:
             self.lift()
