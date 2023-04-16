@@ -16,8 +16,8 @@ jobs:
     
     - name: pyinstaller to executable
       run: |
-        python --version
-        python -m pip list
+        python3 --version
+        python3 -m pip list
       
       
 
