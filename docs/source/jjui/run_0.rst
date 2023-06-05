@@ -19,7 +19,7 @@
 	不了解 python 的使用方法，但仍想偿试一下：
 	  回到目录处，查看 对于 python 使用方面的简短说明。
 	
-	如果了解 python ，也可以去看一下，写 JJui 时：
-	  我用的 python 版本；
-	  使用了哪些第三库。
+	如果了解 python ：
+	  使用了第三库 pillow ，需要自行安装。
+	  UI 界面用的 python 内置的 tkinter 库。如果 windows 操作系统上，基本不用管，tkinter 包含在 python 的安装包中。
 

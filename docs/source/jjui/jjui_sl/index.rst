@@ -9,3 +9,4 @@ JJui_sl 补充
    
    jjui_sl
    jjui_sl_setting
+   use_mame

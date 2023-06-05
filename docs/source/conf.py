@@ -56,7 +56,7 @@ exclude_patterns = []
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
-html_theme = 'sphinx_rtd_theme'
+#html_theme = 'sphinx_rtd_theme'
 #html_theme = 'python_docs_theme'
 #html_theme = 'classic'
 #html_theme = 'sphinxdoc'

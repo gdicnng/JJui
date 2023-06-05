@@ -35,29 +35,14 @@ JJui 街机游戏列表显示器
 
 以下是预览图：
 
-如下图：内置主题 clam 。内置主题，有几个不同的可以选择。
+内置主题，有几个不同的可以选择。如下图：内置主题 clam 。
 
 .. image:: images/001_preview_1.png
    :alt: 此处应显示图片
 
-除了内置的主题，还有第三方的主题，也可以使用。如下图：
+除了内置的主题，还有一些第三方的主题，也可以使用。如下图：
 
 .. image:: images/001_preview_2.png
-   :alt: 此处应显示图片
-
-下面，也是第三方的主题：
-
-.. image:: images/001_preview_3.png
-   :alt: 此处应显示图片
-
-下面，也是第三方的主题：
-
-.. image:: images/001_preview_4.png
-   :alt: 此处应显示图片
-   
-下面，也是第三方的主题：
-   
-.. image:: images/001_preview_5.png
    :alt: 此处应显示图片
 
 …… ……
