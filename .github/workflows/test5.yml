@@ -47,4 +47,5 @@ jobs:
       with:
         name: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
         path: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
+      # ${{ github.ref_name }} The short ref name of the branch or tag that triggered the workflow run.
       

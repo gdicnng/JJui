@@ -1,4 +1,4 @@
-name: Release test x86 and x64
+name: Windows Release Test
 
 on:
   push:
@@ -7,11 +7,14 @@ on:
 
 jobs:
   jobs_1: # build exe 
-    runs-on: windows-2019 # windows-latest or windows-2022
     
     strategy:
       matrix:
-        architecture: [ x86 , x64 ]
+        architecture: [ x86 , x64 ] # python
+        python_version: [ "3.10","3.11" ] # python version
+        os: [ windows-2019, windows-2022] # windows-latest or windows-2022
+    
+    runs-on: ${{ matrix.os }} 
     
     defaults:
       run:
@@ -21,59 +24,12 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
     
-    - name: Set up Python 3.10
+    - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: "3.10"
+        python-version: ${{ matrix.python_version }}
         architecture: ${{ matrix.architecture }}
-    
-    - name: show python version
-      run: |
-        python -V -V
-    
-    - name: Variables
-      run: |
-        echo ......
-        echo ......
-        echo runner.name
-        echo ${{ runner.name }}
         
-        echo RUNNER OS
-        echo %RUNNER_OS%
-        echo ${{ runner.os }}
-        
-        echo RUNNER ARCH
-        echo %RUNNER_ARCH%
-        echo ${{ runner.arch }}
-        
-        echo ......
-        echo ......
-        echo github event_name
-        echo ${{ github.event_name }}
-        
-        echo push ref
-        echo github event ref
-        echo ${{ github.event.ref }}
-        
-        echo GITHUB_REF_NAME
-        echo %GITHUB_REF_NAME%
-        echo ${{ github.ref_name }}
-        
-    - name: path
-      run: |
-        echo ......
-        echo cd
-        cd
-        echo ......
-        echo dir
-        dir
-        echo ......
-        echo where 7z
-        where 7z
-        echo ......
-        echo path
-        path
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -87,13 +43,13 @@ jobs:
         call .windows_build_exe_use_pyinstaller.bat
     - name: 7z
       run: |
-        7z a -t7z "JJui_${{ github.ref_name }}_${{ runner.os }}_${{ matrix.architecture }}.7z" .\dist\*
+        7z a -t7z "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
         dir
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        name: artifacts_${{ matrix.architecture }}
-        path: "JJui_${{ github.ref_name }}_${{ runner.os }}_${{ matrix.architecture }}.7z"
+        name: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
+        path: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
       
         
 

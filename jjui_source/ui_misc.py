@@ -137,38 +137,109 @@ class Misc_functions():
                 # global_variable.root_window.focus_set()
                 # 这能管用吗 算球了，反正 iconify() 暂时有效
             
+            def window_withdraw():
+                global_variable.root_window.iconify() #
+                global_variable.root_window.withdraw()
+                #global_variable.root_window.wm_state("withdrawn")
+            def window_show_again():
+                global_variable.root_window.deiconify()
+                
+                # 列表要不要刷新一下？
+                    # 应该不用了
+                #global_variable.root_window.update()
+                    # 不能刷新太早了
+                    # 太早，不可见时，设置的　刷新无效
+                    # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
+                
+                global_variable.root_window.lift()
+                
+                self.set_ui_to_topmost()
+                
+                # focus_set
+                try:
+                    global_variable.the_showing_table.focus_set()
+                except:
+                    pass
             
-            global_variable.root_window.iconify() #
-            global_variable.root_window.withdraw()
-            #global_variable.root_window.wm_state("withdrawn")
             
-            proc = subprocess.Popen(
-                    command_list,
-                    shell=shell,
-                    cwd=cwd
-                    )
+            window_withdraw()
             
-            proc.wait()
-            global_variable.root_window.deiconify()
+            # returncode 不为 0 时，显示报错信息
+            if global_variable.user_configure_data["show_error_info"]:
+                proc = subprocess.Popen(
+                        command_list,
+                        shell=shell,
+                        cwd=cwd,
+                        # stdout=subprocess.PIPE, # 不记录这个
+                        stderr=subprocess.PIPE, 
+                        )
+                
+                outs, errs = proc.communicate()
+                
+                window_show_again()
+                
+                # returncode 不为 0 时
+                # 显示 报错信息
+                if (proc.returncode!=0) and errs:
+                    # errs 编码 
+                    # mame 运行时，应该是程序输出的编码
+                    # ？？ shell=True 时 参数设置错误，程序未运行成功，命令行报错时，应该是命令行使用的编码
+                    # 编码还不一样
+                    
+                    def bytes_to_string(errs):
+                        encoding_list=[]
+                        
+                        if global_variable.user_configure_data["encoding"]:
+                            encoding_list.append( global_variable.user_configure_data["encoding"] )
+                        
+                        if not encoding_list:
+                            encoding_list.append('utf_8_sig') # mame 应该是这个
+                        
+                        if sys.platform.startswith('win32'):
+                            if 'mbcs' not in encoding_list: # ansi
+                                # mameplus 可能是这个
+                                # 另外
+                                # 如果程序没有设置正确，命令行报错，估计是这个
+                                encoding_list.append('mbcs')
+                        
+                        text=None
+                        for encoding in encoding_list:
+                            try:
+                                text=errs.decode(encoding=encoding)
+                                print(encoding)
+                                break
+                            except:
+                                text=None
+                        
+                        # 默认 
+                        # 已经设置的值 或者 utf_8_sig
+                        if text is None:
+                            
+                            if global_variable.user_configure_data["encoding"]:
+                                encoding = global_variable.user_configure_data["encoding"]
+                            else:
+                                encoding = 'utf_8_sig'
+                            
+                            text = errs.decode(encoding=encoding, errors='replace')
+                        
+                        return text
+                        
+                    text = bytes_to_string(errs)
+                    messagebox.showerror(title="stderr",message=text)
             
-            # 列表要不要刷新一下？
-                # 应该不用了
-            #global_variable.root_window.update()
-                # 不能刷新太早了
-                # 太早，不可见时，设置的　刷新无效
-                # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
-            
-            global_variable.root_window.lift()
-
-            # focus_set
-            try:
-                global_variable.the_showing_table.focus_set()
-            except:
-                pass
-            
-            self.set_ui_to_topmost()
+            # 不显示报错信息
+            else:
+                proc = subprocess.Popen(
+                        command_list,
+                        shell=shell,
+                        cwd=cwd
+                        )
+                
+                proc.wait()
+                
+                window_show_again()
         
-        else:
+        else: # 打开游戏，不隐藏 UI
             subprocess.Popen(
                     command_list,
                     shell=shell,

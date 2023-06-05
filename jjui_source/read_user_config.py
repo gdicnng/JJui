@@ -166,6 +166,8 @@ def get_configure_file_default_value( ):
         # Ture False , 
         # subprocess.Popen() 函数中，windows 中用 True
         
+        ("show_error_info",True ),
+        
         ("high_dpi",0 ),
         
         ("encoding","" ),
@@ -426,6 +428,7 @@ def get_configure_file_value( file_name ):
         "unavailable_mark",
         "use_locale_sort",
         "keep_track_of_the_select_item",
+        "show_error_info",
         ):
         if x in ini_data:
             # 字符 转为 bool

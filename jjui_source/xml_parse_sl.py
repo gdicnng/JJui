@@ -102,11 +102,21 @@ def read_xml( file_name ):
                         
                         # alt_title
                         # <info name="alt_title" value="神宮館'89電脳九星占い"/>
+                        # 可能有多个值 用逗号连接
                         elif grand_child.tag == "info":
                             if "name" in grand_child.attrib:
                                 if grand_child.attrib["name"]=="alt_title":
                                     if "value" in grand_child.attrib:
-                                        temp_dict["alt_title"] = grand_child.attrib["value"]
+                                        if grand_child.attrib["value"]:
+                                            
+                                            # 已有值，逗号连接
+                                            if "alt_title" in temp_dict:
+                                                temp_dict["alt_title"] += ","
+                                                temp_dict["alt_title"] += str(grand_child.attrib["value"])
+                                            # 初始
+                                            else:
+                                                temp_dict["alt_title"] = str(grand_child.attrib["value"])
+
                             
                     
                     # 清理

@@ -5,7 +5,7 @@
 
 from . import global_variable
 
-version_string=r"JJui (v.2.1.03 test)"
+version_string=r"JJui (v.2.1.04 test)"
 title_string = _(r"MAME 街机游戏列表显示器")
 if global_variable.gamelist_type == "softwarelist":
     title_string= _(r"MAME Software List(软件列表)")
