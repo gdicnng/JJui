@@ -234,11 +234,18 @@ def window_for_gamelist_filter():
                         #id_1 = "supported"
                         id_2 = the_key.split(" ",1)[1]
                         temp_set.update( misc.get_id_list_from_internal_index("supported",id_2) ) 
-                    
-        global_variable.filter_set = temp_set
-        if not global_variable.filter_set:
+        
+        if not temp_set:
             print("")
             print("choose nothing")
+        
+        # 屏蔽项目，菜单里选择的
+        if temp_set:
+            global_variable.filter_set.update( temp_set )
+        
+        # 屏蔽项目，初始 屏蔽文件里包含的
+        if global_variable.all_hide_list:
+            global_variable.filter_set.update( global_variable.all_hide_list )
         
         #
         request_for_index_info()

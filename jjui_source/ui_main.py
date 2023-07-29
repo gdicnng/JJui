@@ -222,7 +222,7 @@ def main():
             available_game_list_data = set()
         
         
-        # 拥有列表，自定义过滤文本
+        # 拥有列表，屏蔽，自定义过滤文本
         hide_file = the_files.file_txt_hide_gamelist_available
         available_hide_set = set()
         if os.path.isfile( hide_file ):
@@ -232,44 +232,68 @@ def main():
                 lines = text_file.readlines()
             
             temp = []
-            #search_str = r'^\s*(\S.*?)\s*$'
-            search_str = r'^(.+)$'
-            p=re.compile( search_str, )
             
             for line in lines:
                 
                 line = line.strip()
                 
-                if not line:
-                    continue
+                if line:
+                    temp.append( line.lower() ) # 转小写
+            
+            if temp:
+                available_hide_set = set(temp) & game_list_data['set_data']['all_set']
+                print()
+                print("hide_set")
+                print( len(available_hide_set) )
+                print()
                 
-                m=p.search( line ) 
-                if m:
-                    temp.append( m.group(1).lower() ) # 转小写
-            
-            available_hide_set = set(temp) & game_list_data['set_data']['all_set']
-            print()
-            print("hide_set")
-            print( len(available_hide_set) )
-            print()
-            
-            # 记录
-            global_variable.available_hide_set = available_hide_set
+                # 记录
+                global_variable.available_hide_set = available_hide_set
         
-        
-        
-        
-        
-        
-        # 初始化过滤项
+        # 拥有列表 菜单中选择的 过滤项目，程序启动时 从配置文件读取值
         # 仅 mame ，比如 bios 、devices、机械类 等
         if global_variable.gamelist_type == "softwarelist":
             pass
         else:
             misc_funcs.initial_available_filter_set()
         
+        # 记录 拥有列表 
         misc_funcs.set_available_gamelist(available_game_list_data,need_save=False)
-
+        
+        
+        # 所有列表，屏蔽，自定义过滤文本
+        hide_file_all = the_files.file_txt_hide_gamelist_all
+        hide_list_all = []
+        if os.path.isfile( hide_file_all ):
+            lines=[]
+            
+            with open(hide_file_all, 'rt',encoding='utf_8_sig') as text_file :
+                lines = text_file.readlines()
+            
+            temp = []
+            
+            for line in lines:
+                
+                line = line.strip()
+                
+                if line :
+                    temp.append( line.lower() )# 转小写
+            
+            if temp :
+                hide_list_all = list( set(temp) & game_list_data['set_data']['all_set'] )
+                print()
+                print("hide_list_all")
+                print( len(hide_list_all) )
+                print()
+            
+                # 记录
+                global_variable.all_hide_list = hide_list_all
+                
+                # 将值同步到 global_variable.filter_set
+                if global_variable.all_hide_list:
+                    global_variable.filter_set.update( global_variable.all_hide_list )
+        
+        
         #root.deiconify()
         
         

@@ -57,9 +57,13 @@ if global_variable.gamelist_type == "softwarelist":
     file_pickle_gamelist_available= os.path.join(folder_temporary ,"cache_available_sl.bin") 
 
 # 拥有列表，需要隐藏的
+# 所有列表，需要隐藏的
 file_txt_hide_gamelist_available   =   os.path.join(folder_temporary ,"hide_list.txt")
+file_txt_hide_gamelist_all         =   os.path.join(folder_temporary ,"hide_list_all.txt")
 if global_variable.gamelist_type == "softwarelist":
     file_txt_hide_gamelist_available   =   os.path.join(folder_temporary ,"hide_list_sl.txt")
+    file_txt_hide_gamelist_all         =   os.path.join(folder_temporary ,"hide_list_all_sl.txt")
+
 
 # 游戏列表翻译
 # 两个都保留

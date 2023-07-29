@@ -113,18 +113,32 @@ external_index={}
 #   编辑外部目录时，用一下（在列表右键菜单功能里）
 # .ini .sl_ini
 ############################
+
 # 拥有列表
 available_set = set()
+
 # 未拥有列表
 unavailable_set = set()
-# 过滤列表
+
+# 屏蔽列表，一直不显示
 available_hide_set = set()
-# 拥有列表 其它过滤项 
+    # hide_list.txt      拥有列表 屏蔽项目
+all_hide_list = list()
+    # hide_list_all.txt  全局列表 屏蔽项目
+
+# 拥有列表 过滤项 （在菜单中选择的过滤项目）
+available_filter_set = set() 
     # 仅 mame
-    # 过滤 bios 、devices、机械 等
-available_filter_set = set()
-filter_set = set() # 全局过滤，每一次初始化为空
-filter_list = set() # 记录 过滤的项目
+    # 程序启动时，从配置文件，读取选项，初始化 赋值
+    # 配置文件 "filter" 中，记录 项目 ： ['device', 'bios', 'chd', 'softwarelist', 'mechanical']
+
+filter_set = set() 
+    # 全局过滤，不保存
+    # 程序启动时 应 更新到 all_hide_set
+    # 每一次 变化时 （菜单→游戏列表→全局过滤），应清空，更新到 all_hide_set
+filter_list = set() 
+    # 记录 全局过滤的项目
+    # 不保存
 #################################
 # 外置目录，只读
 external_index_sl_by_xml     = {} 
