@@ -30,7 +30,7 @@ a0e63fdcae8c1547364c7d4a3373d0ff *jjui_source\images\plus.xbm
 c3f067bb0c604474bf930e004a6d63e7 *jjui_source\images\weixin.png
 17eb35c9ec001881ec1e70e89268d4d1 *jjui_source\images\yellow.png
 ff917b28cab039f131a0c4113ae0ba23 *jjui_source\images\zhifubao.png
-d3033511c0bacd5b9fd39c2548f097e4 *jjui_source\misc.py
+73d01284c330eb14a0094a6bd44f6388 *jjui_source\misc.py
 09b585d1a2bc9d7d2f2c8be945989dd0 *jjui_source\read_pickle.py
 acecdd48cc78063c403ae3f2fe90e255 *jjui_source\read_user_config.py
 45ecbf1ba11c015d7d8a4f39c6451afc *jjui_source\save_pickle.py
@@ -64,7 +64,7 @@ fedf73a4958380fa21bd5212f27c2496 *jjui_source\ui_translation\english.txt
 fd4d21806c898385901cfda0242dbb88 *jjui_source\ui__window.py
 8b5ae093073e9c4573b1d3b93162d060 *jjui_source\xml_parse_mame.py
 9351309f04292ba9f8a8307e24eaa543 *jjui_source\xml_parse_sl.py
-b5237b1e09fe27b936d83b695bc39533 *jjui_source\_log.txt
+4f0b46255d336cdd6b79069efc710721 *jjui_source\_log.txt
 fd1bde44395460cd059cb6e1756f33a1 *jjui_source\_virtual_event.txt
 290a250ae105346e59c3dc9bddd17316 *jjui_source\__init__.py
 61393e48c7a02d81b2aafb93e08b23ca *JJui.pyw

@@ -127,12 +127,24 @@ def get_id_list_from_external_index_by_source(id_1,id_2=None):
         return temp
     
     if id_2 is None:
-        the_source_list = for_level_1(id_1)
+        temp_list = for_level_1(id_1)
     else:
-        the_source_list = for_level_2(id_1,id_2)
+        temp_list = for_level_2(id_1,id_2)
+    
+    the_source_list=[] # 以源代码分类
+    
+    the_item_list=[] # 将去除的 一些 项目
+    
+    for x in temp_list:
+        if x.startswith("- ") or x.startswith("-\t"):
+            the_item_list.append( x[2:].lower().strip() )
+        else:
+            the_source_list.append(x)
+    
     
     the_id_list = []
     
+    # 1
     internal_index = global_variable.internal_index
     for the_source in the_source_list :
         if "sourcefile" in internal_index:
@@ -140,8 +152,12 @@ def get_id_list_from_external_index_by_source(id_1,id_2=None):
                 if the_source in internal_index["sourcefile"]["children"]:
                     if "gamelist" in internal_index["sourcefile"]["children"][the_source]:
                         the_id_list.extend( internal_index["sourcefile"]["children"][the_source]["gamelist"] )
-
-    return the_id_list
+    
+    # 2 减掉
+    if the_id_list and the_item_list:
+        the_id_list = set(the_id_list) - set(the_item_list)
+    
+    return the_id_list #  list 或 set
 # external_index_by_source      SL
 def get_id_list_from_external_index_sl_by_xml(id_1,id_2=None):
     the_index = global_variable.external_index_sl_by_xml
@@ -163,18 +179,35 @@ def get_id_list_from_external_index_sl_by_xml(id_1,id_2=None):
         return temp
     
     if id_2 is None:
-        the_xml_list = for_level_1(id_1)
+        temp_list = for_level_1(id_1)
     else:
-        the_xml_list = for_level_2(id_1,id_2)
+        temp_list = for_level_2(id_1,id_2)
+    
+    
+    the_xml_list=[] # 以源代码分类
+    
+    the_item_list=[] # 将去除的 一些 项目
+    
+    for x in temp_list:
+        if x.startswith("- ") or x.startswith("-\t"):
+            the_item_list.append( x[2:].lower().strip() )
+        else:
+            the_xml_list.append(x)
+    
     
     the_id_list = []
     
+    # 1
     xml_dict = global_variable.all_data["xml"]
     for xml_name in the_xml_list:
         if xml_name in xml_dict:
             the_id_list.extend(  xml_dict[xml_name]  )
     
-    return the_id_list
+    # 2 减掉
+    if the_id_list and the_item_list:
+        the_id_list = set(the_id_list) - set(the_item_list)
+    
+    return the_id_list # list or set
 # 拥有列表 未拥有列表
 def get_id_list_for_available_or_unavailable(the_type="available_set"):
     the_id_list = [] # 可能为 list 也可能为 set
