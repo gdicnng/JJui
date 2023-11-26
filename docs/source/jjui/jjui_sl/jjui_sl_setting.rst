@@ -14,16 +14,20 @@ JJui_sl 用来显示 software list 列表的。
 ::
 
 	.jjui 文件夹里，新建 emu_sl 文件夹。
-	在此文件夹里，以 xml名（比如 nes） 建立一个文件夹，里面可以有:
+	在此文件夹里，以 hash 文件夹中的 *.xml 的文件名 建立一个文件夹，
+	比如 nes.xml 就用 nes 作为文件夹 名称，里面可以有:
 		.jjui\emu_sl\nes\1.txt
 		.jjui\emu_sl\nes\2.txt
 		.jjui\emu_sl\nes\3.txt
 		.jjui\emu_sl\nes\...
 		.jjui\emu_sl\nes\9.txt
+		.jjui\emu_sl\nes\0.txt
 	对于这一类型来说
 	其中 1.txt 保存的指令，用来，鼠标双击游戏 或 选中游戏按回车键运行游戏，或者 按数字 1 运行游戏。
 	2.txt ，按数字键 2，运行游戏。
-	3.txt 到 9.txt ，同上。
+	3.txt ，按数字键 3，运行游戏。
+	……
+	……
 
 比如对于 nes.xml 中的游戏：
 
@@ -51,51 +55,60 @@ JJui_sl 用来显示 software list 列表的。
 	command %g/%d_cart
 
 简单说明
-::
-
-	1.txt 美版 nes 运行游戏的指令。
-	2.txt 欧版 nespal 运行游戏的指令。
+	
+	1.txt 是美版 游戏机 nes 运行游戏的指令。
+	
+	2.txt 是欧版 游戏机 nespal 运行游戏的指令。
 	
 	其中
 	
 	%mame% ，代表 mame 模拟器。
 	
-	%xml:software% ， xml名称:rom名称。（这是一个变量，不同的游戏，值不同）
+	%xml:software% ， xml名称:rom名称。（这是一个变量，不同的游戏，值不同，比如 nes:smb1）
 	
 	command 后面跟普通指令，普通指令一般有多条
-		-statename %g/%d_cart 是 nes 存档指令，不然的话，所有游戏存档都放在一个位置乱了，不同类型的游戏可能不太一样，具体参考 mame 官方说明
-		两条指令分开来写，一行写一条
+		
+		-statename %g/%d_cart 是 nes 存档指令，
+			
+			| -statename %g/%d_cart
+			| 是一组指令，但有两条指令
+			| 分开来，写两行
+			| -statename 写一行
+			| %g/%d_cart 写一行
+			
+			| 默认的话，所有 nes 游戏存档都放在一个位置，nes 有几千个游戏，太乱了
+			| nes 以外，其它的游戏机，不同类型的游戏可能不太一样，但大致有几大类，具体参考 mame 官方说明
 	
+	| 命令行指令对比：
+	|   美版游戏机 nes ，运行 nes.xml 中的 smb1 (超级马里奥 世界版)
+	|   mame.exe nes -cart nes:smb1 -statename %g/%d_cart
+	| 命令行指令对比：
+	|   欧版游戏机 nespal ，运行 nes.xml 中的 smb (超级马里奥 欧版)
+	|   mame.exe nespal -cart nes:smb -statename %g/%d_cart
 	
-	命令行指令对比：
-		美版游戏机 nes ，运行 nes.xml 中的 smb1 (超级马里奥 世界版)
-		mame.exe nes -cart nes:smb1 -statename %g/%d_cart
-	命令行指令对比：
-		欧版游戏机 nespal ，运行 nes.xml 中的 smb (超级马里奥 欧版)
-		mame.exe nespal -cart nes:smb -statename %g/%d_cart
-	
-	命令行解释一下
-	mame.exe nes -cart nes:smb1 -statename %g/%d_cart
-		mame.exe 模拟器程序
-		nes 表示 游戏机 nes
-		-cart 表示 游戏卡带 类型，和 游戏卡带类型 有关，不同情况下，值不同
-		nes:smb1 ，写的比较详细，表示 nes.xml 中 的 游戏 smb1
-		-statename %g/%d_cart ，存档位置，
-			%g 表示游戏机种名称
-			%d_cart 游戏名称，和 游戏卡带类型 有关，不同情况下，值不同
-			具体可以去 MAME 官方网站上查看一下 statename 这个选项的说明。
-	mame.exe nes -cart nes:smb1 -statename %g/%d_cart
-	这样的指令写得比较详细
-	如果不考虑存档位置的话，指令短一点看起来方便：
-		mame.exe nes -cart nes:smb1
-		甚至
-		mame.exe nes -cart smb1
-		mame.exe nes nes:smb1
-		mame.exe nes smb1
-		0.255版本中试过，都能运行游戏
-		如果是其它 游戏机
-		如果有多种游戏卡带类型的，省略类型，就可能表达不准确
-		如果能同时使用多个xml文件中记录的游戏，省略xml种类，就可能表达不准确
+	| 命令行解释一下
+	| mame.exe nes -cart nes:smb1 -statename %g/%d_cart
+	| 	mame.exe 模拟器程序
+	| 	nes 表示 游戏机 nes
+	| 	-cart 表示 游戏卡带 类型，和 游戏卡带类型 有关，不同情况下，值不同
+	| 	nes:smb1 ，写的比较详细，表示 nes.xml 中 的 游戏 smb1
+	| 	-statename %g/%d_cart ，存档位置，
+	| 		%g 表示游戏机种名称，此处就是指 游戏机 nes
+	| 		%d_cart 游戏名称，和 游戏卡带类型 有关，不同情况下，值不同
+	| 		这时 用 Shift + F7 存档功能的话，会在 存档文件中，建一个 nes 文件夹，其中再建一个 smb1 文件夹，然后存档文件放入其中。
+	| 		具体可以去 MAME 官方网站上查看一下 statename 这个选项的说明。
+	| mame.exe nes -cart nes:smb1 -statename %g/%d_cart
+	| 这样的指令写得比较详细
+	| 如果不考虑存档位置的话，指令短一点看起来方便：
+	| 	mame.exe nes -cart nes:smb1
+	| 	甚至
+	| 	mame.exe nes -cart smb1
+	| 	mame.exe nes nes:smb1
+	| 	mame.exe nes smb1
+	| 	0.255版本中试过，都能运行游戏
+	| 	如果是其它 游戏机
+	| 	如果有多种游戏卡带类型的，省略类型，就可能表达不准确
+	| 	如果能同时使用多个xml文件中记录的游戏，省略xml种类，就可能表达不准确
 
 参数
 ::

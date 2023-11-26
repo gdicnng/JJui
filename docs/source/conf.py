@@ -14,7 +14,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'JJui-docs'
-copyright = '2022, gdicnng'
+copyright = '2023, gdicnng'
 author = 'gdicnng'
 release = '2.0'
 # The full version, including alpha/beta/rc tags
@@ -55,8 +55,8 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
-#html_theme = 'sphinx_rtd_theme'
+#html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 #html_theme = 'python_docs_theme'
 #html_theme = 'classic'
 #html_theme = 'sphinxdoc'
@@ -154,6 +154,7 @@ elif html_theme == 'sphinx_rtd_theme':# inherit  basic
     html_theme_options ={
         # 页面宽度 怎样 不限制 ？
         'collapse_navigation':True,
+        'navigation_depth': 6,
     }
 # SimSun 宋体
 # SimHei 黑体

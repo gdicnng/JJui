@@ -1,3 +1,2 @@
-.wy-nav-content {
-    max-width: none !important;
-}
+.wy-nav-content{max-width: none !important;}
+.rst-content div[class^="highlight"] pre{font-size:1em}

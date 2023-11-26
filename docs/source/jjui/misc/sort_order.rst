@@ -18,7 +18,7 @@
 	
 	locale_name 的值，可以不用设置，默认留空也可以。
 
-电脑操作系统，如果没有选国外的地区，使用本地排序后，默认是拼音排序的。
+操作系统，如果没有选国外的地区，使用本地排序后，默认是拼音排序的。
 
 配置文件  ``jjui.ini`` 中 ``locale_name`` 的值： ::
 	
@@ -33,10 +33,11 @@
 	上面提到的值，zh-CN、zh-CN_stroke 都不是完整的值。
 	不过没有关系，设置这一部分就能用了。
 	
-	locale_name 的值，用于
-		locale.setlocale(locale.LC_COLLATE,值 ) 
-	排序使用的函数：
-		locale.strxfrm()
+	代码备注：
+		locale_name 的值，用于
+			locale.setlocale(locale.LC_COLLATE,值 ) 
+		排序使用的函数：
+			locale.strxfrm()
 
 
 
