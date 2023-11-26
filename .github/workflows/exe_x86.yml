@@ -1,4 +1,4 @@
-name: exe
+name: exe x86
 
 # Pillow > 9.5.0 no longer includes 32-bit wheels.
 
