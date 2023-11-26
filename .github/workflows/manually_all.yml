@@ -1,4 +1,4 @@
-name: manually exe
+name: manually all
 
 on: workflow_dispatch
 
