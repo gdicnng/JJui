@@ -1,0 +1,14 @@
+name: manually exe
+
+on: workflow_dispatch
+
+# {owner}/{repo}/.github/workflows/{filename}@{ref} for reusable workflows in public and private repositories.
+# ./.github/workflows/{filename} for reusable workflows in the same repository
+
+jobs:
+  jobs_1:
+    uses: ./.github/workflows/exe.yml
+  jobs_2:
+    uses: ./.github/workflows/exe_x86.yml
+  jobs_3:
+    uses: ./.github/workflows/docs.yml

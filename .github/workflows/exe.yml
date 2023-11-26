@@ -1,7 +1,15 @@
-name: test5
+name: exe
 
-on: workflow_dispatch
+# Pillow > 9.5.0 no longer includes 32-bit wheels.
 
+# runners
+#   https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+#   windows-2019
+#   windows-2022
+#   or windows-latest
+
+on:
+  workflow_call:
 
 jobs:
   jobs_1: # build exe 
@@ -46,8 +54,3 @@ jobs:
       with:
         name: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
         path: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
-      
-        
-
-
-

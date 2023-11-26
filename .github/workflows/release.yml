@@ -1,5 +1,13 @@
 name: Windows Release Test
 
+# Pillow > 9.5.0 no longer includes 32-bit wheels.
+
+# runners
+#   https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+#   windows-2019
+#   windows-2022
+#   or windows-latest
+
 on:
   push:
     tags:
@@ -7,54 +15,14 @@ on:
 
 jobs:
   jobs_1: # build exe 
-    
-    strategy:
-      matrix:
-        architecture: [ x86 , x64 ] # python
-        python_version: [ "3.10","3.11" ] # python version
-        os: [ windows-2019, windows-2022] # windows-latest or windows-2022
-    
-    runs-on: ${{ matrix.os }} 
-    
-    defaults:
-      run:
-        shell: cmd
-    
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-    
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python_version }}
-        architecture: ${{ matrix.architecture }}
-        
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install --upgrade setuptools
-        python -m pip install --upgrade wheel
-        python -m pip install pillow
-        python -m pip install pyinstaller
-    
-    - name: pyinstaller to exe
-      run: |
-        call .windows_build_exe_use_pyinstaller.bat
-    - name: 7z
-      run: |
-        7z a -t7z "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
-        dir
-    - name: upload
-      uses: actions/upload-artifact@v3
-      with:
-        name: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
-        path: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
-      
-        
-
-  jobs_2: # release
-    needs: jobs_1
+    uses: ./.github/workflows/exe.yml
+  jobs_2:
+    uses: ./.github/workflows/exe_x86.yml
+  jobs_3:
+    uses: ./.github/workflows/docs.yml
+  jobs_last: # release
+    if: ${{ always() }}
+    needs: [jobs_1,jobs_2,jobs_3]
     
     runs-on: windows-latest
     

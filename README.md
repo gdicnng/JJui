@@ -39,7 +39,7 @@ PPXCLUB 发布页面:
 
 ----
 
-releases
+releases 程序发布页面：
 
 >https://github.com/gdicnng/JJui/releases
 
@@ -50,6 +50,13 @@ releases
 >操作系统比较新，生成的 exe 在老版本的操作系统上，可能兼容性不好
 
 >下面百度网盘中，有手动编译的 exe 文件，在老版本操作系统（虚拟机）上 生成 的 exe ，对老系统兼容性更好。
+
+----
+
+第三方主题包：
+>https://github.com/gdicnng/JJui_themes
+
+将 .jjui 文件夹，复制过去
 
 ----
 
