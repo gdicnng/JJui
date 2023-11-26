@@ -6,10 +6,18 @@
    :glob:
    :maxdepth: 4
    
+   rompath
+   
    input_set
    
-   rompath
+   cheat
+   
+   confirm_quit
+   
    window
+   
+   
+   save
    
    option_statename
    

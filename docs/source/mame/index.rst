@@ -35,7 +35,8 @@ MAME 的使用
    
    mame_configure_in_game
    
-   
+   id
+   colour
    
    
    mame_configure/index
