@@ -12,13 +12,24 @@
    
    cheat
    
+   plugins
+   
    confirm_quit
    
    window
+   keepaspect
+   black_side
    
    
    save
    
-   option_statename
+   video
    
+   
+   
+   skip_gameinfo
+   
+   cpu_overclock
+   
+   option_statename
    *

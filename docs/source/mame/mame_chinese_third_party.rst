@@ -101,7 +101,7 @@ mame32k
 
 
 
-Arcade
+Arcade 汉化版
 =======================
 
 Arcade 本身是 英文版的。最近的话，好像一直有大佬出汉化的版本。
@@ -120,7 +120,7 @@ https://arcade.mameworld.info/
 .. image:: images/3rd_party_arcade_cn.png
    :alt: 此处应显示图片
 
-HBMAME
+HBMAME 汉化版
 =========================
 
 HBMAME 本身是英文版的。最近的话，好像一直有大佬出汉化的版本。
