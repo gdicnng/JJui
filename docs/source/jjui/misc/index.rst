@@ -8,8 +8,15 @@ JJui 一些选项设置
    
    delete_data
    themes
-   extra_text_s_index
    translation_file
+   
+   index_search
+   
+   extra_image
+   extra_text_s_index
+   extra_text
+   
+   
    jjui_other_emu
    index_file
    

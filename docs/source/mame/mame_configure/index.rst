@@ -31,5 +31,12 @@
    
    cpu_overclock
    
+   game_option
+   
+   ips
+   
    option_statename
+   
+   neogeo
+   
    *

@@ -1,6 +1,8 @@
 # JJui
 
-JJui 是一个功能简陋的前端，用于显示 MAME 的游戏列表。
+![Image](docs/source/jjui/images/001_preview_1.png)
+
+JJui 是一款功能简陋的前端，用于显示 MAME 的游戏列表。
 >所以，  
 首先得下载一个 MAME ，  
 然后再打开 JJui ，  
@@ -9,22 +11,23 @@ JJui 是一个功能简陋的前端，用于显示 MAME 的游戏列表。
 
 ----
 
-JJui 用来显示 MAME 主列表。
+JJui 用来显示 MAME 主列表。（主要是街机部分）
 
-JJui_sl 用来显示 MAME Software List 。
+JJui_sl 用来显示 MAME Software List 。 (这个使用起来麻烦点，得先设置运行参数，否则运行不了，具体先查看一下说明)
 
 ----
 
 如果使用的是 已经 打包好的 可执行程序，没有什么好说的。
+>但生成的 exe ，没有数字签名什么的（不是专业程序员，不是很了解这东西），杀毒软件容易报毒
 
-如果使用源代码的话，因为程序是用 Python 写的，可以用 Python 3 打开 JJui.pyw 或者 JJui_sl.pyw 。
+如果使用源代码的话，因为程序是用 Python 语言写的，可以用 Python 3 打开 JJui.pyw 或者 JJui_sl.pyw 。需要安装第三方库 pillow 。
 >pillow ：第三方库  
 >>需要在 Python 中 安装上 pillow 。  
 
->tkinter : 内置的库  
->>在 Windows 操作系统上，不用管。
->>>因为 Python 的 Windows 安装包中，已经有了 tkinter ，除非在安装的时候，有意的选择不安装 它。  
->>>另外 embed 版本，不包含 tkinter ，使用完版的安装版 Python 即可。 
+>tkinter : 属于标准库  
+>>Windows 操作系统，官网的 Python 安装包程序已经包含了 tkinter ，安装时，默认已经勾选了这个。
+
+>>Windows 操作系统，有免安装的版本（文件名有 embed ），此版本不包含 tkinter ，这个不行。
 
 ----
 PPXCLUB 发布页面:
