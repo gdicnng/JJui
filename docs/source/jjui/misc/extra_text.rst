@@ -25,6 +25,13 @@ MamePlus 语言包如果比较完整的话，简体中文出招表在这个位�
 	.. image:: images/extra_text_command.png
 	   :alt: 此处应显示图片
 
+注：
+	
+	| 在 JJui 中显示的话，把 中文出扫表 那里 的字体，设为 等宽字体 一类，效果要好一些。
+	| 等宽字体这种，中文字符宽度相等，英文字符宽度相等、两个英文字符宽度 等于 一个中文字符宽度。
+	| 使用等宽字体这一类字体的话，显示的更整齐一些。
+
+
 历史文档 history.dat
 ==========================
 
@@ -73,3 +80,7 @@ http://mameinfo.mameworld.info/
 
 	.. image:: images/extra_text_mameinfo_2.png
 	   :alt: 此处应显示图片
+
+其它 略
+===========
+略

@@ -22,7 +22,7 @@ f6aff224694e6c42498c22d9aff9ed5a *source\jjui\jjui_sl\images\mame_file_manager.p
 341e2aab8de2706f7dbdf9c003a901dc *source\jjui\jjui_sl\images\mame_gamelist_2.png
 104514f6f462abb7d8b19e2bdb447eef *source\jjui\misc\delete_data.rst
 eb2e43eca42149d4f357078e21715a5e *source\jjui\misc\extra_image.rst
-35e7ff65b9b91a49d383b6b9f3798c09 *source\jjui\misc\extra_text.rst
+59cd2136a9fced031234fabd2f7866e2 *source\jjui\misc\extra_text.rst
 5690a7b6e124e0875cad648eb9a255a7 *source\jjui\misc\extra_text_s_index.rst
 3f863a35ca08898692e67eb6f2597477 *source\jjui\misc\icon_colour.rst
 b94b499eac4996c6addce89ea9227763 *source\jjui\misc\index.rst
@@ -190,5 +190,5 @@ ec568420b94f49120062640a2b18ed0a *source\mame\mame_configure\images\window.png
 23dabca8ad356c51f2576d43aa311ad3 *source\mame\mame_configure\images\window_1.png
 12b9cc184e20aee3d669101b55c27887 *source\mame\mame_configure\images\window_noka.png
 a8c449844b60f4df83764a80db9b8705 *source\python\use_python.rst
-1814df82b4792267d705dbea65af1d3c *source\relative_path\relative_path.rst
+7057efade4a39d557e0a82aaf85a9079 *source\relative_path\relative_path.rst
 b50481377d9021543fe46ebf2284963a *source\_static_rtd\custom.css
