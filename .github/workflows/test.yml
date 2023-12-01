@@ -15,8 +15,8 @@ jobs:
   jobs_1: # build exe 
 
     env:
-      file_name_start: ${{    startsWith( github.ref_name, 'v' )  && format( 'JJui_{0}',github.ref_name ) || 'JJui' }}
-      file_name_start2: ${{ (!startsWith( github.ref_name, 'v' )) && format( 'JJui_{0}',github.ref_name ) || 'JJui' }}
+      file_name_start:   ${{    startsWith( github.ref_name, 'v' )  && format( 'JJui_{0}',github.ref_name ) || 'JJui' }}
+      file_name_start_2: ${{ (!startsWith( github.ref_name, 'v' ))  && format( 'JJui_{0}',github.ref_name ) || 'JJui' }}
       # ${{ startsWith( github.ref_name, 'v' ) && github.ref_name || 'other' }}
 
     strategy:
@@ -46,3 +46,4 @@ jobs:
         echo env.file_name_start
         echo ${{ env.file_name_start }}
         echo %file_name_start%
+        echo %file_name_start_2%
