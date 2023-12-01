@@ -9,7 +9,7 @@ name: exe
 #   or windows-latest
 
 on:
-  workflow_call:
+  workflow_call
 
 jobs:
   jobs_1: # build exe 
