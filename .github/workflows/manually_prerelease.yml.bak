@@ -5,6 +5,8 @@ on: workflow_dispatch
 # {owner}/{repo}/.github/workflows/{filename}@{ref} for reusable workflows in public and private repositories.
 # ./.github/workflows/{filename} for reusable workflows in the same repository
 
+# 更新 prerelease 时，源代码部分，没有更新 ，需要完全删除 更新
+
 jobs:
   jobs_1:
     uses: ./.github/workflows/exe.yml
