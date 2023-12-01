@@ -34,13 +34,15 @@ rem others
 set the_command_string=--clean %the_command_string%
 
 
+
+
 rem icon 
 set the_command_string_jjui=%the_command_string% --icon jjui_source\images\for-icon.png
 set the_command_string_jjui_sl=%the_command_string% --icon jjui_source\images\for-icon-2.png
 
 rem --contents-directory CONTENTS_DIRECTORY
-set the_command_string_jjui=%the_command_string% --contents-directory _jjui
-set the_command_string_jjui_sl=%the_command_string% --contents-directory _jjui_sl
+set the_command_string_jjui=%the_command_string_jjui% --contents-directory _jjui
+set the_command_string_jjui_sl=%the_command_string_jjui_sl% --contents-directory _jjui_sl
 
 echo on
 
