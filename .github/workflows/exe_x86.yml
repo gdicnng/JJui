@@ -1,4 +1,4 @@
-name: exe x86
+name: exe x86 x64
 
 # Pillow > 9.5.0 no longer includes 32-bit wheels.
 
@@ -14,11 +14,14 @@ on:
 jobs:
   jobs_1: # build exe 
     
+    env:
+      file_name_start:   ${{    startsWith( github.ref_name, 'v' )  && format( 'JJui_{0}',github.ref_name ) || 'JJui' }}
+    
     strategy:
       matrix:
-        architecture: [ x86 , ] # python x86 ,x64
-        python_version: [ "3.10", ] # python version
-        os: [ windows-2019, ]
+        architecture: [ x86 ,x64 ] # python x86 ,x64
+        python_version: [ "3.10" ,] # python version
+        os: [ windows-2019, ] # windows-2022 
     
     runs-on: ${{ matrix.os }} 
     
@@ -47,10 +50,10 @@ jobs:
         call .windows_build_exe_use_pyinstaller.bat
     - name: 7z
       run: |
-        7z a -t7z "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
+        7z a -t7z "${{ env.file_name_start }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
         dir
     - name: upload
       uses: actions/upload-artifact@v3
       with:
-        name: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
-        path: "JJui_${{ github.ref_name }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
+        name: "${{ env.file_name_start }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}"
+        path: "${{ env.file_name_start }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z"
