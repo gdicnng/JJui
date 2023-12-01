@@ -1,0 +1,10 @@
+name: manually test
+
+on: workflow_dispatch
+
+# {owner}/{repo}/.github/workflows/{filename}@{ref} for reusable workflows in public and private repositories.
+# ./.github/workflows/{filename} for reusable workflows in the same repository
+
+jobs:
+  jobs_1:
+    uses: ./.github/workflows/test.yml
