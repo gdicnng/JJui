@@ -30,6 +30,12 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
       
+    - name: download
+      uses: actions/download-artifact@v3
+      with:
+        path: artifacts 
+        # name 未指定名称，每一个文件，会包含在一个文件夹里      
+      
     - name: prerelease
       uses: softprops/action-gh-release@v1
       with:
