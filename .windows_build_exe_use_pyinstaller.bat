@@ -66,13 +66,13 @@ IF EXIST jjui_source\ui_translation (
 )
 
 rem .jjui
-rem IF EXIST .jjui (
+IF EXIST .jjui (
 	xcopy .jjui %path_JJui%\.jjui /E /H /C /I
 	xcopy .jjui %path_JJui_sl%\.jjui /E /H /C /I
 )
 
 rem folders
-rem IF EXIST folders (
+IF EXIST folders (
 	xcopy folders %path_JJui%\folders /E /H /C /I
 	xcopy folders %path_JJui_sl%\folders /E /H /C /I
 )
@@ -91,5 +91,3 @@ IF EXIST LICENSE (
 		copy /Y LICENSE dist\LICENSE
 		)
 	)
-
-
