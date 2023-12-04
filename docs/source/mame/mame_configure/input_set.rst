@@ -583,19 +583,23 @@ MAME 模拟各种类型的街机游戏。
 
 默认应该是开启了手柄功能的，如果没有效果的话，检查一下手柄选项有没有打开。
 
-具体可以查看一下说明文件，搜一下 joystick
+进入游戏，可能需要重新设置一下按键，游戏中按 Tab 键，弹出菜单，修改按键设置。
 
-命令行操作，在配置文件中搜一下 joystick ，查看说明时可能主要看这些选项::
+有关于 手柄的 更多选项：
 	
-	mame.exe -showconfig | find "joystick"
+	具体可以查看一下说明文件，搜一下 joystick
 	
-	joystick                  1
-	joystick_map              auto
-	joystick_deadzone         0.15
-	joystick_saturation       0.85
-	joystick_threshold        0.3
-	joystick_contradictory    0
-	joystickprovider          auto
+	命令行操作，在配置文件中搜一下 joystick ，查看说明时可能主要看这些选项::
+		
+		mame.exe -showconfig | find "joystick"
+		
+		joystick                  1
+		joystick_map              auto
+		joystick_deadzone         0.15
+		joystick_saturation       0.85
+		joystick_threshold        0.3
+		joystick_contradictory    0
+		joystickprovider          auto
 
 
 
@@ -606,17 +610,21 @@ MAME 模拟各种类型的街机游戏。
 
 默认应该是 关闭了 鼠标 功能的，在选项中找到 鼠标 开关，打开。
 
-具体可以查看一下说明文件，搜一下 mouse
+进入游戏，可能需要重新设置一下按键，游戏中按 Tab 键，弹出菜单，修改按键设置。
 
-命令行操作，在配置文件中搜一下 mouse ，查看说明时可能主要看这些选项::
+有些光枪类的射击游戏的话，没有光枪，可以用鼠标将就一下。
+
+有关于鼠标的更多选项，具体可以查看一下说明文件，搜一下 mouse
 	
-	mame.exe -showconfig | find "mouse"
-	
-	mouse                     0
-	multimouse                0
-	mouse_device              mouse
-	ui_mouse                  1
-	mouseprovider             auto
+	命令行操作，在配置文件中搜一下 mouse ，查看说明时可能主要看这些选项::
+		
+		mame.exe -showconfig | find "mouse"
+		
+		mouse                     0
+		multimouse                0
+		mouse_device              mouse
+		ui_mouse                  1
+		mouseprovider             auto
 
 
 
