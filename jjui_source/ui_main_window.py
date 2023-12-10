@@ -54,15 +54,20 @@ def get_external_index_data(folders_path):
         else:
             ini_files.update( folders_search.search_ini( x ) )
     
-    # 计算分类列表 具体信息
-    for x in ini_files:
-        temp = folders_read.read_folder_ini(x) ## 
-        if temp is None:
-            # 格式错误，只检查了个别错误
-            pass
-        else: 
-            #external_index_data[x] = {} 
-            external_index_data[x] = temp  
+    if ini_files:
+        # 字符过滤一下，节省一点空间
+        folders_read.all_dict={ game_id:game_id for game_id in global_variable.set_data["all_set"] }
+        
+        # 计算分类列表 具体信息
+        for x in ini_files:
+            temp = folders_read.read_folder_ini(x) ## 
+            if temp is None:
+                # 格式错误，只检查了个别错误
+                pass
+            else: 
+                external_index_data[x] = temp  
+        
+        folders_read.all_dict={} # 清理
     
     return external_index_data
 
@@ -159,9 +164,6 @@ def main(game_list_data,root,style):
     external_index=get_external_index_data(global_variable.user_configure_data["folders_path"])
     print("time:",time.time()-time_external_0)
     del time_external_0
- 
-    
-
     # 记录
     global_variable.external_index = external_index
     

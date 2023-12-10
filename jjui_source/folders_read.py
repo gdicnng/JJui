@@ -3,6 +3,14 @@
 # import os
 # import re
 
+all_dict={} 
+# 第三方的目录有点占用体积
+# 都是重复的字符串，game_id
+# 从已有数据过一遍，看看能不能省一点空间
+# 确实省了一点空间
+    # 使用时，赋值 all_dict ={ game_id:game_id for game_id in global_variable.set_data["all_set"] }
+    # 使用完，清理一下，节省空间
+
 # 以 uft8 格式 读取 一个文本
 # 反回 lines [line,line,……]
 # 读取 错语 返回 None
@@ -26,7 +34,9 @@ def read_a_text( file_name ):
     return lines
 
 def read_folder_ini(file_name):
-
+    
+    global all_dict
+    
     temp_dict = {}
     mark = None # 分类 标题
     mark_list = []
@@ -71,7 +81,12 @@ def read_folder_ini(file_name):
             return None
             # 格式出错，内容出现在标题前
         else:
-            temp_dict[mark].append( line.lower() ) # 转为小写
+            game_id =line.lower() # 转为小写
+            
+            if game_id in all_dict: 
+                temp_dict[mark].append( all_dict[game_id] )
+            else:
+                temp_dict[mark].append( game_id )
     
     # 格式错误
     #

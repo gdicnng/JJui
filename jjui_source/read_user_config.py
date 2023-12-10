@@ -268,6 +268,7 @@ def get_configure_file_default_value( ):
         
         ("extra_image_usezip",1),# 0 , 1 ,ttk.Checkbutton    
         ("extra_image_usezip_2",1),# 0 , 1 ,ttk.Checkbutton    
+        ("extra_image_search_file_first",0),# 0 , 1 ,ttk.Checkbutton # 即使使用 zip ，也需要，先搜索 文件
         ("extra_text_use_index_1",1),# 0 , 1 ,ttk.Checkbutton    
         ("extra_text_use_index_2",1),# 0 , 1 ,ttk.Checkbutton            
      
@@ -496,6 +497,7 @@ def get_configure_file_value( file_name ):
               #"use_background_flag",
               
               "extra_image_usezip","extra_image_usezip_2",
+              "extra_image_search_file_first",
               
               "extra_image_chooser_index",
               "extra_image_chooser_2_index",

@@ -22,22 +22,22 @@
 MxUI
 =============
 
-.. image:: images/ui_mxui.png
-   :alt: 此处应显示图片
-
 https://www.ppxclub.com/671046-1-1
+	
+	.. image:: images/ui_mxui.png
+	   :alt: 此处应显示图片
 
 JJui
 ==============
-
-.. image:: images/ui_jjui.png
-   :alt: 此处应显示图片
 
 https://github.com/gdicnng/JJui
 
 https://www.ppxclub.com/705838-1-1
 
 JJui 功能上比较简陋。
+	
+	.. image:: images/ui_jjui.png
+	   :alt: 此处应显示图片
 
 M+GUI
 =======
@@ -48,7 +48,9 @@ MamePlus 配套的 UI 。
 
 M+GUI 1.8.2 : https://www.ppxclub.com/669953-1-1
 
-
+	
+	.. image:: images/ui_mamepgui.png
+	   :alt: 此处应显示图片
 
 不了解的
 ==================

@@ -46,8 +46,11 @@ JJui:
     源代码
         github
         https://github.com/gdicnng/JJui
+    
+    第三方主题：
+        https://github.com/gdicnng/JJui_themes
 
-    在线文档：
+    在线说明：
         readthedocs 的 在线文档 功能，不知道效果怎样
         网址：
         jjui.readthedocs.io
@@ -657,6 +660,22 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_set_extra_delay_time
                 )
         
+        m.add_separator()
+        
+        self.new_var_tk_extra_image_serach_file_first = tk.IntVar() # default value 0
+        # 初始化,需从配置文件中，读取值
+        
+        # 范围 
+        if global_variable.user_configure_data["extra_image_search_file_first"] not in (0,1):
+            global_variable.user_configure_data["extra_image_search_file_first"] = 1
+        self.new_var_tk_extra_image_serach_file_first.set(global_variable.user_configure_data["extra_image_search_file_first"])
+        
+        m.add_checkbutton(
+                label=_("图片，使用 zip 压缩包时，仍然优先搜索普通文件"), 
+                variable = self.new_var_tk_extra_image_serach_file_first ,
+                command=self.new_func_menu_call_back_extra_image_search_file_first,
+                )
+
         m.add_separator()
         
         m.add_command(label=_("周边文档，建目录加速"), 
@@ -1692,7 +1711,12 @@ class MenuBar(ttk.Frame):
         
         
         window.wait_window()
-
+    
+    def new_func_menu_call_back_extra_image_search_file_first(self,):
+        global_variable.user_configure_data["extra_image_search_file_first"] = self.new_var_tk_extra_image_serach_file_first.get()
+        
+        print( global_variable.user_configure_data["extra_image_search_file_first"] )
+    
     # 游戏列表
     def new_func_menu_call_back_choose_mark_unavailable(self,):
         if self.new_var_tk_unavailable_mark.get():

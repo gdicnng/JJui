@@ -42,7 +42,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         prerelease: true
-        tag_name: latest
+        tag_name: new
         files: |
           artifacts/**/*.7z
 

@@ -17,17 +17,37 @@ JJui_sl 用来显示 MAME Software List 。 (这个使用起来麻烦点，得�
 
 ----
 
-如果使用的是 已经 打包好的 可执行程序，没有什么好说的。
->但生成的 exe ，没有数字签名什么的（不是专业程序员，不是很了解这东西），杀毒软件容易报毒
+如果使用的是 已经 打包好的 可执行程序，将程序从压缩包中，解压缩出来，放在某个文件夹中（不要放在权限比较特殊的文件夹中），运行程序。
+
+>生成的 exe ，没有数字签名什么的，杀毒软件容易报毒
+
+----
 
 如果使用源代码的话，因为程序是用 Python 语言写的，可以用 Python 3 打开 JJui.pyw 或者 JJui_sl.pyw 。需要安装第三方库 pillow 。
 >pillow ：第三方库  
 >>需要在 Python 中 安装上 pillow 。  
 
 >tkinter : 属于标准库  
+
 >>Windows 操作系统，官网的 Python 安装包程序已经包含了 tkinter ，安装时，默认已经勾选了这个。
 
 >>Windows 操作系统，有免安装的版本（文件名有 embed ），此版本不包含 tkinter ，这个不行。
+
+关于源代码中的文件
+
+>JJui.pyw 文件，源代码，可以用 python 运行此脚本 ，用于显示 MAME 游戏列表
+
+>JJui_sl.pyw 文件，源代码，可以用 python 运行此脚本，用于显示 MAME Software List 游戏列表（这个使用麻烦，先看说明）
+
+>jjui_source 文件夹，用于存放 其它 源代码，以及 内置的几个小图片
+
+>.jjui 文件夹，用于存放：配置文件 jjui.ini 、游戏列表翻译文件、第三方主题包、……等
+
+>docs 文件夹，说明文件的源代码
+
+>folders 文件夹，放了几个第三方目前的模板文件，不需要的话，删了就行
+
+>其它可以忽略
 
 ----
 PPXCLUB 发布页面:
@@ -69,3 +89,5 @@ releases 程序发布页面：
 >链接：https://pan.baidu.com/s/1guTSDIWr66S6ewIdyMQPjA
 
 >提取码：r9b9 
+
+----

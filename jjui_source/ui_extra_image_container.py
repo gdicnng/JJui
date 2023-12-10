@@ -68,6 +68,7 @@ class Image_area(ttk.Frame):
         # 备用图片,Pillow 格式，使用时需转换
         self.new_var_backup_image      = Image.open( the_files.image_path_image_no )
         self.new_var_backup_image.load()
+        self.new_var_backup_image_used = False
         
         # 当前图片 ,Pillow 格式，使用时需转换
         self.new_var_current_image       = self.new_var_backup_image
@@ -179,14 +180,14 @@ class Image_area(ttk.Frame):
         
     # pillow 格式
     def new_func_set_new_image(self,new_image):
-        try:
-            self.new_var_current_image = new_image
-        except:
-            self.new_var_current_image = self.new_var_backup_image
+        
+        self.new_var_current_image = new_image
         
         canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
         
         self.new_func_show_image(canvas_size)
+        
+        self.new_var_backup_image_used=False
     
     # 文件
     def new_func_set_new_image_from_file(self,file_name):
@@ -198,11 +199,19 @@ class Image_area(ttk.Frame):
         
         canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
         self.new_func_show_image(canvas_size)
+        
+        self.new_var_backup_image_used=False
 
     def new_func_use_backup_image(self,):
-        self.new_var_current_image = self.new_var_backup_image
-        canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
-        self.new_func_show_image(canvas_size)
+        if not self.new_var_backup_image_used:
+            
+            self.new_var_current_image = self.new_var_backup_image
+            canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
+            self.new_func_show_image(canvas_size)
+            
+            self.new_var_backup_image_used=True
+
+
 
     def show_item_number_in_canvas(self,event):
         print()
@@ -350,7 +359,7 @@ class Image_container(ttk.Frame):
             else:
                 self.new_func_show_image_from_folder(item_id)
     
-    def new_func_show_image_from_folder(self,game_name):
+    def new_func_get_image_folder_path(self,):
         n = self.new_ui_image_chooser.current() # 序号 0，1，2，3，……
         
         #image_types
@@ -364,144 +373,145 @@ class Image_container(ttk.Frame):
         temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
         
         #print(temp)
-        temp = temp.replace(r'"',"") # 去掉双引号
+        return temp.replace(r'"',"") # 去掉双引号
+    
+    def new_func_get_image_file_path(self,game_name,folder_path):
         
-        # 扩展名
-        #ext=r'.png'
+        file_path = ''
         
         file_name = self.new_func_get_image_name(game_name)
         #print(file_name)
+        
+        for x in folder_path.split(';') :
+            file_path_to_check = os.path.join(x, file_name)
+            if os.path.isfile(file_path_to_check):
+                file_path=file_path_to_check
+                break
+        
+        return file_path
 
+    def new_func_show_image_from_folder(self,game_name):
         
-        #print( file_name )
+        folder_path = self.new_func_get_image_folder_path()
         
-        result =[]
-        file_path = ''
+        file_path = self.new_func_get_image_file_path(game_name,folder_path)
         
-        for x in temp.split(';') :
-            search_str = os.path.join(x, file_name)
-            #print(search_str)
-            r = glob.glob( search_str )
-            # 搜不到，结果为 []
-            #   不用通配符搜，
-            #    搜到，结果 ['f:\\snap\\snap\\2001tgm.png']
-            #    说明 search_str 路径正确
-            if r : 
-                file_path = search_str
-                break # 找到一个就行了
-        
-        #print(file_path)
-        
-        if file_path =='':
-            # 如果，本身没有找到，找一下主版本
-            # data['set_data'][]
-            # self.data['dict_data']['clone_to_parent'][]
+        if not file_path:
             
-            parent_file_name = None 
-            
+            # 如果没有
+            # 再，搜索一下，主版本
             if game_name in global_variable.dict_data['clone_to_parent']:
-                #print("try parent")
                 parent_name = global_variable.dict_data['clone_to_parent'][game_name]
-                #parent_file_name = parent_name + ext
-                parent_file_name = self.new_func_get_image_name(parent_name)
-                
-                for x in temp.split(';') :
-                    search_str = os.path.join(x, parent_file_name)
-                    #print(search_str)
-                    r = glob.glob( search_str )
-                    # 搜不到，结果为 []
-                    #   不用通配符搜，
-                    #    搜到，结果 ['f:\\snap\\snap\\2001tgm.png']
-                    #    说明 search_str 路径正确
-                    if r : 
-                        file_path = search_str
-                        break # 找到一个就行了                    
-            else: # 本身是主版，pass
-                pass
+                file_path = self.new_func_get_image_file_path(parent_name,folder_path)
         
-        
-        if game_name != global_variable.current_item : return 
-        
-        if file_path == '' :
-            self.new_ui_image_area.new_func_use_backup_image()
-        else:
+        if file_path:
             self.new_ui_image_area.new_func_set_new_image_from_file(file_path)
-
-    def new_func_show_image_from_zip(self,game_name):
-        #print("zip image")
-        #self.new_var_remember_image_zip_path    = None
-        #self.new_var_remember_image_zip_object  = None    
-        
-        n = self.new_ui_image_chooser.current() # 序号 0，1，2，3，……
-
-        # temp 最后为 配置文件记录 的 ，压缩包的 路径
-        
-        temp = image_types[n] # 图片种类 snap,titles,flyers……
-        
-        temp = temp + r".zip_path" # 匹配，配置文件中的名字
-     
-        temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
-    
-        #print(temp)
-        temp = temp.replace(r'"',"") # 去掉双引号
-        
-        #print(temp)
-        
-        if os.path.isfile(temp):
-        # 配置文件中记录的文件，存在
-            pass 
         else:
-        # 配置文件中记录的文件，不存在
-            # 找不到压缩包,
-            # 还得，使用 默认 图片
-            if self.new_var_remember_image_zip_object is not None:
-                
-                try:
-                    self.new_var_remember_image_zip_object.close()
-                except:
-                    pass
-                
-                self.new_var_remember_image_zip_object = None
-            self.new_var_remember_image_zip_path = None
+            self.new_ui_image_area.new_func_use_backup_image()
+
+    def new_func_show_image_from_zip_but_search_file_fisrt(self,game_name,folder_path):
+        
+        file_path = self.new_func_get_image_file_path(game_name,folder_path)
+        
+        if file_path :
+            #print("use file first : ",file_path)
+            self.new_ui_image_area.new_func_set_new_image_from_file(file_path)
+            return True
+        
+    def new_func_show_image_from_zip(self,game_name):
+        
+        search_file = global_variable.user_configure_data["extra_image_search_file_first"]
+        
+        # 优先搜索 普通文件
+        if search_file:
             
+            folder_path=self.new_func_get_image_folder_path() ##
+            
+            if self.new_func_show_image_from_zip_but_search_file_fisrt(game_name,folder_path):
+                return
+        
+        # 然后搜索 .zip 中的文件
+        
+        #self.new_var_remember_image_zip_path    = None
+            # 打开的 zip 文件路径
+        #self.new_var_remember_image_zip_object  = None
+            # 打开的 zip 
+        
+        def get_zip_file_path():
+            n = self.new_ui_image_chooser.current() # 序号 0，1，2，3，……
+            
+            # image_types[n] ,图片种类 snap,titles,flyers……
+            
+            temp = image_types[n] + r".zip_path" # 匹配，配置文件中的名字
+            
+            temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
+            
+            return temp.replace(r'"',"") # 去掉双引号
+        
+        def close_zip_file():
+            try:
+                self.new_var_remember_image_zip_object.close()
+                self.new_var_remember_image_zip_object = None
+                self.new_var_remember_image_zip_path = None
+                print("close zip")
+            except:
+                self.new_var_remember_image_zip_object = None
+                self.new_var_remember_image_zip_path = None
+        
+        def open_zip_file(zip_file_path):
+            try:
+                self.new_var_remember_image_zip_path = zip_file_path
+                self.new_var_remember_image_zip_object = zipfile.ZipFile( self.new_var_remember_image_zip_path , mode='r',  allowZip64=True,)
+                print("open zip :",zip_file_path)
+            except:
+                self.new_var_remember_image_zip_object = None 
+                self.new_var_remember_image_zip_path = None
+        
+        
+        # temp 最后为 配置文件记录 的 ，压缩包的 路径
+        temp = get_zip_file_path()
+        #print(temp)
+        
+        # 如果 zip 压缩包，不存在
+        if not os.path.isfile(temp):
+            #print("file not exist : ",temp)
+            
+            # 如果 zip 压缩包，不存在
+            #   之前已搜过 普通文件本身
+            #   再，搜索一下，普通文件 的主版本
+            if search_file:
+                if game_name in global_variable.dict_data['clone_to_parent']:
+                    parent_name = global_variable.dict_data['clone_to_parent'][game_name]
+                    if self.new_func_show_image_from_zip_but_search_file_fisrt(parent_name,folder_path):
+                        return
+            
+            # 如果 zip 压缩包，不存在
+            #   关闭已经打开的压缩包
+            if self.new_var_remember_image_zip_object is not None:
+                close_zip_file()
+            
+            # 使用 默认 图片
             self.new_ui_image_area.new_func_use_backup_image()
             
             return
         
+        # zip 压缩包文件,存在，则打开压缩包
+            # 还没有打开压缩包时
+        if self.new_var_remember_image_zip_path is None:
+            open_zip_file(temp)
         
-        
-        # 打开压缩包
-        if self.new_var_remember_image_zip_path is not None:# 已经打开压缩包
-            if self.new_var_remember_image_zip_path != temp : 
-            # 但
-            # 记录的 压缩包 位置 ，与 temp 不匹配
-            # 需要重新找开压缩包
+        # zip 压缩包文件,存在，则打开压缩包
+            # 已经打开压缩包
+            # 但,打开的是别的文件，
+            # 比如，切换不同类型图片时；比如，重新设置 zip 路径时
+        elif self.new_var_remember_image_zip_path != temp :
             
-                # zip_object 重置
-                if self.new_var_remember_image_zip_object is not None:
-                    try:
-                        self.new_var_remember_image_zip_object.close()
-                    except:
-                        pass
-                
-                try:
-                    self.new_var_remember_image_zip_path = temp
-                    self.new_var_remember_image_zip_object = zipfile.ZipFile( self.new_var_remember_image_zip_path , mode='r',  allowZip64=True,)
-                except:
-                    
-                    self.new_var_remember_image_zip_object = None 
-                    
-                    self.new_var_remember_image_zip_path = None
-        else:# 还没有找开压缩包
-            # is None
-            # 需要找开压缩包
-            try:
-                self.new_var_remember_image_zip_path = temp
-                self.new_var_remember_image_zip_object = zipfile.ZipFile( self.new_var_remember_image_zip_path , mode='r',  allowZip64=True,)
-            except:
-                self.new_var_remember_image_zip_object = None 
-                self.new_var_remember_image_zip_path = None
-
+            #关闭 旧 zip 文件
+            close_zip_file()
+            
+            #打开 新 zip 文件
+            open_zip_file( temp )
+        
         # 图片名称，如 kof97.png
         file_name = self.new_func_get_image_name_for_zip(game_name)
         
@@ -529,6 +539,11 @@ class Image_container(ttk.Frame):
                     #print("try parent")
                 
                     parent_name = global_variable.dict_data['clone_to_parent'][game_name]
+                    
+                    # 优先搜索 普通文件
+                    if search_file:
+                        if self.new_func_show_image_from_zip_but_search_file_fisrt(parent_name,folder_path):
+                            return
                     
                     #parent_file_name = parent_name + ext
                     parent_file_name = self.new_func_get_image_name_for_zip(parent_name)
