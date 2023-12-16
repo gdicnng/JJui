@@ -17,6 +17,8 @@
 	
 	https://www.ppxclub.com/130735-1-1
 
+也可去其它模拟器相关的网站找一找资源
+
 也可以去下载一个以前的 MamePlus ，
 MamePlus 0.168 版停止更新（2015年），
 可以下载一个 MamePlus 0.168 版。
@@ -30,6 +32,25 @@ MamePlus 语言包如果比较完整的话，简体中文出招表在这个位�
 	| 在 JJui 中显示的话，把 中文出扫表 那里 的字体，设为 等宽字体 一类，效果要好一些。
 	| 等宽字体这种，中文字符宽度相等，英文字符宽度相等、两个英文字符宽度 等于 一个中文字符宽度。
 	| 使用等宽字体这一类字体的话，显示的更整齐一些。
+
+因为此文件是原来 MamePlus 专用的
+	
+	MamePlus 0.168 版停止更新（2015年）
+	
+	在 MamePlus 运行游戏时，按 Tab 键，弹出菜单，可以选择查看出招表
+		
+		.. image:: images/extra_command_mamep_1.png
+	
+	出招表，内容多的话，可能会有目录，在目录中选择需要显示的条目
+		
+		.. image:: images/extra_command_mamep_2.png
+	
+	显示具体的内容
+		
+		.. image:: images/extra_command_mamep_3.png
+
+
+
 
 
 历史文档 history.dat

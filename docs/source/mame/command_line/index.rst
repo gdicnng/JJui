@@ -9,6 +9,11 @@
 
 windows 10 操作系统上自带的命令行有 CMD 和 PowerShell 。
 
+MAME 官网上的说明，很多都是以命令行方式介绍的。
+如果查看 官网说明的话，看到命令行指令不用奇怪。
+
+以下提几条简单的指令。
+
 .. toctree::
    :glob:
    :maxdepth: 2
