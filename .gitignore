@@ -1,0 +1,3 @@
+__pycache__/
+*.sha256
+/docs/*.sha256
