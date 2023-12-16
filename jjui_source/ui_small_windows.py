@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf_8_sig-*-
-#import os
+import os
 import sys
 
 import tkinter as tk
@@ -13,6 +13,7 @@ from . import global_static_filepath as the_files
 from .ui_misc import  misc_funcs
 from . import save_pickle 
 from . import ui__text_with_scrollbar
+from . import ui__treeview_with_scrollbar
 from . import extra_command
 
 # 搜索范围，选择 列
@@ -923,6 +924,364 @@ def show_a_text_widget(line_list,title=None):
 
     window.wait_window()
 
+# 显示参数列表  小窗口 
+def show_command_list_mame(event=None):
+    # mame
+    # 显示两个 treeview
+        # 整体运行参数
+        # 源代码一类运行参数
+    
+    game_id = global_variable.current_item
+    if game_id is None:
+        return
+    print(game_id)
+    
+    title = _("运行参数列表")+" "+game_id
+    
+    the_folder           = the_files.emulator_configure_folder
+    the_folder_by_source = the_files.emulator_configure_folder_by_source # 之后，补全
+    print(the_folder)
+    print(the_folder_by_source)
+    
+    temp_set = {str(n)+".txt" for n in range(10) }
+    # 0.txt 、1.txt 、…… 、9.txt
+    
+    #"sourcefile"
+    show_sourcefile = True # 有可能信息被删了，得检查一下
+    game_info = global_variable.machine_dict[game_id]
+    if "sourcefile" not in global_variable.columns_index:
+        show_sourcefile = False
+    if show_sourcefile:
+        index = global_variable.columns_index["sourcefile"]
+        sourcefile = game_info[index]
+        sourcefile = sourcefile.replace("\\",os.sep)
+        sourcefile = sourcefile.replace("/",os.sep)
+        sourcefile = os.path.splitext(sourcefile)[0]
+        the_folder_by_source = os.path.join(the_folder_by_source,sourcefile)
+        print(sourcefile)
+        print(the_folder_by_source)
+    
+    def get_file_list(folder):
+        file_list = []
+        
+        if not os.path.isdir(folder):
+            return file_list
+        
+        for temp in sorted(temp_set):
+            file_path = os.path.join(folder,temp)
+            if os.path.isfile(file_path):
+                file_list.append(temp)
+        
+        (dirpath, dirnames, filenames) = next( os.walk(folder) )
+        for file_name in filenames:
+            if file_name.lower().endswith(".txt"):
+                if file_name.lower() not in temp_set:
+                    file_list.append( file_name )
+        return file_list
+    
+    def show_window():
+        root = global_variable.root_window
+        
+        window = tk.Toplevel()
+        window.geometry( "500x400" )
+        window.resizable(width=True, height=True)
+        window.title(title)
+        window.lift(root)
+        window.transient(root)
+        window.rowconfigure(0,weight=1)
+        window.columnconfigure(0,weight=1)
+        window.columnconfigure(1,weight=1)
+
+        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container.grid(row=0,column=0,sticky=tk.NSEW)
+        tree = tree_container.new_ui_tree
+        tree.heading("#0",text=_("全体") + "("+the_folder+")")
+        
+        tree_container_2 = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container_2.grid(row=0,column=1,sticky=tk.NSEW)
+        tree2=tree_container_2.new_ui_tree
+        tree2.heading("#0",text=_("源代码分类") + "(" + the_folder_by_source +")")
+        
+        for file_path in file_list:
+            #tree = tree_container.new_ui_tree.insert(parent, index, iid=None, **kw)
+            tree.insert("", 'end', text=file_path)# iid=file_path,
+        
+        if show_sourcefile:
+            for file_path in file_list_by_source:
+                tree2.insert("", 'end', text=file_path)# iid=file_path,
+        
+        def run_the_file(event,hide=True):
+            the_tree = event.widget
+            if the_tree == tree:
+                temp_folder = the_folder
+            #elif the_tree == tree2:
+            else:
+                temp_folder = the_folder_by_source
+            
+            row    = the_tree.identify_row(event.y)
+            region = the_tree.identify_region(event.x,event.y)
+        
+            # 点击到 标题行 或 别地方
+            if row=='':
+                #print("iid empty")
+                pass
+            
+            # 点击到 标题行
+            elif region=="heading" :
+                # 列表 下拉时
+                # 标题栏挡住一行 内容
+                # 此时，.identify_row(event.y) 仍能，标题栏后的一行的 iid
+                # 需排除
+                pass
+            
+            else:
+                #iid = row
+                #print(row)
+                print(the_tree.item(row,"text"))
+                the_file_path = os.path.join(temp_folder,the_tree.item(row,"text"))
+                print(the_file_path)
+                misc_funcs.run_by_file(the_file_path,game_id,hide=hide)
+
+        
+        def run_the_file_ctrl(event,):
+            hide=False
+            run_the_file(event,hide=hide)
+        
+        def close_window(event=None):
+            window.destroy()
+        
+        window.bind('<KeyPress-Escape>',close_window)
+        
+        tree.bind( '<Double-ButtonPress-1>', run_the_file ) 
+        tree2.bind('<Double-ButtonPress-1>', run_the_file ) 
+        
+        tree.bind( '<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        tree2.bind('<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        
+        window.focus_set()
+        
+    file_list = get_file_list(the_folder)
+    if show_sourcefile:
+        file_list_by_source = get_file_list(the_folder_by_source)
+    show_window()
+
+
+# 显示参数列表  小窗口 
+def show_command_list_sl(event=None):
+
+    game_id = global_variable.current_item
+    if game_id is None:
+        return
+
+    title = _("运行参数列表")+" "+ game_id
+    
+    temp = the_files.emulator_configure_folder_sl
+    xml_name,game_name = game_id.split()
+    the_folder = os.path.join(temp,xml_name)
+    
+    temp_set = {str(n)+".txt" for n in range(10) }
+    # 0.txt 、1.txt 、…… 、9.txt
+    def get_file_list(folder):
+        file_list = []
+        
+        if not os.path.isdir(folder):
+            return file_list
+        
+        for temp in sorted(temp_set):
+            file_path = os.path.join(folder,temp)
+            if os.path.isfile(file_path):
+                file_list.append(temp)
+        
+        (dirpath, dirnames, filenames) = next( os.walk(folder) )
+        for file_name in filenames:
+            if file_name.lower().endswith(".txt"):
+                if file_name.lower() not in temp_set:
+                    file_list.append( file_name )
+        return file_list
+    
+    def show_window():
+        root = global_variable.root_window
+        
+        window = tk.Toplevel()
+        window.geometry( "500x400" )
+        window.resizable(width=True, height=True)
+        window.title(title)
+        window.lift(root)
+        window.transient(root)
+        window.rowconfigure(0,weight=1)
+        window.columnconfigure(0,weight=1)
+        #window.columnconfigure(1,weight=1)
+
+        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container.grid(row=0,column=0,sticky=tk.NSEW)
+        tree = tree_container.new_ui_tree
+        tree.heading("#0",text=_("全体") + "("+the_folder+")")
+        
+        #tree_container_2 = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        #tree_container_2.grid(row=0,column=1,sticky=tk.NSEW)
+        #tree2=tree_container_2.new_ui_tree
+        #tree2.heading("#0",text=_("源代码分类") + "(" + the_folder_by_source +")")
+        
+        for file_path in file_list:
+            #tree = tree_container.new_ui_tree.insert(parent, index, iid=None, **kw)
+            tree.insert("", 'end', text=file_path)# iid=file_path,
+        
+        #if show_sourcefile:
+        #    for file_path in file_list_by_source:
+        #        tree2.insert("", 'end', text=file_path)# iid=file_path,
+        
+        def run_the_file(event,hide=True):
+            the_tree = event.widget
+            if the_tree == tree:
+                temp_folder = the_folder
+            #elif the_tree == tree2:
+            else:
+                temp_folder = the_folder_by_source
+            
+            row    = the_tree.identify_row(event.y)
+            region = the_tree.identify_region(event.x,event.y)
+        
+            # 点击到 标题行 或 别地方
+            if row=='':
+                #print("iid empty")
+                pass
+            
+            # 点击到 标题行
+            elif region=="heading" :
+                # 列表 下拉时
+                # 标题栏挡住一行 内容
+                # 此时，.identify_row(event.y) 仍能，标题栏后的一行的 iid
+                # 需排除
+                pass
+            
+            else:
+                #iid = row
+                #print(row)
+                print(the_tree.item(row,"text"))
+                the_file_path = os.path.join(temp_folder,the_tree.item(row,"text"))
+                print(the_file_path)
+                misc_funcs.run_by_file_sl(the_file_path,game_id,hide=hide)
+
+        
+        def run_the_file_ctrl(event,):
+            hide=False
+            run_the_file(event,hide=hide)
+        
+        def close_window(event=None):
+            window.destroy()
+        
+        window.focus_set()
+        
+        tree.bind( '<Double-ButtonPress-1>', run_the_file ) 
+        #tree2.bind('<Double-ButtonPress-1>', run_the_file ) 
+        
+        tree.bind( '<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        #tree2.bind('<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        
+        window.bind('<KeyPress-Escape>',close_window)
+        
+    file_list = get_file_list(the_folder)
+
+    show_window()
+
+# 显示参数列表  小窗口 F1 
+def show_command_list(event=None):
+    if   global_variable.gamelist_type == "mame":
+        show_command_list_mame()
+    elif global_variable.gamelist_type == "softwarelist":
+        show_command_list_sl()
+
+def show_bios_chooser(event=None):
+    print("show_bios_chooser")
+    title="BIOS 选择，仅部分游戏适用"
+    
+    game_id = global_variable.current_item
+    print(game_id)
+    
+    if game_id is None:
+        return
+    
+    
+    
+    bios_list = misc_funcs.get_bios_list(game_id)
+    
+    if not bios_list:
+        bios_list=[]
+    
+    if bios_list:
+        title = game_id + " - " + title
+    
+    print(bios_list)
+    
+    def show_window():
+        root = global_variable.root_window
+        
+        window = tk.Toplevel()
+        window.geometry( "500x400" )
+        window.resizable(width=True, height=True)
+        window.title(title)
+        window.lift(root)
+        window.transient(root)
+        window.rowconfigure(0,weight=1)
+        window.columnconfigure(0,weight=1)
+
+        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container.grid(row=0,column=0,sticky=tk.NSEW)
+        tree = tree_container.new_ui_tree
+        tree.configure(show="tree")
+        
+        for bios_name in bios_list:
+            tree.insert("", 'end', text=bios_name)# iid=bios_name,
+        
+        def run_game(event,hide=True):
+            the_tree = event.widget
+            
+            row    = the_tree.identify_row(event.y)
+            region = the_tree.identify_region(event.x,event.y)
+        
+            # 点击到 标题行 或 别地方
+            if row=='':
+                #print("iid empty")
+                pass
+            
+            # 点击到 标题行
+            elif region=="heading" :
+                # 列表 下拉时
+                # 标题栏挡住一行 内容
+                # 此时，.identify_row(event.y) 仍能，标题栏后的一行的 iid
+                # 需排除
+                pass
+            
+            else:
+                #iid = row
+                #print(row)
+                bios_name = the_tree.item(row,"text")
+                print(bios_name)
+                
+                other_option=[]
+                other_option.append("-bios")
+                other_option.append(bios_name)
+                
+                # 仅用于 mame
+                misc_funcs.call_mame(game_id,other_option=other_option,hide=hide)
+
+        
+        def run_game_ctrl(event,):
+            hide=False
+            run_the_file(event,hide=hide)
+        
+        def close_window(event=None):
+            window.destroy()
+        
+        window.focus_set()
+        
+        tree.bind( '<Double-ButtonPress-1>', run_game ) 
+        
+        tree.bind( '<Control-Double-ButtonPress-1>', run_game_ctrl ) 
+        
+        window.bind('<KeyPress-Escape>',close_window)
+    
+    show_window()
 
 if __name__ =="__main__":
         

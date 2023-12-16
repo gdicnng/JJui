@@ -649,10 +649,7 @@ class GameList_0(ttk.Frame):
         # 初始化
         self.new_var_data_for_StartGame["type"]         = "mame" 
             # 这个一直不变 ,SL 列表 初始化 时，在后面，会为 softwarelist
-        self.new_var_data_for_StartGame["emu_number"]   = -1 # -1 ，表示默认；1-9 用于对应数字键
-        self.new_var_data_for_StartGame["id"]           = None
-        self.new_var_data_for_StartGame["other_option"] = []
-        self.new_var_data_for_StartGame["hide"]         = True
+        self.new_func_set_info_of_StartGame()
 
         # 这个放最后吧
         #self.new_func_ui()
@@ -718,7 +715,27 @@ class GameList_0(ttk.Frame):
     def new_func_bindings(self,):
         pass
     
-
+    
+    def new_func_set_info_of_StartGame(self,item_id=None,emu_number=-1,other_option=None,hide=True,alt=False):
+        #self.new_var_data_for_StartGame["type"]         = "mame" 
+            # mame or softwarelist
+            # 这个一直不变 ,
+        
+        if other_option is None:
+            other_option=[]
+        
+        self.new_var_data_for_StartGame["emu_number"]   = emu_number # -1
+        # -1 ，表示默认；1-9 用于对应数字键
+        
+        self.new_var_data_for_StartGame["id"]           = item_id 
+        self.new_var_data_for_StartGame["other_option"] = other_option
+        self.new_var_data_for_StartGame["hide"]         = hide
+        self.new_var_data_for_StartGame["alt"]          = alt # 仅 mame 
+        
+        print("StartGame info")
+        for k,v in self.new_var_data_for_StartGame.items():
+            print("  ",k.ljust(15)," ",v)
+        
     # 纵向 滚动条，控制 table 
     def new_func_y_scrollbar_changed(self,*args):
         self.new_ui_table.yview(*args)
@@ -2236,6 +2253,7 @@ class GameList_5(GameList_4):
         table.tag_bind("background_rectangle",'<Button-1>', self.new_func_table_binding_single_click )
         #   鼠标双击
         table.tag_bind("background_rectangle",'<Double-Button-1>', self.new_func_table_binding_double_click,)
+        table.tag_bind("background_rectangle",'<Control-Double-Button-1>', self.new_func_table_binding_ctrl_double_click,)
         #   鼠标右击
         table.tag_bind("background_rectangle",event_mouse_right_click, self.new_func_table_binding_right_click,)
 
@@ -2664,23 +2682,30 @@ class GameList_7(GameList_6):
                     command = lambda hide_value=False: self.new_func_table_pop_up_menu_callback_start_game(other_option=["-multikeyboard", ] )
                     )#"-multikeyboard"
         
-        menu_run_other_way = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
+        # 
+        #menu_run_other_way = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
         self.new_ui_pop_up_menu_for_table.add_cascade(
                 label=_("自定义运行方式"),
-                menu=menu_run_other_way
+                command=ui_small_windows.show_command_list
                 )
         ###########
         # 子菜单
-        for number in (1,2,3,4,5,6,7,8,9,0):
-            menu_run_other_way.add_command(
-                    label=str(number),
-                    command = lambda emu_number = number : self.new_func_table_pop_up_menu_callback_start_game( emu_number=emu_number )
-                    )
-        menu_run_other_way.add_command(label=_("需要你自己设定好对应的参数"),state = "disabled")
-        menu_run_other_way.add_command(label=_("按数字键也是一样的"),state = "disabled")
-        menu_run_other_way.add_command(label=_("按 Ctrl + 数字键，将保留 UI"),state = "disabled")
-        menu_run_other_way.add_command(label=_("具体查看说明"),state = "disabled")
+        #for number in (1,2,3,4,5,6,7,8,9,0):
+        #    menu_run_other_way.add_command(
+        #            label=str(number),
+        #            command = lambda emu_number = number : self.new_func_table_pop_up_menu_callback_start_game( emu_number=emu_number )
+        #            )
+        #menu_run_other_way.add_command(label=_("需要你自己设定好对应的参数"),state = "disabled")
+        #menu_run_other_way.add_command(label=_("按数字键也是一样的"),state = "disabled")
+        #menu_run_other_way.add_command(label=_("按 Ctrl + 数字键，将保留 UI"),state = "disabled")
+        #menu_run_other_way.add_command(label=_("具体查看说明"),state = "disabled")
         ###########
+        
+        if global_variable.gamelist_type == "mame" :
+            self.new_ui_pop_up_menu_for_table.add_command(
+                    label=_("BIOS列表选择器(仅适用部分游戏)") ,
+                    command = ui_small_windows.show_bios_chooser,
+                    )
         
         if global_variable.gamelist_type == "mame" :
             self.new_ui_pop_up_menu_for_table.add_separator()
@@ -2704,6 +2729,31 @@ class GameList_7(GameList_6):
             self.new_ui_pop_up_menu_for_table.add_command(
                     label=_("显示roms信息，-listxml -nodtd（同上，去掉文件头）"),
                     command = lambda : self.new_func_table_pop_up_menu_callback_show_info(other_option=["-listxml","-nodtd" ] )
+                    )
+            
+            
+            menu_more_for_list = tk.Menu(self.new_ui_pop_up_menu_for_table,tearoff=0)
+            
+            self.new_ui_pop_up_menu_for_table.add_cascade(
+                    label = _("其它") ,
+                    menu  = menu_more_for_list,
+                        )
+            
+            for x in [
+                    "-listbios"          ,
+                    "-listmedia"         ,
+                    "-listcrc"           ,
+                    "-listsamples"       ,
+                    "-verifysamples"     ,
+                    "-listdevices"       ,
+                    "-listsource"       ,
+                    "-listclones"       ,
+                    "-listbrothers"       ,
+                    "-listslots"       ,
+                    ]:
+                menu_more_for_list.add_command(
+                    label=x,
+                    command = lambda x=x: self.new_func_table_pop_up_menu_callback_show_info(other_option=[x,] )
                     )
         
         self.new_ui_pop_up_menu_for_table.add_separator()
@@ -3042,11 +3092,7 @@ class GameList_7(GameList_6):
         
         item_id = self.new_var_remember_select_row_id
         
-        self.new_var_data_for_StartGame["emu_number"]  = emu_number # 默认 -1
-        self.new_var_data_for_StartGame["id"]          = item_id
-        self.new_var_data_for_StartGame["other_option"]= other_option
-        self.new_var_data_for_StartGame["hide"]        = hide
-        # "type" = "mame"
+        self.new_func_set_info_of_StartGame(item_id=item_id,emu_number=emu_number,other_option=other_option,hide=hide)
 
         self.event_generate(self.new_var_virtual_event_name_StartGame)
 
@@ -3056,11 +3102,13 @@ class GameList_7(GameList_6):
         
         item_id = self.new_var_remember_select_row_id
         
-        self.new_var_data_for_StartGame["emu_number"]  = -1
-        self.new_var_data_for_StartGame["id"]          = item_id
-        self.new_var_data_for_StartGame["other_option"]= other_option
-        #self.new_var_data_for_StartGame["hide"]        = True # 用不着
-        # "type" = "mame"
+        self.new_func_set_info_of_StartGame(
+            item_id=item_id,
+            #emu_number=emu_number, # -1
+            other_option=other_option,
+            #hide=hide,# 用不着
+            #alt=alt,# 用不着
+            )
 
         self.event_generate(self.new_var_virtual_event_name_MameShowInfo)
     
@@ -3378,7 +3426,7 @@ class GameList_9(GameList_8):
     # table binding 鼠标 双击 ( 范围 是 每行的 背景矩形)
     # 1 选择行 ，这个不用了吧，和 鼠标单击 重复了
     # 2 发送信号，打开游戏，待补充
-    def new_func_table_binding_double_click(self,event):
+    def new_func_table_binding_double_click(self,event=None,hide=True):
         #   table.tag_bind("background_rectangle",'<Double-Button-1>', self.new_func_table_binding_double_click,)
         print()
         print("double click")
@@ -3390,20 +3438,23 @@ class GameList_9(GameList_8):
         # 1 选择行 ，这个不用了吧，和 鼠标单击 重复了
         #self.new_func_remember_select_row(item_id,row_number)
         
-        self.new_var_data_for_StartGame["emu_number"]   = -1
-        self.new_var_data_for_StartGame["id"]           = item_id
-        self.new_var_data_for_StartGame["other_option"].clear()
-        self.new_var_data_for_StartGame["hide"]         = True
-            # "id"   = None
-            # "type" = "mame"
-            # "other_option" = []
-            # "hide" = True
+        self.new_func_set_info_of_StartGame(
+            item_id=item_id,
+            # emu_number=emu_number, # -1
+            #other_option=other_option,
+            hide=hide,
+            #alt=alt,
+            )
         
         self.event_generate(self.new_var_virtual_event_name_StartGame)
         
         # focus_set ，单击时已有，双击可以取消了
         # 猛虎 反应 的卡输入法的问题，会不会就在这里 ?
         return "break" 
+    
+    # ctrl + 鼠标 双击
+    def new_func_table_binding_ctrl_double_click(self,event):
+        self.new_func_table_binding_double_click(event=event,hide=False)
 
     def new_func_table_binding_press_enter(self,event,hide=True):
         print()
@@ -3423,10 +3474,13 @@ class GameList_9(GameList_8):
                 item_id = None
             
             if item_id == self.new_var_remember_select_row_id:
-                self.new_var_data_for_StartGame["emu_number"]   = -1
-                self.new_var_data_for_StartGame["id"]           = item_id
-                self.new_var_data_for_StartGame["other_option"].clear()
-                self.new_var_data_for_StartGame["hide"]         = hide
+                self.new_func_set_info_of_StartGame(
+                    item_id=item_id,
+                    #emu_number=emu_number, # -1
+                    #other_option=other_option,
+                    hide=hide,
+                    #alt=alt,
+                    )
                 
                 self.event_generate(self.new_var_virtual_event_name_StartGame)
         else: #    = -1
@@ -4267,8 +4321,30 @@ class GameList_12(GameList_11):
         self.bind("<Control-KeyPress-8>",self.new_func_table_binding_key_ctrl_1_to_9)
         self.bind("<Control-KeyPress-9>",self.new_func_table_binding_key_ctrl_1_to_9)
         self.bind("<Control-KeyPress-0>",self.new_func_table_binding_key_ctrl_1_to_9)
+        
+        self.bind("<Alt-KeyPress-1>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-2>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-3>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-4>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-5>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-6>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-7>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-8>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-9>",self.new_func_table_binding_key_alt_1_to_9)
+        self.bind("<Alt-KeyPress-0>",self.new_func_table_binding_key_alt_1_to_9)
+        
+        self.bind("<Control-Alt-KeyPress-1>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-2>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-3>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-4>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-5>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-6>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-7>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-8>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-9>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
+        self.bind("<Control-Alt-KeyPress-0>",self.new_func_table_binding_key_ctrl_alt_1_to_9)
     
-    def new_func_table_binding_key_1_to_9(self,event):
+    def new_func_table_binding_key_1_to_9(self,event,hide=True,alt=False):
         # 添加 0
         print()
         print("key press : ",event.keysym)
@@ -4287,41 +4363,28 @@ class GameList_12(GameList_11):
         if item_id != self.new_var_list_to_show [ row_number ] :
             return
         
-        self.new_var_data_for_StartGame["emu_number"]   = int(event.keysym)
-        #self.new_var_data_for_StartGame["emu_number"]   = int(event.char)
-        self.new_var_data_for_StartGame["id"]           = item_id
-        self.new_var_data_for_StartGame["other_option"].clear()
-        self.new_var_data_for_StartGame["hide"]         = True
+        self.new_func_set_info_of_StartGame(
+            item_id=item_id,
+            emu_number=int(event.keysym),# int(event.char)
+            #other_option=other_option,
+            hide=hide,
+            alt=alt,
+            )
+        
         
         self.event_generate(self.new_var_virtual_event_name_StartGame)
 
     def new_func_table_binding_key_ctrl_1_to_9(self,event):
-        # 添加 0
-        print()
-        print("key press : Ctrl + ",event.keysym)
-        #print(event.keysym)
-        
-        if not self.new_var_list_to_show :
-            return
-        
-        row_number = self.new_var_remember_select_row_number
-        
-        if row_number < 0 :
-            return
-        
-        item_id    = self.new_var_remember_select_row_id
-        
-        if item_id != self.new_var_list_to_show [ row_number ] :
-            return
-        
-        self.new_var_data_for_StartGame["emu_number"]   = int(event.keysym)
-        #self.new_var_data_for_StartGame["emu_number"]   = int(event.char)
-        self.new_var_data_for_StartGame["id"]           = item_id
-        self.new_var_data_for_StartGame["other_option"].clear()
-        self.new_var_data_for_StartGame["hide"]         = False
-        
-        self.event_generate(self.new_var_virtual_event_name_StartGame)
-
+        print("ctrl + number")
+        self.new_func_table_binding_key_1_to_9(event,hide=False)
+    
+    def new_func_table_binding_key_alt_1_to_9(self,event):
+        print("alt+ number")
+        self.new_func_table_binding_key_1_to_9(event,alt=True)
+    
+    def new_func_table_binding_key_ctrl_alt_1_to_9(self,event):
+        print("ctrl + alt + number")
+        self.new_func_table_binding_key_1_to_9(event,hide=False,alt=True)
 
 # 快速跳转，
 #   仅配匹开头的字符

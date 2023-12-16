@@ -23,6 +23,8 @@ from .ui_game_list_table_2_level_collapse import GameList as GameList_3
 from .ui_extra           import Extra
 from .ui_statesbar       import StatesBar
 
+from .                   import ui_small_windows # 显示 运行参数列表 小窗口
+
 from . import folders_search 
 from . import folders_read 
 from .ui_misc import  misc_funcs
@@ -502,6 +504,9 @@ def main(game_list_data,root,style):
         root.bind("<<MameShowInfo>>",misc_funcs.mame_show_info)
         
         root.bind("<Control-KeyPress-t>",just_for_test)
+        
+        root.bind("<KeyPress-F1>",ui_small_windows.show_command_list)
+
     
     some_bindings()
     

@@ -108,6 +108,7 @@ image_path_icon_minus    = os.path.join(folder_images,"minus.xbm")
 
 emulator_configure_folder    = os.path.join(folder_temporary,"emu")
 emulator_configure_folder_sl = os.path.join(folder_temporary,"emu_sl")
+emulator_configure_folder_by_source    = os.path.join(folder_temporary,"emu_source") # mame 源代码分类
 
 file_pickle_extra_index_history_xml = os.path.join(folder_temporary ,"cache_index_history_xml.bin") 
 if global_variable.gamelist_type == "softwarelist":

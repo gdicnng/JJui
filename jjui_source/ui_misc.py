@@ -5,6 +5,8 @@ import sys
 import subprocess
 import threading
 import re
+import io
+import xml.etree.ElementTree # uni-bios parse
 #import glob
 
 import tkinter as tk
@@ -55,6 +57,7 @@ class Misc_functions():
         game_id      = widget.new_var_data_for_StartGame["id"]
         other_option = widget.new_var_data_for_StartGame["other_option"]
         hide         = widget.new_var_data_for_StartGame["hide"]
+        alt          = widget.new_var_data_for_StartGame["alt"] # 仅 mame
         
         
         print("game_id   :{}".format(game_id))
@@ -64,7 +67,7 @@ class Misc_functions():
             if emu_number   == -1 : # 默认 MAME
                 self.call_mame( game_id, other_option, hide)
             elif emu_number in( 0,1,2,3,4,5,6,7,8,9,):
-                self.get_other_emu_configure(game_id,emu_number,hide)
+                self.get_other_emu_configure(game_id,emu_number,hide,alt)
         
         elif game_type == "softwarelist":
             if emu_number   == -1 : # 默认 值
@@ -116,9 +119,13 @@ class Misc_functions():
         print("")
         print("start_emu_by_subprocess")
         
-        print("command_list \n\t{}".format(command_list))
-        print("cwd \n\t{}".format(cwd))
-        print("shell \n\t{}".format(shell))
+        print("cwd \n\t",cwd)
+        
+        print("command_list")
+        for x in command_list:
+            print("\t",x)
+        
+        print("shell \n\t",shell)
         
         if hide: # 打开游戏，隐藏 UI
             
@@ -142,7 +149,11 @@ class Misc_functions():
                 global_variable.root_window.withdraw()
                 #global_variable.root_window.wm_state("withdrawn")
             def window_show_again():
-                global_variable.root_window.deiconify()
+                root = global_variable.root_window
+                
+                root.iconify()
+                
+                root.deiconify()
                 
                 # 列表要不要刷新一下？
                     # 应该不用了
@@ -151,15 +162,27 @@ class Misc_functions():
                     # 太早，不可见时，设置的　刷新无效
                     # 算了，直接把 列表刷新的条件 table.winfo_viewable() 去掉
                 
-                global_variable.root_window.lift()
                 
-                self.set_ui_to_topmost()
+                root.update()
                 
-                # focus_set
-                try:
-                    global_variable.the_showing_table.focus_set()
-                except:
-                    pass
+                children = root.winfo_children()
+                #print(children)
+                if len(children)==1: # 如果没有其它 子窗口 时
+                    
+                    root.lift()
+                    
+                    #print("just 1")
+                    root.call('wm', 'attributes', '.', '-topmost', True)
+                    # root.attributes("-topmost", True)
+                    #root.update()
+                    #root.call('wm', 'attributes', '.', '-topmost', False)
+                    root.after_idle(root.call, 'wm', 'attributes', '.', '-topmost', False)
+                    
+                    # focus_set
+                    try:
+                        global_variable.the_showing_table.focus_set()
+                    except:
+                        pass
             
             
             window_withdraw()
@@ -246,14 +269,7 @@ class Misc_functions():
                     cwd=cwd
                     )
     
-    def set_ui_to_topmost(self,):
-        root = global_variable.root_window
-        root.update()
-        root.call('wm', 'attributes', '.', '-topmost', True)
-        # root.attributes("-topmost", True)
-        #root.update()
-        #root.call('wm', 'attributes', '.', '-topmost', False)
-        root.after_idle(root.call, 'wm', 'attributes', '.', '-topmost', False)
+
     
     
     def get_mame_path_and_working_directory(self,):
@@ -287,8 +303,105 @@ class Misc_functions():
         
         return (mame_exe , mame_working_directory)
     
-    # start_game mame 1 - 9
-    def get_other_emu_configure(self,item_id,emu_number,hide=True):
+    def get_bios_list(self,machine,cwd=None,mame_path=None):
+        
+        if mame_path is None:
+            mame_path , cwd = self.get_mame_path_and_working_directory()
+        
+        command_list=[]
+        command_list.append(mame_path)
+        command_list.append(machine)
+        command_list.append("-listxml")
+        
+        temp_io = io.BytesIO()
+        temp_string=[]
+        p = subprocess.Popen( command_list, 
+                            shell=global_variable.user_configure_data["use_shell"],
+                            stdout=subprocess.PIPE  , 
+                            stderr=subprocess.PIPE ,
+                            stdin=subprocess.PIPE,
+                            #encoding="utf_8",# python 3.4 不兼容这选项 。同时也不方便检查 gbk
+                            cwd=cwd,
+                            )
+        for line in p.stdout:
+            temp_io.write(line)
+        temp_io.seek(0)
+        #for line in p.stdout:
+        #    temp_string.append( line.decode() )
+        
+        bios_list = []
+        tree = xml.etree.ElementTree.parse(temp_io)
+        root = tree.getroot()
+        #print(root)
+        for child in root:
+            if child.tag in ("machine" ,"game"):
+
+                if( "name" in child.attrib ):
+                    
+                    game_name = child.attrib["name"].strip().lower()
+                    
+                    if game_name==machine:
+                        for grandchild in child:
+                            if grandchild.tag=="biosset" :
+                                if "name" in grandchild.attrib:
+                                    bios_name = grandchild.attrib["name"]
+                                    bios_list.append(bios_name)
+                        break
+        
+        #print(bios_list)
+        return bios_list
+
+    
+    def get_uni_bios_list(self,machine,cwd=None,mame_path=None):
+        
+        bios_list = self.get_bios_list(machine,cwd=cwd,mame_path=mame_path)
+        
+        uni_bios_list =[]
+        
+        if not bios_list:
+            return uni_bios_list
+        
+        for bios_name in bios_list:
+            if "uni" in bios_name.lower():
+                uni_bios_list.append(bios_name)
+        
+        #print(uni_bios_list)
+        return uni_bios_list
+
+    
+    def get_uni_bios_last(self,machine,cwd=None,mame_path=None):
+        uni_bios_list = self.get_uni_bios_list(machine,cwd=cwd,mame_path=mame_path)
+        
+        if not uni_bios_list:
+            return ""
+        
+        uni_bios_list.sort()
+        
+        print("Universe Bios")
+        for x in uni_bios_list:
+            print("\t",x)
+        
+        uni_bios_choosen=""
+        for x in reversed(uni_bios_list):
+            if x.lower().endswith("o"): # 老版本标记
+                pass
+            else:
+                uni_bios_choosen=x
+                break
+        # 默认值
+        if not uni_bios_choosen:
+            uni_bios_choosen=uni_bios_list[-1]
+        
+        if uni_bios_choosen != uni_bios_list[-1]:
+            print("last",uni_bios_list[-1])
+            print("choosen",uni_bios_choosen)
+        else:
+            print(uni_bios_list[-1])
+        
+        return uni_bios_choosen
+    
+    # 参数运行
+    def run_by_file(self,file_path,item_id,hide=True):
         
         # item_id 为 machine
         # emu_number
@@ -297,27 +410,26 @@ class Misc_functions():
         mame_exe , mame_working_directory = self.get_mame_path_and_working_directory()
         
         the_folder = the_files.emulator_configure_folder
-        the_file   = os.path.join(the_folder,str(emu_number)+".txt")
-        # xxxxx\1.txt
-        # xxxxx\2.txt
-        
-        print(the_folder)
-        print(the_file)
+        the_file   = file_path
         
         ##############
         
         if not os.path.isfile(the_file):
+            print("file not exist : ",the_file)
             return
         
+        print("")
+        print("run by file")
+        print(the_file)
         
         command_list = []
         cwd = None
         flag_use_mame = False # 如果用了 mame ，cwd 需要考虑原有值
         
-        
         file_content=[]
         with open(the_file,mode="rt",encoding="utf_8_sig") as f:
             for line in f :
+                line = line.strip()
                 file_content.append(line)
         
         # 自定义部分不要包含空字符，方便后面处理
@@ -332,25 +444,23 @@ class Misc_functions():
         
         # 正则
         
-        #空行
-        str_empty =r'^\s*$'
-        p_empty = re.compile( str_empty , )
+
         
         # 以空字符分隔
         # 内容 
         #   不含 \s
-        str_1 = r'^\s*([^\s]+)\s*$'
+        str_1 = r'^([^\s]+)$'
         p=re.compile(str_1,)
         
         # 内容2
         #   含 \s
-        str_2 = r'^\s*([^\s]+)\s*([^\s].*?)\s*$'
+        str_2 = r'^([^\s]+)\s*([^\s].*)$'
         p2=re.compile(str_2,)
         
         for line in file_content:
-            # 空行测试
-            m=p_empty.search( line ) 
-            if m : 
+            
+            # 注释
+            if line.startswith("#") : 
                 continue
                 
             # 内容行 1 
@@ -361,6 +471,17 @@ class Misc_functions():
                     flag_use_mame = True
                 elif m.group(1) == r"%machine%" :
                     command_list.append(machine)
+                elif m.group(1) == r"%unibios_last%" : # 使用默认 模拟器
+                    uni_bios = self.get_uni_bios_last(machine)
+                    if uni_bios:
+                        command_list.append("-bios")
+                        command_list.append(uni_bios)
+                elif m.group(1) == r"%unibios_last_other%" :# 使用 其它 mame 模拟器
+                    if command_list:
+                        uni_bios = self.get_uni_bios_last(machine,cwd=cwd,mame_path=command_list[0])
+                        if uni_bios:
+                            command_list.append("-bios")
+                            command_list.append(uni_bios)
                 continue
 
             # 内容行 2
@@ -396,7 +517,7 @@ class Misc_functions():
                     )
     
     # start_game SL 1 - 9
-    def get_other_emu_configure_sl(self,item_id,emu_number,hide=True):
+    def run_by_file_sl(self,file_path,item_id,hide=True):
         
         # item_id 为 xml + name
         # emu_number
@@ -406,17 +527,16 @@ class Misc_functions():
         
         mame_exe , mame_working_directory = self.get_mame_path_and_working_directory()
         
-        the_folder = the_files.emulator_configure_folder_sl
-        the_file   = os.path.join(the_folder,xml,str(emu_number)+".txt")
+        the_file   = file_path
         # xxxxx\nes\1.txt
         # xxxxx\nes\2.txt
         
-        print(the_folder)
         print(the_file)
         
         ##############
         
         if not os.path.isfile(the_file):
+            print("file not exist : ",the_file)
             return
         
         
@@ -429,6 +549,7 @@ class Misc_functions():
         file_content=[]
         with open(the_file,mode="rt",encoding="utf_8_sig") as f:
             for line in f :
+                line=line.strip()
                 file_content.append(line)
         
         # 自定义部分不要包含空字符，方便后面处理
@@ -445,25 +566,21 @@ class Misc_functions():
         
         # 正则
         
-        #空行
-        str_empty =r'^\s*$'
-        p_empty = re.compile( str_empty , )
-        
         # 以空字符分隔
         # 内容 
         #   不含 \s
-        str_1 = r'^\s*([^\s]+)\s*$'
+        str_1 = r'^([^\s]+)$'
         p=re.compile(str_1,)
         
         # 内容2
         #   含 \s
-        str_2 = r'^\s*([^\s]+)\s*([^\s].*?)\s*$'
+        str_2 = r'^([^\s]+)\s*([^\s].*)$'
         p2=re.compile(str_2,)
         
         for line in file_content:
-            # 空行测试
-            m=p_empty.search( line ) 
-            if m : 
+            
+            # 注释
+            if line.startswith("#") : 
                 continue
                 
             # 内容行 1 
@@ -475,6 +592,7 @@ class Misc_functions():
                 elif m.group(1) == r"%xml%"      : command_list.append(xml)
                 elif m.group(1) == r"%software%" : command_list.append(software)
                 elif m.group(1) == r"%xml:software%" : command_list.append(xml+r":"+software)
+                
                 continue
 
             # 内容行 2
@@ -492,6 +610,21 @@ class Misc_functions():
                 elif m.group(1) == r"%xml%"      : command_list.append(xml)
                 elif m.group(1) == r"%software%" : command_list.append(software)
                 elif m.group(1) == r"%xml:software%" : command_list.append(xml+r":"+software)
+                
+                elif m.group(1) == r"%unibios_last%" : # 使用默认 模拟器
+                    machine = m.group(2)
+                    uni_bios = self.get_uni_bios_last(machine)
+                    if uni_bios:
+                        command_list.append("-bios")
+                        command_list.append(uni_bios)
+                
+                elif m.group(1) == r"%unibios_last_other%" :# 使用 其它 mame 模拟器
+                    if command_list:
+                        machine = m.group(2)
+                        uni_bios = self.get_uni_bios_last(machine,cwd=cwd,mame_path=command_list[0])
+                        if uni_bios:
+                            command_list.append("-bios")
+                            command_list.append(uni_bios)
         
         # 如果用了 mame
         if flag_use_mame == True:
@@ -511,6 +644,51 @@ class Misc_functions():
                     cwd=cwd,
                     hide=hide,
                     )
+        
+    
+    # start_game mame 1 - 9
+    def get_other_emu_configure(self,item_id,emu_number,hide=True,alt=False):
+        
+        if alt:
+            the_folder_by_source = the_files.emulator_configure_folder_by_source
+            
+            game_info = global_variable.machine_dict[item_id]
+            
+            if "sourcefile" not in global_variable.columns_index:
+                return
+            
+            index = global_variable.columns_index["sourcefile"]
+            sourcefile = game_info[index]
+            sourcefile = sourcefile.replace("\\",os.sep)
+            sourcefile = sourcefile.replace("/",os.sep)
+            sourcefile = os.path.splitext(sourcefile)[0]
+            
+            the_folder = os.path.join(the_folder_by_source,sourcefile)
+            the_file   = os.path.join(the_folder,str(emu_number)+".txt")
+        else:
+            the_folder = the_files.emulator_configure_folder
+            the_file   = os.path.join(the_folder,str(emu_number)+".txt")
+            # xxxxx\1.txt
+            # xxxxx\2.txt
+        
+        self.run_by_file(the_file,item_id,hide=hide)
+
+    
+    # start_game SL 1 - 9
+    def get_other_emu_configure_sl(self,item_id,emu_number,hide=True):
+        
+        # item_id 为 xml + name
+        # emu_number
+        xml      = item_id.split(" ",1)[0]
+        software = item_id.split(" ",1)[1]
+        print()
+        
+        the_folder = the_files.emulator_configure_folder_sl
+        the_file   = os.path.join(the_folder,xml,str(emu_number)+".txt")
+        # xxxxx\nes\1.txt
+        # xxxxx\nes\2.txt
+        
+        self.run_by_file_sl(the_file,item_id,hide=hide)
     
     ###############
     ###############
