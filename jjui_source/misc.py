@@ -1,10 +1,12 @@
 ﻿# -*- coding: utf_8_sig-*-
 import os
 import sys
-
+import zipfile
+import shutil
 
 from . import save_pickle
 from . import global_variable
+from . import global_static
 from . import global_static_filepath as the_files
 from . import xml_parse_mame
 from . import folders_save
@@ -482,6 +484,277 @@ def delete_current_rows_in_game_list(event=None,reverse=False):
     
     # 退出
     sys.exit()
+
+
+# 复制周边
+def get_games_id_of_current_list():
+    the_table = global_variable.the_showing_table
+    
+    if the_table is None:
+        return []
+    
+    return the_table.new_var_data_holder.get_current_list_all_id()
+
+def copy_extra_file_from_folder(id_list,source_folder,destination_folder,ext=None): # ext=".png"
+    
+    if not id_list:
+        return
+    
+    if type(id_list)!=set:
+        id_list=set(id_list)
+    
+    if not os.path.isdir(source_folder):
+        return
+    
+    if ext is not None:
+        ext = ext.lower()
+    
+    def copy_a_file(file_path,file_path_destination):
+        if not os.path.isfile(file_path_destination):
+            try:
+                if not os.path.isdir(destination_folder):
+                    os.makedirs(destination_folder)
+                shutil.copyfile(file_path, file_path_destination)
+            except:
+                pass
+    
+    def copy_a_file_sl(file_path,file_path_destination,sub_destination_folder):
+        if not os.path.isfile(file_path_destination):
+            try:
+                if not os.path.isdir(sub_destination_folder):
+                    os.makedirs(sub_destination_folder)
+                shutil.copyfile(file_path, file_path_destination)
+            except:
+                pass
+    
+    if global_variable.gamelist_type=="mame":
+        
+        (dirpath, dirnames, filenames) = next( os.walk(source_folder) )
+        
+        for file_name in filenames:
+            
+            name_part_1,name_part_2 = os.path.splitext(file_name)
+            
+            # 范围
+            if name_part_1.lower() not in id_list: 
+                continue
+            
+            if ext is not None :
+                if name_part_2.lower() != ext:
+                    continue
+            
+            file_path = os.path.join(dirpath,file_name)
+            
+            file_path_destination = os.path.join(destination_folder,file_name)
+            
+            copy_a_file(file_path,file_path_destination)
+
+    elif global_variable.gamelist_type=="softwarelist":
+        
+        xml_set = set()
+        for game_id in id_list:
+            xml_name ,game_name = game_id.split(" ")
+            xml_set.add(xml_name)
+        
+        for xml_name in xml_set:
+            
+            sub_source_folder      = os.path.join(source_folder,xml_name)
+            sub_destination_folder = os.path.join(destination_folder,xml_name)
+            
+            
+            if not os.path.isdir(sub_source_folder):
+                continue
+            (dirpath, dirnames, filenames) = next( os.walk(sub_source_folder) )
+            
+            for file_name in filenames:
+                
+                name_part_1,name_part_2 = os.path.splitext(file_name)
+                
+                # 范围
+                if xml_name + " " + name_part_1.lower() not in id_list: 
+                    continue
+                
+                if ext is not None :
+                    if name_part_2.lower() != ext:
+                        continue
+                
+                file_path = os.path.join(dirpath,file_name)
+                
+                file_path_destination = os.path.join(sub_destination_folder,file_name)
+                
+                copy_a_file_sl(file_path,file_path_destination,sub_destination_folder)
+
+def copy_extra_file_from_zip(id_list,source_zip_file_path,destination_folder,ext=None): # ext=".png"
+    
+    if not id_list:
+        return
+    
+    if type(id_list)!=set:
+        id_list=set(id_list)
+    
+    if not os.path.isfile(source_zip_file_path):
+        return
+    
+    if ext is not None:
+        ext = ext.lower()
+    
+    if global_variable.gamelist_type=="mame":
+        print()
+        print(source_zip_file_path)
+        with zipfile.ZipFile(source_zip_file_path, mode='r', allowZip64=True) as z1:
+            zip_file_list = z1.namelist()
+            zip_file_list = sorted(zip_file_list)
+            for file_name in zip_file_list:
+                
+                if "/" in file_name:
+                    continue
+                
+                name_part_1,name_part_2 = os.path.splitext(file_name)
+                
+                if name_part_1 not in id_list:
+                    continue
+                
+                if ext is not None:
+                    if name_part_2.lower() != ext:
+                        continue
+                
+                file_path_destination = os.path.join( destination_folder,file_name )
+                
+                if os.path.isfile(file_path_destination):
+                    continue
+                
+                if not os.path.isdir(destination_folder):
+                    os.makedirs(destination_folder)
+                
+                data = z1.read(file_name)
+                with open(file_path_destination,mode="wb") as f:
+                    f.write(data)
+    
+    elif global_variable.gamelist_type=="softwarelist":
+        
+        print()
+        print(source_zip_file_path)
+        with zipfile.ZipFile(source_zip_file_path, mode='r', allowZip64=True) as z1:
+            zip_file_list = z1.namelist()
+            zip_file_list = sorted(zip_file_list)
+            for file_name in zip_file_list:
+                
+                if file_name.endswith("/"):
+                    continue
+                
+                if file_name.count("/") != 1:
+                    continue
+                
+                name_part_1,name_part_2 = os.path.splitext(file_name)
+                
+                xml_name , game_name = name_part_1.split("/",1)
+                
+                game_id = xml_name+ " " + game_name
+                
+                if game_id not in id_list:
+                    continue
+                
+                if ext is not None:
+                    if name_part_2.lower() != ext:
+                        continue
+                
+                file_path_destination = os.path.join(destination_folder,file_name.replace("/",os.sep))
+                
+                if os.path.isfile(file_path_destination):
+                    continue
+                
+                sub_destination_folder=os.path.join(destination_folder,xml_name)
+                
+                if not os.path.isdir(sub_destination_folder):
+                    os.makedirs(sub_destination_folder)
+                
+                data = z1.read(file_name)
+                with open(file_path_destination,mode="wb") as f:
+                    f.write(data)
+
+def copy_extra_images_from_folder():
+    id_list = get_games_id_of_current_list()
+    
+    if not id_list:
+        return
+    
+    if type(id_list)!=set:
+        id_list=set(id_list)
+    
+    print("copy images from folder")
+    print(len(id_list))
+    
+    # 从文件夹复制
+    def fun_1(image_type):
+    
+        temp = image_type + "_path" # 匹配，配置文件中的名字
+        
+        temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
+        
+        temp = temp.replace(r'"',"") # 去掉双引号
+        
+        destination_folder = os.path.join( the_files.folder_export ,image_type )
+        if os.path.isfile(destination_folder): 
+            os.remove(destination_folder)
+        #if not os.path.isdir(destination_folder):
+        #    os.makedirs(destination_folder)
+        #不在这里建文件夹，在这里建，空文件夹太多了
+        
+        if temp:
+            for a_folder in temp.split(";"):
+                if a_folder:
+                    if os.path.isdir(a_folder):
+                        source_folder = a_folder
+                        print("\t",source_folder)
+                        copy_extra_file_from_folder(id_list,a_folder,destination_folder,ext=".png")
+    
+    for image_type in global_static.extra_image_types:
+        # 图片种类 snap,titles,flyers……        
+        print(image_type)
+        fun_1(image_type)
+
+def copy_extra_images_from_zip():
+    id_list = get_games_id_of_current_list()
+    
+    if not id_list:
+        return
+    
+    if type(id_list)!=set:
+        id_list=set(id_list)
+    
+    print("copy images from zip")
+    print(len(id_list))
+    # 从 .zip 复制
+    def fun_1(image_type):
+        temp = image_type + r".zip_path" # 匹配，配置文件中的名字
+        
+        temp = global_variable.user_configure_data[temp] # 从配置文件中，读取路径
+        
+        temp = temp.replace(r'"',"") # 去掉双引号
+        
+        source_zip_file_path = temp
+        if not os.path.isfile(source_zip_file_path):
+            return
+        
+        destination_folder = os.path.join( the_files.folder_export ,image_type )
+        if os.path.isfile(destination_folder): 
+            os.remove(destination_folder)
+        #if not os.path.isdir(destination_folder):
+        #    os.makedirs(destination_folder)
+        #不在这里建文件夹，在这里建，空文件夹太多了
+        
+        print("\t",source_zip_file_path)
+        copy_extra_file_from_zip(id_list,source_zip_file_path,destination_folder,ext=".png")
+
+    for image_type in global_static.extra_image_types:
+        # 图片种类 snap,titles,flyers……        
+        print(image_type)
+        fun_1(image_type)
+
+def copy_extra_images():
+    copy_extra_images_from_folder()
+    copy_extra_images_from_zip()
+
 
 if __name__ == "__main__" :
     pass

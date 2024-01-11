@@ -3,9 +3,11 @@ import sys
 import os
 import webbrowser
 import locale
+import threading
 import tkinter as tk
 from tkinter import ttk 
 import tkinter.filedialog
+import tkinter.messagebox
 
 from PIL import Image, ImageTk
 # Pillow
@@ -471,11 +473,11 @@ class MenuBar(ttk.Frame):
                 command=self.new_func_menu_call_back_set_file_path
                 )
         
-        m.add_separator()
+        # m.add_separator()
 
-        m.add_command(label=_("如果需要清空数据，可以手动删除 .jjui 文件夹下的 *.bin 文件"), 
-                state=tk.DISABLED
-                )
+        # m.add_command(label=_("如果需要清空数据，可以手动删除 .jjui 文件夹下的 *.bin 文件"), 
+        #         state=tk.DISABLED
+        #         )
         
         
         m.add_separator()
@@ -689,6 +691,36 @@ class MenuBar(ttk.Frame):
                     command=ui_small_windows.window_for_extra_command_character
                     )
             m.add_separator()
+        
+        
+        # 范围 
+        self.new_var_tk_extra_image_keep_aspect_ratio = tk.IntVar() # default value 0
+        self.new_var_tk_extra_image_keep_aspect_ratio_2 = tk.IntVar() # default value 0
+        if global_variable.user_configure_data["extra_image_keep_aspect_ratio"] not in (0,1):
+            global_variable.user_configure_data["extra_image_keep_aspect_ratio"] = 0
+        if global_variable.user_configure_data["extra_image_keep_aspect_ratio_2"] not in (0,1):
+            global_variable.user_configure_data["extra_image_keep_aspect_ratio_2"] = 0
+        self.new_var_tk_extra_image_keep_aspect_ratio.set(global_variable.user_configure_data["extra_image_keep_aspect_ratio"])
+        self.new_var_tk_extra_image_keep_aspect_ratio_2.set(global_variable.user_configure_data["extra_image_keep_aspect_ratio_2"])
+        m.add_checkbutton(
+                    label=_("周边图片一，使用 4:3 或 3:4 的比例（仅适用于一部分游戏）"), 
+                    variable = self.new_var_tk_extra_image_keep_aspect_ratio ,
+                    command=self.new_func_menu_call_back_extra_image_keep_aspect_ratio,
+                    )
+        m.add_checkbutton(
+                    label=_("周边图片二，使用 4:3 或 3:4 的比例（仅适用于一部分游戏）"), 
+                    variable = self.new_var_tk_extra_image_keep_aspect_ratio_2 ,
+                    command=self.new_func_menu_call_back_extra_image_keep_aspect_ratio_2,
+                    )
+        
+        m.add_separator()
+        
+        m.add_command(
+                    label = _("提取图片（仅当前列表）") ,
+                    command = self.new_func_menu_call_back_extra_image_copy ,
+                    )
+        
+        m.add_separator()
 
     def new_func_ui_menu_for_language(self,):
         m = tk.Menu(self.new_menu_botton_language, tearoff=0)
@@ -1440,7 +1472,9 @@ class MenuBar(ttk.Frame):
             window.focus_set()
         
         # 1 
-        # mame
+        # mame 路径
+        # mame 工作目录
+        # 清除 mame 数据
         ttk.Label(frame1,text=_("mame 模拟器 路径")).grid(row=0,column=0,sticky=tk.W+tk.N,)
         
         data["mame_path"]=tk.StringVar()
@@ -1470,8 +1504,64 @@ class MenuBar(ttk.Frame):
         
         n=2
         
-        ttk.Label(frame1,text="").grid(row=n,column=0,columnspan=5,sticky=tk.W+tk.N,)
-        n+=1        
+        def delete_temp_file():
+            
+            files_delete=[]
+            files_not_delete=[]
+            
+            for the_file in (
+                the_files.file_pickle_gamelist_data,
+                the_files.file_pickle_gamelist_available,
+                ):
+                
+                if os.path.isfile(the_file):
+                    try:
+                        os.remove(the_file)
+                        files_delete.append(the_file)
+                    except:
+                        files_not_delete.append(the_file)
+            
+            text=""
+            if files_delete:
+                text+=_("已删除的文件：")
+                text+="\n"
+                for the_file in files_delete:
+                    text+=the_file
+                    text+="\n"
+            if files_not_delete:
+                text+="\n"
+                text+=_("未能删除的文件（可以尝试手动删除）：")
+                text+="\n"
+                for the_file in files_not_delete:
+                    text+=the_file
+                    text+="\n"
+                
+            result = tkinter.messagebox.showinfo(message=text)
+            if the_files.file_pickle_gamelist_data in files_delete:
+                window.destroy()
+                sys.exit()
+        
+        def ask_for_delete_temp_file():
+            text=_("清除模拟器数据");text+="\n"
+            text+=_("清除数据后，程序将关闭");text+="\n"
+            text+=_("下次打开，需要重新初始化");text+="\n"
+            
+            result = tkinter.messagebox.askyesno(message=text,)
+            if result:
+                delete_temp_file()
+        
+        ttk.Label(frame1,text="",).grid(row=n,column=0,columnspan=5,sticky=tk.W+tk.N,)
+        n+=1
+        
+        button_mame_delete_temp_file = ttk.Button(
+                frame1,
+                text = _("清空游戏列表数据"),
+                command = ask_for_delete_temp_file,
+                )
+        button_mame_delete_temp_file.grid(row=n,column=0,columnspan=5,sticky=tk.W+tk.N,)
+        n+=1
+        
+        
         
         #the_dir = os.getcwd()
         #the_dir = os.path.abspath( the_dir )
@@ -1635,7 +1725,6 @@ class MenuBar(ttk.Frame):
         
         window.wait_window()
     
-
     
     # 设置→周边延迟显示
     def new_func_menu_call_back_use_extra_delay_time(self,):
@@ -1716,6 +1805,30 @@ class MenuBar(ttk.Frame):
         global_variable.user_configure_data["extra_image_search_file_first"] = self.new_var_tk_extra_image_serach_file_first.get()
         
         print( global_variable.user_configure_data["extra_image_search_file_first"] )
+    
+    def new_func_menu_call_back_extra_image_keep_aspect_ratio(self,):
+        global_variable.user_configure_data["extra_image_keep_aspect_ratio"] = self.new_var_tk_extra_image_keep_aspect_ratio.get()
+    def new_func_menu_call_back_extra_image_keep_aspect_ratio_2(self,):
+        global_variable.user_configure_data["extra_image_keep_aspect_ratio_2"] = self.new_var_tk_extra_image_keep_aspect_ratio_2.get()
+    
+    def new_func_menu_call_back_extra_image_copy(self,):
+        
+        the_text  = _("复制图片")
+        the_text += "\n"
+        
+        the_text += _("范围：仅当前列表")
+        the_text += "\n"
+        
+        the_text += _("复制到：")
+        the_text += the_files.folder_export
+        the_text += "\n"
+        the_text += _("如果此文件夹已有其它文件，复制前最好手动清空此文件夹")
+        the_text += "\n"
+        
+        result = tkinter.messagebox.askyesno( message=the_text )
+        
+        if result:
+            misc_funcs.use_threading(misc.copy_extra_images)
     
     # 游戏列表
     def new_func_menu_call_back_choose_mark_unavailable(self,):

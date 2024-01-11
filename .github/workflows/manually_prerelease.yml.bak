@@ -16,7 +16,6 @@ jobs:
     uses: ./.github/workflows/docs.yml
     
   jobs_last:
-    if: ${{ always() }}
     needs: [jobs_1,jobs_2,jobs_3]
     
     runs-on: windows-latest

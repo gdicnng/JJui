@@ -24,6 +24,7 @@ from . import ui_themes
 from . import ui_high_dpi
 
 from .ui_misc import  misc_funcs # import 在后边，有些变量值，之前，还没有赋值
+from . import misc
 
 
 # 因为 global_variable 赋值
@@ -207,6 +208,29 @@ def main():
             # 列表，搜索限制，选择 搜索哪些 列
             # 初始化为全部
             global_variable.search_columns_set = set( global_variable.columns + ["#id",] )
+            
+            # 4:3 比例的图片，稍微限制一下范围
+            if global_variable.gamelist_type == "softwarelist":
+                global_variable.set_extra_image_keep_aspect_ratio=global_variable.set_data["all_set"]
+            elif global_variable.gamelist_type == "mame":
+                temp_games_1 = misc.get_id_list_from_internal_index("display number","1")
+                temp_games_2 = misc.get_id_list_from_internal_index("display type","raster")
+                print("")
+                print("4:3")
+                print(len(temp_games_1))
+                print(len(temp_games_2))
+                temp_games = global_variable.set_data["all_set"]
+                if temp_games_1 :
+                    temp_games = temp_games & set(temp_games_1)
+                if temp_games_2:
+                    temp_games = temp_games & set(temp_games_2)
+                print(len(temp_games))
+                global_variable.set_extra_image_keep_aspect_ratio = temp_games
+                del temp_games_1
+                del temp_games_2
+                del temp_games
+                
+                #"display number"
             
             print("")
             print("columns")

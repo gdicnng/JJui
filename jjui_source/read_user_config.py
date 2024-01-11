@@ -287,6 +287,9 @@ def get_configure_file_default_value( ):
         ("filter",[]),
 
         # # ##################### # #
+        ("extra_image_keep_aspect_ratio"   ,0    ),    #图片区域1，使用 4:3 或 3:4 比例
+        ("extra_image_keep_aspect_ratio_2"   ,0    ),  #图片区域2，使用 4:3 或 3:4 比例
+        
         
         ("folders_path",os.path.join(os.curdir,"folders") ),#r".\folders"
 
@@ -498,6 +501,8 @@ def get_configure_file_value( file_name ):
               
               "extra_image_usezip","extra_image_usezip_2",
               "extra_image_search_file_first",
+              "extra_image_keep_aspect_ratio",
+              "extra_image_keep_aspect_ratio_2",
               
               "extra_image_chooser_index",
               "extra_image_chooser_2_index",

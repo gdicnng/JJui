@@ -6,25 +6,34 @@ JJui 一些选项设置
    :maxdepth: 4
    :caption: 目录:
    
+   save_window_size
    delete_data
-   themes
+   
+   icon_colour
    translation_file
    
+   
+   themes
+   
+   
    index_search
+   index_file
+   multi_selection
    
    extra_image
    extra_text_s_index
    extra_text
    
-   
-   jjui_other_emu
-   index_file
-   
    sort_order
    
-   multi_selection
+   
+   
+   
+   jjui_other_emu
+   
+   
    *
    
-   
+
 
 

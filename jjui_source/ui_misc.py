@@ -2457,6 +2457,45 @@ class Misc_functions():
         
         window.wait_window()
     
+    
+    
+    #
+    def use_threading(self,a_func):
+    
+        # 进度条
+        root = global_variable.root_window
+        progressbar = ttk.Progressbar(root)
+        progressbar.grid(row=0,column=0,rowspan=2,sticky=tk.W+tk.E+tk.S)
+        progressbar.grab_set()
+        progressbar.start()
+        
+        #
+        tkvar = tk.StringVar()
+        tkvar.set("waiting")        
+        
+        #
+        def wait_threading(thread):
+            
+            if thread.is_alive(): #运行
+                root.after(300,wait_threading,thread)
+            else: # 停止
+                print("threading finish")
+                root.after(10,tkvar.set ,("threading finish",))
+        
+        #
+        thread = threading.Thread(target=a_func,)
+        thread.start()
+
+        #
+        wait_threading(thread)
+        # wait
+        if tkvar.get() == "waiting":
+            root.wait_variable(tkvar)
+        
+        # 进度条 取消
+        progressbar.stop()
+        progressbar.grab_release()
+        progressbar.destroy()
     #     
     #######################
     # exit

@@ -45,7 +45,7 @@ jobs:
         python -m sphinx -b html -d docs_build\.doctrees docs\source docs_build\html
     - name: 7z
       run: |
-        7z a -t7z "docs.7z" .\docs_build\html\*
+        7z a -t7z -mx=9 "docs.7z" .\docs_build\html\*
         dir
     - name: upload
       uses: actions/upload-artifact@v3

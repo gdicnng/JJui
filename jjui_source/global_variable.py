@@ -226,3 +226,9 @@ extra_index_for_command_english_dat = {}
 
 # "gameinit.dat",
 extra_index_for_gameinit_dat = {}
+
+# 范围 稍微限制一下
+#   哪些游戏，周边图片 使用 4:3 或 3:4 的比例
+#   MAME 稍微限制一下
+#   MESS 完全没有限制
+set_extra_image_keep_aspect_ratio = set()

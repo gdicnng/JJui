@@ -76,6 +76,8 @@ class Image_area(ttk.Frame):
         # 当前图片 ,tk 格式
         self.new_var_tk_image = ImageTk.PhotoImage(self.new_var_current_image)
         
+        self.new_var_aspect_ratio = None
+        
         self.new_func_ui()
         self.new_func_bindigns()
     
@@ -114,9 +116,9 @@ class Image_area(ttk.Frame):
         
         new_canvas_size=(event.width,event.height)
         
-        self.new_func_show_image(new_canvas_size)
+        self.new_func_show_image(new_canvas_size , self.new_var_aspect_ratio)
     
-    def new_func_show_image(self,canvas_size):
+    def new_func_show_image(self,canvas_size,aspect_ratio=None):
         
         if not self.new_ui_canvas.winfo_viewable():
             return None
@@ -143,7 +145,10 @@ class Image_area(ttk.Frame):
         
         image_original_size = self.new_var_current_image.size
         
-        image_current_size = self.image_get_new_size(image_original_size,canvas_size)
+        if aspect_ratio is not None:
+            image_current_size = self.image_get_new_size_2(image_original_size,canvas_size,aspect_ratio)
+        else:
+            image_current_size = self.image_get_new_size(image_original_size,canvas_size)
         
         if image_current_size is None:
             return None
@@ -177,32 +182,77 @@ class Image_area(ttk.Frame):
             return new_image_size
         else:
             return None
+    
+    # 图片，获得图片新尺寸（4:3 或 3:4）
+    # mame
+    def image_get_new_size_2(self,image_size,canvas_size,aspect_ratio=None):
         
+        if canvas_size[0] <= 10: return None
+        if canvas_size[1] <= 10: return None
+        
+        def get_new_size(w,h): # 比如 4:3 
+            
+            if canvas_size[0]/canvas_size[1] >= w/h:
+                new_width  = canvas_size[1] / h * w
+                new_height = canvas_size[1]
+            else:
+                new_width  = canvas_size[0]
+                new_height = canvas_size[0] / w * h
+            
+            #print(new_width)
+            #print(new_height)
+            
+            #print(r"image width height :",new_width,new_height)
+            #print(r"image width/height =",new_width/new_height)
+            
+            return int(new_width) , int(new_height)
+        
+        # 其它情况
+        #    目前未使用
+        # aspect_ratio = 4 , 3
+        # 4:3 或 3:4 自动调整
+        if type(aspect_ratio) == tuple:
+            # 4:3
+            if image_size[0] >= image_size[1]:
+                return get_new_size(aspect_ratio[0],aspect_ratio[1])
+            # 3:4
+            else:
+                return get_new_size(aspect_ratio[1],aspect_ratio[0])
+        
+    
+    
     # pillow 格式
-    def new_func_set_new_image(self,new_image):
+    def new_func_set_new_image(self,new_image,aspect_ratio=None):
+        
+        self.new_var_aspect_ratio = aspect_ratio
         
         self.new_var_current_image = new_image
         
         canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
         
-        self.new_func_show_image(canvas_size)
+        self.new_func_show_image(canvas_size,aspect_ratio)
         
         self.new_var_backup_image_used=False
     
     # 文件
-    def new_func_set_new_image_from_file(self,file_name):
+    def new_func_set_new_image_from_file(self,file_name,aspect_ratio=None):
+        
         try:
+            self.new_var_aspect_ratio = aspect_ratio
             self.new_var_current_image = Image.open( file_name )
             self.new_var_current_image.load()
+            self.new_var_backup_image_used=False
         except:
             self.new_var_current_image = self.new_var_backup_image
+            self.new_var_aspect_ratio = None
+            self.new_var_backup_image_used=True
         
         canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
-        self.new_func_show_image(canvas_size)
-        
-        self.new_var_backup_image_used=False
+        self.new_func_show_image(canvas_size,aspect_ratio)
 
     def new_func_use_backup_image(self,):
+        self.new_var_aspect_ratio = None
+        
         if not self.new_var_backup_image_used:
             
             self.new_var_current_image = self.new_var_backup_image
@@ -405,7 +455,8 @@ class Image_container(ttk.Frame):
                 file_path = self.new_func_get_image_file_path(parent_name,folder_path)
         
         if file_path:
-            self.new_ui_image_area.new_func_set_new_image_from_file(file_path)
+            aspect_ratio = self.new_func_get_image_aspect_ratio()
+            self.new_ui_image_area.new_func_set_new_image_from_file(file_path,aspect_ratio)
         else:
             self.new_ui_image_area.new_func_use_backup_image()
 
@@ -415,7 +466,8 @@ class Image_container(ttk.Frame):
         
         if file_path :
             #print("use file first : ",file_path)
-            self.new_ui_image_area.new_func_set_new_image_from_file(file_path)
+            aspect_ratio = self.new_func_get_image_aspect_ratio()
+            self.new_ui_image_area.new_func_set_new_image_from_file(file_path,aspect_ratio)
             return True
         
     def new_func_show_image_from_zip(self,game_name):
@@ -563,7 +615,8 @@ class Image_container(ttk.Frame):
         if image is None :
             self.new_ui_image_area.new_func_use_backup_image()
         else:
-            self.new_ui_image_area.new_func_set_new_image(image)
+            aspect_ratio = self.new_func_get_image_aspect_ratio()
+            self.new_ui_image_area.new_func_set_new_image(image,aspect_ratio)
 
     # for files in floder
     def new_func_get_image_name(self,item_id):
@@ -582,7 +635,16 @@ class Image_container(ttk.Frame):
             return folder + "/" + name+ r".png"
         else:
             return item_id + r".png"
-
+    
+    def new_func_get_image_aspect_ratio(self,):
+        # None ：原始比例
+        # (4,3)：   4:3 或 3:4
+        # 4/3 ：    4:3 ，目前未使用
+        if global_variable.user_configure_data["extra_image_keep_aspect_ratio"]:
+            if global_variable.current_item in global_variable.set_extra_image_keep_aspect_ratio:
+                return 4,3
+        return None
+    
 class Image_container_2(Image_container):
     def __init__(self ,parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
@@ -616,6 +678,11 @@ class Image_container_2(Image_container):
         
         self.new_func_get_info_from_choice()# 初始数据读取
     
+    def new_func_get_image_aspect_ratio(self,):
+        if global_variable.user_configure_data["extra_image_keep_aspect_ratio_2"]:
+            if global_variable.current_item in global_variable.set_extra_image_keep_aspect_ratio:
+                return 4,3
+        return None
 
 if __name__ == "__main__" :
     root=tk.Tk()

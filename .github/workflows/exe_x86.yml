@@ -47,10 +47,10 @@ jobs:
     
     - name: pyinstaller to exe
       run: |
-        call .windows_build_exe_use_pyinstaller.bat
+        python .windows_build_exe_use_pyinstaller.py
     - name: 7z
       run: |
-        7z a -t7z "${{ env.file_name_start }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
+        7z a -t7z -mx=9 "${{ env.file_name_start }}_${{ matrix.os }}_python_${{ matrix.python_version }}_${{ matrix.architecture }}.7z" .\dist\*
         dir
     - name: upload
       uses: actions/upload-artifact@v3

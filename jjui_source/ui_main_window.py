@@ -115,10 +115,6 @@ def get_external_read_only_index_data(folders_path,file_extension):
     return external_index_data
 
 
-
-
-
-
 # 游戏列表界面，建立
 def add_game_list( 
             gamelist_table_type,
