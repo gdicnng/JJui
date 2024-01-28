@@ -249,7 +249,16 @@ class Misc_functions():
                         
                     text = bytes_to_string(errs)
                     messagebox.showerror(title="stderr",message=text)
-            
+                elif errs:
+                    print()
+                    print("stderr:")
+                    try:
+                        sys.stdout.buffer.write(errs)
+                    except:
+                        pass
+                    print()
+                
+                
             # 不显示报错信息
             else:
                 proc = subprocess.Popen(

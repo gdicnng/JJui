@@ -98,18 +98,18 @@ class Image_area(ttk.Frame):
 
     def new_func_bindigns(self,):
         self.new_ui_canvas.bind('<Configure>',  self.new_func_size_changed)
-        self.new_ui_canvas.bind('<Map>',        self.new_func_show_the_first_time)
+        self.new_ui_canvas.bind('<Map>',        self.new_func_size_changed_map)
         
         # for test
         #self.new_ui_canvas.bind_all('<Control-KeyPress-i>',self.show_item_number_in_canvas,"+")
         ""
 
     # bindings
-    def new_func_show_the_first_time(self,event):
+    def new_func_size_changed_map(self,event):
         
         canvas_size=(self.new_ui_canvas.winfo_width(),self.new_ui_canvas.winfo_height() )
         
-        self.new_func_show_image(canvas_size)
+        self.new_func_show_image(canvas_size , self.new_var_aspect_ratio)
     
     # bindings
     def new_func_size_changed(self,event):

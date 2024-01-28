@@ -2343,7 +2343,6 @@ class GameList_5(GameList_4):
         self.new_var_remember_selected_items.clear()
         self.new_var_remember_selected_items.add(item_id)
         ##################
-
         
         #print()
         #print("  select row : {} ".format(row_number) )
@@ -2352,8 +2351,9 @@ class GameList_5(GameList_4):
         self.new_func_refresh_table()
         
         #self.new_var_data_for_CurrentGame = item_id
-        global_variable.current_item = item_id
-        self.event_generate( self.new_var_virtual_event_name_CurrentGame )
+        if global_variable.current_item != item_id:
+            global_variable.current_item = item_id
+            self.event_generate( self.new_var_virtual_event_name_CurrentGame )
     
 
 
