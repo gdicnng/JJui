@@ -33,18 +33,17 @@ MAME 使用说明
 
 ********
 
-关于命令行，不用命令行也没有什么影响
-
 .. toctree::
    :glob:
-   :maxdepth: 4
+   :maxdepth: 1
 
    command_line/index
 
 
 ********
 
-以下各种设置，内容排序比较杂乱：
+| 零碎
+| 一些常见的选项设置，内容排序比较杂乱
 
 .. toctree::
    :glob:
