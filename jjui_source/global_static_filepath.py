@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import os
 #import sys
 #import string
@@ -104,6 +104,8 @@ image_path_weixin        = os.path.join(folder_images,"weixin.png")
 
 image_path_icon_plus     = os.path.join(folder_images,"plus.xbm")
 image_path_icon_minus    = os.path.join(folder_images,"minus.xbm")
+
+image_path_index_edit    = os.path.join(folder_images,"index_edit.png")
 
 
 emulator_configure_folder    = os.path.join(folder_temporary,"emu")

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import os
 import sys
 
@@ -983,7 +983,7 @@ def show_command_list_mame(event=None):
         root = global_variable.root_window
         
         window = tk.Toplevel()
-        window.geometry( "500x400" )
+        window.geometry( "700x400" )
         window.resizable(width=True, height=True)
         window.title(title)
         window.lift(root)
@@ -997,7 +997,7 @@ def show_command_list_mame(event=None):
         tree = tree_container.new_ui_tree
         tree.heading("#0",text=_("全体") + "("+the_folder+")")
         
-        tree_container_2 = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container_2 = ui__treeview_with_scrollbar.Treeview_with_scrollbar_with_sizegrip(window,)
         tree_container_2.grid(row=0,column=1,sticky=tk.NSEW)
         tree2=tree_container_2.new_ui_tree
         tree2.heading("#0",text=_("源代码分类") + "(" + the_folder_by_source +")")
@@ -1047,6 +1047,25 @@ def show_command_list_mame(event=None):
             hide=False
             run_the_file(event,hide=hide)
         
+        def for_event_return(event,hide=True):
+            the_tree = event.widget
+            row  = the_tree.focus()
+            
+            if row == "": return
+            
+            if the_tree == tree:
+                temp_folder = the_folder
+            #elif the_tree == tree2:
+            else:
+                temp_folder = the_folder_by_source
+            
+            the_file_path = os.path.join(temp_folder,the_tree.item(row,"text"))
+            print(the_file_path)
+            misc_funcs.run_by_file(the_file_path,game_id,hide=hide)
+        
+        def for_event_return_ctrl(event):
+            for_event_return(event,hide=False)
+        
         def close_window(event=None):
             window.destroy()
         
@@ -1057,6 +1076,12 @@ def show_command_list_mame(event=None):
         
         tree.bind( '<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
         tree2.bind('<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        
+        tree.bind( '<KeyPress-Return>', for_event_return)
+        tree2.bind('<KeyPress-Return>', for_event_return)
+        
+        tree.bind( '<Control-KeyPress-Return>', for_event_return_ctrl)
+        tree2.bind('<Control-KeyPress-Return>', for_event_return_ctrl)
         
         window.focus_set()
         
@@ -1112,7 +1137,7 @@ def show_command_list_sl(event=None):
         window.columnconfigure(0,weight=1)
         #window.columnconfigure(1,weight=1)
 
-        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar_with_sizegrip(window,)
         tree_container.grid(row=0,column=0,sticky=tk.NSEW)
         tree = tree_container.new_ui_tree
         tree.heading("#0",text=_("全体") + "("+the_folder+")")
@@ -1167,6 +1192,26 @@ def show_command_list_sl(event=None):
             hide=False
             run_the_file(event,hide=hide)
         
+        
+        def for_event_return(event,hide=True):
+            the_tree = event.widget
+            row  = the_tree.focus()
+            
+            if row == "": return
+            
+            if the_tree == tree:
+                temp_folder = the_folder
+            #elif the_tree == tree2:
+            else:
+                temp_folder = the_folder_by_source
+            
+            the_file_path = os.path.join(temp_folder,the_tree.item(row,"text"))
+            print(the_file_path)
+            misc_funcs.run_by_file(the_file_path,game_id,hide=hide)
+        
+        def for_event_return_ctrl(event):
+            for_event_return(event,hide=False)        
+        
         def close_window(event=None):
             window.destroy()
         
@@ -1177,6 +1222,12 @@ def show_command_list_sl(event=None):
         
         tree.bind( '<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
         #tree2.bind('<Control-Double-ButtonPress-1>', run_the_file_ctrl ) 
+        
+        tree.bind( '<KeyPress-Return>', for_event_return)
+        #tree2.bind('<KeyPress-Return>', for_event_return)
+        
+        tree.bind( '<Control-KeyPress-Return>', for_event_return_ctrl)
+        #tree2.bind('<Control-KeyPress-Return>', for_event_return_ctrl)        
         
         window.bind('<KeyPress-Escape>',close_window)
         
@@ -1225,7 +1276,7 @@ def show_bios_chooser(event=None):
         window.rowconfigure(0,weight=1)
         window.columnconfigure(0,weight=1)
 
-        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar(window,)
+        tree_container = ui__treeview_with_scrollbar.Treeview_with_scrollbar_with_sizegrip(window,)
         tree_container.grid(row=0,column=0,sticky=tk.NSEW)
         tree = tree_container.new_ui_tree
         tree.configure(show="tree")
@@ -1268,16 +1319,36 @@ def show_bios_chooser(event=None):
         
         def run_game_ctrl(event,):
             hide=False
-            run_the_file(event,hide=hide)
+            run_game(event,hide=hide)
+        
+        def run_game_by_return(event,hide=True):
+            the_tree = event.widget
+            row  = the_tree.focus()
+            
+            if row != "":
+                
+                bios_name = the_tree.item(row,"text")
+                print(bios_name)
+                
+                other_option=[]
+                other_option.append("-bios")
+                other_option.append(bios_name)
+                
+                # 仅用于 mame
+                misc_funcs.call_mame(game_id,other_option=other_option,hide=hide)
+        
+        def run_game_by_return_ctrl(event):
+            run_game_by_return(event,hide=False)
         
         def close_window(event=None):
             window.destroy()
         
         window.focus_set()
         
-        tree.bind( '<Double-ButtonPress-1>', run_game ) 
-        
-        tree.bind( '<Control-Double-ButtonPress-1>', run_game_ctrl ) 
+        tree.bind( '<Double-ButtonPress-1>', run_game )
+        tree.bind( '<Control-Double-ButtonPress-1>', run_game_ctrl )
+        tree.bind( '<KeyPress-Return>', run_game_by_return )
+        tree.bind( '<Control-KeyPress-Return>', run_game_by_return_ctrl )
         
         window.bind('<KeyPress-Escape>',close_window)
     

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import sys
 import os
 import re
@@ -2850,7 +2850,7 @@ class GameList_7(GameList_6):
         
         # id
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_(""), # id
+                label=(""), # id
                 #state="disabled",
                 command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("id",),
                     )
@@ -2859,7 +2859,7 @@ class GameList_7(GameList_6):
         
         # translation
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_(""), # translation
+                label=(""), # translation
                 #state="disabled",
                 command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("translation",),
                     )
@@ -2868,7 +2868,7 @@ class GameList_7(GameList_6):
         
         # description
         self.new_ui_pop_up_menu_for_table.add_command(
-                label=_(""), # description
+                label=(""), # description
                 #state="disabled",
                 command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("description",),
                     )
@@ -2878,7 +2878,7 @@ class GameList_7(GameList_6):
         # alt_title # 仅 SL
         if global_variable.gamelist_type == "softwarelist" :
             self.new_ui_pop_up_menu_for_table.add_command(
-                    label=_(""), # alt_title
+                    label=(""), # alt_title
                     #state="disabled",
                     command = lambda : self.new_func_table_pop_up_menu_callback_click_to_copy_content("alt_title",),
                         )
@@ -4386,10 +4386,123 @@ class GameList_12(GameList_11):
         print("ctrl + alt + number")
         self.new_func_table_binding_key_1_to_9(event,hide=False,alt=True)
 
+
+
+# 目录 编辑，快捷键 Insert Delete
+class GameList_13(GameList_12):
+    def __init__(self, parent,*args,**kwargs):
+        super().__init__(parent,*args,**kwargs)
+    
+    def new_func_bindings(self,):
+        super().new_func_bindings()
+        
+        # Insert
+        # Delete
+        self.bind('<KeyPress-Insert>',self.new_func_binding_key_press_insert,)
+        self.bind('<KeyPress-Delete>',self.new_func_binding_key_press_delete,)
+        
+        
+    # 不要忘 了， 添加标记，被修改过
+    # 如果是当前目录，内容被修改，记得刷新列表
+    def new_func_binding_key_press_insert(self,event):
+        print("Insert")
+        
+        if global_variable.index_item_for_edit is None:
+            print("no index item for edit,return")
+            return
+        
+        if not self.new_var_remember_selected_items:
+            print("no selected items,return")
+            return
+        
+        # 如果是当前列表，增加不了，不用管
+        if self.new_var_remember_last_index_data == global_variable.index_item_for_edit__info:
+            print("same index , no new items , return")
+            return
+        
+        #print(self.new_var_remember_selected_items)
+        
+        # 右下角显示
+        global_variable.short_time_info= "+" + str(len(self.new_var_remember_selected_items))
+        self.event_generate( "<<ShortTimeInfo>>" )
+        
+        # 内容修改
+        id_1 = global_variable.index_item_for_edit__info[1]
+        id_2 = None
+        if len(global_variable.index_item_for_edit__info[1]) == 3:
+            id_2 = global_variable.index_item_for_edit__info[2]
+        old_items = misc.get_id_list_from_external_index(id_1,id_2)
+        new_items = set(old_items) | self.new_var_remember_selected_items
+        misc.set_id_list_for_external_index(new_items,id_1,id_2)
+        
+        # 记录，修改过的文件
+        global_variable.external_index_files_be_edited.add( global_variable.index_item_for_edit__info[1])
+        
+        # 如果是当前列表，增加不了，不用管
+        pass
+    
+    def new_func_binding_key_press_delete(self,event):
+        print("Delete")
+        
+        if global_variable.index_item_for_edit is None:
+            print("no index item for edit,return")
+            return
+        
+        if not self.new_var_remember_selected_items:
+            print("no selected items,return")
+            return
+        
+        #print(self.new_var_remember_selected_items)
+        
+        # 右下角显示
+        global_variable.short_time_info= "-" + str(len(self.new_var_remember_selected_items))
+        self.event_generate( "<<ShortTimeInfo>>" )
+        
+        # 内容修改
+        id_1 = global_variable.index_item_for_edit__info[1]
+        id_2 = None
+        if len(global_variable.index_item_for_edit__info[1]) == 3:
+            id_2 = global_variable.index_item_for_edit__info[2]
+        old_items = misc.get_id_list_from_external_index(id_1,id_2)
+        new_items = set(old_items) - self.new_var_remember_selected_items
+        misc.set_id_list_for_external_index(new_items,id_1,id_2)
+        
+        # 记录，修改过的文件
+        global_variable.external_index_files_be_edited.add( global_variable.index_item_for_edit__info[1])
+        
+        # 如果是当前列表，重新 刷新 列表
+            # 如果 在正常状态 ？ 如果 在搜索状态 ？
+        # 如果是当前列表，增加不了，不用管
+        if self.new_var_remember_last_index_data == global_variable.index_item_for_edit__info:
+            if not self.new_var_data_holder.flag_search:
+                
+                # 重新 读取 目录 内容
+                #   目录信号记录，重置
+                self.new_var_remember_last_index_data = None 
+                #   重新请求目录信号
+                self.event_generate('<<RequestForIndexInfo>>')
+            else:
+                # 标记
+                #   如果继续搜索，用到
+                #   如果搜索清空，用到
+                self.new_var_flag_current_index_be_edited = True
+
+                ###################
+                # 当前列表中，删除 选中内容
+                # self.new_var_remember_selected_items
+                self.new_var_data_holder.func_for_delete_items_from_current_list( self.new_var_remember_selected_items )
+        
+                ################
+                ## 重载列表
+                self.new_func_table_reload_the_game_list(jump_to_select_item=False)
+
+
+    
+
 # 快速跳转，
 #   仅配匹开头的字符
 #   搜索栏处，按 ↑、 ↓ ，查找到第一个符合的，并跳转到过去
-class GameList_13(GameList_12):
+class GameList_14(GameList_13):
 
     def __init__(self, parent,*args,**kwargs):
         super().__init__(parent,*args,**kwargs)
@@ -4512,10 +4625,11 @@ class GameList_13(GameList_12):
             # 放后面
 
 
+
 # 99
 # 将 focus 留在 列表 里
 # 显示 ctrl + i 
-class GameList_99(GameList_13):
+class GameList_99(GameList_14):
 
     def __init__(self, parent,*args,**kwargs):
         

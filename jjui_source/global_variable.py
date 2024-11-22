@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 
 gamelist_type = "mame"
 # 主脚本中确定
@@ -232,3 +232,15 @@ extra_index_for_gameinit_dat = {}
 #   MAME 稍微限制一下
 #   MESS 完全没有限制
 set_extra_image_keep_aspect_ratio = set()
+
+
+#####
+# 目录条目，记录（快速编辑，可用 Insert键、Delete键的那一项）
+# 两组同时用
+index_item_for_edit = None # 记录 iid
+index_item_for_edit__info=None 
+    # 记录 type,第一层 id,第二层 id ,
+    # 见 ui_index.py ,  new_func_get_virtual_event_info_from_iid()
+
+
+short_time_info = ""

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 #import sys
 #import os
 import tkinter as tk
@@ -40,12 +40,21 @@ class StatesBar(ttk.Frame):
         parent.columnconfigure(column, weight=1)#### 可拉伸
         column+=1
         
+        #
+        # 右侧，显示消息，3秒后取消文字
+        self.new_var_remember_after = None
+        self.new_ui_label_info = ttk.Label(parent,anchor=tk.W,text="")
+        self.new_ui_label_info.grid(row=0,column=column,sticky=tk.E,)
+        column+=1
+        
+        
         ttk.Sizegrip(parent).grid(row=0,column=column,sticky=tk.E)
         column+=1
     
     def new_func_bindings(self):
         self.bind_all('<<CurrentGameListNumber>>',self.new_func_binding_virtual_event_receive_CurrentGameListNumber,)
         self.bind_all('<<CurrentGame>>',self.new_func_binding_virtual_event_receive_CurrentGame,"+")
+        self.bind_all('<<ShortTimeInfo>>',self.new_func_binding_virtual_event_receive_ShortTimeInfo,)
     
     def new_func_binding_virtual_event_receive_CurrentGameListNumber(self,event):
         widget = event.widget
@@ -81,3 +90,22 @@ class StatesBar(ttk.Frame):
             if result_string:
                 temp_string += " | " + _("存盘状态：") + result_string
         self.new_ui_label_current_item.configure(text= temp_string  )#  + "·"
+    
+    
+    
+    def new_func_clear_short_time_info(self,):
+        self.new_ui_label_info.configure(text= "")
+        
+    def new_func_binding_virtual_event_receive_ShortTimeInfo(self,event):
+        # global_variable.short_time_info
+        
+        # 取消 after
+        if self.new_var_remember_after is not None:
+            try:
+                self.after_cancel( self.new_var_remember_after )
+            except:
+                pass
+        
+        self.new_ui_label_info.configure(text= global_variable.short_time_info)
+        
+        self.new_var_remember_after = self.after(1000, self.new_func_clear_short_time_info,)

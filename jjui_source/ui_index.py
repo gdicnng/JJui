@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 
 import sys
 import os
@@ -7,6 +7,7 @@ import time
 import tkinter as tk
 # import tkinter.ttk as ttk
 import tkinter.messagebox
+from tkinter import PhotoImage
 
 #from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_v as Treeview_with_scrollbar
 from .ui__treeview_with_scrollbar import Treeview_with_scrollbar_for_index as Treeview_with_scrollbar
@@ -14,13 +15,27 @@ from . import ui_small_windows
 
 # from . import global_static_key_word_translation as key_word_translation
 # from . import global_static
-# from . import global_variable
+from . import global_variable
+from . import global_static_filepath as the_files
 
 # from . import folders_search
 #from . import folders_read 
 #from . import folders_save 
 from .ui_misc import misc_funcs
 from . import misc
+
+from PIL import Image, ImageTk
+# Pillow
+# DeprecationWarning: 
+# BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01).
+# Use Resampling.BILINEAR instead.
+# 老的 Image.BILINEAR 就是 int 2
+# 新的 Image.Resampling.BILINEAR 是 <enum 'Resampling'>，
+#   新版本还没有出来，不知道直接用 2 ，可不可以
+try:
+    bilinear = Image.Resampling.BILINEAR
+except:
+    bilinear = Image.BILINEAR
 
 # 鼠标右击 ，mac 似乎不一样
 if sys.platform.startswith('darwin'): # macos
@@ -73,7 +88,13 @@ class GameIndex(Treeview_with_scrollbar):
         super().__init__(parent,*args,**kwargs)
         #width = self.ini_data["width_index"]
         self.new_var_data_for_virtual_event=None
-
+        
+        
+        self.new_var_icon_width = 16
+        self.new_image_index_edit_original   = Image.open( the_files.image_path_index_edit)
+        self.new_func_set_icon_width(16)
+        self.new_image_none = PhotoImage()
+        
     # 还有列宽度设置
     def new_func_ui(self,):
         super().new_func_ui()
@@ -110,7 +131,17 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_var_menu_index_for_show_illegal_items = self.new_ui_index_popup_menu.index(tk.END)
         #self.new_ui_index_popup_menu.add_command(label="显示横向滚动条",command = self.new_func_index_popup_menu_function_show_scrollbar_h)
         #self.new_ui_index_popup_menu.add_command(label="收起横向滚动条",command = self.new_func_index_popup_menu_function_hide_scrollbar_h)
-
+        
+        self.new_ui_index_popup_menu.add_command(label=_("标记此项用于快速编辑"),
+                command = self.new_func_index_popup_menu_function_edit_mark)
+        # 记录 index
+        self.new_var_menu_index_for_edit_mark = self.new_ui_index_popup_menu.index(tk.END)
+        
+        self.new_ui_index_popup_menu.add_command(label=_("取消标记"),
+                command = self.new_func_index_popup_menu_function_cancel_edit_mark)
+        # 记录 index
+        self.new_var_menu_index_for_cancel_edit_mark = self.new_ui_index_popup_menu.index(tk.END)
+        
         # 搜索结果处，右键菜单
         self.new_ui_index_popup_menu_for_search = tk.Menu(self.new_ui_tree_for_search, tearoff=0)
         self.new_ui_index_popup_menu_for_search.add_command(label=_("全部收起"),
@@ -199,37 +230,48 @@ class GameIndex(Treeview_with_scrollbar):
         
         # 菜单 多余游戏
         the_state = tk.DISABLED 
+        the_state_edit = tk.DISABLED 
         the_string = "-"
-        if row and row_focused==row:
-            print()
-            print(row)
-            if row.startswith("external_ini_file"):
-                id_2 = None
-                parent = tree.parent(row)
-                if parent:
-                    # 第二层
-                    # index_name_level_2 = iid.removeprefix(parent_iid)
-                    # 3.9 才有这 个 str.removeprefix()
-                    id_1 = parent.split(r"|",1)[1]
-                    
-                    len_1 = len(parent) + 1 # 还有一个 | 字符
-                    id_2 = row[len_1:]
-                    print(id_2)
-                else:
-                    # 第一层
-                    id_1 = row.split(r"|",1)[1]
-                    print(id_1)
-                
+        the_string_edit = _("标记此项用于快速编辑")
+        
+        
+        print()
+        print(row)
+        
+        temp = self.new_func_get_virtual_event_info_from_iid( row )
+        
+        id_1=None
+        id_2=None
+        if len(temp)==2:
+            the_type, id_1 = temp
+        elif len(temp)==3:
+            the_type, id_1, id_2 = temp
+        
+        
+        if row.startswith("external_ini_file"):
+            if row == row_focused:
                 the_state = tk.NORMAL
                 if id_2 is None: # 一层
-                    the_string = _("查看超出范围的项目：")+id_1+ "|" + r"[ROOT_FOLDER]"
+                    the_string = _("查看超出范围的项目：")+id_1 + "|" + r"[ROOT_FOLDER]"
                 else: # 二层
                     the_string = _("查看超出范围的项目：")+id_1 + "|" + "[" + id_2 + "]"
                 print(the_string)
+            
+            
+                if id_1 in global_variable.external_index_files_editable :
+                    the_state = tk.NORMAL
+              
         
         menu = self.new_ui_index_popup_menu
+        
         index = self.new_var_menu_index_for_show_illegal_items
         menu.entryconfigure(index,state=the_state,label=the_string)
+        
+        # 编辑
+        index_2 = self.new_var_menu_index_for_edit_mark
+        menu.entryconfigure(index_2,state=the_state,label=the_string_edit)
+        
+        
         
         menu.tk_popup(event.x_root, event.y_root)
     # bindings 鼠标 右键 ,弹出菜单
@@ -329,6 +371,60 @@ class GameIndex(Treeview_with_scrollbar):
         
         ui_small_windows.show_a_text_widget(line_list,title="超出范围的项目")
     
+    
+    # 右键菜单，标记，用于快速编辑，
+    def new_func_index_popup_menu_function_edit_mark(self,event=None):
+        # wip
+        # 
+        # 标记一个 目录 项目，用于 快速编辑
+        #   游戏列表中，按 Insert 键，将选中项目，添加到 选中目录中
+        #   游戏列表中，按 Delete 键，将选中项目，从 选中目录中 移除
+        #
+        # print("event",event) # None
+        
+
+        
+        tree = self.new_ui_tree
+        row_focused = tree.focus()
+        print(row_focused)
+        
+        if row_focused:
+            
+            #print(global_variable.index_item_for_edit)
+            
+            # 已经标记了，再点击取消
+            if row_focused == global_variable.index_item_for_edit:
+                
+                print("same")
+                
+                self.new_func_index_popup_menu_function_cancel_edit_mark()
+            
+            # 没有标记，点击标记
+            elif row_focused != global_variable.index_item_for_edit:
+                
+                print("diff")
+                
+                # 原图标取消
+                if global_variable.index_item_for_edit is not None:
+                    tree.item(global_variable.index_item_for_edit,image=self.new_image_none)
+                
+                # 新图标设置
+                tree.item(row_focused,image=self.new_image_index_edit)
+                
+                # 记录两个
+                global_variable.index_item_for_edit = row_focused
+                global_variable.index_item_for_edit__info = self.new_func_get_virtual_event_info_from_iid(row_focused)
+    
+    def new_func_index_popup_menu_function_cancel_edit_mark(self,event=None):
+        
+        tree = self.new_ui_tree
+        
+        if global_variable.index_item_for_edit is not None:
+            tree.item(global_variable.index_item_for_edit,image=self.new_image_none)
+            
+            # 记录两个
+            global_variable.index_item_for_edit = None
+            global_variable.index_item_for_edit__info=[None,None]
     
     # 生成 virtual event
     def new_func_index_generate_virtual_event(self,iid):
@@ -688,6 +784,19 @@ class GameIndex(Treeview_with_scrollbar):
         self.new_ui_search_box.focus_set()
 
 
+
+    def new_func_set_icon_width(self,width):
+        if width<=0: 
+            width = 16
+        self.new_var_icon_width = width
+        self.new_func_icon_resize()
+    
+    def new_func_icon_resize(self):
+        new_size = ( self.new_var_icon_width,self.new_var_icon_width )
+        
+        self.new_image_index_edit  = ImageTk.PhotoImage( 
+                self.new_image_index_edit_original.resize(  new_size,bilinear, ) )
+        
 
 if __name__ == "__main__" :
     from .read_pickle import read as read_pickle

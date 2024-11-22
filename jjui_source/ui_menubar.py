@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import sys
 import os
 import webbrowser
@@ -544,7 +544,21 @@ class MenuBar(ttk.Frame):
                 state=tk.DISABLED,
                 )
         
+        m.add_separator()
+        self.new_var_tk_unavailable_mark = tk.IntVar() # default value 0
+            # 初始化,需从配置文件中，读取值
         
+        # 全局记录 bool
+        global_variable.flag_mark_unavailable_game = global_variable.user_configure_data["unavailable_mark"]
+        
+        if global_variable.user_configure_data["unavailable_mark"] :# bool
+            self.new_var_tk_unavailable_mark.set(1)
+            
+        m.add_checkbutton(
+                label=_(r"标记未拥有"),
+                command=self.new_func_menu_call_back_choose_mark_unavailable,
+                variable =self.new_var_tk_unavailable_mark,
+                )
         
         if global_variable.gamelist_type == "softwarelist":
             pass
@@ -567,21 +581,6 @@ class MenuBar(ttk.Frame):
                 command = ui_small_windows.header_pop_up_menu_callback_choose_columns
                 )
         
-        m.add_separator()
-        self.new_var_tk_unavailable_mark = tk.IntVar() # default value 0
-            # 初始化,需从配置文件中，读取值
-        
-        # 全局记录 bool
-        global_variable.flag_mark_unavailable_game = global_variable.user_configure_data["unavailable_mark"]
-        
-        if global_variable.user_configure_data["unavailable_mark"] :# bool
-            self.new_var_tk_unavailable_mark.set(1)
-            
-        m.add_checkbutton(
-                label=_(r"标记未拥有"),
-                command=self.new_func_menu_call_back_choose_mark_unavailable,
-                variable =self.new_var_tk_unavailable_mark,
-                )
         m.add_separator()
 
         # 定位 
@@ -1838,6 +1837,9 @@ class MenuBar(ttk.Frame):
         else:
             global_variable.user_configure_data["unavailable_mark"] = False
             global_variable.flag_mark_unavailable_game = False
+        
+        global_variable.the_showing_table.new_func_refresh_table()
+        
 
     def new_func_menu_call_back_for_keep_track_of_the_select_item(self,):
 

@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 #import sys
 import os
 import sys
@@ -145,13 +145,13 @@ class Misc_functions():
                 # 这能管用吗 算球了，反正 iconify() 暂时有效
             
             def window_withdraw():
-                global_variable.root_window.iconify() #
+                #global_variable.root_window.iconify() # 这种，弹出 的 MAME 、UI 本身隐藏后再显示，老不在最上层
                 global_variable.root_window.withdraw()
                 #global_variable.root_window.wm_state("withdrawn")
             def window_show_again():
                 root = global_variable.root_window
                 
-                root.iconify()
+                #root.iconify()
                 
                 root.deiconify()
                 

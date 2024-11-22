@@ -1,11 +1,12 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 #import os
 #import sys
 #import re
 
 from . import global_variable
+from . import version
 
-version_string=r"JJui (v.2.1.06 test)"
+version_string=r"JJui" + " " + "(" + version.version + ")"
 title_string = _(r"MAME 街机游戏列表显示器")
 if global_variable.gamelist_type == "softwarelist":
     title_string= _(r"MAME Software List(软件列表)")

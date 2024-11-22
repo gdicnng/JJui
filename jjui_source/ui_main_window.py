@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 # import sys
 import os
 import time
@@ -502,6 +502,11 @@ def main(game_list_data,root,style):
         root.bind("<Control-KeyPress-t>",just_for_test)
         
         root.bind("<KeyPress-F1>",ui_small_windows.show_command_list)
+        
+        if global_variable.gamelist_type == "mame":
+            #root.bind("<KeyPress-F3>",ui_small_windows.show_bios_chooser)
+            root.bind("<Control-KeyPress-b>",ui_small_windows.show_bios_chooser)
+            root.bind("<Control-KeyPress-B>",ui_small_windows.show_bios_chooser)
 
     
     some_bindings()

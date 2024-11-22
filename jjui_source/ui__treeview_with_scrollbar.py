@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import sys
 
 import tkinter as tk
@@ -126,6 +126,19 @@ class Treeview_with_scrollbar_v(Treeview_with_scrollbar):
         super().new_func_ui()
         self.new_ui_scrollbar_h.grid_remove()
 
+
+class Treeview_with_scrollbar_with_sizegrip(Treeview_with_scrollbar):
+    
+    def __init__(self, parent,*args,**kwargs):
+        super().__init__(parent,*args,**kwargs)
+        
+    def new_func_ui(self,):
+        super().new_func_ui()
+        self.new_ui_scrollbar_sizegrip = ttk.Sizegrip(self)
+        self.new_ui_scrollbar_sizegrip.grid(row=1,column=1,sticky=tk.E,)
+        
+        
+        
 # 分类目录处
 # 一个 treeview 显示 分类目录
 # 另一个 treeview 显示 搜索结果

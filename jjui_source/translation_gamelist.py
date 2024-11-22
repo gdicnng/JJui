@@ -1,4 +1,4 @@
-﻿# -*- coding: utf_8_sig-*-
+﻿# -*- coding: utf-8 -*-
 import re
 
 def read_translation_file( translation_file_name ,text_encoding='utf_8_sig'):
