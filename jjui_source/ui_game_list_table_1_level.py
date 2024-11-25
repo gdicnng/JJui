@@ -4429,7 +4429,7 @@ class GameList_13(GameList_12):
         # 内容修改
         id_1 = global_variable.index_item_for_edit__info[1]
         id_2 = None
-        if len(global_variable.index_item_for_edit__info[1]) == 3:
+        if len(global_variable.index_item_for_edit__info) == 3:
             id_2 = global_variable.index_item_for_edit__info[2]
         old_items = misc.get_id_list_from_external_index(id_1,id_2)
         new_items = set(old_items) | self.new_var_remember_selected_items
@@ -4461,7 +4461,7 @@ class GameList_13(GameList_12):
         # 内容修改
         id_1 = global_variable.index_item_for_edit__info[1]
         id_2 = None
-        if len(global_variable.index_item_for_edit__info[1]) == 3:
+        if len(global_variable.index_item_for_edit__info) == 3:
             id_2 = global_variable.index_item_for_edit__info[2]
         old_items = misc.get_id_list_from_external_index(id_1,id_2)
         new_items = set(old_items) - self.new_var_remember_selected_items
