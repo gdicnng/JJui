@@ -1,6 +1,7 @@
 name: Windows Release Test
 
 # Pillow > 9.5.0 no longer includes 32-bit wheels.
+# 好像又有 32-bit 的
 
 # runners
 #   https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
@@ -14,15 +15,15 @@ on:
       - "*"
 
 jobs:
-  jobs_1: # build exe 
-    uses: ./.github/workflows/exe.yml
+  # jobs_1: # build exe 
+  #   uses: ./.github/workflows/exe.yml
   jobs_2:
     uses: ./.github/workflows/exe_x86.yml
   jobs_3:
     uses: ./.github/workflows/docs.yml
   jobs_last: # release
     if: ${{ always() }}
-    needs: [jobs_1,jobs_2,jobs_3]
+    needs: [jobs_2,jobs_3]
     
     runs-on: windows-latest
     

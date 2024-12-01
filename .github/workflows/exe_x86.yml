@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         architecture: [ x86 ,x64 ] # python x86 ,x64
-        python_version: [ "3.10" ,] # python version
+        python_version: [ "3.11" ,] # python version
         os: [ windows-2019, ] # windows-2022 
     
     runs-on: ${{ matrix.os }} 
