@@ -16,6 +16,7 @@
 中文出招表 现在主要是 jjsnake 在维护：
 	
 	https://www.ppxclub.com/130735-1-1
+	https://bbs.xqemu.cn/forum.php?mod=viewthread&tid=2147
 
 也可去其它模拟器相关的网站找一找资源
 

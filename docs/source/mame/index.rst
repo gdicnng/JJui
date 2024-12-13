@@ -11,22 +11,18 @@ MAME 使用说明
    
    mame
    
-   
-   
    mame_configure_chinese_internal_ui
    mame_configure_chinese_gamelist
    
    mame_chinese_third_party
    mame_chinese_ui
    
-
-   
    old_mame_info_before_game
    
    mame_configure_before_game
    mame_configure_before_game_2
    
-   mame_configure_in_game
+   mame_configure_in_game_tab
    
    id
    colour
@@ -53,7 +49,7 @@ MAME 使用说明
    mame_configure/rompath
    mame_configure/input_set
    mame_configure/cheat
-   
+   mame_configure/game_option
    
    
    mame_configure/confirm_quit
@@ -68,7 +64,7 @@ MAME 使用说明
    
    mame_configure/video
    mame_configure/plugins
-   mame_configure/game_option
+   
    
    mame_configure/cpu_overclock
    
